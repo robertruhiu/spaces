@@ -236,6 +236,19 @@
 
 
                 </div>
+                <!----Post Job drawer------->
+                <a-drawer
+                        width=640
+                        placement="right"
+                        :closable="false"
+                        @close="onCloseJobDrawer"
+                        :visible="jobdrawervisible"
+                >
+
+                    <p>Job drawer</p>
+
+
+                </a-drawer>
 
             </a-layout-content>
 
@@ -262,6 +275,7 @@
                 greeting: null,
                 logo: false,
                 date: null,
+                jobdrawervisible: false,
                 styleObject: {
 
                     marginLeft: '5.9%',
@@ -334,6 +348,12 @@
                     this.logo = this.expandedlogo;
 
                 }
+            },
+            showJobDrawer() {
+                this.jobdrawervisible = true
+            },
+            onCloseJobDrawer() {
+                this.jobdrawervisible = false
             },
         },
 

@@ -327,7 +327,7 @@
 
 
 <script>
-    console.log(process.env.VUE_APP_PATH)
+
     class Developer {
         constructor(id, name, skills, about, location, availabilty) {
             this.id = id;
