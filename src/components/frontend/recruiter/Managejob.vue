@@ -310,11 +310,6 @@
 
         },
         async mounted() {
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-            }
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             let today = new Date()
             let curHr = today.getHours()
             this.date = today.getDay()
@@ -329,6 +324,12 @@
                 this.greeting = 'Good Evening'
 
             }
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
+            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
         },
         methods: {
             logout() {
