@@ -1,129 +1,25 @@
 <template>
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
 
-        <a-layout-sider
-                collapsible
-                v-model="collapsed" @click="expand"
-                :style="{backgroundColor:'white',marginTop: '',position:'fixed'}"
-        >
-            <div>
-                <router-link to="/">
-                    <img v-bind:style="logo" src="../../../assets/logobg.svg"
-                         style="width: 120px;height: 31px;margin-top: 7%;margin-bottom: 6%;margin-left: 9%">
+        <RecruiterSider/>
 
-                </router-link>
+        <a-layout>
 
 
-            </div>
-
-            <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
-                <a-menu-item key="1">
-                    <router-link to="recruiter">
-                        <a-icon type="dashboard"/>
-                        <span>Dashboard</span>
-                    </router-link>
-                </a-menu-item>
-                <a-menu-item key="5">
-                    <a v-on:click="showJobDrawer">
-                        <a-icon type="edit"/>
-                        <span>Post a job</span>
-                    </a>
-                </a-menu-item>
-                <a-menu-item key="2">
-                    <router-link to="managejobs">
-                        <a-icon type="project"/>
-                        <span>My jobs</span>
-                    </router-link>
-                </a-menu-item>
-                <a-menu-item key="3">
-                    <router-link to="mycandidates">
-                        <a-icon type="team"/>
-                        <span>My Candidates</span>
-                    </router-link>
-                </a-menu-item>
-
-                <a-menu-item key="4">
-                    <router-link to="talent">
-                        <a-icon type="star"/>
-                        <span>Talent Pool</span>
-                    </router-link>
-
-                </a-menu-item>
-                <a-menu-item key="6">
-                    <router-link to="talent">
-                        <a-icon type="user"/>
-                        <span>My profile</span>
-                    </router-link>
-
-                </a-menu-item>
-                <a-menu-item key="7">
-                    <a @click="logout">
-                        <a-icon type="export"/>
-                        <span>Logout</span>
-                    </a>
-
-                </a-menu-item>
-
-            </a-menu>
-        </a-layout-sider>
-
-        <a-layout style="backgroundColor:#fff">
-
-            <a-layout-content v-bind:style="expanded" style="margin-left: 14.6%">
-                <a-layout-header
-                        :style="{ position: 'fixed', zIndex: 1, width: '100%',backgroundColor:'#004ec7',height:'100px' }">
-                    <a-row>
-                        <a-col :span="4">
-                            <p style="color: white;line-height: 61px;font-size: 17px;font-weight:bold">{{greeting}}
-                                {{(this.$store.state.user.first_name).charAt(0).toUpperCase()+
-                                this.$store.state.user.first_name.slice(1)}}</p>
-                            <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;">4 interviews
-                                Today</p>
-                        </a-col>
+            <a-layout-content >
+                <Pageheader/>
 
 
-                        <a-col :span="4">
-                            <a-card class="events">
-                                <p style="line-height: 0">9:00 am - 10:30 am</p>
-                                <p>Dennis Ruhiu</p>
-
-                            </a-card>
-                        </a-col>
-                        <a-col :span="4">
-                            <a-card class="events">
-                                <p style="line-height: 0">1:00 pm - 2:00 pm</p>
-                                <p>Test User</p>
-
-                            </a-card>
-                        </a-col>
-                        <a-col :span="4">
-                            <a-card class="events">
-                                <p style="line-height: 0">2:30 pm - 3:30 pm</p>
-                                <p>Jessica Freeman</p>
-
-                            </a-card>
-                        </a-col>
-                        <a-col :span="4">
-                            <a-card class="events">
-                                <p style="line-height: 0">2:30 pm - 3:30 pm</p>
-                                <p>Jessica Freeman</p>
-
-                            </a-card>
-                        </a-col>
-
-
-                    </a-row>
-
-                </a-layout-header>
-
-
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh',marginTop:'6rem' }">
+                <div :style="{ padding: '5px', background: '#fff', }">
                     <a-row>
                         <a-col span="24">
-                            <div>
+
                                 <h3 style="margin-left: 1.5rem;color: #1976D2;font-weight: bold">What would you like to
                                     do today?</h3>
-                                <a-row :gutter="16"
+                        </a-col>
+
+                    </a-row>
+                    <a-row :gutter="16"
                                        style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
                                     <a v-on:click="showJobDrawer">
                                         <a-col class="boxes" :span="6">
@@ -199,7 +95,9 @@
                                     </router-link>
 
                                 </a-row>
-                                <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
+                </div>
+                    <div style="padding: 2% 1%;background-color: white;margin: 2% 1%">
+                    <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
                                     <a-col :span="12">
 
                                         <h3 style="color: #1976D2;font-weight: bold">Your Recent Jobs</h3>
@@ -218,89 +116,69 @@
                                     </a-col>
 
                                 </a-row>
-                                <a-row :gutter="16" style="margin-left: 1rem;margin-right: 1rem;margin-bottom: 1rem">
-                                    <a-col :span="12">
-                                        <a-card>
-                                            <h3 style="font-weight: bold">Frontend Developer</h3>
-                                            <p>
-                                              <span>
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">react</a-tag>
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">javascript</a-tag>
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">redux</a-tag>
+                    <a-row :gutter="16"  style="margin-left: 1rem;margin-right: 1rem;margin-bottom: 1rem">
+
+
+                                    <a-col :span="12" v-for="job in myjobs" v-bind:key="job.id">
+                                            <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >
+                                                <h3 style="font-weight: bold">{{job.title}}</h3>
+                                                <p>
+                                              <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                            </p>
+                                                </p>
 
-                                            <p>
-                                                <a-alert style="color:#1976D2;border: 0 " message="Applicant Tracker"
-                                                         type="info"/>
-                                            </p>
+                                                <p>
+                                                    <a-alert style="color:#1976D2;border: 0 "
+                                                             message="Applicant Tracker"
+                                                             type="info"/>
+                                                </p>
 
-                                            <p>
-                                                <a-row>
-                                                    <a-col :span="8"><span>Applicants <a-badge count="5"
-                                                                                               :numberStyle="{backgroundColor: '#9FC6F2'} "/></span>
-                                                    </a-col>
-                                                    <a-col :span="8"><span>Testing Stage <a-badge count="3"
-                                                                                                  :numberStyle="{backgroundColor: '#92DDDD'} "/></span>
-                                                    </a-col>
-                                                    <a-col :span="8"><span>Interview Stage <a-badge count="2"
-                                                                                                    :numberStyle="{backgroundColor: '#DA92D0'} "/></span>
-                                                    </a-col>
-                                                </a-row>
-
-                                            </p>
-                                            <div style="text-align: center">
-                                                <a-button style="width: 60%" type="primary" block>Manage Job</a-button>
-                                            </div>
+                                                <p>
+                                                    <a-row>
+                                                        <a-col :span="8">
+                                                            <span>
+                                                                Applicants
+                                                                <a-tag color="#9fc6f2"
+                                                                       style="color:white;border-radius: 50%">{{job.applicants}}</a-tag>
+                                                            </span>
 
 
-                                        </a-card>
-                                    </a-col>
-                                    <a-col :span="12">
-                                        <a-card>
-                                            <h3 style="font-weight: bold">Frontend Developer</h3>
-                                            <p>
-                                              <span>
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">react</a-tag>
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">javascript</a-tag>
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">redux</a-tag>
+                                                        </a-col>
+                                                        <a-col :span="8">
+                                            <span>
+                                                Testing Stage
 
+                                            <a-tag color="#92DDDD"
+                                                   style="color:white;border-radius: 50%">{{job.test}}</a-tag>
                                             </span>
-                                            </p>
 
-                                            <p>
-                                                <a-alert style="color:#1976D2;border: 0 " message="Applicant Tracker"
-                                                         type="info"/>
-                                            </p>
+                                                        </a-col>
+                                                        <a-col :span="8">
+                                            <span>
+                                                  Interview Stage
+                                            <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
+                                            </span>
 
-                                            <p>
-                                                <a-row>
-                                                    <a-col :span="8"><span>Applicants <a-badge count="5"
-                                                                                               :numberStyle="{backgroundColor: '#9FC6F2'} "/></span>
-                                                    </a-col>
-                                                    <a-col :span="8"><span>Testing Stage <a-badge count="3"
-                                                                                                  :numberStyle="{backgroundColor: '#92DDDD'} "/></span>
-                                                    </a-col>
-                                                    <a-col :span="8"><span>Interview Stage <a-badge count="2"
-                                                                                                    :numberStyle="{backgroundColor: '#DA92D0'} "/></span>
-                                                    </a-col>
-                                                </a-row>
+                                                        </a-col>
+                                                    </a-row>
 
-                                            </p>
-                                            <div style="text-align: center">
-                                                <a-button style="width: 60%" type="primary" block>Manage Job</a-button>
-                                            </div>
+                                                </p>
+                                                <div style="text-align: center">
+
+                                                    <a-button style="width: 60%"
+                                                              @click="navigateTo({name:'job',params:{jobId: job.id}})"
+                                                              type="primary" block>Manage Job
+                                                    </a-button>
+
+                                                </div>
 
 
-                                        </a-card>
-                                    </a-col>
+                                            </a-card>
+                                        </a-col>
+
                                 </a-row>
-
-
-                            </div>
-                        </a-col>
-                    </a-row>
 
 
                 </div>
@@ -326,46 +204,38 @@
 
 
 <script>
+    class Job {
+        constructor(id, title, skills, applicants, test, interview) {
+            this.id = id;
+            this.title = title;
+            this.skills = skills;
+            this.applicants = applicants;
+            this.test = test;
+            this.interview = interview
+
+        }
+    }
 
 
-    import Pageheader from '@/components/layout/Dashboardheader.vue'
+
     import UsersService from '@/services/UsersService'
+    import Marketplace from '@/services/Marketplace'
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
+    import Pageheader from '@/components/layout/Pageheader'
+    import RecruiterSider from "../../layout/RecruiterSider";
+
 
     export default {
         name: 'index',
         data() {
+
             return {
                 currentUserProfile: null,
-                collapsed: false,
-                expanded: false,
-                logo: false,
-                greeting: null,
+                jobs: null,
+                myjobs: [],
                 jobdrawervisible: false,
-                styleObject: {
 
-                    marginLeft: '5.9%',
-                },
-                styleObject2: {
-
-                    marginLeft: '14.6%'
-                },
-                expandedlogo: {
-                    width: '120px',
-                    height: '31px',
-                    marginTop: '7%',
-                    marginLeft: '9%',
-                    marginBottom: '6%'
-
-                },
-                contractedlogo: {
-                    width: '100%',
-                    height: '31px',
-                    marginTop: '7%',
-                    marginLeft: '1%',
-                    marginBottom: '7%'
-                }
 
             }
         },
@@ -373,51 +243,64 @@
             ARow,
             ACol,
             Pageheader,
+            RecruiterSider,
+
+
 
 
         },
         async mounted() {
-            let today = new Date()
-            let curHr = today.getHours()
 
-            if (curHr < 12) {
-                this.greeting = 'Good Morning'
-
-            } else if (curHr < 18) {
-                this.greeting = 'Good Afternoon'
-
-            } else {
-                this.greeting = 'Good Evening'
-
-            }
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
+            for (let i = 0; i < this.jobs.length; i++) {
+                this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
+                let test = 0;
+                let interview = 0;
+                for (let j = 0; j < this.applicants.length; j++) {
+                    if (this.applicants[j].stage == 'test') {
+                        test++
+
+                    } else if (this.applicants[j].stage == 'interview') {
+                        interview++
+
+                    }
+
+                }
+                let skill_list = this.jobs[i].tech_stack.split(',');
+
+                let id = this.jobs[i].id
+                let title = this.jobs[i].title
+                let skills = skill_list
+                let applicants = this.applicants.length
+                let onejob = new Job(
+                    id, title, skills, applicants, test, interview
+                )
+
+
+                this.myjobs.push(onejob)
+
+
+            }
 
         },
         methods: {
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)
+                this.$store.dispatch('setisLoggedIn', false)
+                this.$store.dispatch('setUsertype', null)
+                this.$store.dispatch('setUser_id', null)
                 this.$router.push({
                     name: 'home'
                 })
             },
             navigateTo(route) {
                 this.$router.push(route)
-            },
-            expand() {
-                if (this.collapsed) {
-                    this.expanded = this.styleObject;
-                    this.logo = this.contractedlogo;
-
-                } else {
-                    this.expanded = this.styleObject2;
-                    this.logo = this.expandedlogo;
-
-                }
             },
             showJobDrawer() {
                 this.jobdrawervisible = true
@@ -474,16 +357,7 @@
         padding: 0.89rem;
     }
 
-    .events {
-        width: 11rem;
-        height: 5rem;
-        margin-top: 0.5rem;
-        border-radius: 0;
-        background-color: #0064ff;
-        border: 0;
-        color: white;
 
-    }
 
 
 </style>

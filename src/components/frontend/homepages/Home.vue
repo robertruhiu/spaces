@@ -366,8 +366,6 @@
         },
         async mounted() {
 
-
-
             this.devs = (await UsersService.devs()).data;
             this.alldevs = (await UsersService.allusers()).data;
             for (let j = 0; j < this.alldevs.length; j++) {

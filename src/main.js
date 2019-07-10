@@ -11,38 +11,40 @@ import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
 
 import VueSelectImage from 'vue-select-image'
+
 require('vue-select-image/dist/vue-select-image.css')
 Vue.use(VueSelectImage)
 
 import Multiselect from 'vue-multiselect'
+
 Vue.component('multiselect', Multiselect)
 import {
-  Drawer,
-  Alert,
-  Avatar,
-  Checkbox,
-  Badge,
-  Modal,
-  Button,
-
-  Card,
-  Select,
-  Col,
-  Radio,
-  Carousel,
-  Form,
-  Icon,
-  Input,
-  InputNumber,
-  Layout,
-  List,
-  Popover,
-  AutoComplete,
-  Menu,
-
-
-
-  Tag,
+    Drawer,
+    Alert,
+    Avatar,
+    Checkbox,
+    Badge,
+    Modal,
+    Button,
+    Tabs,
+    Table,
+    Card,
+    Select,
+    Col,
+    Radio,
+    Carousel,
+    Form,
+    Icon,
+    Input,
+    InputNumber,
+    Layout,
+    List,
+    Popover,
+    AutoComplete,
+    Menu,
+    Dropdown,
+    Progress,
+    Tag,
 
 } from 'ant-design-vue';
 
@@ -70,8 +72,13 @@ Vue.use(Checkbox);
 Vue.use(Drawer)
 Vue.use(AutoComplete)
 Vue.use(Modal)
+Vue.use(Table)
+Vue.use(Tabs)
+Vue.use(Dropdown)
+Vue.use(Progress)
 
 import vueCountryRegionSelect from 'vue-country-region-select'
+
 Vue.use(vueCountryRegionSelect)
 import VueSession from 'vue-session'
 
@@ -79,7 +86,7 @@ Vue.use(VueSession)
 
 sync(store, router);
 new Vue({
-  router,
-  store,
-  render: h => h(App),
+    router,
+    store,
+    render: h => h(App),
 }).$mount('#app')

@@ -36,6 +36,7 @@
                             <a-input v-model="email"
 
                                      placeholder="Email"
+                                     style="z-index: 0"
                             >
                                 <a-icon
                                         slot="prefix"
@@ -49,6 +50,7 @@
 
                                      type="password"
                                      placeholder="Password"
+                                     style="z-index: 0"
                             >
                                 <a-icon
                                         slot="prefix"
@@ -62,6 +64,7 @@
 
                                      type="password"
                                      placeholder="Confirm password"
+                                     style="z-index: 0"
                             >
                                 <a-icon
                                         slot="prefix"

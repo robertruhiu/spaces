@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/store'
 import Home from '@/components/frontend/homepages/Home'
 import Register from '@/components/frontend/homepages/Register'
 import Login from '@/components/frontend/homepages/Login'
@@ -10,10 +11,14 @@ import JobBoard from '@/components/frontend/homepages/jobboard'
 import RecruiterDashboard from '@/components/frontend/recruiter/Dashboard'
 import ManageJobs from '@/components/frontend/recruiter/Managejob'
 import MyCandidates from '@/components/frontend/recruiter/Mycandidates'
+import CandidateProfile from '@/components/frontend/recruiter/candidateprofile'
+import Job from '@/components/frontend/recruiter/job'
+import Calendar from '@/components/frontend/recruiter/calendar'
 import DeveloperDashboard from '@/components/frontend/developer/DevDashboard'
+
 Vue.use(Router);
 
-export default new Router({
+let router =  new Router({
     mode: 'history',
     routes: [
         {
@@ -44,7 +49,10 @@ export default new Router({
         {
             path: '/talent',
             name: 'talent',
-            component: Talent
+            component: Talent,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/jobs',
@@ -71,7 +79,38 @@ export default new Router({
             name: 'mycandidates',
             component: MyCandidates
         },
+        {
+            path: '/job/:jobId',
+            name: 'job',
+            component: Job
+        },
+        {
+            path: '/calendar',
+            name: 'calendar',
+            component: Calendar
+        },
+        {
+            path: '/candidateprofile/:candidateID',
+            name: 'candidateprofile',
+            component: CandidateProfile
+        },
 
 
     ]
 })
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+
+
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
+})
+
+export default router

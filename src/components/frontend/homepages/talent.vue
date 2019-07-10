@@ -13,9 +13,10 @@
 
                             <a-auto-complete
                                     :dataSource="dataSource"
-                                    style="width: 80%"
+                                    style="width: 80%;z-index: 0"
                                     placeholder="Search skills like react,javascript,vue python"
                                     v-model="search"
+
 
                             >
 

@@ -1,6 +1,9 @@
 import Api from '@/services/Api'
 
 export default {
+  authenticated (user_id,auth){
+    return Api().get(`getprofile/${user_id} `,auth)
+  },
 
   devs (){
     return Api().get('users')
@@ -10,6 +13,9 @@ export default {
   },
   currentuser (user_id,auth) {
     return Api().get(`getprofile/${user_id} `,auth)
+  },
+  retrieveuser (user_id,auth) {
+    return Api().get(`getuser/${user_id} `,auth)
   },
   talentuser (id) {
     return Api().get(`gettalent/${id} `)
