@@ -4,20 +4,19 @@
         <RecruiterSider/>
 
         <a-layout style="background-color:#F8FAFB">
-            <DashboardHeader/>
 
 
             <a-layout-content>
+                <CandidateHeader/>
 
 
-                <a-row style="padding: 0 1%">
+                <a-row style="padding: 1% 1%">
                     <a-col :span="16" style=" padding-left: 15px;padding-right: 15px;">
                         <div class="profile" style="padding-bottom: 2%">
                             <a-row>
-                                <a-col span="8">
-                                    avatar
-                                </a-col>
-                                <a-col :span="16">
+
+                                <a-col :span="22">
+                                    <p>About</p>
                                     <p>{{currentUserProfile.about}}</p>
                                 </a-col>
                             </a-row>
@@ -37,15 +36,15 @@
                             </a-tag>
                             </span>
                                 </a-col>
-                                <a-col :span="12">
-                                    Skill tags :
-                                    <span style="" v-for="skill in skilltags" v-bind:key="skill.id">
-
-                            <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                {{skill}}
+                                <a-col :span="6">
+                                <span>
+                                    Location :
+                                <a-tag color="#F0F6FD" style="color:#007BFF;">
+                                 {{currentUserProfile.country}}
                             </a-tag>
-                        </span>
+                            </span>
                                 </a-col>
+
                             </a-row>
                         </div>
                         <div class="bio">
@@ -56,17 +55,14 @@
                                         Skills
                                     </span>
                                     <p>Quizzes taken by Candidate</p>
-                                            Javascript :
-                                            <a-progress :percent="30"/>
-                                            java:
-                                            <a-progress :percent="50" />
-                                            React:
-                                            <a-progress :percent="70" />
-                                            Angular:
-                                            <a-progress :percent="89"/>
-
-
-
+                                    Javascript :
+                                    <a-progress :percent="30"/>
+                                    java:
+                                    <a-progress :percent="50"/>
+                                    React:
+                                    <a-progress :percent="70"/>
+                                    Angular:
+                                    <a-progress :percent="89"/>
                                 </a-tab-pane>
                                 <a-tab-pane key="2">
                                     <span slot="tab">
@@ -89,18 +85,39 @@
                     </a-col>
 
 
-                    <a-col :span="7" style="background-color: white;margin: 1%">
+                    <a-col :span="8" style="margin-top: 0.4%">
                         <div class="actions">
+                            <p>Skill tags</p>
                             <p>Candidate skill tags(what candidate says they can do.You can asign a
-                                                project to test) </p>
-                                            <span style="" v-for="skill in skilltags" v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                                    {{skill}}
-                                                </a-tag>
-                                            </span>
+                                project to test)
+                            </p>
+                            <p>
+                                <span style="" v-for="skill in skilltags" v-bind:key="skill.id">
+                                <a-tag color="#F0F6FD" style="color:#007BFF;">
+                                    {{skill}}
+                                </a-tag>
+                            </span>
+                            </p>
+
+                            <p>
+                                <a-button type="primary" @click="showModal">Asign code test</a-button>
+                            </p>
+
+
                         </div>
+
+
                     </a-col>
                 </a-row>
+                <a-modal
+                        title="Basic Modal"
+                        v-model="visible"
+                        @ok="handleOk"
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </a-modal>
 
 
             </a-layout-content>
@@ -115,7 +132,8 @@
 
     import UsersService from '@/services/UsersService'
     import RecruiterSider from "../../layout/RecruiterSider";
-    import DashboardHeader from "../../layout/Dashboardheader";
+
+    import CandidateHeader from "../../layout/CandidateHeader";
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
 
@@ -127,7 +145,8 @@
             return {
                 currentUserProfile: {},
                 currentUser: {},
-                skilltags: []
+                skilltags: [],
+                visible: false,
             }
         },
         components: {
@@ -135,7 +154,7 @@
             ARow,
 
             RecruiterSider,
-            DashboardHeader
+            CandidateHeader
 
 
         },
@@ -164,7 +183,14 @@
             },
             navigateTo(route) {
                 this.$router.push(route)
-            }
+            },
+            showModal() {
+                this.visible = true
+            },
+            handleOk(e) {
+
+                this.visible = false
+            },
         },
 
     }
@@ -186,20 +212,16 @@
     .actions {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background-color: white;
-        min-height: 85vh;
+        min-height: 30vh;
         margin: 1%;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 2%;
+        padding: 4%;
     }
 
     .profile {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background-color: white;
         margin: 1%;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 2%;
+        padding: 4%;
     }
 
 </style>

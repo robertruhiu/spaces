@@ -17,40 +17,63 @@
 
                     >
                         <a-form-item>
-                            <a-input v-model="firstname"
+                            <validation-provider name="firstname" rules="required|firstname">
+                                <template #default="{ errors }">
+                                    <a-input
+                                            v-model="firstname"
+                                            placeholder="firstname"
+                                            style="z-index: 0"
+                                    >
 
-                                     placeholder="firstname"
-                            >
+                                    </a-input>
 
-                            </a-input>
+                                    <span style="color: red">{{ errors[0] }}</span>
+                                </template>
+                            </validation-provider>
+
+
                         </a-form-item>
                         <a-form-item>
-                            <a-input v-model="lastname"
+                            <validation-provider name="lastname" rules="required|lastname">
+                                <template #default="{ errors }">
+                                    <a-input
+                                            v-model="lastname"
+                                            placeholder="lastname"
+                                            style="z-index: 0"
+                                    >
 
-                                     placeholder="lastname"
-                            >
+                                    </a-input>
 
-                            </a-input>
+                                    <span style="color: red">{{ errors[0] }}</span>
+                                </template>
+                            </validation-provider>
+
                         </a-form-item>
                         <a-form-item>
-                            <a-input v-model="email"
+                            <validation-provider name="email" rules="required|email">
+                                <template #default="{ errors }">
+                                    <a-input
+                                            v-model="email"
+                                            placeholder="Email"
+                                            style="z-index: 0"
+                                    >
+                                        <a-icon
+                                                slot="prefix"
+                                                type="user"
+                                                style="color: rgba(0,0,0,.25)"
+                                        />
+                                    </a-input>
 
-                                     placeholder="Email"
-                                     style="z-index: 0"
-                            >
-                                <a-icon
-                                        slot="prefix"
-                                        type="user"
-                                        style="color: rgba(0,0,0,.25)"
-                                />
-                            </a-input>
+                                    <span style="color: red">{{ errors[0] }}</span>
+                                </template>
+                            </validation-provider>
                         </a-form-item>
                         <a-form-item>
-                            <a-input v-model="password1"
-
-                                     type="password"
-                                     placeholder="Password"
-                                     style="z-index: 0"
+                            <a-input v-model="password1" type="password"
+                                     v-validate="'min:8|number|upCase|required'"
+                                     name="password"
+                                     ref="password"
+                                     :class="{'is-danger': errors.has('password')}"
                             >
                                 <a-icon
                                         slot="prefix"
@@ -58,20 +81,35 @@
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
+                            <span style="margin-left: -2%">
+                                <span>
+                                    <li :class="errorClass('upCase')" class="ant-tag">One uppercase</li>
+                                </span>
+                                <span>
+                                    <li :class="errorClass('number')" class="ant-tag">One number</li>
+                                </span>
+                                <span>
+                                    <li :class="errorClass('min')" class="ant-tag">8 characters</li>
+                                </span>
+
+                            </span>
+
+
                         </a-form-item>
                         <a-form-item>
-                            <a-input v-model="password2"
-
-                                     type="password"
-                                     placeholder="Confirm password"
-                                     style="z-index: 0"
-                            >
+                            <a-input v-model="password2" v-validate="'required|confirmed:password'"
+                                     name="password_confirmation"
+                                     type="password" :class="{'is-danger': errors.has('password_confirmation')}"
+                                     placeholder="Password, Again" data-vv-as="password">
                                 <a-icon
                                         slot="prefix"
                                         type="lock"
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
+                            <span style="color: red" v-show="errors.has('password_confirmation')"
+                                  class="help is-danger">{{ errors.first('password_confirmation') }}</span>
+
                         </a-form-item>
                         <a-form-item>
 
@@ -85,6 +123,7 @@
 
                         </a-form-item>
                     </a-form>
+
                 </a-card>
 
 
@@ -114,6 +153,7 @@
                     </div>
 
                 </div>
+
                 <div v-if="currentUserProfile.user_type && currentUserProfile.user_type =='developer'" class="center"
                      :style="{width: '60rem',boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important',border:'1px solid rgba(0,0,0,.125)'}">
 
@@ -124,18 +164,20 @@
                                      title=""
                                      subtitle="">
                             <tab-content title="Personal details"
-                                         icon="ti-user">
+                                         icon="ti-user" >
                                 <a-form :form="form">
                                     <a-row :gutter="16">
                                         <a-col :span="8">
                                             <a-form-item
                                                     label="Github Url"
                                                     :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span:  24}"
+                                                    :wrapper-col="{ span:  24}" prop="github_repo"
                                             >
-                                                <a-input v-model="currentUserProfile.github_repo"
+                                                <a-input v-validate="'required'"
+                                                         v-model="currentUserProfile.github_repo" name="github"
 
                                                 />
+                                                <span style="color: red">{{ errors.first('github') }}</span>
                                             </a-form-item>
 
                                         </a-col>
@@ -146,9 +188,11 @@
                                                     :label-col="{ span: 24 }"
                                                     :wrapper-col="{ span:  24}"
                                             >
-                                                <a-input v-model="currentUserProfile.linkedin_url"
+                                                <a-input v-validate="'required'"
+                                                         v-model="currentUserProfile.linkedin_url" name="linkedin"
 
                                                 />
+                                                <span style="color: red">{{ errors.first('linkedin') }}</span>
                                             </a-form-item>
 
                                         </a-col>
@@ -159,23 +203,26 @@
                                                     :label-col="{ span: 24 }"
                                                     :wrapper-col="{ span:  24}"
                                             >
-                                                <country-select v-model="currentUserProfile.country"
+                                                <country-select v-validate="'required'"
+                                                                v-model="currentUserProfile.country" name="country"
                                                                 class="ant-input"
                                                 />
+                                                <span style="color: red">{{ errors.first('country') }}</span>
                                             </a-form-item>
 
                                         </a-col>
 
-                                        <a-col :span="8">
-                                            <a-form-item
-                                                    label="Gender"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span: 24 }"
-                                            >
-                                                <a-select
 
-                                                        placeholder="Select a option and change input text above"
-                                                        v-model="currentUserProfile.gender"
+                                        <a-col :span="8">
+                                            <a-form-item style="margin-top: -10px"
+                                                         label="Gender"
+                                                         :label-col="{ span: 24 }"
+                                                         :wrapper-col="{ span: 24 }"
+                                            >
+                                                <a-select v-validate="'required'"
+
+                                                          placeholder="Select a option and change input text above"
+                                                          v-model="currentUserProfile.gender" name="gender"
                                                 >
                                                     <a-select-option value="male">
                                                         male
@@ -184,19 +231,20 @@
                                                         female
                                                     </a-select-option>
                                                 </a-select>
+                                                <span style="color: red">{{ errors.first('gender') }}</span>
                                             </a-form-item>
                                         </a-col>
 
                                         <a-col :span="8">
-                                            <a-form-item
-                                                    label="Years of experience"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span: 24 }"
+                                            <a-form-item style="margin-top: -10px"
+                                                         label="Years of experience"
+                                                         :label-col="{ span: 24 }"
+                                                         :wrapper-col="{ span: 24 }"
                                             >
-                                                <a-select
+                                                <a-select v-validate="'required'"
 
-                                                        placeholder="Select a option and change input text above"
-                                                        v-model="currentUserProfile.years"
+                                                          placeholder="Select a option and change input text above"
+                                                          v-model="currentUserProfile.years" name="experience"
                                                 >
                                                     <a-select-option value="0-1">
                                                         0-1
@@ -211,20 +259,21 @@
                                                         4-above
                                                     </a-select-option>
                                                 </a-select>
+                                                <span style="color: red">{{ errors.first('experience') }}</span>
                                             </a-form-item>
 
                                         </a-col>
 
                                         <a-col :span="8">
-                                            <a-form-item
-                                                    label="Preffered work type"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span: 24 }"
+                                            <a-form-item style="margin-top: -10px"
+                                                         label="Preffered work type"
+                                                         :label-col="{ span: 24 }"
+                                                         :wrapper-col="{ span: 24 }"
                                             >
-                                                <a-select
+                                                <a-select v-validate="'required'"
 
-                                                        placeholder="Select a option and change input text above"
-                                                        v-model="currentUserProfile.availabilty"
+                                                          placeholder="Select a option and change input text above"
+                                                          v-model="currentUserProfile.availabilty" name="work type"
                                                 >
                                                     <a-select-option value="contract">
                                                         contract
@@ -239,6 +288,7 @@
                                                         remote
                                                     </a-select-option>
                                                 </a-select>
+                                                <span style="color: red">{{ errors.first('work type') }}</span>
                                             </a-form-item>
 
                                         </a-col>
@@ -297,11 +347,15 @@
                                                 :label-col="{ span: 24 }"
                                                 :wrapper-col="{ span:  24}"
                                         >
-
-                                            <a-textarea v-model="currentUserProfile.about"
+                                            <a-textarea v-validate="'required|max:300'"
+                                                        v-model="currentUserProfile.about"
                                                         placeholder="Tell us something about yourself"
-                                                        :rows="4"/>
+                                                        :rows="4" name="bio" type="text"/>
+                                            <span style="color: red">{{ errors.first('bio') }}</span>
+
+
                                         </a-form-item>
+
 
                                     </a-col>
                                     <a-col :span="24">
@@ -319,6 +373,7 @@
                     </div>
 
                 </div>
+
                 <div v-if="currentUserProfile.user_type && currentUserProfile.user_type =='recruiter'" class="center"
                      :style="{width: '60rem',boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important',border:'1px solid rgba(0,0,0,.125)'}">
 
@@ -413,9 +468,9 @@
 
                                                 <template v-for=" tag in recommendationtags">
                                                     <a-checkable-tag style="border-color: blue;font-size: 14px"
-                                                            :key="tag"
-                                                            :checked="selectedTags.indexOf(tag) > -1"
-                                                            @change="(checked) => handleChange(tag, checked)"
+                                                                     :key="tag"
+                                                                     :checked="selectedTags.indexOf(tag) > -1"
+                                                                     @change="(checked) => handleChange(tag, checked)"
                                                     >
                                                         {{tag}}
                                                     </a-checkable-tag>
@@ -434,7 +489,6 @@
                     </div>
 
                 </div>
-
 
 
             </div>
@@ -459,22 +513,35 @@
     import ARadioButton from "ant-design-vue/es/radio/RadioButton";
     import {FormWizard, TabContent} from 'vue-form-wizard'
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+    import {ValidationProvider} from 'vee-validate';
+    import ATextarea from "ant-design-vue/es/input/TextArea";
 
 
     export default {
         name: 'register',
 
         components: {
+            ATextarea,
             ACol,
             ARadioButton,
             ARow,
-
+            ValidationProvider,
             Pageheader,
             Footer,
             FormWizard,
             TabContent,
 
 
+        },
+        created() {
+            this.$validator.extend('upCase', {
+                getMessage: () => "One uppercase character",
+                validate: value => value.match(/[A-Z]/g) !== null
+            })
+            this.$validator.extend('number', {
+                getMessage: () => "One number",
+                validate: value => value.match(/[0-9]/g) !== null
+            })
         },
         data() {
             return {
@@ -491,6 +558,13 @@
                 inputValue: '',
                 recommendationtags: ['Movies', 'Books', 'Music', 'Sports'],
                 selectedTags: [],
+                rules: {
+                    github_repo: [{
+                        required: true,
+                        message: 'Please input Activity name',
+                        trigger: 'blur'
+                    }]
+                }
 
 
             }
@@ -508,10 +582,14 @@
             this.tags = array
 
 
-
         },
 
         methods: {
+            errorClass(rule) {
+                return {
+                    'error': this.errors.firstByRule('password', rule)
+                }
+            },
             async register() {
                 try {
                     const response = await AuthService.register({
@@ -535,12 +613,18 @@
 
             onComplete: async function () {
                 if (this.currentUserProfile.user_type === 'developer') {
+                    this.currentUserProfile.stage = 'complete'
+                    this.currentUserProfile.about = this.currentUserProfile.about.substring(0, 299);
+
 
                     this.$router.push({
                         name: 'developer'
                     })
 
                 } else {
+                    this.currentUserProfile.stage = 'complete'
+                    this.currentUserProfile.about = this.currentUserProfile.about.substring(0, 299);
+
                     this.$router.push({
                         name: 'recruiter'
                     })
@@ -557,8 +641,6 @@
                     response()
 
 
-
-
                 } catch (error) {
                     this.error = error.response.data.error
 
@@ -567,14 +649,6 @@
 
             },
 
-            validateFirstStep() {
-                return new Promise((resolve, reject) => {
-                    this.$refs.ruleForm.validate((valid) => {
-                        resolve(valid);
-                    });
-                })
-
-            },
             handleClose(removedTag) {
                 const tags = this.tags.filter(tag => tag !== removedTag)
                 this.tags = tags
@@ -617,7 +691,7 @@
 
                 this.selectedTags = nextSelectedTags
                 let alltags = this.selectedTags.join(", ")
-                this.currentUserProfile.skills=alltags
+                this.currentUserProfile.skills = alltags
             },
 
 
@@ -655,6 +729,22 @@
         width: 15rem;
         margin: 4px;
 
+    }
+
+    ul > li {
+        display: inline-block;
+        /* You can also add some margins here to make it look prettier */
+        zoom: 1;
+        *display: inline;
+        /* this fix is needed for IE7- */
+    }
+
+    li {
+        color: #1d7bff;
+    }
+
+    li.error {
+        color: #ff5111;
     }
 
 </style>

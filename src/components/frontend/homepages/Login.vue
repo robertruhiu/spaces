@@ -19,8 +19,10 @@
 
                     >
                         <a-form-item>
-                            <a-input v-model="email"
-
+                            <validation-provider name="email" rules="required|email">
+                                <template #default="{ errors }">
+                                    <a-input
+                                    v-model="email"
                                      placeholder="Email"
                                      style="z-index: 0"
                             >
@@ -30,20 +32,30 @@
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
+
+                                    <span style="color: red">{{ errors[0] }}</span>
+                                </template>
+                            </validation-provider>
+
                         </a-form-item>
                         <a-form-item>
-                            <a-input v-model="password"
-
-                                     type="password"
+                            <validation-provider name="password" rules="required|password">
+                                <template #default="{ errors }">
+                                    <a-input
+                                    v-model="password"
                                      placeholder="Password"
                                      style="z-index: 0"
                             >
                                 <a-icon
                                         slot="prefix"
-                                        type="lock"
+                                        type="user"
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
+
+                                    <span style="color: red">{{ errors[0] }}</span>
+                                </template>
+                            </validation-provider>
                         </a-form-item>
                         <a-form-item>
 
@@ -69,6 +81,7 @@
                 </a-card>
 
 
+
             </div>
 
 
@@ -83,17 +96,19 @@
     import Footer from '@/components/layout/Footer.vue'
     import AuthService from '@/services/AuthService'
     import User from '@/services/UsersService'
+    import {ValidationProvider} from 'vee-validate';
 
     export default {
         name: 'login',
         components: {
             Pageheader,
-            Footer
+            Footer,
+            ValidationProvider
         },
         data() {
             return {
-                email: 'robertruhiu@gmail.com',
-                password: 'Pokerface1994',
+                email: '',
+                password: '',
                 error: null,
                 usertype: null,
                 currentUserProfile: {},
@@ -112,7 +127,7 @@
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                     }
-                    this.currentUserProfile = (await User.currentuser(this.$store.state.user.pk,auth)).data
+                    this.currentUserProfile = (await User.currentuser(this.$store.state.user.pk, auth)).data
                     this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                     this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                     if (this.$store.state.usertype === 'developer') {
@@ -154,7 +169,7 @@
     }
 
     #components-form-demo-normal-login .login-form-forgot {
-        float: left;
+        float: right;
     }
 
     #components-form-demo-normal-login .login-form-button {

@@ -83,7 +83,7 @@
                     </a-col>
                     <a-col :span="14">
 
-                        <a-list style="padding-bottom: 2rem"
+                        <a-list style="padding-bottom: 2%"
                                 itemLayout="vertical"
                                 size="large"
                                 :pagination="pagination"
@@ -99,9 +99,9 @@
                                     <a-row>
 
                                         <a-col span="18" style="padding-left: 1rem">
-                                            <h4>FullStack Developer</h4>
-                                            <p>Deadline:</p>
-                                            <p style="">{{item.about}}</p>
+                                            <h4>{{item.title}}</h4>
+                                            <p>Deadline:{{item.deadline}}</p>
+
 
                                             skills looking for:
                                             <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
@@ -118,7 +118,7 @@
                                                     <a-icon type="environment"/>
                                                     {{item.location}}
                                                 </a-tag>
-                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
+                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.contract}}
                                                 </a-tag>
 
 
@@ -151,12 +151,7 @@
                         @close="onClose"
                         :visible="visible"
                 >
-                    <span><p :style="[pStyle, pStyle2]">User Profile<a-button type="primary" style="float: right">Pick Candidate</a-button></p> </span>
-                    <p :style="pStyle">{{profile}}</p>
-                    <p v-if="experience !== null">{{experience}}</p>
-                    <p v-else>No work experience</p>
-                    <p v-if="portfolio !== null">{{portfolio}}</p>
-                    <p v-else>No past projects</p>
+                    {{job}}
 
                 </a-drawer>
             </div>
@@ -169,14 +164,14 @@
 </template>
 
 <script>
-    class Developer {
-        constructor(id, name, skills, about, location, availabilty) {
+    class Job {
+        constructor(id, title,  deadline, location, contract, skills) {
             this.id = id;
-            this.name = name;
-            this.skills = skills;
-            this.about = about;
+            this.title = title;
             this.location = location;
-            this.availabilty = availabilty
+            this.contract = contract;
+            this.skills = skills
+
         }
     }
 
@@ -186,7 +181,7 @@
     import Footer from '@/components/layout/Footer.vue'
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
-    import UsersService from '@/services/UsersService'
+    import Marketplace from '@/services/Marketplace'
 
 
     const plainOptions = ['Fulltime', 'Contract', 'Remote', 'Parttime']
@@ -198,12 +193,10 @@
         data() {
             return {
                 visible: false,
-                devs: null,
-                alldevs: null,
+                jobs: null,
+                alljobs: null,
+                job: {},
                 search: '',
-                profile: null,
-                experience: null,
-                portfolio: null,
                 country: null,
                 checkedList: defaultCheckedList,
                 indeterminate: true,
@@ -247,49 +240,42 @@
             Footer
         },
         async mounted() {
-            this.devs = (await UsersService.devs()).data;
-            this.alldevs = (await UsersService.allusers()).data;
-            for (let j = 0; j < this.alldevs.length; j++) {
-                for (let i = 0; i < this.devs.length; i++) {
-                    if (this.alldevs[j].id === this.devs[i].id) {
-                        let skill_list = this.devs[i].skills.split(',');
 
-                        let id = this.devs[i].id
-                        let name = this.alldevs[j].first_name[0].toUpperCase() + this.alldevs[j].last_name[0].toUpperCase()
-                        let skills = skill_list
-                        let about = this.devs[i].about
-                        let location = this.devs[i].country
-                        let availabilty = this.devs[i].availabilty
-                        let onedev = new Developer(
-                            id, name, skills, about, location, availabilty
-                        )
+            this.jobs = (await Marketplace.alljobs()).data
+
+            for (let i = 0; i < this.jobs.length; i++) {
+
+                let skill_list = this.jobs[i].tech_stack.split(',');
+
+                let id = this.jobs[i].id
+                let skills = skill_list
+                let title = this.jobs[i].title
+                let deadline = this.jobs[i].deadline
+
+                let location = this.jobs[i].location
+                let contract = this.jobs[i].engagement_type
 
 
-                        this.listData.push(onedev)
-
-                    }
+                let onejob = new Job(id, title, deadline, location, contract, skills)
 
 
-                }
+                this.listData.push(onejob)
+
+
             }
+
 
 
         },
 
         methods: {
-            async showDrawer(dev_id) {
+            async showDrawer(job_id) {
                 this.visible = true
-                this.profile = (await UsersService.talentuser(dev_id)).data
-                try {
-                    this.experience = (await UsersService.experience(dev_id)).data
-                } catch (err) {
-                    this.experience = null
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
                 }
-                try {
-                    this.portfolio = (await UsersService.portfolio(dev_id)).data
-                } catch (err) {
-                    this.portfolio = null
-                }
+                this.job = (await Marketplace.specificjob(job_id, auth)).data
 
 
             },
@@ -324,9 +310,9 @@
         },
         computed: {
             filteredList() {
-                return this.listData.filter(dev => {
+                return this.listData.filter(job => {
 
-                    return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
+                    return job.skills.toString().toLowerCase().includes(this.search.toLowerCase())
                 })
             }
         }

@@ -6,131 +6,110 @@
         <a-layout>
 
             <a-layout-content>
-                <a-layout-header
-                        :style="{ position: 'fixed', zIndex: 1, width: '100%',backgroundColor:'#004ec7',minHeight:'100px' }">
-                    <a-row>
-                        <a-col :span="20">
-                            <span>
-                                <span style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
-                                {{job.title}}</span>
-                                <span style="float: right">
-                                    <a-button type="primary">Unpublish Job</a-button>
-                                </span>
-                            </span>
-
-                            <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;">
-                                <a-icon type="environment"/>
-                                {{job.location}}
-                            </p>
-
-                        </a-col>
+                <Jobheader/>
 
 
-                    </a-row>
-
-
-                </a-layout-header>
-
-
-                <div :style="{ padding: '3px 20px', background: '#fff', minHeight: '80vh',marginTop:'6rem' }">
+                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '80vh' }">
                     <div style="padding-top: 1%;">
-                        <a-tabs defaultActiveKey="1" type="card"
+                        <a-tabs defaultActiveKey="1"
                                 style="z-index: 0;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                            <a-tab-pane  key="1">
+
+                            <a-tab-pane key="1" style="">
                                 <span slot="tab">
-                                    <a-icon type="usergroup-add" />
+                                    <a-icon type="usergroup-add"/>
                                     Applicants
                                 </span>
-                                <a-row :gutter="16">
+                                <div style="margin-left:0">
+                                    <a-row :gutter="16">
 
-                                    <a-col :span="24"
-                                           style="padding-bottom: 1%;padding-right: 2%">
-                                        <a-tabs defaultActiveKey="1" tabPosition=left style="z-index: 0;">
-                                            <a-tab-pane key="1">
+                                        <a-col :span="24"
+                                               style="padding-bottom: 1%;padding-right: 2%">
+                                            <a-tabs defaultActiveKey="1" tabPosition=left style="z-index: 0;">
+                                                <a-tab-pane key="1">
                                             <span slot="tab">
 
                                                 All Applicants
                                             </span>
-                                                <a-tabs defaultActiveKey="1" style="z-index: 0;">
+                                                    <a-tabs defaultActiveKey="1" style="z-index: 0;">
 
 
-                                                    <a-tab-pane v-if="pickeddevs" tab="Active" key="1">
+                                                        <a-tab-pane v-if="pickeddevs" tab="Active" key="1">
 
-                                                        <a-table :dataSource="pickedapplicants" :scroll="{ y: 340 }"
-                                                                 size="middle">
-
-
-                                                            <a-table-column
-                                                                    dataIndex="name"
-                                                                    key="name"
-                                                                    width="10%"
+                                                            <a-table :dataSource="pickedapplicants" :scroll="{ y: 340 }"
+                                                                     size="middle">
 
 
-                                                            >
-                                                                <span slot="title">Name</span>
-                                                                <template slot-scope="text,record">
+                                                                <a-table-column
+                                                                        dataIndex="name"
+                                                                        key="name"
+                                                                        width="10%"
+
+
+                                                                >
+                                                                    <span slot="title">Name</span>
+                                                                    <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}}
                                                         </span>
-                                                                </template>
-                                                            </a-table-column>
-                                                            <a-table-column
-                                                                    dataIndex="profile"
-                                                                    key="profile"
-                                                                    width="20%"
+                                                                    </template>
+                                                                </a-table-column>
+                                                                <a-table-column
+                                                                        dataIndex="profile"
+                                                                        key="profile"
+                                                                        width="20%"
 
 
-                                                            >
-                                                                <span slot="title">User profile</span>
-                                                                <template slot-scope="text,record">
+                                                                >
+                                                                    <span slot="title">User profile</span>
+                                                                    <template slot-scope="text,record">
                                                         <span>
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
                                                         </span>
-                                                                </template>
-                                                            </a-table-column>
-                                                            <a-table-column
-                                                                    title="Tags"
-                                                                    dataIndex="tags"
-                                                                    key="tags"
-                                                                    width="20%"
-                                                            >
-                                                                <template slot-scope="tags">
+                                                                    </template>
+                                                                </a-table-column>
+                                                                <a-table-column
+                                                                        title="Tags"
+                                                                        dataIndex="tags"
+                                                                        key="tags"
+                                                                        width="20%"
+                                                                >
+                                                                    <template slot-scope="tags">
                                                         <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
-                                                                </template>
-                                                            </a-table-column>
+                                                                    </template>
+                                                                </a-table-column>
 
 
-                                                            <a-table-column
-                                                                    title="Stage"
-                                                                    dataIndex="stage"
-                                                                    key="stage"
-                                                                    width="20%"
-                                                            >
-                                                                <template slot-scope="text, record">
+                                                                <a-table-column
+                                                                        title="Stage"
+                                                                        dataIndex="stage"
+                                                                        key="stage"
+                                                                        width="20%"
+                                                                >
+                                                                    <template slot-scope="text, record">
                                                         <span>
                                                             <a-tag v-if="record.stage === 'new'"
-                                                                   color="#0679fb"
-                                                                   style="text-align: center;width: 5rem;">{{record.stage}}</a-tag>
-                                                    <a-tag v-else-if="record.stage === 'test'" color="#403A56"
-                                                           style="text-align: center;width: 5rem;">{{record.stage}}</a-tag>
-                                                    <a-tag v-else-if="record.stage === 'interview'" color="#FE55F2"
-                                                           style="text-align: center;width: 5rem;">{{record.stage}}</a-tag>
+                                                                   color="#8BC34A"
+                                                                   style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
+                                                    <a-tag v-else-if="record.stage === 'test'" color="#9C27B0"
+                                                           style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
+                                                    <a-tag v-else-if="record.stage === 'interview'" color="#FF4081"
+                                                           style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
                                                             <a-tag v-else-if="record.stage === 'offer'"
-                                                                   color="#FF7E3F"
-                                                                   style="text-align: center;width: 5rem;">{{record.stage}}</a-tag>
+                                                                   color="#03A9F4"
+                                                                   style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
                                                         </span>
-                                                                </template>
+                                                                    </template>
 
-                                                            </a-table-column>
-                                                            <a-table-column
-                                                                    title="Action"
-                                                                    width="10%"
+                                                                </a-table-column>
+                                                                <a-table-column
+                                                                        title="Action"
+                                                                        width="10%"
 
 
-                                                            >
+                                                                >
                                                     <span slot-scope="action">
                                                     <a-dropdown>
                                                         <a-menu slot="overlay" @click="handleMenuClick">
@@ -147,85 +126,267 @@
                                                     </a-dropdown>
 
                                                 </span>
-                                                            </a-table-column>
+                                                                </a-table-column>
 
 
-                                                        </a-table>
-                                                    </a-tab-pane>
-                                                    <a-tab-pane tab="New Applicants" key="2">
+                                                            </a-table>
+                                                        </a-tab-pane>
+                                                        <a-tab-pane v-if="newapplicant.length > 0" tab="New Applicants"
+                                                                    key="2">
 
-                                                        {{newapplicant}}
-                                                    </a-tab-pane>
-                                                    <a-tab-pane tab="Recommended Candidates" key="3">Content of Tab Pane
-                                                        3
-                                                    </a-tab-pane>
-                                                </a-tabs>
-                                            </a-tab-pane>
+                                                            <a-tag color="#F0F6FD" style="color:#007BFF;">hio</a-tag>
 
-                                            <!------test stage ------>
-                                            <a-tab-pane key="2">
+
+                                                        </a-tab-pane>
+                                                        <a-tab-pane tab="Recommended Candidates" key="3">Content of Tab
+                                                            Pane
+                                                            3
+                                                        </a-tab-pane>
+                                                    </a-tabs>
+                                                </a-tab-pane>
+
+                                                <!------test stage ------>
+                                                <a-tab-pane key="2">
                                             <span slot="tab">
 
                                                 Coding test
                                             </span>
-                                                {{testingstage}}
-                                            </a-tab-pane>
-                                            <!------interview stage ------>
+                                                    {{testingstage}}
+                                                </a-tab-pane>
+                                                <!------interview stage ------>
 
 
-                                            <a-tab-pane key="3">
+                                                <a-tab-pane key="3">
                                             <span slot="tab">
 
                                                 Interview
                                             </span>
-                                                {{interviewstage}}
-                                            </a-tab-pane>
+                                                    {{interviewstage}}
+                                                </a-tab-pane>
 
-                                            <!------offers stage ------>
-                                            <a-tab-pane key="4">
+                                                <!------offers stage ------>
+                                                <a-tab-pane key="4">
                                             <span slot="tab">
 
                                                 Offers
                                             </span>
-                                                {{offerstage}}
-                                            </a-tab-pane>
+                                                    {{offerstage}}
+                                                </a-tab-pane>
 
-                                            <!------hires stage ------>
-                                            <a-tab-pane key="5">
+                                                <!------hires stage ------>
+                                                <a-tab-pane key="5">
                                             <span slot="tab">
 
                                                 Hires
                                             </span>
-                                                {{offerstage}}
-                                            </a-tab-pane>
-                                        </a-tabs>
+                                                    {{offerstage}}
+                                                </a-tab-pane>
+                                            </a-tabs>
 
-                                    </a-col>
+                                        </a-col>
 
-                                </a-row>
+                                    </a-row>
+                                </div>
+
                             </a-tab-pane>
 
 
-                            <a-tab-pane  key="2" forceRender>
+                            <a-tab-pane key="2" forceRender>
                                 <span slot="tab">
-                                    <a-icon type="profile" />
+                                    <a-icon type="profile"/>
                                     Job Details
                                 </span>
-                                details
+                                <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
+                                    <a-form :form="form"
+                                            @submit="handleSubmit">
+                                        <a-row :gutter="16">
+                                            <a-col :span="8">
+                                                <a-form-item label="Title">
+                                                    <a-input v-model="job.title">
+
+                                                    </a-input>
+                                                </a-form-item>
+                                            </a-col>
+                                            <a-col :span="8">
+                                                <a-form-item label="Job role">
+                                                    <a-select
+
+                                                            placeholder="Select a option and change input text above"
+                                                            v-model="job.job_role"
+                                                    >
+                                                        <a-select-option value="Full Stack Developer">
+                                                            Full Stack Developer
+                                                        </a-select-option>
+                                                        <a-select-option value="Frontend Developer">
+                                                            Frontend Developer
+                                                        </a-select-option>
+                                                        <a-select-option value="Backend  Developer">
+                                                            Backend Developer
+                                                        </a-select-option>
+                                                        <a-select-option value="Android  Developer">
+                                                            Android Developer
+                                                        </a-select-option>
+                                                        <a-select-option value="Graphic Designer">
+                                                            Graphic Designer
+                                                        </a-select-option>
+                                                        <a-select-option value="IOS Developer">
+                                                            IOS Developer
+                                                        </a-select-option>
+                                                        <a-select-option value="Data Scientist">
+                                                            Data Scientist
+                                                        </a-select-option>
+                                                    </a-select>
+                                                </a-form-item>
+
+
+                                            </a-col>
+                                            <a-col :span="8">
+                                                <a-form-item label="Developer Experience">
+                                                    <a-select
+
+                                                            placeholder="Select a option and change input text above"
+                                                            v-model="job.dev_experience"
+                                                    >
+                                                        <a-select-option value="Entry">
+                                                            Entry
+                                                        </a-select-option>
+                                                        <a-select-option value="Junior">
+                                                            Junior
+                                                        </a-select-option>
+                                                        <a-select-option value="Mid-Level">
+                                                            Mid-Level
+                                                        </a-select-option>
+                                                        <a-select-option value="Senior">
+                                                            Senior
+                                                        </a-select-option>
+
+                                                    </a-select>
+                                                </a-form-item>
+
+                                            </a-col>
+                                            <a-col :span="8">
+                                                <a-form-item label="Contract type">
+                                                    <a-select
+
+                                                            placeholder="Select a option and change input text above"
+                                                            v-model="job.engagement_type"
+                                                    >
+                                                        <a-select-option value="Full-time">
+                                                            Full-time
+                                                        </a-select-option>
+                                                        <a-select-option value="Part-time">
+                                                            Part-time
+                                                        </a-select-option>
+                                                        <a-select-option value="Contract">
+                                                            Contract
+                                                        </a-select-option>
+                                                        <a-select-option value="Remote">
+                                                            Remote
+                                                        </a-select-option>
+                                                        <a-select-option value="Freelance">
+                                                            Freelance
+                                                        </a-select-option>
+
+                                                    </a-select>
+                                                </a-form-item>
+
+                                            </a-col>
+                                            <a-col :span="8">
+                                                <a-form-item label="Location">
+                                                    <country-select v-model="job.location"
+                                                                    class="ant-input"
+                                                    />
+                                                </a-form-item>
+
+                                            </a-col>
+                                            <a-col :span="8">
+                                                <a-form-item label="Salary range ">
+                                                    <a-input v-model="job.remuneration">
+
+                                                    </a-input>
+                                                </a-form-item>
+
+                                            </a-col>
+                                            <a-col :span="24">
+                                                <a-form-item
+                                                        label="Which tech skills are you looking for? "
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+                                                    <template v-for="(tag, index) in tags">
+                                                        <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                                                            <a-tag :key="tag"
+                                                                   :afterClose="() => handleClose(tag)" color="#2db7f5">
+                                                                {{`${tag.slice(0, 20)}...`}}
+                                                            </a-tag>
+                                                        </a-tooltip>
+                                                        <a-tag v-else :key="tag" :closable="index >= 0"
+                                                               :afterClose="() => handleClose(tag)" color="#2db7f5">
+                                                            {{tag}}
+                                                        </a-tag>
+                                                    </template>
+                                                    <a-input
+                                                            v-if="inputVisible"
+                                                            ref="input"
+                                                            type="text"
+                                                            size="small"
+                                                            :style="{ width: '78px' }"
+                                                            :value="inputValue"
+                                                            @change="handleInputChange"
+                                                            @blur="handleInputConfirm"
+                                                            @keyup.enter="handleInputConfirm"
+                                                    />
+                                                    <a-tag v-else @click="showInput"
+                                                           style="background: #fff; borderStyle: dashed;">
+                                                        <a-icon type="plus"/>
+                                                        New Tag
+                                                    </a-tag>
+                                                </a-form-item>
+                                            </a-col>
+                                            <a-col :span="24">
+                                                <a-form-item
+                                                        label="Job description "
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+
+                                                    <a-textarea v-model="job.description"
+                                                                placeholder="A bit about the job"
+                                                                :rows="6"/>
+                                                </a-form-item>
+
+                                            </a-col>
+                                        </a-row>
+
+
+                                        <a-form-item>
+
+
+                                            <a-button
+                                                    type="primary"
+                                                    html-type="submit"
+
+                                            >
+                                                Submit Changes
+                                            </a-button>
+
+
+                                        </a-form-item>
+                                    </a-form>
+
+
+                                </div>
+
+
                             </a-tab-pane>
 
 
-                            <a-tab-pane  key="3">
-                               <span slot="tab">
-                                    <a-icon type="calendar"/>
-                                    Calendar
-                                </span>
-                            </a-tab-pane>
                         </a-tabs>
                     </div>
 
 
                 </div>
+
 
             </a-layout-content>
 
@@ -284,8 +445,9 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     import Marketplace from '@/services/Marketplace'
-    import Pageheader from '@/components/layout/Pageheader'
+    import Jobheader from '@/components/layout/Jobheader'
     import RecruiterSider from "../../layout/RecruiterSider";
+
 
 
     export default {
@@ -305,6 +467,12 @@
                 interviewstage: [],
                 testingstage: [],
                 offerstage: [],
+                skills: [],
+                tags: [],
+                selectedTags: [],
+                inputVisible: false,
+                inputValue: '',
+
 
 
             }
@@ -312,8 +480,9 @@
         components: {
             ARow,
             ACol,
-            Pageheader,
             RecruiterSider,
+            Jobheader,
+
 
 
         },
@@ -328,9 +497,16 @@
             this.alldevs = (await UsersService.allusers()).data;
             const jobId = this.$store.state.route.params.jobId
             this.job = (await Marketplace.specificjob(jobId, auth)).data
+            this.skills = this.job.tech_stack.split(',')
+            let temptaglist = this.job.tech_stack;
+
+            let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
+
+            this.tags = array
             this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
             if (this.applicants.length === 0) {
                 this.pickeddevs = false
+
             }
             for (let i = 0; i < this.applicants.length; i++) {
                 if (this.applicants[i].selected === false) {
@@ -376,6 +552,25 @@
 
         },
         methods: {
+            handleSubmit: async function () {
+
+                try {
+                    const auth = {
+                        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                    }
+
+                    const response = await Marketplace.updatejob(this.job.id, this.job, auth)
+                    response()
+
+
+                } catch (error) {
+                    this.error = error.response.data.error
+
+                }
+
+
+            },
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)
@@ -392,6 +587,51 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
+            handleClose(removedTag) {
+                const tags = this.tags.filter(tag => tag !== removedTag)
+                this.tags = tags
+                let alltags = this.tags.join(", ")
+                this.job.tech_stack = alltags
+
+            },
+
+            showInput() {
+                this.inputVisible = true
+                this.$nextTick(function () {
+                    this.$refs.input.focus()
+                })
+            },
+
+            handleInputChange(e) {
+                this.inputValue = e.target.value
+            },
+
+            handleInputConfirm() {
+                const inputValue = this.inputValue
+                let tags = this.tags
+                if (inputValue && tags.indexOf(inputValue) === -1) {
+                    tags = [...tags, inputValue]
+                }
+
+                let alltags = tags.join(", ")
+                this.job.tech_stack = alltags
+                Object.assign(this, {
+                    tags,
+                    inputVisible: false,
+                    inputValue: '',
+                })
+            },
+            handleChange(tag, checked) {
+                const {selectedTags} = this
+                const nextSelectedTags = checked
+                    ? [...selectedTags, tag]
+                    : selectedTags.filter(t => t !== tag)
+
+                this.selectedTags = nextSelectedTags
+                let alltags = this.selectedTags.join(", ")
+                this.job.tech_stack = alltags
+            },
+
         },
     }
 </script>

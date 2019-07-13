@@ -4,8 +4,7 @@
         <a-row>
             <a-col :span="6">
                 <span style="color: white;font-size: 17px;font-weight:bold">{{greeting}}
-                    {{(this.$store.state.user.first_name).charAt(0).toUpperCase()+
-                    this.$store.state.user.first_name.slice(1)}}</span>
+                    {{this.$store.state.user.first_name | capitalize}}</span>
                 <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px">4 interviews
                     Today</p>
             </a-col>
@@ -83,6 +82,13 @@
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
 
 
+        },
+        filters: {
+            capitalize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            }
         },
         methods: {
             logout() {

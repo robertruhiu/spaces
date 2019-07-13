@@ -90,7 +90,7 @@ let router =  new Router({
             component: Calendar
         },
         {
-            path: '/candidateprofile/:candidateID',
+            path: '/candidateprofile/:candidateID/:jobID',
             name: 'candidateprofile',
             component: CandidateProfile
         },

@@ -39,7 +39,7 @@
                                     <a-row v-for="job in myjobs" v-bind:key="job.id">
 
                                         <a-col :span="24">
-                                            <a-card style="margin-bottom: 1%">
+                                            <a-card style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                                 <h3 style="font-weight: bold">{{job.title}}</h3>
                                                 <p>
                                               <span style="" v-for="skill in job.skills" v-bind:key="skill.id">

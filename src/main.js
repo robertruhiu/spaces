@@ -9,12 +9,15 @@ import 'ant-design-vue/dist/antd.css'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
-
+import VeeValidate from 'vee-validate';
 import VueSelectImage from 'vue-select-image'
 
 require('vue-select-image/dist/vue-select-image.css')
 Vue.use(VueSelectImage)
-
+const config = {
+  fastExit: false
+}
+Vue.use(VeeValidate,config);
 import Multiselect from 'vue-multiselect'
 
 Vue.component('multiselect', Multiselect)
@@ -45,6 +48,10 @@ import {
     Dropdown,
     Progress,
     Tag,
+    DatePicker,
+    Steps
+
+
 
 } from 'ant-design-vue';
 
@@ -76,6 +83,10 @@ Vue.use(Table)
 Vue.use(Tabs)
 Vue.use(Dropdown)
 Vue.use(Progress)
+Vue.use(DatePicker)
+Vue.use(Steps)
+
+
 
 import vueCountryRegionSelect from 'vue-country-region-select'
 
