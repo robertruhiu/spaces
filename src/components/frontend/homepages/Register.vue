@@ -17,56 +17,55 @@
 
                     >
                         <a-form-item>
-                            <validation-provider name="firstname" rules="required|firstname">
-                                <template #default="{ errors }">
-                                    <a-input
-                                            v-model="firstname"
-                                            placeholder="firstname"
-                                            style="z-index: 0"
-                                    >
 
-                                    </a-input>
+                            <a-input
+                                    v-model="firstname"
+                                    placeholder="firstname"
+                                    style="z-index: 0"
+                            >
 
-                                    <span style="color: red">{{ errors[0] }}</span>
-                                </template>
-                            </validation-provider>
+                            </a-input>
+
+                            <div v-if="firstnamenull" style="color: #f5222d;" class="ant-form-explain">field
+                                required
+                            </div>
+
+
+                        </a-form-item>
+                        <a-form-item>
+
+                            <a-input
+                                    v-model="lastname"
+                                    placeholder="lastname"
+                                    style="z-index: 0"
+                            >
+
+                            </a-input>
+
+                            <div v-if="lastnamenull" style="color: #f5222d;" class="ant-form-explain">field
+                                required
+                            </div>
 
 
                         </a-form-item>
                         <a-form-item>
-                            <validation-provider name="lastname" rules="required|lastname">
-                                <template #default="{ errors }">
-                                    <a-input
-                                            v-model="lastname"
-                                            placeholder="lastname"
-                                            style="z-index: 0"
-                                    >
 
-                                    </a-input>
+                            <a-input
+                                    v-model="email"
+                                    placeholder="Email"
+                                    style="z-index: 0"
+                            >
+                                <a-icon
+                                        slot="prefix"
+                                        type="user"
+                                        style="color: rgba(0,0,0,.25)"
+                                />
+                            </a-input>
 
-                                    <span style="color: red">{{ errors[0] }}</span>
-                                </template>
-                            </validation-provider>
+                            <div v-if="emailnull" style="color: #f5222d;" class="ant-form-explain">field
+                                required
+                            </div>
 
-                        </a-form-item>
-                        <a-form-item>
-                            <validation-provider name="email" rules="required|email">
-                                <template #default="{ errors }">
-                                    <a-input
-                                            v-model="email"
-                                            placeholder="Email"
-                                            style="z-index: 0"
-                                    >
-                                        <a-icon
-                                                slot="prefix"
-                                                type="user"
-                                                style="color: rgba(0,0,0,.25)"
-                                        />
-                                    </a-input>
-
-                                    <span style="color: red">{{ errors[0] }}</span>
-                                </template>
-                            </validation-provider>
                         </a-form-item>
                         <a-form-item>
                             <a-input v-model="password1" type="password"
@@ -93,6 +92,9 @@
                                 </span>
 
                             </span>
+                            <div v-if="password1null" style="color: #f5222d;" class="ant-form-explain">field
+                                required
+                            </div>
 
 
                         </a-form-item>
@@ -109,6 +111,9 @@
                             </a-input>
                             <span style="color: red" v-show="errors.has('password_confirmation')"
                                   class="help is-danger">{{ errors.first('password_confirmation') }}</span>
+                            <div v-if="password2null" style="color: #f5222d;" class="ant-form-explain">field
+                                required
+                            </div>
 
                         </a-form-item>
                         <a-form-item>
@@ -164,7 +169,7 @@
                                      title=""
                                      subtitle="">
                             <tab-content title="Personal details"
-                                         icon="ti-user" >
+                                         icon="ti-user">
                                 <a-form :form="form">
                                     <a-row :gutter="16">
                                         <a-col :span="8">
@@ -525,7 +530,6 @@
             ACol,
             ARadioButton,
             ARow,
-            ValidationProvider,
             Pageheader,
             Footer,
             FormWizard,
@@ -551,7 +555,13 @@
                 email: '',
                 password1: '',
                 password2: '',
+                firstnamenull: null,
+                lastnamenull: null,
+                emailnull: null,
+                password1null: null,
+                password2null: null,
                 error: null,
+                formerrors: [],
                 currentUserProfile: {},
                 tags: [],
                 inputVisible: false,
@@ -592,16 +602,41 @@
             },
             async register() {
                 try {
-                    const response = await AuthService.register({
-                        first_name: this.firstname,
-                        last_name: this.lastname,
-                        email: this.email,
-                        password1: this.password1,
-                        password2: this.password2
-                    })
+                    if (this.email !== '' && this.password1 !== '' && this.password1 !== ''
+                        && this.firstname !== '' && this.lastname !== '') {
+                        const response = await AuthService.register({
+                            first_name: this.firstname,
+                            last_name: this.lastname,
+                            email: this.email,
+                            password1: this.password1,
+                            password2: this.password2
+                        })
 
-                    this.$store.dispatch('setToken', response.data.token)
-                    this.$store.dispatch('setUser', response.data.user)
+                        this.$store.dispatch('setToken', response.data.token)
+                        this.$store.dispatch('setUser', response.data.user)
+
+                    } else if (this.email === '' && this.password1 ==='' && this.firstname === '' && this.lastname === '') {
+                        this.emailnull = 'required'
+                        this.password1null = 'required'
+                        this.firstnamenull = ' required'
+                        this.lastnamenull = ' required'
+                        this.password2null = 'required'
+                    }
+                    else if (this.firstname === '') {
+                        this.firstnamenull = ' required'
+                    }
+                    else if (this.lastname === '') {
+                        this.lastnamenull = ' required'
+                    }
+                    else if (this.email === '') {
+                        this.emailnull = ' required'
+                    }
+                    else if(this.password1 === ''){
+                        this.password1null = 'required'
+                    }
+                    else if(this.password2 === ''){
+                        this.password2null = 'required'
+                    }
 
 
                 } catch (error) {
