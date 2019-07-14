@@ -5,6 +5,9 @@
         <a-layout>
 
             <a-layout-content>
+                {{currentUserProfile.user_type}}
+                <br>
+                {{currentUserProfile}}
 
 
 
@@ -23,6 +26,7 @@
         name: "DevDashboard",
         data() {
             return {
+                currentUserProfile :{}
 
 
 
