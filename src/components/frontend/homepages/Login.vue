@@ -45,7 +45,7 @@
                             >
                                 <a-icon
                                         slot="prefix"
-                                        type="user"
+                                        type="lock"
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
