@@ -19,43 +19,41 @@
 
                     >
                         <a-form-item>
-                            <validation-provider name="email" rules="required|email">
-                                <template #default="{ errors }">
-                                    <a-input
-                                    v-model="email"
-                                     placeholder="Email"
-                                     style="z-index: 0"
-                            >
-                                <a-icon
-                                        slot="prefix"
-                                        type="user"
-                                        style="color: rgba(0,0,0,.25)"
-                                />
-                            </a-input>
 
-                                    <span style="color: red">{{ errors[0] }}</span>
-                                </template>
-                            </validation-provider>
+                                    <a-input
+                                            v-model="email"
+                                            placeholder="Email"
+                                            style="z-index: 0"
+                                    >
+                                        <a-icon
+                                                slot="prefix"
+                                                type="user"
+                                                style="color: rgba(0,0,0,.25)"
+                                        />
+                                    </a-input>
+                            <div v-if="emailnull" style="color: #f5222d;" class="ant-form-explain">{{emailnull}}</div>
+
+
+
 
                         </a-form-item>
                         <a-form-item>
-                            <validation-provider name="password" rules="required|password">
-                                <template #default="{ errors }">
-                                    <a-input
-                                    v-model="password"
-                                     placeholder="Password"
-                                     style="z-index: 0"
-                            >
-                                <a-icon
-                                        slot="prefix"
-                                        type="user"
-                                        style="color: rgba(0,0,0,.25)"
-                                />
-                            </a-input>
 
-                                    <span style="color: red">{{ errors[0] }}</span>
-                                </template>
-                            </validation-provider>
+                                    <a-input
+                                            v-model="password"
+                                            placeholder="Password"
+                                            style="z-index: 0"
+                                    >
+                                        <a-icon
+                                                slot="prefix"
+                                                type="user"
+                                                style="color: rgba(0,0,0,.25)"
+                                        />
+                                    </a-input>
+                            <div v-if="passwordnull" style="color: #f5222d;" class="ant-form-explain">{{ passwordnull }}</div>
+
+
+
                         </a-form-item>
                         <a-form-item>
 
@@ -79,7 +77,6 @@
                     </a-form>
 
                 </a-card>
-
 
 
             </div>
@@ -109,6 +106,8 @@
             return {
                 email: '',
                 password: '',
+                emailnull: null,
+                passwordnull: null,
                 error: null,
                 usertype: null,
                 currentUserProfile: {},
@@ -117,29 +116,39 @@
         methods: {
             async login() {
                 try {
-                    const response = await AuthService.login({
-                        email: this.email,
-                        password: this.password
-                    })
-                    this.$store.dispatch('setToken', response.data.token)
-                    this.$store.dispatch('setUser', response.data.user)
-                    const auth = {
-                        headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                    }
-                    this.currentUserProfile = (await User.currentuser(this.$store.state.user.pk, auth)).data
-                    this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
-                    this.$store.dispatch('setUser_id', this.currentUserProfile.user)
-                    if (this.$store.state.usertype === 'developer') {
-                        this.$router.push({
-                            name: 'developer'
+                    if (this.email !== '' && this.password !== '') {
+                        const response = await AuthService.login({
+                            email: this.email,
+                            password: this.password
                         })
+                        this.$store.dispatch('setToken', response.data.token)
+                        this.$store.dispatch('setUser', response.data.user)
+                        const auth = {
+                            headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-                    } else {
-                        this.$router.push({
-                            name: 'recruiter'
-                        })
+                        }
+                        this.currentUserProfile = (await User.currentuser(this.$store.state.user.pk, auth)).data
+                        this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
+                        this.$store.dispatch('setUser_id', this.currentUserProfile.user)
+                        if (this.$store.state.usertype === 'developer') {
+                            this.$router.push({
+                                name: 'developer'
+                            })
 
+                        } else {
+                            this.$router.push({
+                                name: 'recruiter'
+                            })
+
+                        }
+
+                    }else if (this.email === '' && this.password ==='') {
+                        this.emailnull = 'email required'
+                        this.passwordnull = 'password required'
+                    } else if (this.email === '') {
+                        this.emailnull = 'email required'
+                    }else if(this.password === ''){
+                        this.passwordnull = 'password required'
                     }
 
 
