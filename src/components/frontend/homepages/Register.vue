@@ -639,6 +639,7 @@
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                     }
+                    this.currentUserProfile.stage ='complete'
                     this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                     this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                     UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -675,6 +676,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.currentUserProfile.stage ='complete'
                 this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                 this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
