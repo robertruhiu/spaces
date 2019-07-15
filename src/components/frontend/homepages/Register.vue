@@ -380,7 +380,6 @@
                                      title=""
                                      subtitle="">
                             <tab-content title="Company details"
-                                         :before-change="validateRecruiterFirstStep"
                                          icon="ti-user">
                                 <a-form :form="form">
                                     <a-row :gutter="16">
@@ -595,13 +594,6 @@
                 return next
 
 
-            },
-            validateRecruiterFirstStep() {
-                let next = false
-                next = this.$validator.validateAll()
-
-
-                return next
             },
             register() {
                 this.$validator.validateAll().then((values) => {
