@@ -97,7 +97,7 @@
                     </a-row>
 
                 </div>
-                <div style="padding: 2% 1%;background-color: white;margin: 2% 1%">
+                <div  style="padding: 2% 1%;background-color: white;margin: 2% 1%">
                     <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
                         <a-col :span="12">
 

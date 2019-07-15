@@ -343,12 +343,12 @@
                                                 :wrapper-col="{ span:  24}"
                                         >
 
-                                            <a-textarea name="bio" v-validate="'required|max:300'"
+                                            <a-textarea name="bio"
+                                                        maxlength="300"
                                                         v-model="currentUserProfile.about"
                                                         placeholder="Tell us something about yourself"
                                                         :rows="4"/>
-                                            <span style="color: #f5222d;" v-show="errors.has('bio')"
-                                                  class="help is-danger">{{ errors.first('bio') }}</span>
+
                                             <span style="color: #f5222d;" class="alert"
                                                   v-if="abouterror">{{abouterror}}</span>
                                         </a-form-item>
@@ -389,14 +389,11 @@
                                                     :label-col="{ span: 24 }"
                                                     :wrapper-col="{ span:  24}"
                                             >
-                                                <a-input v-validate="'required'" name="company"
+                                                <a-input
                                                          v-model="currentUserProfile.company"
 
                                                 />
-                                                <div v-if="errors.has('company')" style="color: #f5222d;"
-                                                     class="ant-form-explain">{{
-                                                    errors.first('company') }}
-                                                </div>
+
                                             </a-form-item>
 
                                         </a-col>
@@ -407,14 +404,11 @@
                                                     :label-col="{ span: 24 }"
                                                     :wrapper-col="{ span:  24}"
                                             >
-                                                <a-input v-validate="'required'" name="company_website"
+                                                <a-input
                                                          v-model="currentUserProfile.company_url"
 
                                                 />
-                                                <div v-if="errors.has('company_website')" style="color: #f5222d;"
-                                                     class="ant-form-explain">{{
-                                                    errors.first('company_website') }}
-                                                </div>
+
 
                                             </a-form-item>
 
@@ -625,8 +619,8 @@
 
 
             onComplete() {
-                if (this.currentUserProfile.about !== '') {
-                    this.currentUserProfile.about = this.currentUserProfile.about.substring(0, 299)
+
+                if (this.currentUserProfile.about !== null) {
                     const auth = {
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
