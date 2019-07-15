@@ -16,6 +16,7 @@
                             id="components-form-demo-normal-login"
                             :form="form"
                             class="login-form"
+                            @submit.prevent="login"
 
                     >
                         <a-form-item>
@@ -24,6 +25,8 @@
                                     v-model="email"
                                     placeholder="Email"
                                     style="z-index: 0"
+                                    name="email"
+                                    v-validate="'required'"
                             >
                                 <a-icon
                                         slot="prefix"
@@ -31,7 +34,9 @@
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
-                            <div v-if="emailnull" style="color: #f5222d;" class="ant-form-explain">{{emailnull}}</div>
+
+
+                            <div v-if="errors.has('email')" style="color: #f5222d;" class="ant-form-explain">{{ errors.first('email') }}</div>
 
 
                         </a-form-item>
@@ -42,6 +47,8 @@
                                     placeholder="Password"
                                     style="z-index: 0"
                                     type="password"
+                                    name="password"
+                                    v-validate="'required'"
                             >
                                 <a-icon
                                         slot="prefix"
@@ -49,9 +56,9 @@
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
-                            <div v-if="passwordnull" style="color: #f5222d;" class="ant-form-explain">{{ passwordnull
-                                }}
-                            </div>
+                            <div v-if="errors.has('password')" style="color: #f5222d;" class="ant-form-explain">{{ errors.first('password') }}</div>
+
+
 
 
                         </a-form-item>
@@ -93,14 +100,14 @@
     import Footer from '@/components/layout/Footer.vue'
     import AuthService from '@/services/AuthService'
     import User from '@/services/UsersService'
-    import {ValidationProvider} from 'vee-validate';
+
 
     export default {
         name: 'login',
         components: {
             Pageheader,
             Footer,
-            ValidationProvider
+
         },
         data() {
             return {
@@ -114,60 +121,65 @@
             }
         },
         methods: {
-            async login() {
-                try {
-                    if (this.email !== '' && this.password !== '') {
-                        const response = await AuthService.login({
+            login() {
+                this.$validator.validateAll().then((values) => {
+                    if (values) {
+
+                        AuthService.login({
                             email: this.email,
                             password: this.password
+
                         })
-                        this.$store.dispatch('setToken', response.data.token)
-                        this.$store.dispatch('setUser', response.data.user)
-                        const auth = {
-                            headers: {Authorization: 'JWT ' + this.$store.state.token}
+                            .then(resp => {
+                                this.$store.dispatch('setToken', resp.data.token)
+                                this.$store.dispatch('setUser', resp.data.user)
+                                const auth = {
+                                    headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-                        }
-                        this.currentUserProfile = (await User.currentuser(this.$store.state.user.pk, auth)).data
-                        this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
-                        this.$store.dispatch('setUser_id', this.currentUserProfile.user)
-                        if (this.currentUserProfile.stage === 'complete') {
-                            if (this.$store.state.usertype === 'developer') {
-                                this.$router.push({
-                                    name: 'developer'
-                                })
+                                }
+                                User.currentuser(this.$store.state.user.pk, auth)
+                                    .then(response => {
+                                        this.$store.dispatch('setUsertype', response.data.user_type)
+                                        this.$store.dispatch('setUser_id', response.data.user)
+                                        if (response.data.stage === 'complete') {
+                                            if (this.$store.state.usertype === 'developer') {
+                                                this.$router.push({
+                                                    name: 'developer'
+                                                })
 
-                            } else {
-                                this.$router.push({
-                                    name: 'recruiter'
-                                })
+                                            } else {
+                                                this.$router.push({
+                                                    name: 'recruiter'
+                                                })
 
-                            }
-                        } else {
-                            this.$router.push({
-                                name: 'register'
+                                            }
+                                        } else {
+                                            this.$router.push({
+                                                name: 'register'
+                                            })
+
+                                        }
+
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+
+
+                                    });
+
+
                             })
+                            .catch(error => {
+                                console.log(error)
+                                this.error = 'login details incorrect'
 
-                        }
+                            });
 
 
-                    } else if (this.email === '' && this.password === '') {
-                        this.emailnull = 'email required'
-                        this.passwordnull = 'password required'
-                    } else if (this.email === '') {
-                        this.emailnull = 'email required'
-                    } else if (this.password === '') {
-                        this.passwordnull = 'password required'
                     }
-
-
-                } catch (error) {
-                    if (error) {
-                        this.error = 'login details incorrect'
-                    }
-
-
-                }
+                })
             },
+
 
 
         }

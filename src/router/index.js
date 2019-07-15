@@ -19,7 +19,7 @@ import DeveloperDashboard from '@/components/frontend/developer/DevDashboard'
 Vue.use(Router);
 
 let router =  new Router({
-    mode: 'history',
+
     routes: [
         {
             path: '/',
@@ -34,12 +34,18 @@ let router =  new Router({
         {
             path: '/recruiter',
             name: 'recruiter',
-            component: RecruiterDashboard
+            component: RecruiterDashboard,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/developer',
             name: 'developer',
-            component: DeveloperDashboard
+            component: DeveloperDashboard,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/login',
@@ -72,12 +78,18 @@ let router =  new Router({
         {
             path: '/managejobs',
             name: 'managejobs',
-            component: ManageJobs
+            component: ManageJobs,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/mycandidates',
             name: 'mycandidates',
-            component: MyCandidates
+            component: MyCandidates,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/job/:jobId',
@@ -87,12 +99,18 @@ let router =  new Router({
         {
             path: '/calendar',
             name: 'calendar',
-            component: Calendar
+            component: Calendar,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/candidateprofile/:candidateID/:jobID',
             name: 'candidateprofile',
-            component: CandidateProfile
+            component: CandidateProfile,
+            meta: {
+                requiresAuth: true
+            }
         },
 
 

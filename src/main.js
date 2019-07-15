@@ -15,9 +15,10 @@ import VueSelectImage from 'vue-select-image'
 require('vue-select-image/dist/vue-select-image.css')
 Vue.use(VueSelectImage)
 const config = {
-  fastExit: false
+    fastExit: false
 }
-Vue.use(VeeValidate,config);
+Vue.use(VeeValidate, config);
+
 import Multiselect from 'vue-multiselect'
 
 Vue.component('multiselect', Multiselect)
@@ -52,8 +53,6 @@ import {
     Steps,
 
 
-
-
 } from 'ant-design-vue';
 
 Vue.use(VueFormWizard)
@@ -86,7 +85,6 @@ Vue.use(Dropdown)
 Vue.use(Progress)
 Vue.use(DatePicker)
 Vue.use(Steps)
-
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'
