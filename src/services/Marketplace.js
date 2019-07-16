@@ -28,7 +28,11 @@ export default {
         return Api().get(`marketplace/myjobapplication/${candidate_id}/${job_id}`, auth)
     },
     updatejob(job_id, CurrentJob, auth) {
-        return Api().put(`marketplace/updatejob/${job_id} `, CurrentJob, auth)
+        return Api().patch(`marketplace/updatejob/${job_id} `, CurrentJob, auth)
+    },
+
+    pickreject(jobapplication_id,Currentapplication, auth) {
+        return Api().patch(`marketplace/pickreject/${jobapplication_id} `, Currentapplication,auth)
     },
     createupdatejob(currentJob, auth) {
         return Api().post(`marketplace/createupdatejob`, currentJob, auth)

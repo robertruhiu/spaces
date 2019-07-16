@@ -102,7 +102,7 @@
 
                                 <div>
                                     <a-row>
-                                        <a-col span="4">
+                                        <a-col span="4" style="background-color:#0679FB ">
                                             <a-avatar class="poolavatar"
                                                       style="">
                                                 {{item.name}}
@@ -110,8 +110,9 @@
                                         </a-col>
                                         <a-col span="15">
                                             <h4>Bio</h4>
-                                            <p style="">{{item.about}}</p>
+                                            <p style="">{{item.about | truncate(100)}}</p>
                                             <br>
+                                            <p>Skills</p>
                                             <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
@@ -160,7 +161,7 @@
                 >
 
                     <span><p :style="[pStyle, pStyle2]">User Profile
-                        <a-button  type="primary"  style="float: right;"
+                        <a-button type="primary" style="float: right;"
                                   @click="pickcandidate(profile.user)">
                             Pick Candidate
                         </a-button>
@@ -208,6 +209,9 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService';
     import MarketPlaceService from '@/services/Marketplace'
+    import Vue from 'vue'
+    var VueTruncate = require('vue-truncate-filter')
+    Vue.use(VueTruncate)
 
 
     const plainOptions = ['Fulltime', 'Contract', 'Remote', 'Parttime']
@@ -321,7 +325,7 @@
                     this.tags = templist
                     for (let j = 0; j < this.tags.length; j++) {
 
-                }
+                    }
 
 
                 }
