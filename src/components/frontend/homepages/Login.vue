@@ -111,8 +111,8 @@
         },
         data() {
             return {
-                email: '',
-                password: '',
+                email: 'robertruhiu@gmail.com',
+                password: 'Pokerface1994',
                 emailnull: null,
                 passwordnull: null,
                 error: null,

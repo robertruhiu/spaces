@@ -493,6 +493,7 @@
 
 
             </div>
+            {{currentUserProfile}}
 
 
         </a-layout-content>
