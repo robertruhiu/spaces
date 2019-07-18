@@ -34,7 +34,13 @@ export default {
     pickreject(jobapplication_id,Currentapplication, auth) {
         return Api().patch(`marketplace/pickreject/${jobapplication_id} `, Currentapplication,auth)
     },
-    createupdatejob(currentJob, auth) {
-        return Api().post(`marketplace/createupdatejob`, currentJob, auth)
+    unpublishjob(job_id,Currentjob, auth) {
+        return Api().patch(`marketplace/unpublishjob/${job_id} `, Currentjob,auth)
+    },
+    createjob(currentJob, auth) {
+        return Api().post(`marketplace/createjob`, currentJob, auth)
+    },
+    pickrecommended(newapplication,auth) {
+        return Api().post(`marketplace/pickrecommended`,newapplication,auth)
     }
 }

@@ -2,7 +2,7 @@
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
 
         <RecruiterSider/>
-        <a-layout>
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
                 <Pageheader/>

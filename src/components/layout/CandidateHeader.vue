@@ -1,6 +1,7 @@
 <template>
     <a-layout-header
-            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
+            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',
+            padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
         <div style="margin-left: 1%">
 
             <a-row>

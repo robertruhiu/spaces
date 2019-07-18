@@ -51,6 +51,7 @@ import {
     Tag,
     DatePicker,
     Steps,
+    Timeline
 
 
 
@@ -86,6 +87,7 @@ Vue.use(Dropdown)
 Vue.use(Progress)
 Vue.use(DatePicker)
 Vue.use(Steps)
+Vue.use(Timeline)
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

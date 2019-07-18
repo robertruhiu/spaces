@@ -5,7 +5,8 @@
             collapsedWidth="0"
             @collapse="onCollapse"
             @breakpoint="onBreakpoint"
-            style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white"
+            :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }"
+            style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white;position: fixed"
 
     >
         <router-link to="/">
@@ -499,7 +500,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                const response = (await Marketplace.createupdatejob(this.job, auth))
+                const response = (await Marketplace.createjob(this.job, auth))
                 response()
                 this.visible = false
 

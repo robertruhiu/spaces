@@ -3,7 +3,7 @@
 
         <RecruiterSider/>
 
-        <a-layout>
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
 
 
             <a-layout-content>
@@ -664,7 +664,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                const response = (await Marketplace.createupdatejob(this.job, auth))
+                const response = (await Marketplace.createjob(this.job, auth))
                 response()
                 this.visible = false
 

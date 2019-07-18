@@ -20,11 +20,11 @@ export default {
   talentuser (id) {
     return Api().get(`gettalent/${id} `)
   },
-  experience (id) {
-    return Api().get(`getexperience/${id} `)
+  experience (id,auth) {
+    return Api().get(`getexperience/${id} `,auth)
   },
-  portfolio (id) {
-    return Api().get(`getportofolio/${id} `)
+  portfolio (id,auth) {
+    return Api().get(`getportofolio/${id} `,auth)
   },
   update (user_id,currentUserProfile,auth) {
     return Api().patch(`updater/${user_id} `,currentUserProfile,auth)

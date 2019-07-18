@@ -1,7 +1,9 @@
 <template>
     <div>
+
         <a-layout-header
                 :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
+
             <a-row>
                 <a-col :span="22">
                             <span>
@@ -10,11 +12,16 @@
 
 
 
-                                <span style="float: right">
-                                    <a-button type="primary">Unpublish Job</a-button>
-                                </span>
-                            </span>
+                                    <span style="float: right" v-if="job.published" id="unpublishbutton">
+                                    <a-button type="primary" @click="unpublishjob(job.id)">Unpublish Job</a-button>
 
+                                </span>
+                                <br>
+
+
+
+
+                            </span>
 
 
                 </a-col>
@@ -24,11 +31,17 @@
                     <a-icon type="calendar"/>
                     Calendar
                 </a-button>
+                <a-button type="primary" style="margin-left: 1%">
+                    <a-icon type="share-alt" />
+                    Share Job
+                </a-button>
 
 
             </a-row>
 
+
         </a-layout-header>
+
         <a-drawer
                 placement="right"
                 :closable="false"
@@ -107,6 +120,22 @@
 
         },
         methods: {
+            //unpublish job
+            unpublishjob(job_id) {
+                let x = document.getElementById("unpublishbutton");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.unpublishjob(job_id, {published: false}, auth)
+
+
+            },
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)
@@ -147,7 +176,6 @@
                 popup_data.close_popup = true;
             }
         }
-
 
 
     }

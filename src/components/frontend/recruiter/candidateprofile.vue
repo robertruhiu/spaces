@@ -3,7 +3,7 @@
 
         <RecruiterSider/>
 
-        <a-layout style="background-color:#F8FAFB">
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
 
 
             <a-layout-content>
@@ -64,19 +64,68 @@
                                     Angular:
                                     <a-progress :percent="89"/>
                                 </a-tab-pane>
+
                                 <a-tab-pane key="2">
                                     <span slot="tab">
                                         <a-icon type="solution"/>
                                         Projects portfolio
                                     </span>
-                                    Tab 2
+                                    <div style="padding:0 2%">
+
+                                        <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%" v-for="item in portfolio" v-bind:key="item.id">
+                                            <p style="font-weight: 700">{{item.title}}</p>
+                                            <p>
+                                                Tools used:
+                                                    <a-tag v-for="tag in item.tags" color="blue"
+                                                           :key="tag">
+                                                        {{tag}}
+                                                    </a-tag>
+
+                                                </p>
+                                            <p>{{item.description}}
+                                            </p>
+                                            <a :href=" item.demo" target="_blank">view project</a>
+
+                                        </div>
+
+
+                                    </div>
+
+
                                 </a-tab-pane>
+
                                 <a-tab-pane key="3">
                                     <span slot="tab">
                                         <a-icon type="hourglass"/>
                                         Work experience
                                     </span>
-                                    Tab 2
+                                    <div style="padding:2%">
+                                        <a-timeline>
+                                            <a-timeline-item v-for="item in experiences" v-bind:key="item.id">
+                                                <p style="font-weight: 700">{{item.title}}</p>
+                                                <p><span><a-icon type="bank"/>  {{item.company}} <a-icon
+                                                        type="environment"/>  {{item.location}} <a-icon
+                                                        type="hourglass"/>  {{item.duration}}months</span>
+                                                </p>
+                                                <p>
+                                                    Technologies used:
+                                                    <a-tag v-for="tag in item.tags" color="blue"
+                                                           :key="tag">
+                                                        {{tag}}
+                                                    </a-tag>
+
+                                                </p>
+
+
+                                                <p>{{item.description}}</p>
+
+                                            </a-timeline-item>
+
+                                        </a-timeline>
+
+
+                                    </div>
+
                                 </a-tab-pane>
                             </a-tabs>
                         </div>
@@ -110,13 +159,44 @@
                     </a-col>
                 </a-row>
                 <a-modal
-                        title="Basic Modal"
+                        title="Pick  technologies "
                         v-model="visible"
                         @ok="handleOk"
+                        style="top: 20px;"
+
+
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <a-alert style="margin-bottom: 1%"
+                             message="Testing bundle needed to enable project asignment to candidates" type="info"/>
+                    <template slot="footer">
+                        <a-button key="back" @click="handleOk">Return</a-button>
+                        <a-button key="submit" type="primary">
+                            Submit
+                        </a-button>
+                    </template>
+                    <p>My choices :
+                        <span>
+                                <a-tag v-for="tag in selectedtech" color="blue"
+                                       :key="tag">{{tag.name}}</a-tag>
+                            </span>
+                    </p>
+                    <a-row :gutter="8">
+                        <a-col :span="6" v-for=" tag in techchoicestags" :key="tag" style="margin-bottom: 1%;">
+                            <a-checkable-tag
+                                    :key="tag"
+                                    :checked="selectedtech.indexOf(tag) > -1"
+                                    @change="(checked) => techChoices(tag, checked)"
+                                    style="width: 5.6rem;height:6.0rem"
+                            >
+                                <img style="width: 100%;" :src='tag.image'>
+                                <div style="text-align: center;">{{tag.name}}</div>
+
+                            </a-checkable-tag>
+
+                        </a-col>
+                    </a-row>
+
+
                 </a-modal>
 
 
@@ -128,6 +208,30 @@
 
 
 <script>
+    //experience structure on table
+    class Experience {
+        constructor(id, title, description, company, location, duration, tech_used) {
+            this.key = id;
+            this.title = title;
+            this.description = description;
+            this.company = company;
+            this.duration = duration;
+            this.tags = tech_used;
+            this.location = location;
+
+        }
+    }
+    class Portfolio {
+        constructor(id, title, description, demo, tech_used) {
+            this.key = id;
+            this.title = title;
+            this.description = description;
+            this.demo = demo;
+            this.tags = tech_used;
+
+
+        }
+    }
 
 
     import UsersService from '@/services/UsersService'
@@ -147,6 +251,41 @@
                 currentUser: {},
                 skilltags: [],
                 visible: false,
+                inputVisible: false,
+                inputValue: '',
+                techchoicestags: [
+                    {name: 'javascript', image: 'https://i.ibb.co/dPbdXXr/javascript.png'},
+                    {name: 'react', image: 'https://i.ibb.co/0ZyDJvM/iconfinder-React-js-logo-1174949.png'},
+                    {name: 'html', image: 'https://i.ibb.co/tc74V6V/html-5.png'},
+                    {name: 'css', image: 'https://i.ibb.co/JFq3pRy/css-3.png'},
+                    {name: 'php', image: 'https://i.ibb.co/18R20M7/php.png'},
+                    {name: 'nodejs', image: 'https://i.ibb.co/s5KqNVq/iconfinder-nodejs-512-339733.png'},
+                    {name: 'python', image: 'https://i.ibb.co/WFv6Y09/python.png'},
+                    {name: 'sql', image: 'https://i.ibb.co/H724NDW/sql.png'},
+                    {name: 'postgres', image: 'https://i.ibb.co/RTMNjz9/postgresql.png'},
+                    {name: 'android', image: 'https://i.ibb.co/W6XRn8Z/android.png'},
+                    {
+                        name: 'angular',
+                        image: 'https://i.ibb.co/RQMhSnz/angular.png'
+                    },
+                    {
+                        name: 'vue',
+                        image: 'https://i.ibb.co/rk2VcKH/vue.png'
+                    },
+                    {name: 'laravel', image: 'https://i.ibb.co/0MtxRk9/lARA.png'},
+                    {
+                        name: 'django',
+                        image: 'https://i.ibb.co/1s223NF/django.jpg'
+                    },
+                    {name: 'bootstrap', image: 'https://i.ibb.co/bgXz8xY/bootstrap.png'},
+                    {name: 'java', image: 'https://i.ibb.co/n1dts5w/java.png'},
+
+                ],
+                selectedtech: [],
+                experienceslist: [],
+                experiences: [],
+                portoliolist:[],
+                portfolio :[]
             }
         },
         components: {
@@ -167,10 +306,58 @@
             this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateID, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateID, auth)).data
             this.skilltags = this.currentUserProfile.skills.split(',');
+            this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateID, auth)).data
+            this.experienceslist = (await UsersService.experience(this.$route.params.candidateID, auth)).data
+
+
+            for (let i = 0; i < this.portfoliolist.length; i++) {
+                let id = this.portfoliolist[i]
+                let title = this.portfoliolist[i].title
+                let description = this.portfoliolist[i].description
+                let demo = this.portfoliolist[i].demo_link
+                let tech_used = this.portfoliolist[i].tech_tags.split(',');
+
+                let one_portfolio = new Portfolio(
+                    id, title, description, demo, tech_used
+                );
+                this.portfolio.push(one_portfolio)
+
+
+            }
+            for (let i = 0; i < this.experienceslist.length; i++) {
+                let id = this.experienceslist[i]
+                let title = this.experienceslist[i].title
+                let description = this.experienceslist[i].description
+                let company = this.experienceslist[i].company
+                let location = this.experienceslist[i].location
+                let duration = this.experienceslist[i].duration
+                let tech_used = this.experienceslist[i].tech_tags.split(',');
+
+                let one_experience = new Experience(
+                    id, title, description, company, location, duration, tech_used
+                );
+                this.experiences.push(one_experience)
+
+
+            }
+
 
 
         },
         methods: {
+            // acts as filters to project to be asigned under testing stage
+            techChoices(tag, checked) {
+                const {selectedtech} = this
+                const nextSelectedTags = checked
+                    ? [...selectedtech, tag]
+                    : selectedtech.filter(t => t !== tag)
+                console.log('You are interested in: ', nextSelectedTags)
+                this.selectedtech = nextSelectedTags
+            },
+
+            onChange(checkedValues) {
+                this.test = checkedValues
+            },
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)

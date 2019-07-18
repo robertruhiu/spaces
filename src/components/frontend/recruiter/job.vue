@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout>
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
                 <Jobheader/>
@@ -13,7 +13,7 @@
                     <div style="padding-top: 2%;">
                         <a-tabs defaultActiveKey="1"
                                 style="z-index: 0;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-
+                            <!------allapplicants tabs  ------>
                             <a-tab-pane key="1" style="">
                                 <span slot="tab">
                                     <a-icon type="usergroup-add"/>
@@ -27,20 +27,16 @@
                                             <a-tabs defaultActiveKey="1" tabPosition=left style="z-index: 0;">
                                                 <!------allapplicants stage ------>
                                                 <a-tab-pane key="1">
-
-                                            <span slot="tab">
-
-
-                                                All Applicants
-                                                <a-tag color="blue">{{applicants.length}}</a-tag>
-
-                                            </span>
+                                                    <span slot="tab">
+                                                        Active Applicants
+                                                        <a-tag color="blue">{{pickedapplicants.length}}</a-tag>
+                                                    </span>
 
                                                     <a-tabs defaultActiveKey="1" style="z-index: 0;">
 
 
                                                         <!-------active  candidates-------->
-                                                        <a-tab-pane v-if="pickedapplicants.length > 0" tab="Active"
+                                                        <a-tab-pane v-if="active" tab="Active"
                                                                     key="1">
 
                                                             <a-table :dataSource="pickedapplicants" :scroll="{ y: 340 }"
@@ -147,11 +143,12 @@
                                                                                                 type="calendar"/>
                                                                                         schedule interview
                                                                                     </a-menu-item>
+
                                                                                     <a-menu-item
                                                                                             @click="handleMenuClick(record.action,record.profile,3)">
                                                                                         <a-icon
-                                                                                                type="like"/>
-                                                                                        make offer
+                                                                                                type="close"/>
+                                                                                        reject candidate
                                                                                     </a-menu-item>
                                                                                 </a-menu>
                                                                                 <a-button type="primary"
@@ -179,7 +176,7 @@
                                                         </a-tab-pane>
 
                                                         <!-------new  candidates-------->
-                                                        <a-tab-pane v-if="newapplicant.length > 0" tab="New Applicants"
+                                                        <a-tab-pane v-if="newapplications" tab="New Applicants"
                                                                     key="2">
 
                                                             <a-table :dataSource="newapplicant" :scroll="{ y: 340 }"
@@ -288,7 +285,8 @@
                                                         </a-tab-pane>
 
                                                         <!-------system recommmended candidates-------->
-                                                        <a-tab-pane tab="Recommended Candidates" key="3">
+                                                        <a-tab-pane v-if="recommended" tab="Recommended Candidates"
+                                                                    key="3">
 
                                                             <a-table :dataSource="recommmedcandidates"
                                                                      :scroll="{ y: 340 }"
@@ -374,20 +372,17 @@
 
                                                                 >
                                                                     <div style="margin-left: 10%" slot="title">
-                                                                        Pick/Reject
+                                                                        Pick
                                                                     </div>
                                                                     <template slot-scope="text,record">
-                                                                        <a-button-group>
-                                                                            <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,true)"
-                                                                                    type="primary">pick
-                                                                            </a-button>
-                                                                            <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,false)">
-                                                                                reject
+                                                                        <div style="margin-left: 5%">
+                                                                            <a-button :size="small"
+                                                                                      @click="pickrecommedationClick(job.id,record.profile,true)"
+                                                                                      type="primary">pick
                                                                             </a-button>
 
-                                                                        </a-button-group>
+
+                                                                        </div>
                                                                     </template>
                                                                 </a-table-column>
 
@@ -406,6 +401,10 @@
                                                         Coding test
                                                         <a-tag color="blue">{{testingstage.length}}</a-tag>
                                                     </span>
+
+                                                    <a-alert style="margin-bottom: 1%"
+                                                             message="Please purchase a testing bundle to enable project asignment to candidates"
+                                                             type="info" closeText="Close Now"/>
                                                     <a-table :dataSource="testingstage" :scroll="{ y: 340 }"
                                                              size="middle">
 
@@ -470,7 +469,9 @@
                                                             </div>
                                                             <template slot-scope="text,record">
                                                                 <span style="margin-left: 15%;">
-                                                                    <a-button :size="small" style="background-color: #9c27b0;color: white" @click="showModal">
+                                                                    <a-button :size="small"
+                                                                              style="background-color: #9c27b0;color: white"
+                                                                              @click="showModal">
                                                                         <a-icon type="codepen"/>
                                                                         Assign test
                                                                 </a-button>
@@ -513,19 +514,19 @@
                                                                     <a-menu slot="overlay">
 
                                                                         <a-menu-item
-                                                                                @click="handleMenuClick(record.action,record.profile,2)">
+                                                                                @click="handleTestMenuClick(record.action,record.profile,2)">
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
                                                                         </a-menu-item>
                                                                         <a-menu-item
-                                                                                @click="handleMenuClick(record.action,record.profile,3)">
+                                                                                @click="handleTestMenuClick(record.action,record.profile,3)">
                                                                             <a-icon
                                                                                     type="like"/>
                                                                             make offer
                                                                         </a-menu-item>
                                                                         <a-menu-item
-                                                                                @click="handleMenuClick(record.action,record.profile,4)">
+                                                                                @click="handleTestMenuClick(record.action,record.profile,4)">
                                                                             <a-icon
                                                                                     type="close"/>
                                                                             reject candidate
@@ -618,7 +619,9 @@
                                                             </div>
                                                             <template slot-scope="text,record">
                                                                 <span style="margin-left: 5%;">
-                                                                    <a-button :size="small" style="background-color: #673AB7;color: white" @click="showModal">
+                                                                    <a-button :size="small"
+                                                                              style="background-color: #673AB7;color: white"
+                                                                              @click="showModal">
                                                                         <a-icon type="calendar"/>
                                                                         create
                                                                 </a-button>
@@ -661,19 +664,19 @@
                                                                     <a-menu slot="overlay">
 
                                                                         <a-menu-item
-                                                                                @click="handleMenuClick(record.action,record.profile,1)">
+                                                                                @click="handleInterviewClick(record.action,record.profile,1)">
                                                                             <a-icon
                                                                                     type="codepen"/>
                                                                             assign coding test
                                                                         </a-menu-item>
                                                                         <a-menu-item
-                                                                                @click="handleMenuClick(record.action,record.profile,3)">
+                                                                                @click="handleInterviewClick(record.action,record.profile,2)">
                                                                             <a-icon
                                                                                     type="like"/>
                                                                             make offer
                                                                         </a-menu-item>
                                                                         <a-menu-item
-                                                                                @click="handleMenuClick(record.action,record.profile,4)">
+                                                                                @click="handleInterviewClick(record.action,record.profile,3)">
                                                                             <a-icon
                                                                                     type="close"/>
                                                                             reject candidate
@@ -738,7 +741,6 @@
                                                         </a-table-column>
 
 
-
                                                         <!-----offer letter--------->
                                                         <a-table-column
 
@@ -762,21 +764,22 @@
 
 
                                                         >
-                                                            <div style="margin-left: 10%" slot="title">Hire/reject</div>
+                                                            <div style="margin-left: 10%" slot="title">Hire/reject?
+                                                            </div>
 
                                                             <template slot-scope="text,record">
-                                                                        <a-button-group>
-                                                                            <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,true)"
-                                                                                    type="primary">Hire
-                                                                            </a-button>
-                                                                            <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,false)">
-                                                                                Reject
-                                                                            </a-button>
+                                                                <a-button-group>
+                                                                    <a-button
+                                                                            @click="pickrejectClick(record.action,record.profile,true)"
+                                                                            type="primary">Hired
+                                                                    </a-button>
+                                                                    <a-button
+                                                                            @click="pickrejectClick(record.action,record.profile,false)">
+                                                                        Rejected
+                                                                    </a-button>
 
-                                                                        </a-button-group>
-                                                                    </template>
+                                                                </a-button-group>
+                                                            </template>
 
 
                                                         </a-table-column>
@@ -934,6 +937,7 @@
                             </a-tab-pane>
 
 
+                            <!------job details tab  ------>
                             <a-tab-pane key="2" forceRender>
                                 <span slot="tab">
                                     <a-icon type="profile"/>
@@ -1122,6 +1126,45 @@
 
 
                             </a-tab-pane>
+                            <!------job details tab  ------>
+                            <a-tab-pane key="3" forceRender>
+                                <span slot="tab">
+                                    <a-icon type="credit-card"/>
+                                    Testing bundles
+                                </span>
+                                <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
+                                    <a-row>
+                                        <a-col :span="16">
+                                            <h3>Pick Bundle</h3>
+                                            <a-button v-model="amount" @click="bundleamount(1)">200</a-button>
+                                            <a-button v-model="amount" @click="bundleamount(2)">350</a-button>
+                                            <a-button v-model="amount" @click="bundleamount(3)">500</a-button>
+                                        </a-col>
+                                        <a-col :span="8">
+                                            <h3>Pay</h3>
+                                            <a-card
+
+                                                    style="width: 300px"
+                                            >
+                                                <img
+                                                        alt="example"
+                                                        src="../../../assets/images/card.svg"
+                                                        slot="cover"
+                                                />
+                                                <a-card-meta
+                                                        style="text-align: center;"
+                                                        title="Payment Methods">
+
+                                                    <template slot="description">
+                                                        <p>Amount :${{amount}}</p>
+                                                        <a onClick=""><img class="ant-btn " style="width: 10rem" src="../../../assets/images/flutter.svg"></a>
+                                                        </template>
+                                                </a-card-meta>
+                                            </a-card>
+                                        </a-col>
+                                    </a-row>
+                                </div>
+                            </a-tab-pane>
 
 
                         </a-tabs>
@@ -1135,6 +1178,7 @@
 
 
                     >
+
                         <template slot="footer">
                             <a-button key="back" @click="handleOk">Return</a-button>
                             <a-button key="submit" type="primary">
@@ -1278,6 +1322,7 @@
     }
 
 
+
     import UsersService from '@/services/UsersService'
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
@@ -1320,26 +1365,30 @@
                     {name: 'nodejs', image: 'https://i.ibb.co/s5KqNVq/iconfinder-nodejs-512-339733.png'},
                     {name: 'python', image: 'https://i.ibb.co/WFv6Y09/python.png'},
                     {name: 'sql', image: 'https://i.ibb.co/H724NDW/sql.png'},
-                    {name: 'postgres', image: 'http://www.joshuaatteberry.com/img/postgresql.png'},
+                    {name: 'postgres', image: 'https://i.ibb.co/RTMNjz9/postgresql.png'},
                     {name: 'android', image: 'https://i.ibb.co/W6XRn8Z/android.png'},
                     {
                         name: 'angular',
-                        image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Fc%2Fcf%2FAngular_full_color_logo.svg%2F1200px-Angular_full_color_logo.svg.png&f=1'
+                        image: 'https://i.ibb.co/RQMhSnz/angular.png'
                     },
                     {
                         name: 'vue',
-                        image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F95%2FVue.js_Logo_2.svg%2F1200px-Vue.js_Logo_2.svg.png&f=1'
+                        image: 'https://i.ibb.co/rk2VcKH/vue.png'
                     },
                     {name: 'laravel', image: 'https://i.ibb.co/0MtxRk9/lARA.png'},
                     {
                         name: 'django',
-                        image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.3HgSI9fFykV9W7bWiDwa0AHaHa%26pid%3DApi&f=1'
+                        image: 'https://i.ibb.co/1s223NF/django.jpg'
                     },
                     {name: 'bootstrap', image: 'https://i.ibb.co/bgXz8xY/bootstrap.png'},
                     {name: 'java', image: 'https://i.ibb.co/n1dts5w/java.png'},
 
                 ],
-                selectedtech: []
+                selectedtech: [],
+                active: true,
+                newapplications: true,
+                recommended: true,
+                amount:null
 
 
             }
@@ -1402,23 +1451,31 @@
             }
             // applicants sorting
             for (let i = 0; i < this.applicantprofile.length; i++) {
-                if (this.applicantprofile[i].selected === false) {
+                if (this.applicantprofile[i].selected === false && this.applicantprofile[i].stage !== 'rejected') {
                     this.newapplicant.push(this.applicantprofile[i])
                 } else if (this.applicantprofile[i].selected) {
                     this.pickedapplicants.push(this.applicantprofile[i])
 
-                } else if (this.applicantprofile[i].stage === 'interview') {
+                }
+                // second part of sorting conditional coz the fist condition met
+                if (this.applicantprofile[i].stage === 'interview') {
                     this.interviewstage.push(this.applicantprofile[i])
+
                 } else if (this.applicantprofile[i].stage === 'test') {
                     this.testingstage.push(this.applicantprofile[i])
+
                 } else if (this.applicantprofile[i].stage === 'offer') {
                     this.offerstage.push(this.applicantprofile[i])
+
+
                 } else if (this.applicantprofile[i].stage === 'hired') {
                     this.hirestage.push(this.applicantprofile[i])
+
                 }
 
 
             }
+
 
             // system recommend candidates (all candidates with matching skill tags - current applicants)
             let allrecommedednouniquefilter = []
@@ -1452,37 +1509,54 @@
             }
             let recommededlist = allrecommended.diff(allapplicants);
 
+
             // create a profile for each recommended comparision and matching between user,profile
-            for (let i = 0; i < this.alldevs.length; i++) { //all users
-                for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                    for (let k = 0; k < recommededlist.length; k++) {
-                        if (this.alldevs[i].id === recommededlist[k] && this.alldevsprofile[l].user === this.alldevs[i].id) {
+            if (recommededlist.length > 0) {
+                for (let i = 0; i < this.alldevs.length; i++) { //all users
+                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                        for (let k = 0; k < recommededlist.length; k++) {
+                            if (this.alldevs[i].id === recommededlist[k] && this.alldevsprofile[l].user === this.alldevs[i].id) {
 
-                            let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                            let stage = 'recommended'
-                            let id = this.alldevs[i].id
-                            let pk = this.alldevs[i].id
-                            let user_id = this.alldevs[i].id
-                            let name = this.alldevs[i].username
-                            let selected = false
-                            let onerecommed = new Recommended(
-                                id, name, stage, tags, user_id, selected, pk
-                            );
+                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                let stage = 'recommended'
+                                let id = this.alldevs[i].id
+                                let pk = this.alldevs[i].id
+                                let user_id = this.alldevs[i].id
+                                let name = this.alldevs[i].username
+                                let selected = false
+                                let onerecommed = new Recommended(
+                                    id, name, stage, tags, user_id, selected, pk
+                                );
 
-                            this.recommmedcandidates.push(onerecommed)
+                                this.recommmedcandidates.push(onerecommed)
+
+                            }
 
                         }
 
                     }
 
+
                 }
 
+            } else {
+                this.recommended = false
+            }
 
+
+            // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
+            if (this.pickedapplicants.length === 0) {
+                this.active = false
+            } else if (this.newapplicant.length === 0) {
+                this.newapplications = false
+            } else if (this.recommmedcandidates.length === 0) {
+                this.recommended = false
             }
 
 
         },
         methods: {
+            // acts as filters to project to be asigned under testing stage
             techChoices(tag, checked) {
                 const {selectedtech} = this
                 const nextSelectedTags = checked
@@ -1491,16 +1565,21 @@
                 console.log('You are interested in: ', nextSelectedTags)
                 this.selectedtech = nextSelectedTags
             },
+
             onChange(checkedValues) {
                 this.test = checkedValues
             },
+
             showModal() {
                 this.visible = true
             },
+
             handleOk(e) {
 
                 this.visible = false
             },
+
+            //  enables current job to be updated
             handleSubmit: async function () {
 
                 try {
@@ -1520,6 +1599,8 @@
 
 
             },
+
+            //logout
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)
@@ -1530,33 +1611,134 @@
                     name: 'home'
                 })
             },
+
+            // handles active stage of applicants movement keys 1,2,3
             handleMenuClick(action, profile, id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
                 if (id === 1) { // testing
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
                             this.pickedapplicants[i].stage = 'test'
                             this.testingstage.push(this.pickedapplicants[i])
+                            Marketplace.pickreject(action, {stage: 'test'}, auth)
 
                         }
                     }
 
-                } else if (id === 2) {
+                } else if (id === 2) { // interview
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
                             this.pickedapplicants[i].stage = 'interview'
                             this.interviewstage.push(this.pickedapplicants[i])
+                            Marketplace.pickreject(action, {stage: 'interview'}, auth)
                         }
                     }
 
-                } else if (id === 3) {
+                } else if (id === 3) { // reject
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
-                            this.pickedapplicants[i].stage = 'offer'
-                            this.offerstage.push(this.pickedapplicants[i])
+                            this.pickedapplicants[i].stage = 'rejected'
+                            Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
+                            let index = this.pickedapplicants.indexOf(this.pickedapplicants[i]);
+                            this.pickedapplicants.splice(index, 1);
                         }
                     }
+
                 }
             },
+
+            // handles movement on the testing stage keys 1,2,3
+            handleTestMenuClick(action, profile, id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                if (id === 2) { // interview
+                    for (let i = 0; i < this.testingstage.length; i++) {
+                        if (this.testingstage[i].profile === profile) {
+                            this.testingstage[i].stage = 'interview'
+                            this.interviewstage.push(this.testingstage[i])
+                            Marketplace.pickreject(action, {stage: 'interview'}, auth)
+                            let index = this.testingstage.indexOf(this.testingstage[i]);
+                            this.testingstage.splice(index, 1);
+
+                        }
+                    }
+
+                } else if (id === 3) { // offer
+                    for (let i = 0; i < this.testingstage.length; i++) {
+                        if (this.testingstage[i].profile === profile) {
+                            this.testingstage[i].stage = 'offer'
+                            this.offerstage.push(this.testingstage[i])
+                            Marketplace.pickreject(action, {stage: 'offer'}, auth)
+                            let index = this.testingstage.indexOf(this.testingstage[i]);
+                            this.testingstage.splice(index, 1);
+                        }
+                    }
+
+                } else if (id === 4) { // reject
+                    for (let i = 0; i < this.testingstage.length; i++) {
+                        if (this.testingstage[i].profile === profile) {
+                            this.testingstage[i].stage = 'rejected'
+                            Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
+                            let index = this.testingstage.indexOf(this.testingstage[i]);
+                            this.testingstage.splice(index, 1);
+                        }
+                    }
+
+                }
+
+
+            },
+
+            // handles movement on the testing stage keys 1,2,3
+            handleInterviewClick(action, profile, id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                if (id === 1) { // coding
+                    for (let i = 0; i < this.interviewstage.length; i++) {
+                        if (this.interviewstage[i].profile === profile) {
+                            this.interviewstage[i].stage = 'test'
+                            this.testingstage.push(this.interviewstage[i])
+                            Marketplace.pickreject(action, {stage: 'test'}, auth)
+                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
+                            this.interviewstage.splice(index, 1);
+
+                        }
+                    }
+
+                } else if (id === 2) { // offer
+                    for (let i = 0; i < this.interviewstage.length; i++) {
+                        if (this.interviewstage[i].profile === profile) {
+                            this.interviewstage[i].stage = 'offer'
+                            this.offerstage.push(this.interviewstage[i])
+                            Marketplace.pickreject(action, {stage: 'offer'}, auth)
+                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
+                            this.interviewstage.splice(index, 1);
+                        }
+                    }
+
+                } else if (id === 3) { // reject
+                    for (let i = 0; i < this.interviewstage.length; i++) {
+                        if (this.interviewstage[i].profile === profile) {
+                            this.interviewstage[i].stage = 'rejected'
+                            Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
+                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
+                            this.interviewstage.splice(index, 1);
+                        }
+                    }
+
+                }
+
+
+            },
+
+            //pick or reject from new applicants
             pickrejectClick(job_id, candidate_id, key) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -1567,8 +1749,12 @@
                         if (this.newapplicant[i].profile === candidate_id) {
                             this.newapplicant[i].stage = 'active'
                             this.pickedapplicants.push(this.newapplicant[i])
+                            this.active = true
                             let index = this.newapplicant.indexOf(this.newapplicant[i]);
                             this.newapplicant.splice(index, 1);
+                            if (this.newapplicant.length === 0) {
+                                this.newapplications = false
+                            }
                             Marketplace.pickreject(job_id, {stage: 'active', selected: true}, auth)
 
 
@@ -1580,6 +1766,9 @@
 
                             let index = this.newapplicant.indexOf(this.newapplicant[i]);
                             this.newapplicant.splice(index, 1);
+                            if (this.newapplicant.length === 0) {
+                                this.newapplications = false
+                            }
                             Marketplace.pickreject(job_id, {stage: 'rejected', selected: false}, auth)
 
 
@@ -1589,9 +1778,44 @@
 
 
             },
+
+            // pick from recommedation list
+            pickrecommedationClick(job_id, candidate_id, key) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                if (key) {
+                    for (let i = 0; i < this.recommmedcandidates.length; i++) {
+                        if (this.recommmedcandidates[i].profile === candidate_id) {
+                            this.recommmedcandidates[i].stage = 'active'
+                            this.pickedapplicants.push(this.recommmedcandidates[i])
+                            let index = this.recommmedcandidates.indexOf(this.recommmedcandidates[i]);
+                            this.recommmedcandidates.splice(index, 1);
+                            if (this.recommmedcandidates.length === 0) {
+                                this.recommended = false
+                            }
+                            Marketplace.pickrecommended(
+                                {
+                                    job: job_id,
+                                    candidate: candidate_id,
+                                    stage: 'active',
+                                    selected: true
+                                },
+                                auth
+                            )
+
+
+                        }
+                    }
+                }
+
+            },
+
             navigateTo(route) {
                 this.$router.push(route)
             },
+
             handleClose(removedTag) {
                 const tags = this.tags.filter(tag => tag !== removedTag)
                 this.tags = tags
@@ -1626,6 +1850,7 @@
                     inputValue: '',
                 })
             },
+
             handleChange(tag, checked) {
                 const {selectedTags} = this
                 const nextSelectedTags = checked
@@ -1636,6 +1861,20 @@
                 let alltags = this.selectedTags.join(", ")
                 this.job.tech_stack = alltags
             },
+
+            bundleamount(key){
+                if(key === 1){
+                  this.amount = 200
+                }else if(key === 2){
+                    this.amount = 300
+                }
+                else{
+                    this.amount = 500
+                }
+
+            }
+
+
 
         },
     }

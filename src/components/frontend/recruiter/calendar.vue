@@ -4,7 +4,7 @@
 
 
 
-        <a-layout>
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
 
