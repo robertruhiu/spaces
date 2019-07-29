@@ -3,13 +3,13 @@
         <pageheader></pageheader>
         <a-layout-content :style="{ padding: '0 0px', marginTop: '1rem' }">
             <div style="margin-top: 3rem">
-                <a-row style="background-color:#004ec7;margin-bottom: 1rem ">
+                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1 ">
                     <a-col span="4">
-                        <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1.5rem;">Talent</h3>
+                        <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
                     </a-col>
                     <a-col :span="16">
 
-                        <div style="padding: 2rem;" class='center'>
+                        <div style="padding-top: 2rem;" class='center'>
 
                             <a-auto-complete
                                     :dataSource="dataSource"
@@ -42,9 +42,9 @@
                     </a-col>
                 </a-row>
 
-                <a-row>
+                <a-row :gutter="16">
 
-                    <a-col :span="5">
+                    <a-col :span="6" style="margin-top: 6%">
                         <div style="padding-left: 3rem">
 
 
@@ -85,7 +85,7 @@
 
                     </a-col>
 
-                    <a-col :span="14">
+                    <a-col :span="14" style="margin-top: 6%;">
 
 
                         <a-list style="padding-bottom: 2rem"
@@ -95,54 +95,55 @@
                                 :dataSource="filteredList"
                         >
 
-                            <a-list-item class="ant-card" style="margin-bottom: 1rem;
-                            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 1rem;
-                            "
-                                         slot="renderItem" slot-scope="item, index" key="item.title">
+                            <a-list-item
+                                    slot="renderItem" slot-scope="item, index" key="item.title">
 
-                                <div>
-                                    <a-row>
-                                        <a-col span="4" style="background-color:#0679FB ">
-                                            <a-avatar class="poolavatar"
-                                                      style="">
-                                                {{item.name}}
-                                            </a-avatar>
-                                        </a-col>
-                                        <a-col span="15">
-                                            <h4>Bio</h4>
-                                            <p style="">{{item.about | truncate(100)}}</p>
-                                            <br>
-                                            <p>Skills</p>
+
+                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                    <a-col span="4" style="background-color:#0679FB;height: 100% ">
+                                        <a-avatar class="poolavatar"
+                                                  style="">
+                                            {{item.name}}
+                                        </a-avatar>
+                                    </a-col>
+                                    <a-col span="15" style="padding: 2%">
+                                        <p>Bio</p>
+                                        <p>{{item.about | truncate(100)}}<a @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})"">read more</a>
+                                        </p>
+
+                                        <p>
+                                            Skills :
                                             <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-
-                                        </a-col>
-                                        <a-col span="5">
-                                            <div style="padding-top: 1rem;">
-
-                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                    <a-icon type="environment"/>
-                                                    {{item.location}}
-                                                </a-tag>
-                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
-                                                </a-tag>
+                                        </p>
 
 
-                                            </div>
-                                            <div style="margin-top: 6rem">
-                                                <a-button type="primary" ghost @click="showDrawer(item.id)">View
-                                                    Profile
-                                                </a-button>
-                                            </div>
+                                    </a-col>
+                                    <a-col span="5">
+                                        <div style="padding-top: 1rem;">
+
+                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                <a-icon type="environment"/>
+                                                {{item.location}}
+                                            </a-tag>
+                                            <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
+                                            </a-tag>
 
 
-                                        </a-col>
+                                        </div>
+                                        <div style="margin-top: 2rem">
+                                            <a-button type="primary" ghost @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                View Profile
+                                            </a-button>
+                                        </div>
 
 
-                                    </a-row>
-                                </div>
+                                    </a-col>
+
+
+                                </a-row>
 
 
                             </a-list-item>
@@ -150,40 +151,17 @@
 
 
                     </a-col>
+
+
+
                 </a-row>
 
-                <a-drawer
-                        width=640
-                        placement="right"
-                        :closable="false"
-                        @close="onClose"
-                        :visible="visible"
-                >
 
-                    <span><p :style="[pStyle, pStyle2]">User Profile
-                        <a-button type="primary" style="float: right;"
-                                  @click="pickcandidate(profile.user)">
-                            Pick Candidate
-                        </a-button>
-
-
-                    </p>
-                    </span>
-                    <p :style="pStyle">{{profile.user}}</p>
-                    <p>{{profile}}</p>
-
-                    <p v-if="experience !== null">{{experience}}</p>
-                    <p v-else>No work experience</p>
-                    <p v-if="portfolio !== null">{{portfolio}}</p>
-                    <p v-else>No past projects</p>
-
-
-                </a-drawer>
             </div>
 
 
         </a-layout-content>
-        <Footer/>
+
     </a-layout>
 
 
@@ -191,15 +169,19 @@
 <script>
 
     class Developer {
-        constructor(id, name, skills, about, location, availabilty) {
+        constructor(id, name, skills, about, location, availabilty, experience, portfolio) {
             this.id = id;
             this.name = name;
             this.skills = skills;
             this.about = about;
             this.location = location;
             this.availabilty = availabilty
+            this.experience = experience
+            this.portfolio = portfolio
         }
     }
+
+    //experience structure on table
 
 
     import "../../../assets/css/styles.css";
@@ -208,8 +190,9 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService';
-    import MarketPlaceService from '@/services/Marketplace'
+
     import Vue from 'vue'
+
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
 
@@ -227,8 +210,6 @@
                 alldevs: null,
                 search: '',
                 profile: {},
-                experience: null,
-                portfolio: null,
                 country: null,
                 checkedList: defaultCheckedList,
                 indeterminate: true,
@@ -239,6 +220,7 @@
                 checkAll1: false,
                 mydevs: null,
                 tags: [],
+
 
 
                 dataSource: ['react', 'angular', 'javascript'],
@@ -275,6 +257,7 @@
             Pageheader,
             Footer
         },
+
         async mounted() {
             this.devs = (await UsersService.devs()).data;
             this.alldevs = (await UsersService.allusers()).data;
@@ -307,57 +290,11 @@
 
 
         methods: {
-            async showDrawer(dev_id) {
-                this.visible = true
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                const requesteddevs = await MarketPlaceService.mydevs(this.$store.state.user.pk, auth)
-
-                this.mydevs = requesteddevs.data
-                if (this.mydevs !== null) {
-                    let array = this.mydevs.developers.slice(1, -1).replace(/'/g, '').replace(/ /g, '').split(',');
-                    let templist = []
-                    for (let i = 0; i < array.length; i++) {
-                        templist.push(parseInt(array[i]))
-                    }
-                    this.tags = templist
-                    for (let j = 0; j < this.tags.length; j++) {
-
-                    }
-
-
-                }
-
-
-                this.profile = (await UsersService.talentuser(dev_id)).data
-                try {
-                    this.experience = (await UsersService.experience(dev_id)).data
-                } catch (err) {
-                    this.experience = null
-                }
-                try {
-                    this.portfolio = (await UsersService.portfolio(dev_id)).data
-                } catch (err) {
-                    this.portfolio = null
-                }
-
-
+            navigateTo(route) {
+                this.$router.push(route)
             },
-            async pickcandidate(dev) {
-
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                this.mydevs.push(dev)
-                const devpicking = await MarketPlaceService.pickdev(this.$store.state.user.pk, dev, auth).data
-                devpicking()
-                this.mydevs.push(dev)
 
 
-            },
 
             onClose() {
                 this.visible = false
@@ -408,7 +345,7 @@
         line-height: 80px;
         font-size: 30px;
         background-color: #0679FB;
-        margin-top: 2rem;
+        margin: 25% 25%;
     }
 
     .talentcard {
@@ -419,6 +356,39 @@
         margin: auto;
         width: 60%;
 
+
+    }
+
+    .bio {
+
+        background-color: white;
+        min-height: 50vh;
+
+
+    }
+
+    .actions {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+        min-height: 30vh;
+        margin: 1%;
+        padding: 4%;
+    }
+
+    .profile {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+        margin: 1%;
+        padding: 4%;
+    }
+
+    .profilecard {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        min-height: 50vh;
+        margin-right: 3%;
+
+        padding: 1%;
+        position: fixed;
 
     }
 

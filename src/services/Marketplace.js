@@ -2,13 +2,17 @@ import Api from '@/services/Api'
 
 export default {
 
+    pickdeveloper(instance,auth){
+      return Api().post(`marketplace/pickdev `,instance, auth)
+    },
 
-    pickdev(user_id, dev, auth) {
-        return Api().put(`marketplace/devrequest/${user_id}/${dev} `, auth)
+    mydevelopers(user_id, auth) {
+        return Api().get(`marketplace/mydevs/${user_id} `, auth)
     },
-    mydevs(user_id, auth) {
-        return Api().get(`marketplace/alldevrequests/${user_id}`, auth)
+    allmyjobapplicants(user_id,auth){
+        return Api().get(`marketplace/myapplicants/${user_id} `, auth)
     },
+
     alljobs() {
         return Api().get('marketplace/alljobs')
     },
@@ -27,12 +31,23 @@ export default {
     joboneapplicant(candidate_id, job_id, auth) {
         return Api().get(`marketplace/myjobapplication/${candidate_id}/${job_id}`, auth)
     },
+    jobdetails(job_id,auth){
+        return Api().get(`marketplace/jobdetails/${job_id}`, auth)
+
+    },
+    candidatejobs(candidate_id,auth){
+        return Api().get(`marketplace/candidatejobs/${candidate_id}`, auth)
+
+    },
     updatejob(job_id, CurrentJob, auth) {
         return Api().patch(`marketplace/updatejob/${job_id} `, CurrentJob, auth)
     },
 
     pickreject(jobapplication_id,Currentapplication, auth) {
         return Api().patch(`marketplace/pickreject/${jobapplication_id} `, Currentapplication,auth)
+    },
+    candidatemanager(candidatemanagement_id,CurrentCandidate, auth) {
+        return Api().patch(`marketplace/candidatemanager/${candidatemanagement_id} `, CurrentCandidate,auth)
     },
     unpublishjob(job_id,Currentjob, auth) {
         return Api().patch(`marketplace/unpublishjob/${job_id} `, Currentjob,auth)
@@ -42,5 +57,8 @@ export default {
     },
     pickrecommended(newapplication,auth) {
         return Api().post(`marketplace/pickrecommended`,newapplication,auth)
+    },
+    applyjob(newapplication,auth) {
+        return Api().post(`marketplace/applyjob`,newapplication,auth)
     }
 }

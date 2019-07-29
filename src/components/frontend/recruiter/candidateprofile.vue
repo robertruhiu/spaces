@@ -254,31 +254,31 @@
                 inputVisible: false,
                 inputValue: '',
                 techchoicestags: [
-                    {name: 'javascript', image: 'https://i.ibb.co/dPbdXXr/javascript.png'},
-                    {name: 'react', image: 'https://i.ibb.co/0ZyDJvM/iconfinder-React-js-logo-1174949.png'},
-                    {name: 'html', image: 'https://i.ibb.co/tc74V6V/html-5.png'},
-                    {name: 'css', image: 'https://i.ibb.co/JFq3pRy/css-3.png'},
-                    {name: 'php', image: 'https://i.ibb.co/18R20M7/php.png'},
-                    {name: 'nodejs', image: 'https://i.ibb.co/s5KqNVq/iconfinder-nodejs-512-339733.png'},
-                    {name: 'python', image: 'https://i.ibb.co/WFv6Y09/python.png'},
-                    {name: 'sql', image: 'https://i.ibb.co/H724NDW/sql.png'},
-                    {name: 'postgres', image: 'https://i.ibb.co/RTMNjz9/postgresql.png'},
-                    {name: 'android', image: 'https://i.ibb.co/W6XRn8Z/android.png'},
+                    {name: 'javascript', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533210/images/production/icons8-javascript_vsjvup.svg'},
+                    {name: 'react', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533216/images/production/react_hxj4ki.svg'},
+                    {name: 'html', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533441/images/production/css-3_gcvrpj.png'},
+                    {name: 'css', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533441/images/production/html-5_sttz5d.png'},
+                    {name: 'php', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533215/images/production/php_qtwuri.svg'},
+                    {name: 'nodejs', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533210/images/production/icons8-nodejs_xxsktw.svg'},
+                    {name: 'python', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533215/images/production/python_nrtl3e.svg'},
+                    {name: 'sql', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533214/images/production/mysql_qkvupj.svg'},
+                    {name: 'postgres', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532798/images/postgresql_j8ggec.png'},
+                    {name: 'android', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533205/images/production/android_uylhbx.svg'},
                     {
                         name: 'angular',
-                        image: 'https://i.ibb.co/RQMhSnz/angular.png'
+                        image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532798/images/angular_yntlau.png'
                     },
                     {
                         name: 'vue',
-                        image: 'https://i.ibb.co/rk2VcKH/vue.png'
+                        image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532798/images/vue_m4s1mo.png'
                     },
-                    {name: 'laravel', image: 'https://i.ibb.co/0MtxRk9/lARA.png'},
+                    {name: 'laravel', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533214/images/production/Laravel_lxvtad.svg'},
                     {
                         name: 'django',
-                        image: 'https://i.ibb.co/1s223NF/django.jpg'
+                        image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532797/images/django_nncvxo.jpg'
                     },
-                    {name: 'bootstrap', image: 'https://i.ibb.co/bgXz8xY/bootstrap.png'},
-                    {name: 'java', image: 'https://i.ibb.co/n1dts5w/java.png'},
+                    {name: 'bootstrap', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532994/images/bootstrap_fihh5l.png'},
+                    {name: 'java', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532994/images/java_tayu3b.png'},
 
                 ],
                 selectedtech: [],

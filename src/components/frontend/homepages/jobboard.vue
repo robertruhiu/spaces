@@ -81,6 +81,7 @@
                         </div>
 
                     </a-col>
+
                     <a-col :span="14">
 
                         <a-list style="padding-bottom: 2%"
@@ -90,51 +91,60 @@
                                 :dataSource="filteredList"
                         >
 
-                            <a-list-item class="ant-card" style="margin-bottom: 1rem;
-                            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 1rem;
-                            "
-                                         slot="renderItem" slot-scope="item, index" key="item.title">
-
-                                <div>
-                                    <a-row>
-
-                                        <a-col span="18" style="padding-left: 1rem">
-                                            <h4>{{item.title}}</h4>
-                                            <p>Deadline:{{item.deadline}}</p>
+                            <a-list-item
+                                    slot="renderItem" slot-scope="item, index" key="item.title">
 
 
-                                            skills looking for:
+                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                    <a-col span="4" style="background-color:#0679FB;height: 100% ">
+                                        <p class="jobtitle">{{item.title}}</p>
+
+
+                                    </a-col>
+                                    <a-col span="15" style="padding: 2%">
+
+                                        <p>Job Description</p>
+                                        <p>{{item.description | truncate(100)}}<a
+                                                @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
+                                            more</a>
+                                        </p>
+
+                                        <p>
+                                            Skills looking for :
                                             <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
-
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-
-                                        </a-col>
-                                        <a-col span="6">
-                                            <div style="padding-top: 1rem;">
-
-                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                    <a-icon type="environment"/>
-                                                    {{item.location}}
-                                                </a-tag>
-                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.contract}}
-                                                </a-tag>
+                                        </p>
 
 
-                                            </div>
-                                            <div style="margin-top: 7rem">
-                                                <a-button type="primary" ghost @click="showDrawer(item.id)">View
-                                                    details
-                                                </a-button>
-                                            </div>
+                                    </a-col>
+                                    <a-col span="5">
+                                        <div style="padding-top: 1rem;">
+
+                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                <a-icon type="environment"/>
+                                                {{item.location}}
+                                            </a-tag>
+                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                <a-icon type="bank"/>
+                                                {{item.company}}
+                                            </a-tag>
 
 
-                                        </a-col>
+                                        </div>
+                                        <div style="margin-top: 2rem">
+                                            <a-button type="primary" ghost
+                                                      @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">
+                                                View details
+                                            </a-button>
+                                        </div>
 
 
-                                    </a-row>
-                                </div>
+                                    </a-col>
+
+
+                                </a-row>
 
 
                             </a-list-item>
@@ -144,16 +154,7 @@
                     </a-col>
                 </a-row>
 
-                <a-drawer
-                        width=640
-                        placement="right"
-                        :closable="false"
-                        @close="onClose"
-                        :visible="visible"
-                >
-                    {{job}}
 
-                </a-drawer>
             </div>
 
 
@@ -165,12 +166,14 @@
 
 <script>
     class Job {
-        constructor(id, title,  deadline, location, contract, skills) {
+        constructor(id, title, deadline, location, contract, skills, description, company) {
             this.id = id;
             this.title = title;
+            this.description = description;
             this.location = location;
             this.contract = contract;
-            this.skills = skills
+            this.skills = skills;
+            this.company = company
 
         }
     }
@@ -192,7 +195,6 @@
         name: 'jobboard',
         data() {
             return {
-                visible: false,
                 jobs: null,
                 alljobs: null,
                 job: {},
@@ -254,9 +256,11 @@
 
                 let location = this.jobs[i].location
                 let contract = this.jobs[i].engagement_type
+                let description = this.jobs[i].description
+                let company = this.jobs[i].company
 
 
-                let onejob = new Job(id, title, deadline, location, contract, skills)
+                let onejob = new Job(id, title, deadline, location, contract, skills, description, company)
 
 
                 this.listData.push(onejob)
@@ -265,23 +269,13 @@
             }
 
 
-
         },
 
         methods: {
-            async showDrawer(job_id) {
-                this.visible = true
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                this.job = (await Marketplace.specificjob(job_id, auth)).data
-
-
+            navigateTo(route) {
+                this.$router.push(route)
             },
-            onClose() {
-                this.visible = false
-            },
+
             onChange(checkedList) {
                 this.indeterminate = !!checkedList.length && (checkedList.length < plainOptions.length)
                 this.checkAll = checkedList.length === plainOptions.length
@@ -327,7 +321,7 @@
         line-height: 80px;
         font-size: 30px;
         background-color: #0679FB;
-        margin-top: 2rem;
+        margin: 25% 25%;
     }
 
     .talentcard {
@@ -339,6 +333,14 @@
         width: 60%;
 
 
+    }
+
+    .jobtitle {
+        margin-top: 33%;
+        color: white;
+        margin-left: 10%;
+        font-weight: 700;
+        font-size: large;
     }
 
 

@@ -8,11 +8,15 @@ import Talent from '@/components/frontend/homepages/talent'
 import Privacy from '@/components/frontend/homepages/privacy'
 import Terms from '@/components/frontend/homepages/terms'
 import JobBoard from '@/components/frontend/homepages/jobboard'
+import JobDetails from '@/components/frontend/homepages/jobdetails'
 import RecruiterDashboard from '@/components/frontend/recruiter/Dashboard'
 import ManageJobs from '@/components/frontend/recruiter/Managejob'
 import MyCandidates from '@/components/frontend/recruiter/Mycandidates'
+import TalentProfile from '@/components/frontend/recruiter/candidatetalentprofile'
 import CandidateProfile from '@/components/frontend/recruiter/candidateprofile'
 import Job from '@/components/frontend/recruiter/job'
+import Projectdetails from '@/components/frontend/recruiter/projectdetails'
+import Projectlist from '@/components/frontend/recruiter/projectlist'
 import Calendar from '@/components/frontend/recruiter/calendar'
 import DeveloperDashboard from '@/components/frontend/developer/DevDashboard'
 
@@ -97,6 +101,14 @@ let router =  new Router({
             component: Job
         },
         {
+            path: '/jobdetails/:jobId',
+            name: 'jobdetails',
+            component: JobDetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/calendar',
             name: 'calendar',
             component: Calendar,
@@ -105,9 +117,33 @@ let router =  new Router({
             }
         },
         {
+            path: '/projectdetails',
+            name: 'projectdetails',
+            component: Projectdetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/projectlist',
+            name: 'projectlist',
+            component: Projectlist,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/candidateprofile/:candidateID/:jobID',
             name: 'candidateprofile',
             component: CandidateProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/candidatetalentprofile/:candidateProfileID',
+            name: 'candidatetalentprofile',
+            component: TalentProfile,
             meta: {
                 requiresAuth: true
             }

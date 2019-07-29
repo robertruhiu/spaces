@@ -11,9 +11,10 @@ import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
 import VeeValidate from 'vee-validate';
 import VueSelectImage from 'vue-select-image'
-
+import SocialSharing from 'vue-social-sharing'
 require('vue-select-image/dist/vue-select-image.css')
 Vue.use(VueSelectImage)
+Vue.use(SocialSharing)
 const config = {
     fastExit: false
 }
@@ -51,7 +52,8 @@ import {
     Tag,
     DatePicker,
     Steps,
-    Timeline
+    Timeline,
+
 
 
 
@@ -88,6 +90,7 @@ Vue.use(Progress)
 Vue.use(DatePicker)
 Vue.use(Steps)
 Vue.use(Timeline)
+
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

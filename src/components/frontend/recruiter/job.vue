@@ -219,7 +219,7 @@
 
                                                                         dataIndex="tags"
                                                                         key="tags"
-                                                                        width="20%"
+                                                                        width="25%"
 
                                                                 >
                                                                     <div style="margin-left: 25%" slot="title">Skills
@@ -1054,7 +1054,7 @@
                                                 </a-form-item>
 
                                             </a-col>
-                                            <a-col :span="24">
+                                            <a-col :span="12">
                                                 <a-form-item
                                                         label="Which tech skills are you looking for? "
                                                         :label-col="{ span: 24 }"
@@ -1088,6 +1088,18 @@
                                                         <a-icon type="plus"/>
                                                         New Tag
                                                     </a-tag>
+                                                </a-form-item>
+                                            </a-col>
+                                            <a-col :span="12">
+                                                <a-form-item label="Deadline ">
+                                                    Current deadline {{deadline}}
+                                                    <a-date-picker @change="onDate"
+
+                                                                   format="YYYY-MM-DD"
+                                                                   :disabledDate="disabledDate"
+
+                                                    />
+
                                                 </a-form-item>
                                             </a-col>
                                             <a-col :span="24">
@@ -1157,8 +1169,9 @@
 
                                                     <template slot="description">
                                                         <p>Amount :${{amount}}</p>
-                                                        <a onClick=""><img class="ant-btn " style="width: 10rem" src="../../../assets/images/flutter.svg"></a>
-                                                        </template>
+                                                        <a onClick=""><img class="ant-btn " style="width: 10rem"
+                                                                           src="../../../assets/images/flutter.svg"></a>
+                                                    </template>
                                                 </a-card-meta>
                                             </a-card>
                                         </a-col>
@@ -1171,44 +1184,42 @@
                     </div>
 
                     <a-modal
-                            title="Pick  technologies "
+                            title="Project assignments "
                             v-model="visible"
                             @ok="handleOk"
-                            style="top: 20px;"
+                            style="top: 60px;"
+                            :footer="null"
 
 
                     >
+                        <p style="text-align: center;">Would you like to get a project recommendation or pick a project?</p>
+                        <a-row :gutter="16">
+                            <a-col :span="12">
+                                <a @click="Pick">
+                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%"
+                                     src="../../../assets/images/pick.png">
+                                <p style="text-align: center">Pick one by myself</p>
 
-                        <template slot="footer">
-                            <a-button key="back" @click="handleOk">Return</a-button>
-                            <a-button key="submit" type="primary">
-                                Submit
-                            </a-button>
-                        </template>
-                        <p>My choices :
-                            <span>
-                                <a-tag v-for="tag in selectedtech" color="blue"
-                                       :key="tag">{{tag.name}}</a-tag>
-                            </span>
-                        </p>
-                        <a-row :gutter="8">
-                            <a-col :span="6" v-for=" tag in techchoicestags" :key="tag" style="margin-bottom: 1%;">
-                                <a-checkable-tag
-                                        :key="tag"
-                                        :checked="selectedtech.indexOf(tag) > -1"
-                                        @change="(checked) => techChoices(tag, checked)"
-                                        style="width: 5.6rem;height:6.0rem"
-                                >
-                                    <img style="width: 100%;" :src='tag.image'>
-                                    <div style="text-align: center;">{{tag.name}}</div>
+                                    </div>
 
-                                </a-checkable-tag>
+                                </a>
+                            </a-col>
+                            <a-col :span="12">
+                                <a @click="Recommend">
+                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
+                                     src="../../../assets/images/recommend.png">
+                                <p style="text-align: center">Get recommendation</p>
 
+                                    </div>
+
+                                </a>
                             </a-col>
                         </a-row>
 
-
                     </a-modal>
+
 
 
                 </div>
@@ -1224,6 +1235,8 @@
 <script>
 
     // table structure
+    import AFormItem from "ant-design-vue/es/form/FormItem";
+
     const columns = [
         {
             title: 'Username',
@@ -1321,14 +1334,14 @@
         }
     }
 
-
-
+    import moment from 'moment';
     import UsersService from '@/services/UsersService'
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     import Marketplace from '@/services/Marketplace'
     import Jobheader from '@/components/layout/Jobheader'
     import RecruiterSider from "../../layout/RecruiterSider";
+
 
 
     export default {
@@ -1356,48 +1369,23 @@
                 inputVisible: false,
                 inputValue: '',
                 visible: false,
-                techchoicestags: [
-                    {name: 'javascript', image: 'https://i.ibb.co/dPbdXXr/javascript.png'},
-                    {name: 'react', image: 'https://i.ibb.co/0ZyDJvM/iconfinder-React-js-logo-1174949.png'},
-                    {name: 'html', image: 'https://i.ibb.co/tc74V6V/html-5.png'},
-                    {name: 'css', image: 'https://i.ibb.co/JFq3pRy/css-3.png'},
-                    {name: 'php', image: 'https://i.ibb.co/18R20M7/php.png'},
-                    {name: 'nodejs', image: 'https://i.ibb.co/s5KqNVq/iconfinder-nodejs-512-339733.png'},
-                    {name: 'python', image: 'https://i.ibb.co/WFv6Y09/python.png'},
-                    {name: 'sql', image: 'https://i.ibb.co/H724NDW/sql.png'},
-                    {name: 'postgres', image: 'https://i.ibb.co/RTMNjz9/postgresql.png'},
-                    {name: 'android', image: 'https://i.ibb.co/W6XRn8Z/android.png'},
-                    {
-                        name: 'angular',
-                        image: 'https://i.ibb.co/RQMhSnz/angular.png'
-                    },
-                    {
-                        name: 'vue',
-                        image: 'https://i.ibb.co/rk2VcKH/vue.png'
-                    },
-                    {name: 'laravel', image: 'https://i.ibb.co/0MtxRk9/lARA.png'},
-                    {
-                        name: 'django',
-                        image: 'https://i.ibb.co/1s223NF/django.jpg'
-                    },
-                    {name: 'bootstrap', image: 'https://i.ibb.co/bgXz8xY/bootstrap.png'},
-                    {name: 'java', image: 'https://i.ibb.co/n1dts5w/java.png'},
-
-                ],
-                selectedtech: [],
                 active: true,
                 newapplications: true,
                 recommended: true,
-                amount:null
+                amount: null,
+                deadline: null,
+
 
 
             }
         },
         components: {
+            AFormItem,
             ARow,
             ACol,
             RecruiterSider,
             Jobheader,
+
 
 
         },
@@ -1415,6 +1403,7 @@
             const jobId = this.$store.state.route.params.jobId
             // current job
             this.job = (await Marketplace.specificjob(jobId, auth)).data
+            this.deadline = this.job.deadline
             // used as part of system recommendation of candidates
             this.skills = this.job.tech_stack.split(',')
             // allows compatible storage of list to string
@@ -1556,13 +1545,22 @@
 
         },
         methods: {
+            moment,
+            disabledDate(current) {
+                // Can not select days before today and today
+                return current && current < moment().endOf('day');
+            },
+            onDate(date, dateString) {
+
+                this.deadline = dateString
+            },
+
             // acts as filters to project to be asigned under testing stage
             techChoices(tag, checked) {
                 const {selectedtech} = this
                 const nextSelectedTags = checked
                     ? [...selectedtech, tag]
                     : selectedtech.filter(t => t !== tag)
-                console.log('You are interested in: ', nextSelectedTags)
                 this.selectedtech = nextSelectedTags
             },
 
@@ -1587,7 +1585,7 @@
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                     }
-
+                    this.job.deadline = this.deadline
                     const response = await Marketplace.updatejob(this.job.id, this.job, auth)
                     response()
 
@@ -1851,26 +1849,27 @@
                 })
             },
 
-            handleChange(tag, checked) {
-                const {selectedTags} = this
-                const nextSelectedTags = checked
-                    ? [...selectedTags, tag]
-                    : selectedTags.filter(t => t !== tag)
 
-                this.selectedTags = nextSelectedTags
-                let alltags = this.selectedTags.join(", ")
-                this.job.tech_stack = alltags
-            },
-
-            bundleamount(key){
-                if(key === 1){
-                  this.amount = 200
-                }else if(key === 2){
+            bundleamount(key) {
+                if (key === 1) {
+                    this.amount = 200
+                } else if (key === 2) {
                     this.amount = 300
-                }
-                else{
+                } else {
                     this.amount = 500
                 }
+
+            },
+            Pick(){
+                this.$router.push({
+                    name: 'projectlist'
+                })
+
+            },
+            Recommend(){
+                this.$router.push({
+                    name: 'projectdetails'
+                })
 
             }
 
@@ -1895,6 +1894,18 @@
     .customtable {
 
 
+    }
+    .radiochoice {
+        height: 10rem;
+        width: 15rem;
+        margin: 4px;
+
+    }
+    .center1 {
+        margin: auto;
+        width: 32rem;
+
+        padding: 0;
     }
 
 </style>

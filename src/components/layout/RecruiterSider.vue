@@ -482,10 +482,10 @@
             },
 
             onCollapse(collapsed, type) {
-                console.log(collapsed, type);
+                 return type;
             },
             onBreakpoint(broken) {
-                console.log(broken);
+                return broken;
             },
             async mounted() {
 

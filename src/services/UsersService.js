@@ -26,6 +26,12 @@ export default {
   portfolio (id,auth) {
     return Api().get(`getportofolio/${id} `,auth)
   },
+  getallexperiences () {
+    return Api().get(`getallexperience`,)
+  },
+  getallportfolios () {
+    return Api().get(`getallportofolio`,)
+  },
   update (user_id,currentUserProfile,auth) {
     return Api().patch(`updater/${user_id} `,currentUserProfile,auth)
   }

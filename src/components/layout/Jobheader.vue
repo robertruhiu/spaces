@@ -31,10 +31,33 @@
                     <a-icon type="calendar"/>
                     Calendar
                 </a-button>
-                <a-button type="primary" style="margin-left: 1%">
-                    <a-icon type="share-alt" />
-                    Share Job
-                </a-button>
+
+
+                <a-button-group style="margin-left: 1%">
+                    <a-button type="primary" icon="share-alt">Share Job</a-button>
+                    <social-sharing url="https://vuejs.org/"
+                                    :title=job.title
+                                    :description=job.description
+                                    quote="Apply for this job at the link below."
+                                    :hashtags=job.tech_stack
+                                    inline-template>
+                        <network network="facebook">
+                            <a-button type="primary" icon="facebook"/>
+                        </network>
+
+                    </social-sharing>
+                    <social-sharing url="https://vuejs.org/"
+                                    :title=job.title
+                                    :description=job.description
+                                    :hashtags=job.tech_stack
+                                    inline-template>
+
+                        <network network="twitter">
+                            <a-button type="primary" icon="twitter"/>
+                        </network>
+                    </social-sharing>
+
+                </a-button-group>
 
 
             </a-row>
@@ -49,26 +72,34 @@
                 :visible="visible"
                 :width="400"
         >
-            <kalendar :configuration="calendar_settings" :appointments="appointments">
-                <div slot="popup-form" slot-scope="{popup_scope}" style="display: flex; flex-direction: column;">
-                    <h4 style="margin-bottom: 10px">New Appointment</h4>
-                    <input v-model="new_appointment['title']" type="text" name="title" placeholder="Title">
-                    <textarea v-model="new_appointment['description']" type="text" name="description"
-                              placeholder="Description" rows="2"></textarea>
-                    <div class="buttons">
-                        <button class="cancel" @click="popup_scope.close_popup = true">Cancel</button>
-                        <button @click="completeAppointment(popup_scope, new_appointment)">Save</button>
-                    </div>
-                </div>
-                <div slot="details-card" slot-scope="{appointment_props}">
-                    <h4 class="appointment-title">{{appointment_props.data.title}}</h4>
-                    <small v-show="(appointment_props.end - appointment_props.start) > 2">
-                        {{appointment_props.data.description}}
-                    </small>
-                    <span class="time">{{appointment_props.start_value.value | normalizeDate('hh:mm A')}} - {{appointment_props.end_value.value | normalizeDate('hh:mm A')}}</span>
-                </div>
-            </kalendar>
+            <vue-cal xsmall class="vuecal--blue-theme"
+                     ref="vuecal"
+                     default-view="day"
+                     :disable-views="['years', 'year', 'month','week']"
+                     editable-events
+
+            >
+            </vue-cal>
+            <div style="right: 5vw;bottom: 4vh;z-index: 999;position: fixed;">
+                <a-button @click="showChildrenDrawer" type="primary" shape="circle" icon="plus" :size="size"
+                          style="width: 60px;height: 60px"/>
+
+            </div>
+            <a-drawer
+                    title="Two-level Drawer"
+                    width=320
+                    :closable="false"
+                    @close="onChildrenDrawerClose"
+                    :visible="childrenDrawer"
+            >
+                <a-button type="primary" @click="showChildrenDrawer">
+                    This is two-level drawer
+                </a-button>
+            </a-drawer>
+
+
         </a-drawer>
+
 
     </div>
 
@@ -78,9 +109,12 @@
 <script>
 
     import Marketplace from '@/services/Marketplace'
-    import {Kalendar} from 'kalendar-vue';
+
     import 'kalendar-vue/dist/KalendarVue.css';
     import ACol from "ant-design-vue/es/grid/Col";
+    import VueCal from 'vue-cal'
+    import '../../assets/css/vuecal.css'
+    import fab from 'vue-fab'
 
     export default {
         name: "Jobheader",
@@ -90,6 +124,7 @@
                 job: {},
                 visible: false,
                 appointments: [],
+                childrenDrawer: false,
                 calendar_settings: {
                     style: "material_design",
                     view_type: "Day",
@@ -98,13 +133,14 @@
                     scrollToNow: true,
                     current_day: new Date()
                 },
+                bgColor: '#1372cc',
 
 
             }
         },
         components: {
             ACol,
-            Kalendar
+            'vue-cal': VueCal,
 
 
         },
@@ -155,6 +191,16 @@
             onClose() {
                 this.visible = false
             },
+            showChildrenDrawer() {
+                this.childrenDrawer = true
+            },
+            onChildrenDrawerClose() {
+                this.childrenDrawer = false
+            },
+            NewEvent() {
+                this.createEvent = true
+
+            },
             completeAppointment(popup_data, form_data) {
                 let payload = {
                     data: {
@@ -174,7 +220,8 @@
                     title: null
                 };
                 popup_data.close_popup = true;
-            }
+            },
+
         }
 
 

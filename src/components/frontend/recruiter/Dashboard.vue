@@ -1,4 +1,4 @@
-<template>
+ <template>
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
 
         <RecruiterSider/>
@@ -60,6 +60,7 @@
 
                             </a-col>
                         </router-link>
+                        <router-link to="mycandidates">
 
                         <a-col class="boxes" :span="6">
                             <a-row class="ant-card actioncards">
@@ -76,6 +77,7 @@
 
                             </a-row>
                         </a-col>
+                        </router-link>
                         <router-link to="talent">
                             <a-col class="boxes" :span="6">
                                 <a-row class="ant-card actioncards">
