@@ -69,7 +69,7 @@
                                                                     <div style="" slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -138,13 +138,6 @@
                                                                                         assign project test
                                                                                     </a-menu-item>
                                                                                     <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,2)">
-                                                                                        <a-icon
-                                                                                                type="calendar"/>
-                                                                                        schedule interview
-                                                                                    </a-menu-item>
-
-                                                                                    <a-menu-item
                                                                                             @click="handleMenuClick(record.action,record.profile,3)">
                                                                                         <a-icon
                                                                                                 type="close"/>
@@ -209,7 +202,7 @@
                                                                     <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -319,7 +312,7 @@
                                                                     <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -435,7 +428,7 @@
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -465,13 +458,18 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div style="" slot="title">Project/Test assigned
+                                                            <div style="" slot="title">Test assigned
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                                <span style="margin-left: 15%;">
+                                                                <span style="">
+                                                                    <a style="margin-left: 15%;" v-if="record.project" @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,applicationId: record.action}})">
+                                                                        {{record.projectname}}
+                                                                    </a>
+
                                                                     <a-button :size="small"
                                                                               style="background-color: #9c27b0;color: white"
-                                                                              @click="showModal">
+                                                                              v-else
+                                                                              @click="showModal(record.profile,record.action)">
                                                                         <a-icon type="codepen"/>
                                                                         Assign test
                                                                 </a-button>
@@ -490,10 +488,13 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div slot="title">Test report
+                                                            <div slot="title">Report status
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                        <span style="margin-left: 25%">
+                                                        <span v-if="record.test_stage" style="margin-left: 20%">
+                                                            {{record.test_stage}}
+                                                        </span>
+                                                                <span v-else style="margin-left: 20%">
                                                             --
                                                         </span>
                                                             </template>
@@ -513,18 +514,14 @@
                                                                 <a-dropdown>
                                                                     <a-menu slot="overlay">
 
-                                                                        <a-menu-item
+
+                                                                        <a-menu-item v-if="record.test_stage ==='complete'"
                                                                                 @click="handleTestMenuClick(record.action,record.profile,2)">
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
                                                                         </a-menu-item>
-                                                                        <a-menu-item
-                                                                                @click="handleTestMenuClick(record.action,record.profile,3)">
-                                                                            <a-icon
-                                                                                    type="like"/>
-                                                                            make offer
-                                                                        </a-menu-item>
+
                                                                         <a-menu-item
                                                                                 @click="handleTestMenuClick(record.action,record.profile,4)">
                                                                             <a-icon
@@ -585,7 +582,7 @@
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -735,7 +732,7 @@
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -825,7 +822,7 @@
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateID: record.profile,jobID:job.id}})">profile</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -1192,25 +1189,26 @@
 
 
                     >
-                        <p style="text-align: center;">Would you like to get a project recommendation or pick a project?</p>
+                        <p style="text-align: center;">Would you like to get a project recommendation or pick a
+                            project?</p>
                         <a-row :gutter="16">
                             <a-col :span="12">
-                                <a @click="Pick">
+                                <a @click="navigateTo({name:'projectlist'})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%"
-                                     src="../../../assets/images/pick.png">
-                                <p style="text-align: center">Pick one by myself</p>
+                                             src="../../../assets/images/pick.png">
+                                        <p style="text-align: center">Pick one by myself</p>
 
                                     </div>
 
                                 </a>
                             </a-col>
                             <a-col :span="12">
-                                <a @click="Recommend">
+                                <a @click="navigateTo({name:'projectdetails',params:{jobId:job.id,candidateId: candidate,applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
-                                     src="../../../assets/images/recommend.png">
-                                <p style="text-align: center">Get recommendation</p>
+                                             src="../../../assets/images/recommend.png">
+                                        <p style="text-align: center">Get recommendation</p>
 
                                     </div>
 
@@ -1219,7 +1217,6 @@
                         </a-row>
 
                     </a-modal>
-
 
 
                 </div>
@@ -1299,13 +1296,31 @@
             key: 'action',
 
         },
+        {
+            title: 'Test_stage',
+            dataIndex: 'test_stage',
+            key: 'test_stage',
+
+        },
+        {
+            title: 'Project',
+            dataIndex: 'project',
+            key: 'project',
+
+        },
+        {
+            title: 'Projectname',
+            dataIndex: 'projectname',
+            key: 'projectname',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project,projectname) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1313,6 +1328,9 @@
             this.action = pk
             this.tags = tags;
             this.selected = selected;
+            this.test_stage = test_stage;
+            this.project = project
+            this.projectname =projectname
 
 
         }
@@ -1341,7 +1359,7 @@
     import Marketplace from '@/services/Marketplace'
     import Jobheader from '@/components/layout/Jobheader'
     import RecruiterSider from "../../layout/RecruiterSider";
-
+    import Projectsservice from '@/services/Projects'
 
 
     export default {
@@ -1374,7 +1392,9 @@
                 recommended: true,
                 amount: null,
                 deadline: null,
-
+                candidate: null,
+                applicationid: null,
+                projects: []
 
 
             }
@@ -1385,7 +1405,6 @@
             ACol,
             RecruiterSider,
             Jobheader,
-
 
 
         },
@@ -1410,6 +1429,7 @@
             let temptaglist = this.job.tech_stack;
             this.tags = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',')
 
+            this.projects = Projectsservice.allprojects(auth)
 
             // getting applicants for job
             this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
@@ -1418,8 +1438,8 @@
             for (let i = 0; i < this.alldevs.length; i++) { //all users
                 for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
                     for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                        if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
 
+                        if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
                             let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
                             let stage = this.applicants[j].stage
                             let id = this.applicants[j].id
@@ -1427,13 +1447,17 @@
                             let user_id = this.applicants[j].candidate
                             let name = this.alldevs[i].username
                             let selected = this.applicants[j].selected
+                            let test_stage = this.applicants[j].test_stage
+                            let project = this.applicants[j].project
+                            let projectname = this.applicants[j].projectname
                             let onepickeddev = new Applicant(
-                                id, name, stage, tags, user_id, selected, pk
+                                id, name, stage, tags, user_id, selected, pk, test_stage, project,projectname
                             );
 
                             this.applicantprofile.push(onepickeddev)
 
                         }
+
                     }
 
                 }
@@ -1568,8 +1592,10 @@
                 this.test = checkedValues
             },
 
-            showModal() {
+            showModal(dev, application) {
                 this.visible = true
+                this.candidate = dev
+                this.applicationid = application
             },
 
             handleOk(e) {
@@ -1859,20 +1885,7 @@
                     this.amount = 500
                 }
 
-            },
-            Pick(){
-                this.$router.push({
-                    name: 'projectlist'
-                })
-
-            },
-            Recommend(){
-                this.$router.push({
-                    name: 'projectdetails'
-                })
-
             }
-
 
 
         },
@@ -1895,12 +1908,14 @@
 
 
     }
+
     .radiochoice {
         height: 10rem;
         width: 15rem;
         margin: 4px;
 
     }
+
     .center1 {
         margin: auto;
         width: 32rem;

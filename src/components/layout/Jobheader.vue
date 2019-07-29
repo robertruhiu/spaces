@@ -110,7 +110,6 @@
 
     import Marketplace from '@/services/Marketplace'
 
-    import 'kalendar-vue/dist/KalendarVue.css';
     import ACol from "ant-design-vue/es/grid/Col";
     import VueCal from 'vue-cal'
     import '../../assets/css/vuecal.css'

@@ -15,6 +15,8 @@ import SocialSharing from 'vue-social-sharing'
 require('vue-select-image/dist/vue-select-image.css')
 Vue.use(VueSelectImage)
 Vue.use(SocialSharing)
+import VueYoutube from 'vue-youtube'
+Vue.use(VueYoutube)
 const config = {
     fastExit: false
 }
@@ -53,6 +55,7 @@ import {
     DatePicker,
     Steps,
     Timeline,
+    Skeleton
 
 
 
@@ -90,6 +93,7 @@ Vue.use(Progress)
 Vue.use(DatePicker)
 Vue.use(Steps)
 Vue.use(Timeline)
+Vue.use(Skeleton)
 
 
 

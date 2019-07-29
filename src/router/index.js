@@ -117,8 +117,16 @@ let router =  new Router({
             }
         },
         {
-            path: '/projectdetails',
+            path: '/projectdetails/:jobId/:candidateId/:applicationId',
             name: 'projectdetails',
+            component: Projectdetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/pickedprojectdetails/:projectId/:jobId/:candidateId/:applicationId',
+            name: 'pickedprojectdetails',
             component: Projectdetails,
             meta: {
                 requiresAuth: true
@@ -133,7 +141,7 @@ let router =  new Router({
             }
         },
         {
-            path: '/candidateprofile/:candidateID/:jobID',
+            path: '/candidateprofile/:candidateId/:jobId/:applicationId',
             name: 'candidateprofile',
             component: CandidateProfile,
             meta: {

@@ -46,6 +46,9 @@ export default {
     pickreject(jobapplication_id,Currentapplication, auth) {
         return Api().patch(`marketplace/pickreject/${jobapplication_id} `, Currentapplication,auth)
     },
+    retrieveapplication(jobapplication_id, auth) {
+        return Api().get(`marketplace/pickreject/${jobapplication_id} `, auth)
+    },
     candidatemanager(candidatemanagement_id,CurrentCandidate, auth) {
         return Api().patch(`marketplace/candidatemanager/${candidatemanagement_id} `, CurrentCandidate,auth)
     },

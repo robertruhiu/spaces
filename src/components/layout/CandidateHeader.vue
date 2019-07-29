@@ -67,9 +67,9 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateID, auth)).data
-            this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateID, auth)).data
-            this.allapplicant = (await Marketplace.joboneapplicant(this.$route.params.candidateID, this.$route.params.jobID, auth)).data
+            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateId, auth)).data
+            this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
+            this.allapplicant = (await Marketplace.joboneapplicant(this.$route.params.candidateId, this.$route.params.jobId, auth)).data
             this.myapplicant = this.allapplicant[0]
 
 

@@ -72,16 +72,17 @@
                                     </span>
                                     <div style="padding:0 2%">
 
-                                        <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%" v-for="item in portfolio" v-bind:key="item.id">
+                                        <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                             v-for="item in portfolio" v-bind:key="item.id">
                                             <p style="font-weight: 700">{{item.title}}</p>
                                             <p>
                                                 Tools used:
-                                                    <a-tag v-for="tag in item.tags" color="blue"
-                                                           :key="tag">
-                                                        {{tag}}
-                                                    </a-tag>
+                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                       :key="tag">
+                                                    {{tag}}
+                                                </a-tag>
 
-                                                </p>
+                                            </p>
                                             <p>{{item.description}}
                                             </p>
                                             <a :href=" item.demo" target="_blank">view project</a>
@@ -149,8 +150,20 @@
                             </p>
 
                             <p>
-                                <a-button type="primary" @click="showModal">Asign code test</a-button>
+                                <a style="" v-if="application.project" @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
+                                    <strong>Project Assigned:</strong>      {{application.projectname}}
+                                                                    </a>
+                                <a-button :size="small"
+                                          style="background-color: #9c27b0;color: white"
+                                          v-else
+                                          @click="showModal()">
+                                    <a-icon type="codepen"/>
+                                    Assign test
+                                </a-button>
+
                             </p>
+
+
 
 
                         </div>
@@ -159,45 +172,42 @@
                     </a-col>
                 </a-row>
                 <a-modal
-                        title="Pick  technologies "
-                        v-model="visible"
-                        @ok="handleOk"
-                        style="top: 20px;"
+                            title="Project assignments "
+                            v-model="visible"
+                            @ok="handleOk"
+                            style="top: 60px;"
+                            :footer="null"
 
 
-                >
-                    <a-alert style="margin-bottom: 1%"
-                             message="Testing bundle needed to enable project asignment to candidates" type="info"/>
-                    <template slot="footer">
-                        <a-button key="back" @click="handleOk">Return</a-button>
-                        <a-button key="submit" type="primary">
-                            Submit
-                        </a-button>
-                    </template>
-                    <p>My choices :
-                        <span>
-                                <a-tag v-for="tag in selectedtech" color="blue"
-                                       :key="tag">{{tag.name}}</a-tag>
-                            </span>
-                    </p>
-                    <a-row :gutter="8">
-                        <a-col :span="6" v-for=" tag in techchoicestags" :key="tag" style="margin-bottom: 1%;">
-                            <a-checkable-tag
-                                    :key="tag"
-                                    :checked="selectedtech.indexOf(tag) > -1"
-                                    @change="(checked) => techChoices(tag, checked)"
-                                    style="width: 5.6rem;height:6.0rem"
-                            >
-                                <img style="width: 100%;" :src='tag.image'>
-                                <div style="text-align: center;">{{tag.name}}</div>
+                    >
+                        <p style="text-align: center;">Would you like to get a project recommendation or pick a
+                            project?</p>
+                        <a-row :gutter="16">
+                            <a-col :span="12">
+                                <a @click="navigateTo({name:'projectlist'})">
+                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%"
+                                             src="../../../assets/images/pick.png">
+                                        <p style="text-align: center">Pick one by myself</p>
 
-                            </a-checkable-tag>
+                                    </div>
 
-                        </a-col>
-                    </a-row>
+                                </a>
+                            </a-col>
+                            <a-col :span="12">
+                                <a @click="navigateTo({name:'projectdetails',params:{jobId:job.id,candidateId: currentUser.id,applicationId:application.id}})">
+                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
+                                             src="../../../assets/images/recommend.png">
+                                        <p style="text-align: center">Get recommendation</p>
 
+                                    </div>
 
-                </a-modal>
+                                </a>
+                            </a-col>
+                        </a-row>
+
+                    </a-modal>
 
 
             </a-layout-content>
@@ -221,6 +231,7 @@
 
         }
     }
+
     class Portfolio {
         constructor(id, title, description, demo, tech_used) {
             this.key = id;
@@ -236,7 +247,7 @@
 
     import UsersService from '@/services/UsersService'
     import RecruiterSider from "../../layout/RecruiterSider";
-
+    import Marketplace from '@/services/Marketplace'
     import CandidateHeader from "../../layout/CandidateHeader";
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
@@ -253,39 +264,12 @@
                 visible: false,
                 inputVisible: false,
                 inputValue: '',
-                techchoicestags: [
-                    {name: 'javascript', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533210/images/production/icons8-javascript_vsjvup.svg'},
-                    {name: 'react', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533216/images/production/react_hxj4ki.svg'},
-                    {name: 'html', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533441/images/production/css-3_gcvrpj.png'},
-                    {name: 'css', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533441/images/production/html-5_sttz5d.png'},
-                    {name: 'php', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533215/images/production/php_qtwuri.svg'},
-                    {name: 'nodejs', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533210/images/production/icons8-nodejs_xxsktw.svg'},
-                    {name: 'python', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533215/images/production/python_nrtl3e.svg'},
-                    {name: 'sql', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533214/images/production/mysql_qkvupj.svg'},
-                    {name: 'postgres', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532798/images/postgresql_j8ggec.png'},
-                    {name: 'android', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533205/images/production/android_uylhbx.svg'},
-                    {
-                        name: 'angular',
-                        image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532798/images/angular_yntlau.png'
-                    },
-                    {
-                        name: 'vue',
-                        image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532798/images/vue_m4s1mo.png'
-                    },
-                    {name: 'laravel', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563533214/images/production/Laravel_lxvtad.svg'},
-                    {
-                        name: 'django',
-                        image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532797/images/django_nncvxo.jpg'
-                    },
-                    {name: 'bootstrap', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532994/images/bootstrap_fihh5l.png'},
-                    {name: 'java', image: 'https://res.cloudinary.com/dwtvwjhn3/image/upload/v1563532994/images/java_tayu3b.png'},
-
-                ],
-                selectedtech: [],
+                application: {},
                 experienceslist: [],
                 experiences: [],
-                portoliolist:[],
-                portfolio :[]
+                portoliolist: [],
+                portfolio: [],
+                job: {},
             }
         },
         components: {
@@ -303,11 +287,17 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateID, auth)).data
-            this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateID, auth)).data
+            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateId, auth)).data
+            this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
             this.skilltags = this.currentUserProfile.skills.split(',');
-            this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateID, auth)).data
-            this.experienceslist = (await UsersService.experience(this.$route.params.candidateID, auth)).data
+            this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateId, auth)).data
+            this.experienceslist = (await UsersService.experience(this.$route.params.candidateId, auth)).data
+            this.ApplicationId = this.$store.state.route.params.applicationId
+            const jobId = this.$store.state.route.params.jobId
+            // current application
+
+            this.application = (await Marketplace.retrieveapplication(this.ApplicationId, auth)).data
+            this.job = (await Marketplace.specificjob(jobId, auth)).data
 
 
             for (let i = 0; i < this.portfoliolist.length; i++) {
@@ -342,7 +332,6 @@
             }
 
 
-
         },
         methods: {
             // acts as filters to project to be asigned under testing stage
@@ -373,6 +362,7 @@
             },
             showModal() {
                 this.visible = true
+
             },
             handleOk(e) {
 
