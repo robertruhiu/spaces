@@ -1,4 +1,4 @@
- <template>
+<template>
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
 
         <RecruiterSider/>
@@ -62,21 +62,21 @@
                         </router-link>
                         <router-link to="mycandidates">
 
-                        <a-col class="boxes" :span="6">
-                            <a-row class="ant-card actioncards">
-                                <a-col span="8">
-                                    <img class="poolavatar" src="../../../assets/images/statistics.svg">
-                                </a-col>
-                                <a-col span="16">
-                                    <p>Manage My Candidates</p>
-                                    <p style="margin: 0;">Manage and track devs picked from talent pool</p>
+                            <a-col class="boxes" :span="6">
+                                <a-row class="ant-card actioncards">
+                                    <a-col span="8">
+                                        <img class="poolavatar" src="../../../assets/images/statistics.svg">
+                                    </a-col>
+                                    <a-col span="16">
+                                        <p>Manage My Candidates</p>
+                                        <p style="margin: 0;">Manage and track devs picked from talent pool</p>
 
 
-                                </a-col>
+                                    </a-col>
 
 
-                            </a-row>
-                        </a-col>
+                                </a-row>
+                            </a-col>
                         </router-link>
                         <router-link to="talent">
                             <a-col class="boxes" :span="6">
@@ -99,7 +99,7 @@
                     </a-row>
 
                 </div>
-                <div  style="padding: 2% 1%;background-color: white;margin: 2% 1%">
+                <div style="padding: 2% 1%;background-color: white;margin: 2% 1%">
                     <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
                         <a-col :span="12">
 
@@ -187,363 +187,367 @@
                 </div>
                 <!----Post Job drawer------->
                 <a-drawer
-                title="Create a new job"
-                :width="720"
-                @close="onClose"
-                :visible="visible"
-                :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
-        >
-            <form-wizard @on-complete="onComplete"
-                         shape="tab"
-                         color="#007BFF"
-                         title=""
-                         subtitle=""
-            >
-                <tab-content title="Job details"
-                             icon="ti-user">
-                    <a-form :form="form">
-                        <a-row :gutter="32">
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Title">
-                                    <a-input v-model="job.title">
+                        title="Create a new job"
+                        :width="720"
+                        @close="onClose"
+                        :visible="visible"
+                        :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
+                >
+                    <form-wizard @on-complete="onComplete"
+                                 shape="tab"
+                                 color="#007BFF"
+                                 title=""
+                                 subtitle=""
+                    >
+                        <tab-content title="Job details"
+                                     icon="ti-user">
+                            <a-form :form="form">
+                                <a-row :gutter="32">
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Title">
+                                            <a-input v-model="job.title">
 
-                                    </a-input>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Job role">
-                                    <a-select
+                                            </a-input>
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Job role">
+                                            <a-select
 
-                                            placeholder="Select a option"
-                                            v-model="job.job_role"
-                                    >
-                                        <a-select-option value="Full Stack Developer">
-                                            Full Stack Developer
-                                        </a-select-option>
-                                        <a-select-option value="Frontend Developer">
-                                            Frontend Developer
-                                        </a-select-option>
-                                        <a-select-option value="Backend  Developer">
-                                            Backend Developer
-                                        </a-select-option>
-                                        <a-select-option value="Android  Developer">
-                                            Android Developer
-                                        </a-select-option>
-                                        <a-select-option value="Graphic Designer">
-                                            Graphic Designer
-                                        </a-select-option>
-                                        <a-select-option value="IOS Developer">
-                                            IOS Developer
-                                        </a-select-option>
-                                        <a-select-option value="Data Scientist">
-                                            Data Scientist
-                                        </a-select-option>
-                                    </a-select>
-                                </a-form-item>
-
-
-                            </a-col>
-
-
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Developer Experience">
-                                    <a-select
-
-                                            placeholder="Select a option"
-                                            v-model="job.dev_experience"
-                                    >
-                                        <a-select-option value="Entry">
-                                            Entry
-                                        </a-select-option>
-                                        <a-select-option value="Junior">
-                                            Junior
-                                        </a-select-option>
-                                        <a-select-option value="Mid-Level">
-                                            Mid-Level
-                                        </a-select-option>
-                                        <a-select-option value="Senior">
-                                            Senior
-                                        </a-select-option>
-
-                                    </a-select>
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Contract type">
-                                    <a-select
-
-                                            placeholder="Select a option"
-                                            v-model="job.engagement_type"
-                                    >
-                                        <a-select-option value="Full-time">
-                                            Full-time
-                                        </a-select-option>
-                                        <a-select-option value="Part-time">
-                                            Part-time
-                                        </a-select-option>
-                                        <a-select-option value="Contract">
-                                            Contract
-                                        </a-select-option>
-                                        <a-select-option value="Remote">
-                                            Remote
-                                        </a-select-option>
-                                        <a-select-option value="Freelance">
-                                            Freelance
-                                        </a-select-option>
-
-                                    </a-select>
-                                </a-form-item>
-
-                            </a-col>
-
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Location">
-                                    <country-select v-model="job.location"
-                                                    class="ant-input"
-                                    />
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Salary range per month ">
-                                    <a-input placeholder="1000-1500$" v-model="job.remuneration">
-
-                                    </a-input>
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Deadline ">
-                                    <a-date-picker v-model="job.deadline"
-                                                   placeholder="Applications deadline"
-                                                   format="YYYY-MM-DD HH:mm:ss"
-                                                   :disabledDate="disabledDate"
-                                                   :disabledTime="disabledDateTime"
-                                                   :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
-                                    />
-
-
-                                </a-form-item>
-
-
-                            </a-col>
-                            <a-col :span="12" style="padding-right: 1%">
-                                <a-form-item label="Developers needed ">
-                                    <a-input-number :min="1" v-model="job.num_devs_wanted"/>
-
-
-                                </a-form-item>
-
-
-                            </a-col>
-
-
-                        </a-row>
-
-
-                    </a-form>
-                </tab-content>
-                <tab-content title="Skills of interest"
-                             icon="ti-settings">
-                    <a-row :gutter="16">
-                        <a-col :span="24">
-
-                            <a-form-item>
-                                <p>Pick skills you are looking for</p>
-                                <div>
-
-                                    <template v-for=" tag in recommendationtags">
-                                        <a-checkable-tag style="border-color: blue;font-size: 14px"
-                                                         :key="tag"
-                                                         :checked="selectedTags.indexOf(tag) > -1"
-                                                         @change="(checked) => handleChange(tag, checked)"
-                                        >
-                                            {{tag}}
-                                        </a-checkable-tag>
-                                    </template>
-                                </div>
-
-
-                            </a-form-item>
-                        </a-col>
-                        <a-col :span="24">
-                            <a-form-item
-                                    label="Job description "
-                                    :label-col="{ span: 24 }"
-                                    :wrapper-col="{ span:  24}"
-                            >
-
-                                <a-textarea v-model="job.description"
-                                            placeholder="A bit about the job"
-                                            :rows="6"/>
-                            </a-form-item>
-
-                        </a-col>
-                    </a-row>
-                </tab-content>
-                <tab-content title="Job review"
-                             icon="ti-settings">
-                    <a-form :form="form">
-                        <a-row :gutter="16">
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Title">
-                                    <a-input v-model="job.title">
-
-                                    </a-input>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Job role">
-                                    <a-select
-
-                                            placeholder="Select a option and change input text above"
-                                            v-model="job.job_role"
-                                    >
-                                        <a-select-option value="Full Stack Developer">
-                                            Full Stack Developer
-                                        </a-select-option>
-                                        <a-select-option value="Frontend Developer">
-                                            Frontend Developer
-                                        </a-select-option>
-                                        <a-select-option value="Backend  Developer">
-                                            Backend Developer
-                                        </a-select-option>
-                                        <a-select-option value="Android  Developer">
-                                            Android Developer
-                                        </a-select-option>
-                                        <a-select-option value="Graphic Designer">
-                                            Graphic Designer
-                                        </a-select-option>
-                                        <a-select-option value="IOS Developer">
-                                            IOS Developer
-                                        </a-select-option>
-                                        <a-select-option value="Data Scientist">
-                                            Data Scientist
-                                        </a-select-option>
-                                    </a-select>
-                                </a-form-item>
-
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Developer Experience">
-                                    <a-select
-
-                                            placeholder="Select a option and change input text above"
-                                            v-model="job.dev_experience"
-                                    >
-                                        <a-select-option value="Entry">
-                                            Entry
-                                        </a-select-option>
-                                        <a-select-option value="Junior">
-                                            Junior
-                                        </a-select-option>
-                                        <a-select-option value="Mid-Level">
-                                            Mid-Level
-                                        </a-select-option>
-                                        <a-select-option value="Senior">
-                                            Senior
-                                        </a-select-option>
-
-                                    </a-select>
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Contract type">
-                                    <a-select
-
-
-                                            v-model="job.engagement_type"
-                                    >
-                                        <a-select-option value="Full-time">
-                                            Full-time
-                                        </a-select-option>
-                                        <a-select-option value="Part-time">
-                                            Part-time
-                                        </a-select-option>
-                                        <a-select-option value="Contract">
-                                            Contract
-                                        </a-select-option>
-                                        <a-select-option value="Remote">
-                                            Remote
-                                        </a-select-option>
-                                        <a-select-option value="Freelance">
-                                            Freelance
-                                        </a-select-option>
-
-                                    </a-select>
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item>
-                                    <span>Location : {{job.location}}</span>
-                                    <country-select v-model="job.location"
-                                                    class="ant-input"
-                                    />
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="8" style="padding-right: 1%">
-                                <a-form-item label="Salary range ">
-                                    <a-input placeholder="1000-1500$" v-model="job.remuneration">
-
-                                    </a-input>
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="24">
-
-                                <a-form-item>
-                                    <p>Pick skills you are looking for</p>
-                                    <div>
-
-                                        <template v-for=" tag in recommendationtags">
-                                            <a-checkable-tag style="border-color: blue;font-size: 14px"
-                                                             :key="tag"
-                                                             :checked="selectedTags.indexOf(tag) > -1"
-                                                             @change="(checked) => handleChange(tag, checked)"
+                                                    placeholder="Select a option"
+                                                    v-model="job.job_role"
                                             >
-                                                {{tag}}
-                                            </a-checkable-tag>
-                                        </template>
-                                    </div>
+                                                <a-select-option value="Full Stack Developer">
+                                                    Full Stack Developer
+                                                </a-select-option>
+                                                <a-select-option value="Frontend Developer">
+                                                    Frontend Developer
+                                                </a-select-option>
+                                                <a-select-option value="Backend  Developer">
+                                                    Backend Developer
+                                                </a-select-option>
+                                                <a-select-option value="Android  Developer">
+                                                    Android Developer
+                                                </a-select-option>
+                                                <a-select-option value="Graphic Designer">
+                                                    Graphic Designer
+                                                </a-select-option>
+                                                <a-select-option value="IOS Developer">
+                                                    IOS Developer
+                                                </a-select-option>
+                                                <a-select-option value="Data Scientist">
+                                                    Data Scientist
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-item>
 
 
-                                </a-form-item>
-                                <a-form-item label="Application Deadline">
-                                    <a-date-picker v-model="job.deadline"
-                                                   format="YYYY-MM-DD HH:mm:ss"
-                                                   :disabledDate="disabledDate"
-                                                   :disabledTime="disabledDateTime"
-                                                   :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
-                                    />
-                                </a-form-item>
-
-                            </a-col>
-                            <a-col :span="24">
-                                <a-form-item
-                                        label="Job description "
-                                        :label-col="{ span: 24 }"
-                                        :wrapper-col="{ span:  24}"
-                                >
-
-                                    <a-textarea v-model="job.description"
-                                                placeholder="A bit about the job"
-                                                :rows="6"/>
-                                </a-form-item>
-
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </tab-content>
+                                    </a-col>
 
 
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Developer Experience">
+                                            <a-select
 
-            </form-wizard>
-        </a-drawer>
+                                                    placeholder="Select a option"
+                                                    v-model="job.dev_experience"
+                                            >
+                                                <a-select-option value="Entry">
+                                                    Entry
+                                                </a-select-option>
+                                                <a-select-option value="Junior">
+                                                    Junior
+                                                </a-select-option>
+                                                <a-select-option value="Mid-Level">
+                                                    Mid-Level
+                                                </a-select-option>
+                                                <a-select-option value="Senior">
+                                                    Senior
+                                                </a-select-option>
+
+                                            </a-select>
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Contract type">
+                                            <a-select
+
+                                                    placeholder="Select a option"
+                                                    v-model="job.engagement_type"
+                                            >
+                                                <a-select-option value="Full-time">
+                                                    Full-time
+                                                </a-select-option>
+                                                <a-select-option value="Part-time">
+                                                    Part-time
+                                                </a-select-option>
+                                                <a-select-option value="Contract">
+                                                    Contract
+                                                </a-select-option>
+                                                <a-select-option value="Remote">
+                                                    Remote
+                                                </a-select-option>
+                                                <a-select-option value="Freelance">
+                                                    Freelance
+                                                </a-select-option>
+
+                                            </a-select>
+                                        </a-form-item>
+
+                                    </a-col>
+
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Location">
+                                            <country-select v-model="job.location"
+                                                            class="ant-input"
+                                            />
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Salary range per month ">
+                                            <a-input placeholder="1000-1500$" v-model="job.remuneration">
+
+                                            </a-input>
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Deadline ">
+                                            <a-date-picker v-model="job.deadline"
+                                                           placeholder="Applications deadline"
+                                                           format="YYYY-MM-DD HH:mm:ss"
+                                                           :disabledDate="disabledDate"
+                                                           :disabledTime="disabledDateTime"
+                                                           :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
+                                            />
+
+
+                                        </a-form-item>
+
+
+                                    </a-col>
+                                    <a-col :span="12" style="padding-right: 1%">
+                                        <a-form-item label="Developers needed ">
+                                            <a-input-number :min="1" v-model="job.num_devs_wanted"/>
+
+
+                                        </a-form-item>
+
+
+                                    </a-col>
+
+
+                                </a-row>
+
+
+                            </a-form>
+                        </tab-content>
+                        <tab-content title="Skills of interest"
+                                     icon="ti-settings">
+                            <a-row :gutter="16">
+                                <a-col :span="24">
+
+                                    <a-form-item>
+                                        <p>Pick skills you are looking for</p>
+                                        <div>
+
+                                            <template v-for=" tag in recommendationtags">
+                                                <a-checkable-tag style="border-color: blue;font-size: 14px"
+                                                                 :key="tag"
+                                                                 :checked="selectedTags.indexOf(tag) > -1"
+                                                                 @change="(checked) => handleChange(tag, checked)"
+                                                >
+                                                    {{tag}}
+                                                </a-checkable-tag>
+                                            </template>
+                                        </div>
+
+
+                                    </a-form-item>
+                                </a-col>
+                                <a-col :span="24">
+                                    <a-form-item
+                                            label="Job description "
+                                            :label-col="{ span: 24 }"
+                                            :wrapper-col="{ span:  24}"
+                                    >
+
+                                        <a-textarea v-model="job.description"
+                                                    placeholder="A bit about the job"
+                                                    :rows="6"/>
+                                    </a-form-item>
+
+                                </a-col>
+                            </a-row>
+                        </tab-content>
+                        <tab-content title="Job review"
+                                     icon="ti-settings">
+                            <a-form :form="form">
+                                <a-row :gutter="16">
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Title">
+                                            <a-input v-model="job.title">
+
+                                            </a-input>
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Job role">
+                                            <a-select
+
+                                                    placeholder="Select a option and change input text above"
+                                                    v-model="job.job_role"
+                                            >
+                                                <a-select-option value="Full Stack Developer">
+                                                    Full Stack Developer
+                                                </a-select-option>
+                                                <a-select-option value="Frontend Developer">
+                                                    Frontend Developer
+                                                </a-select-option>
+                                                <a-select-option value="Backend  Developer">
+                                                    Backend Developer
+                                                </a-select-option>
+                                                <a-select-option value="Android  Developer">
+                                                    Android Developer
+                                                </a-select-option>
+                                                <a-select-option value="Graphic Designer">
+                                                    Graphic Designer
+                                                </a-select-option>
+                                                <a-select-option value="IOS Developer">
+                                                    IOS Developer
+                                                </a-select-option>
+                                                <a-select-option value="Data Scientist">
+                                                    Data Scientist
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-item>
+
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Developer Experience">
+                                            <a-select
+
+                                                    placeholder="Select a option and change input text above"
+                                                    v-model="job.dev_experience"
+                                            >
+                                                <a-select-option value="Entry">
+                                                    Entry
+                                                </a-select-option>
+                                                <a-select-option value="Junior">
+                                                    Junior
+                                                </a-select-option>
+                                                <a-select-option value="Mid-Level">
+                                                    Mid-Level
+                                                </a-select-option>
+                                                <a-select-option value="Senior">
+                                                    Senior
+                                                </a-select-option>
+
+                                            </a-select>
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Contract type">
+                                            <a-select
+
+
+                                                    v-model="job.engagement_type"
+                                            >
+                                                <a-select-option value="Full-time">
+                                                    Full-time
+                                                </a-select-option>
+                                                <a-select-option value="Part-time">
+                                                    Part-time
+                                                </a-select-option>
+                                                <a-select-option value="Contract">
+                                                    Contract
+                                                </a-select-option>
+                                                <a-select-option value="Remote">
+                                                    Remote
+                                                </a-select-option>
+                                                <a-select-option value="Freelance">
+                                                    Freelance
+                                                </a-select-option>
+
+                                            </a-select>
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item>
+                                            <span>Location : {{job.location}}</span>
+                                            <country-select v-model="job.location"
+                                                            class="ant-input"
+                                            />
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="Salary range ">
+                                            <a-input placeholder="1000-1500$" v-model="job.remuneration">
+
+                                            </a-input>
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="24">
+
+                                        <a-form-item>
+                                            <p>Pick skills you are looking for</p>
+                                            <div>
+
+                                                <template v-for=" tag in recommendationtags">
+                                                    <a-checkable-tag style="border-color: blue;font-size: 14px"
+                                                                     :key="tag"
+                                                                     :checked="selectedTags.indexOf(tag) > -1"
+                                                                     @change="(checked) => handleChange(tag, checked)"
+                                                    >
+                                                        {{tag}}
+                                                    </a-checkable-tag>
+                                                </template>
+                                            </div>
+
+
+                                        </a-form-item>
+                                        <a-form-item label="Application Deadline">
+                                            <a-date-picker v-model="job.deadline"
+                                                           format="YYYY-MM-DD HH:mm:ss"
+                                                           :disabledDate="disabledDate"
+                                                           :disabledTime="disabledDateTime"
+                                                           :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
+                                            />
+                                        </a-form-item>
+
+                                    </a-col>
+                                    <a-col :span="24">
+                                        <a-form-item
+                                                label="Job description "
+                                                :label-col="{ span: 24 }"
+                                                :wrapper-col="{ span:  24}"
+                                        >
+
+                                            <a-textarea v-model="job.description"
+                                                        placeholder="A bit about the job"
+                                                        :rows="6"/>
+                                        </a-form-item>
+
+                                    </a-col>
+                                </a-row>
+                            </a-form>
+                        </tab-content>
+                        {{job}}
+
+
+
+
+
+                    </form-wizard>
+
+                </a-drawer>
 
             </a-layout-content>
 
@@ -590,11 +594,11 @@
                 inputVisible: false,
                 currentUser: {},
                 inputValue: '',
-                recommendationtags: ['Django','Javascript','Python','Php','Postgres','Sql', 'Html', 'Css', 'bootstrap','React','Java',
-                'React Native','Redux','Flask ','Go','Expressjs','Vuejs',
-                    'Angular','Ios','flutter','Ionic','Rails','Meteor','AI','Cybersecurity',
-                    'Blockchain','Arduino','Spring','Bitcoin','Kotlin','Scala','Nativescript ',
-                'Android','Website','Mobile'],
+                recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                    'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
+                    'Android', 'Website', 'Mobile'],
                 selectedTags: [],
 
             }
@@ -649,7 +653,7 @@
 
         },
         methods: {
-             moment,
+            moment,
             disabledDate(current) {
                 // Can not select days before today and today
                 return current && current < moment().endOf('day');
@@ -661,20 +665,29 @@
             onBreakpoint(broken) {
                 console.log(broken);
             },
-            onComplete: async function () {
-                this.$router.push({
-                        name: 'managejobs'
-                    })
+            async onComplete() {
+
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                const response = (await Marketplace.createjob(this.job, auth))
-                response()
-                this.visible = false
+                Marketplace.createjob(this.job, auth)
+                    .then(resp => {
+                        this.visible = false
+                        this.$router.push({
+                            name: 'managejobs'
+                        })
 
 
+                    })
+                    .catch(error => {
+                        this.visible = false
+                        this.$router.push({
+                            name: 'recruiter'
+                        })
+
+                    });
 
 
             },

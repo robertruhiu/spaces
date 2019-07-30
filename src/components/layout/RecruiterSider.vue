@@ -495,20 +495,29 @@
 
 
             },
-            onComplete: async function () {
-                this.$router.push({
-                        name: 'managejobs'
-                    })
+            async onComplete() {
+
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                const response = (await Marketplace.createjob(this.job, auth))
-                response()
-                this.visible = false
+                Marketplace.createjob(this.job, auth)
+                    .then(resp => {
+                        this.visible = false
+                        this.$router.push({
+                            name: 'managejobs'
+                        })
 
 
+                    })
+                    .catch(error => {
+                        this.visible = false
+                        this.$router.push({
+                            name: 'recruiter'
+                        })
+
+                    });
 
 
             },

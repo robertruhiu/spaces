@@ -108,7 +108,7 @@
                                     </a-col>
                                     <a-col span="15" style="padding: 2%">
                                         <p>Bio</p>
-                                        <p>{{item.about | truncate(100)}}<a @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})"">read more</a>
+                                        <p>{{item.about | truncate(100)}}<a @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read more</a>
                                         </p>
 
                                         <p>
@@ -186,7 +186,6 @@
 
     import "../../../assets/css/styles.css";
     import Pageheader from '@/components/layout/Header.vue'
-    import Footer from '@/components/layout/Footer.vue'
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService';
@@ -255,7 +254,7 @@
             ACol,
             ARow,
             Pageheader,
-            Footer
+
         },
 
         async mounted() {
