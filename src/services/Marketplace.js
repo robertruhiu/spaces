@@ -52,6 +52,10 @@ export default {
     candidatemanager(candidatemanagement_id,CurrentCandidate, auth) {
         return Api().patch(`marketplace/candidatemanager/${candidatemanagement_id} `, CurrentCandidate,auth)
     },
+    retrievecandidate(application_id, auth) {
+        return Api().get(`marketplace/candidatemanager/${application_id} `, auth)
+    },
+
     unpublishjob(job_id,Currentjob, auth) {
         return Api().patch(`marketplace/unpublishjob/${job_id} `, Currentjob,auth)
     },

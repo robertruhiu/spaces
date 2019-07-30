@@ -9,7 +9,7 @@
                             <span>
                                 <span style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
                                 {{currentUser.username |capitalize}}</span>
-                                <span style="float: right">
+                                <span style="float: right" v-if="myapplicant.test_stage === 'complete'">
                                     <a-button type="primary">Schedule Interview</a-button>
                                 </span>
                             </span>

@@ -59,7 +59,7 @@
             </a-menu-item>
 
             <a-menu-item key="6">
-                <router-link to="/talent">
+                <router-link to="/myprofile">
                     <a-icon type="user"/>
                     <span>My profile</span>
                 </router-link>
@@ -462,7 +462,11 @@
                 currentUser: {},
                 inputVisible: false,
                 inputValue: '',
-                recommendationtags: ['Movies', 'Books', 'Music', 'Sports'],
+                recommendationtags: ['Django','Javascript','Python','Php','Postgres','Sql', 'Html', 'Css', 'bootstrap','React','Java',
+                'React Native','Redux','Flask ','Go','Expressjs','Vuejs',
+                    'Angular','Ios','flutter','Ionic','Rails','Meteor','AI','Cybersecurity',
+                    'Blockchain','Arduino','Spring','Bitcoin','Kotlin','Scala','Nativescript ',
+                'Android','Website','Mobile'],
                 selectedTags: [],
 
             }

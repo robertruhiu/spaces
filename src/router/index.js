@@ -10,15 +10,18 @@ import Terms from '@/components/frontend/homepages/terms'
 import JobBoard from '@/components/frontend/homepages/jobboard'
 import JobDetails from '@/components/frontend/homepages/jobdetails'
 import RecruiterDashboard from '@/components/frontend/recruiter/Dashboard'
-import ManageJobs from '@/components/frontend/recruiter/Managejob'
-import MyCandidates from '@/components/frontend/recruiter/Mycandidates'
+import ManageJobs from '@/components/frontend/recruiter/job/Managejob'
+import MyCandidates from '@/components/frontend/recruiter/candidates/Mycandidates'
 import TalentProfile from '@/components/frontend/recruiter/candidatetalentprofile'
-import CandidateProfile from '@/components/frontend/recruiter/candidateprofile'
-import Job from '@/components/frontend/recruiter/job'
-import Projectdetails from '@/components/frontend/recruiter/projectdetails'
+import CandidateProfile from '@/components/frontend/recruiter/job/candidateprofile'
+import MyCandidateProfile from '@/components/frontend/recruiter/candidates/mycandidatesprofile'
+import Job from '@/components/frontend/recruiter/job/job'
+import Projectdetails from '@/components/frontend/recruiter/job/projectdetails'
+import MyProjectdetails from '@/components/frontend/recruiter/candidates/myprojectdetails'
 import Projectlist from '@/components/frontend/recruiter/projectlist'
 import Calendar from '@/components/frontend/recruiter/calendar'
 import DeveloperDashboard from '@/components/frontend/developer/DevDashboard'
+import Myprofile from '@/components/frontend/recruiter/Myprofile'
 
 Vue.use(Router);
 
@@ -55,6 +58,14 @@ let router =  new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/myprofile',
+            name: 'myprofile',
+            component: Myprofile,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/talent',
@@ -125,9 +136,25 @@ let router =  new Router({
             }
         },
         {
+            path: '/myprojectdetails/:userId/:candidateId/:applicationId',
+            name: 'myprojectdetails',
+            component: MyProjectdetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/pickedprojectdetails/:projectId/:jobId/:candidateId/:applicationId',
             name: 'pickedprojectdetails',
             component: Projectdetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/mypickedprojectdetails/:projectId/:candidateId/:applicationId',
+            name: 'mypickedprojectdetails',
+            component: MyProjectdetails,
             meta: {
                 requiresAuth: true
             }
@@ -148,6 +175,15 @@ let router =  new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/mycandidatesprofile/:candidateId/:applicationId',
+            name: 'mycandidatesprofile',
+            component: MyCandidateProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
         {
             path: '/candidatetalentprofile/:candidateProfileID',
             name: 'candidatetalentprofile',
