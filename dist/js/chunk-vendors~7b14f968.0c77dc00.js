@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-vendors~7b14f968"],{a600:function(n,a,o){"use strict";var c=o("c1b3"),t=o("452c");c["a"].Button=t["a"],c["a"].install=function(n){n.component(c["a"].name,c["a"]),n.component(t["a"].name,t["a"])},a["a"]=c["a"]}}]);
-//# sourceMappingURL=chunk-vendors~7b14f968.0c77dc00.js.map

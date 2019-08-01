@@ -1,27 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store/store'
-import Home from '@/components/frontend/homepages/Home'
-import Register from '@/components/frontend/homepages/Register'
-import Login from '@/components/frontend/homepages/Login'
-import Talent from '@/components/frontend/homepages/talent'
-import Privacy from '@/components/frontend/homepages/privacy'
-import Terms from '@/components/frontend/homepages/terms'
-import JobBoard from '@/components/frontend/homepages/jobboard'
-import JobDetails from '@/components/frontend/homepages/jobdetails'
-import RecruiterDashboard from '@/components/frontend/recruiter/Dashboard'
-import ManageJobs from '@/components/frontend/recruiter/job/Managejob'
-import MyCandidates from '@/components/frontend/recruiter/candidates/Mycandidates'
-import TalentProfile from '@/components/frontend/recruiter/candidatetalentprofile'
-import CandidateProfile from '@/components/frontend/recruiter/job/candidateprofile'
-import MyCandidateProfile from '@/components/frontend/recruiter/candidates/mycandidatesprofile'
-import Job from '@/components/frontend/recruiter/job/job'
-import Projectdetails from '@/components/frontend/recruiter/job/projectdetails'
-import MyProjectdetails from '@/components/frontend/recruiter/candidates/myprojectdetails'
-import Projectlist from '@/components/frontend/recruiter/projectlist'
-import Calendar from '@/components/frontend/recruiter/calendar'
-import DeveloperDashboard from '@/components/frontend/developer/DevDashboard'
-import Myprofile from '@/components/frontend/recruiter/Myprofile'
+const  Home = () => import('@/components/frontend/homepages/Home')
+const  Register = () => import('@/components/frontend/homepages/Register')
+const  Login = () => import('@/components/frontend/homepages/Login')
+const  Talent = () => import('@/components/frontend/homepages/talent')
+const  Privacy = () => import('@/components/frontend/homepages/privacy')
+const  Terms = () => import('@/components/frontend/homepages/terms')
+const  JobBoard = () => import('@/components/frontend/homepages/jobboard')
+const  JobDetails = () => import('@/components/frontend/homepages/jobdetails')
+const  RecruiterDashboard = () => import('@/components/frontend/recruiter/Dashboard')
+const  ManageJobs = () => import('@/components/frontend/recruiter/job/Managejob')
+const  MyCandidates = () => import('@/components/frontend/recruiter/candidates/Mycandidates')
+const  TalentProfile = () => import('@/components/frontend/recruiter/candidatetalentprofile')
+const  CandidateProfile = () => import('@/components/frontend/recruiter/job/candidateprofile')
+const  MyCandidateProfile = () => import('@/components/frontend/recruiter/candidates/mycandidatesprofile')
+const  Job = () => import('@/components/frontend/recruiter/job/job')
+const  Projectdetails = () => import('@/components/frontend/recruiter/job/projectdetails')
+const  MyProjectdetails = () => import('@/components/frontend/recruiter/candidates/myprojectdetails')
+const  Projectlist = () => import('@/components/frontend/recruiter/projectlist')
+const  Calendar = () => import('@/components/frontend/recruiter/calendar')
+const  DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
+const  Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
+
 
 Vue.use(Router);
 
