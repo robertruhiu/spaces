@@ -91,7 +91,8 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            if(this.$store.state.user.pk){
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
             this.skills = this.job.tech_stack.split(',');
             this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
@@ -102,6 +103,8 @@
                     }
                 }
             }
+            }
+
 
 
         },

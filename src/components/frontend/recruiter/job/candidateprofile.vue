@@ -345,7 +345,11 @@
 
             }
             // recent projects
-            this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+            if(this.$store.state.user.pk){
+                this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+
+            }
+
 
 
         },

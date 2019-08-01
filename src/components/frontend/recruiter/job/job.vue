@@ -1044,60 +1044,65 @@
                                             <a-row :gutter="8">
                                                 <a-col :span="8">
                                                     <a-card
-                                                    hoverable
-                                                    style="width: 10rem"
-                                            >
+                                                            hoverable
+                                                            style="width: 10rem"
+                                                    >
 
-                                                <a-card-meta
-                                                        title="$200">
-                                                    <template slot="description">
-                                                        <p>10 candidates</p>
-                                                        <a-button v-model="amount" @click="bundleamount(1)">Pick</a-button>
+                                                        <a-card-meta
+                                                                title="$200">
+                                                            <template slot="description">
+                                                                <p>10 candidates</p>
+                                                                <a-button v-model="amount" @click="bundleamount(1)">
+                                                                    Pick
+                                                                </a-button>
 
-                                                    </template>
+                                                            </template>
 
-                                                </a-card-meta>
-                                            </a-card>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                                    <a-card
-                                                    hoverable
-                                                    style="width: 10rem"
-                                            >
-
-                                                <a-card-meta
-                                                        title="$300">
-                                                    <template slot="description">
-                                                        <p>15 candidates</p>
-                                                        <a-button v-model="amount" @click="bundleamount(2)">Pick</a-button>
-
-                                                    </template>
-
-                                                </a-card-meta>
-                                            </a-card>
+                                                        </a-card-meta>
+                                                    </a-card>
 
                                                 </a-col>
                                                 <a-col :span="8">
                                                     <a-card
-                                                    hoverable
-                                                    style="width: 10rem"
-                                            >
+                                                            hoverable
+                                                            style="width: 10rem"
+                                                    >
 
-                                                <a-card-meta
-                                                        title="$500">
-                                                    <template slot="description">
-                                                        <p>25 candidates</p>
-                                                        <a-button v-model="amount" @click="bundleamount(3)">Pick</a-button>
+                                                        <a-card-meta
+                                                                title="$300">
+                                                            <template slot="description">
+                                                                <p>15 candidates</p>
+                                                                <a-button v-model="amount" @click="bundleamount(2)">
+                                                                    Pick
+                                                                </a-button>
 
-                                                    </template>
+                                                            </template>
 
-                                                </a-card-meta>
-                                            </a-card>
+                                                        </a-card-meta>
+                                                    </a-card>
+
+                                                </a-col>
+                                                <a-col :span="8">
+                                                    <a-card
+                                                            hoverable
+                                                            style="width: 10rem"
+                                                    >
+
+                                                        <a-card-meta
+                                                                title="$500">
+                                                            <template slot="description">
+                                                                <p>25 candidates</p>
+                                                                <a-button v-model="amount" @click="bundleamount(3)">
+                                                                    Pick
+                                                                </a-button>
+
+                                                            </template>
+
+                                                        </a-card-meta>
+                                                    </a-card>
 
                                                 </a-col>
                                             </a-row>
-
 
 
                                         </a-col>
@@ -1184,103 +1189,96 @@
                     </a-modal>
                     <a-modal
 
-                        v-model="interviewmodal"
+                            v-model="interviewmodal"
 
-
-                >
-                    <template slot="title">
-
-
-
-
-                    </template>
-
-                    <a-form
-                            :form="form"
 
                     >
-                        <a-form-item
-                                label="Interview with"
-                                :label-col="{ span: 5 }"
-                                :wrapper-col="{ span: 10 }"
+                        <template slot="title">
+
+
+                        </template>
+
+                        <a-form
+                                :form="form"
+
                         >
-                            <a-input v-model="candidatename"/>
-                        </a-form-item>
-
-
-
-
-                        <a-form-item label="Start "
-                                     :label-col="{ span: 5 }"
-                                     :wrapper-col="{ span: 8 }">
-
-                            <a-date-picker
-                                    v-model="starttime"
-
-                                    showTime
-                                    format="YYYY-MM-DD HH:mm"
-                                    placeholder="Select Time"
-                                    @change="onChange"
-                                    @ok="onOk"
-                            />
-
-
-                        </a-form-item>
-                        <a-form-item label="Finish "
-                                     :label-col="{ span: 5 }"
-                                     :wrapper-col="{ span: 8 }">
-                            <a-date-picker
-                                    v-model="endtime"
-                                    showTime
-                                    format="YYYY-MM-DD HH:mm"
-                                    placeholder="Select Time"
-                                    @change="onChange"
-                                    @ok="onOk"
-                            />
-
-
-                        </a-form-item>
-                        <a-form-item label="Event color"
-                                     :label-col="{ span: 5 }"
-                                     :wrapper-col="{ span: 3 }">
-                            <a-select
-                                    defaultValue="blue"
-                                    @change="handleSelectChange"
+                            <a-form-item
+                                    label="Interview with"
+                                    :label-col="{ span: 5 }"
+                                    :wrapper-col="{ span: 10 }"
                             >
-                                <a-select-option value="blue">
-                                    <a-tag color="#029BE4" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="green">
-                                    <a-tag color="#3BB679" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="purple">
-                                    <a-tag color="#a515ae" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="tomato">
-                                    <a-tag color="tomato" class="eventcolors"></a-tag>
-                                </a-select-option>
-                            </a-select>
-
-                        </a-form-item>
+                                <a-input v-model="candidatename"/>
+                            </a-form-item>
 
 
+                            <a-form-item label="Start "
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 8 }">
+
+                                <a-date-picker
+                                        v-model="starttime"
+
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+                                        @ok="onOk"
+                                />
 
 
+                            </a-form-item>
+                            <a-form-item label="Finish "
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 8 }">
+                                <a-date-picker
+                                        v-model="endtime"
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+                                        @ok="onOk"
+                                />
 
-                    </a-form>
-                    <template slot="footer">
 
-                        <a-button @click="CreateEvent(interviewcandidateapplicant)"
-                                type="primary"
-                                html-type="submit"
-                        >
-                            Save
-                        </a-button>
+                            </a-form-item>
+                            <a-form-item label="Event color"
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 3 }">
+                                <a-select
+                                        defaultValue="blue"
+                                        @change="handleSelectChange"
+                                >
+                                    <a-select-option value="blue">
+                                        <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="green">
+                                        <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="purple">
+                                        <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="tomato">
+                                        <a-tag color="tomato" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                </a-select>
 
-                    </template>
+                            </a-form-item>
 
 
-                </a-modal>
+                        </a-form>
+                        <template slot="footer">
+
+                            <a-button @click="CreateEvent(interviewcandidateapplicant)"
+                                      type="primary"
+                                      html-type="submit"
+                            >
+                                Save
+                            </a-button>
+
+                        </template>
+
+
+                    </a-modal>
 
 
                 </div>
@@ -1390,7 +1388,7 @@
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname,status) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1468,12 +1466,11 @@
                 applicationid: null,
                 projects: [],
                 recentprojects: [],
-                interviewmodal:false,
-                candidatename:null,
-                starttime:null,
-                endtime:null,
-                interviewcandidateapplicant:null
-
+                interviewmodal: false,
+                candidatename: null,
+                starttime: null,
+                endtime: null,
+                interviewcandidateapplicant: null
 
 
             }
@@ -1493,168 +1490,171 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             };
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            // all developer profile list api fetch
-            this.alldevsprofile = (await UsersService.devs()).data;
-            // all developer users list api fetch
-            this.alldevs = (await UsersService.allusers()).data;
-            const jobId = this.$store.state.route.params.jobId
-            // current job
-            this.job = (await Marketplace.specificjob(jobId, auth)).data
-            this.deadline = this.job.deadline
-            // used as part of system recommendation of candidates
-            this.skills = this.job.tech_stack.split(',')
-            // allows compatible storage of list to string
-            let temptaglist = this.job.tech_stack;
-            this.tags = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',')
+            if (this.$store.state.user.pk) {
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                // all developer profile list api fetch
+                this.alldevsprofile = (await UsersService.devs()).data;
+                // all developer users list api fetch
+                this.alldevs = (await UsersService.allusers()).data;
+                const jobId = this.$store.state.route.params.jobId
+                // current job
+                this.job = (await Marketplace.specificjob(jobId, auth)).data
+                this.deadline = this.job.deadline
+                // used as part of system recommendation of candidates
+                this.skills = this.job.tech_stack.split(',')
+                // allows compatible storage of list to string
+                let temptaglist = this.job.tech_stack;
+                this.tags = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',')
 
-            this.projects = Projectsservice.allprojects(auth)
+                this.projects = Projectsservice.allprojects(auth)
 
-            // getting applicants for job
-            this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
+                // getting applicants for job
+                this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
 
-            // create a profile for each applicant comparision and matching between user,profile and applicant model
-            for (let i = 0; i < this.alldevs.length; i++) { //all users
-                for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
-                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-
-                        if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
-                            let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                            let stage = this.applicants[j].stage
-                            let id = this.applicants[j].id
-                            let pk = this.applicants[j].id
-                            let user_id = this.applicants[j].candidate
-                            let name = this.alldevs[i].username
-                            let selected = this.applicants[j].selected
-                            let test_stage = this.applicants[j].test_stage
-                            let project = this.applicants[j].project
-                            let projectname = this.applicants[j].name
-                            let status = this.applicants[j].interviewstatus
-                            let onepickeddev = new Applicant(
-                                id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname,status
-                            );
-
-                            this.applicantprofile.push(onepickeddev)
-
-                        }
-
-                    }
-
-                }
-            }
-            // applicants sorting
-            for (let i = 0; i < this.applicantprofile.length; i++) {
-                if (this.applicantprofile[i].selected === false && this.applicantprofile[i].stage !== 'rejected') {
-                    this.newapplicant.push(this.applicantprofile[i])
-                } else if (this.applicantprofile[i].selected) {
-                    this.pickedapplicants.push(this.applicantprofile[i])
-
-                }
-                // second part of sorting conditional coz the fist condition met
-                if (this.applicantprofile[i].stage === 'interview') {
-                    this.interviewstage.push(this.applicantprofile[i])
-
-                } else if (this.applicantprofile[i].stage === 'test') {
-                    this.testingstage.push(this.applicantprofile[i])
-
-                } else if (this.applicantprofile[i].stage === 'offer') {
-                    this.offerstage.push(this.applicantprofile[i])
-
-
-                } else if (this.applicantprofile[i].stage === 'hired') {
-                    this.hirestage.push(this.applicantprofile[i])
-
-                }
-
-
-            }
-
-
-            // system recommend candidates (all candidates with matching skill tags - current applicants)
-            let allrecommedednouniquefilter = []
-            for (let x = 0; x < this.alldevsprofile.length; x++) {
-                for (let z = 0; z < this.tags.length; z++) {
-                    if (this.alldevsprofile[x].skills.includes(this.tags[z])) { // direct comparision direct match for now
-                        let user_id = this.alldevsprofile[x].id
-                        allrecommedednouniquefilter.push(user_id)
-
-                    }
-                }
-            }
-
-            // allows unique filter under codeln recommended candidates id
-            function onlyUnique(value, index, self) {
-                return self.indexOf(value) === index;
-            }
-
-            // finds the difference to eliminate candidates already picked/selected or applied from recommended
-            Array.prototype.diff = function (a) {
-                return this.filter(function (i) {
-                    return a.indexOf(i) < 0;
-                });
-            };
-
-
-            let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
-            let allapplicants = []
-            for (let x = 0; x < this.applicants.length; x++) {
-                allapplicants.push(this.applicants[x].candidate)
-            }
-            let recommededlist = allrecommended.diff(allapplicants);
-
-
-            // create a profile for each recommended comparision and matching between user,profile
-            if (recommededlist.length > 0) {
+                // create a profile for each applicant comparision and matching between user,profile and applicant model
                 for (let i = 0; i < this.alldevs.length; i++) { //all users
-                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                        for (let k = 0; k < recommededlist.length; k++) {
-                            if (this.alldevs[i].id === recommededlist[k] && this.alldevsprofile[l].user === this.alldevs[i].id) {
+                    for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
+                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
 
+                            if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
                                 let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                                let stage = 'recommended'
-                                let id = this.alldevs[i].id
-                                let pk = this.alldevs[i].id
-                                let user_id = this.alldevs[i].id
+                                let stage = this.applicants[j].stage
+                                let id = this.applicants[j].id
+                                let pk = this.applicants[j].id
+                                let user_id = this.applicants[j].candidate
                                 let name = this.alldevs[i].username
-                                let selected = false
-                                let onerecommed = new Recommended(
-                                    id, name, stage, tags, user_id, selected, pk
+                                let selected = this.applicants[j].selected
+                                let test_stage = this.applicants[j].test_stage
+                                let project = this.applicants[j].project
+                                let projectname = this.applicants[j].name
+                                let status = this.applicants[j].interviewstatus
+                                let onepickeddev = new Applicant(
+                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status
                                 );
 
-                                this.recommmedcandidates.push(onerecommed)
+                                this.applicantprofile.push(onepickeddev)
 
                             }
 
                         }
 
                     }
+                }
+                // applicants sorting
+                for (let i = 0; i < this.applicantprofile.length; i++) {
+                    if (this.applicantprofile[i].selected === false && this.applicantprofile[i].stage !== 'rejected') {
+                        this.newapplicant.push(this.applicantprofile[i])
+                    } else if (this.applicantprofile[i].selected) {
+                        this.pickedapplicants.push(this.applicantprofile[i])
+
+                    }
+                    // second part of sorting conditional coz the fist condition met
+                    if (this.applicantprofile[i].stage === 'interview') {
+                        this.interviewstage.push(this.applicantprofile[i])
+
+                    } else if (this.applicantprofile[i].stage === 'test') {
+                        this.testingstage.push(this.applicantprofile[i])
+
+                    } else if (this.applicantprofile[i].stage === 'offer') {
+                        this.offerstage.push(this.applicantprofile[i])
+
+
+                    } else if (this.applicantprofile[i].stage === 'hired') {
+                        this.hirestage.push(this.applicantprofile[i])
+
+                    }
 
 
                 }
 
-            } else {
-                this.recommended = false
+
+                // system recommend candidates (all candidates with matching skill tags - current applicants)
+                let allrecommedednouniquefilter = []
+                for (let x = 0; x < this.alldevsprofile.length; x++) {
+                    for (let z = 0; z < this.tags.length; z++) {
+                        if (this.alldevsprofile[x].skills.includes(this.tags[z])) { // direct comparision direct match for now
+                            let user_id = this.alldevsprofile[x].id
+                            allrecommedednouniquefilter.push(user_id)
+
+                        }
+                    }
+                }
+
+                // allows unique filter under codeln recommended candidates id
+                function onlyUnique(value, index, self) {
+                    return self.indexOf(value) === index;
+                }
+
+                // finds the difference to eliminate candidates already picked/selected or applied from recommended
+                Array.prototype.diff = function (a) {
+                    return this.filter(function (i) {
+                        return a.indexOf(i) < 0;
+                    });
+                };
+
+
+                let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
+                let allapplicants = []
+                for (let x = 0; x < this.applicants.length; x++) {
+                    allapplicants.push(this.applicants[x].candidate)
+                }
+                let recommededlist = allrecommended.diff(allapplicants);
+
+
+                // create a profile for each recommended comparision and matching between user,profile
+                if (recommededlist.length > 0) {
+                    for (let i = 0; i < this.alldevs.length; i++) { //all users
+                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                            for (let k = 0; k < recommededlist.length; k++) {
+                                if (this.alldevs[i].id === recommededlist[k] && this.alldevsprofile[l].user === this.alldevs[i].id) {
+
+                                    let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                    let stage = 'recommended'
+                                    let id = this.alldevs[i].id
+                                    let pk = this.alldevs[i].id
+                                    let user_id = this.alldevs[i].id
+                                    let name = this.alldevs[i].username
+                                    let selected = false
+                                    let onerecommed = new Recommended(
+                                        id, name, stage, tags, user_id, selected, pk
+                                    );
+
+                                    this.recommmedcandidates.push(onerecommed)
+
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+
+                } else {
+                    this.recommended = false
+                }
+
+
+                // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
+                if (this.pickedapplicants.length === 0) {
+                    this.active = false
+                } else if (this.newapplicant.length === 0) {
+                    this.newapplications = false
+                } else if (this.recommmedcandidates.length === 0) {
+                    this.recommended = false
+                }
+
+                // recent projects
+                this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+
             }
-
-
-            // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
-            if (this.pickedapplicants.length === 0) {
-                this.active = false
-            } else if (this.newapplicant.length === 0) {
-                this.newapplications = false
-            } else if (this.recommmedcandidates.length === 0) {
-                this.recommended = false
-            }
-
-            // recent projects
-            this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
 
 
         },
         methods: {
             moment,
 
-            onEventCreate(application_id,candidate_name) {
+            onEventCreate(application_id, candidate_name) {
                 this.interviewmodal = true
                 this.candidatename = candidate_name;
                 this.interviewcandidateapplicant = application_id
@@ -1978,15 +1978,18 @@
 
             },
 
-            async CreateEvent(application_id){
+            async CreateEvent(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                Marketplace.pickreject(application_id, {interviewstarttime: this.starttime,interviewendtime:this.endtime, interviewstatus: 'invite sent'}, auth)
+                Marketplace.pickreject(application_id, {
+                    interviewstarttime: this.starttime,
+                    interviewendtime: this.endtime,
+                    interviewstatus: 'invite sent'
+                }, auth)
                 this.interviewmodal = false
             }
-
 
 
         },
@@ -2023,6 +2026,7 @@
 
         padding: 0;
     }
+
     .eventcolors {
         margin-top: 30%;
         border-radius: 50%;

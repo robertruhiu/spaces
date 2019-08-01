@@ -222,7 +222,8 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            if(this.$store.state.user.pk){
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             let myapplicants = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
             let mydevs = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
             this.allusers = (await UsersService.allusers(auth)).data
@@ -249,6 +250,9 @@
                     }
                 }
             }
+
+            }
+
 
 
         },

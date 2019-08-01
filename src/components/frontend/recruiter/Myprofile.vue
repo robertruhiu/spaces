@@ -140,11 +140,11 @@
 
             return {
                 currentUserProfile: null,
-                recommendationtags: ['Django','Javascript','Python','Php','Postgres','Sql', 'Html', 'Css', 'bootstrap','React','Java',
-                'React Native','Redux','Flask ','Go','Expressjs','Vuejs',
-                    'Angular','Ios','flutter','Ionic','Rails','Meteor','AI','Cybersecurity',
-                    'Blockchain','Arduino','Spring','Bitcoin','Kotlin','Scala','Nativescript ',
-                'Android','Website','Mobile'],
+                recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                    'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
+                    'Android', 'Website', 'Mobile'],
                 selectedTags: [],
 
 
@@ -161,58 +161,59 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            if (this.$store.state.user.pk) {
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
 
-            if(this.currentUserProfile.skills.length >= 0){
-                let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
-                for(let i=0;i<tags.length;i++){
-                this.selectedTags.push(tags[i])
+                if (this.currentUserProfile.skills.length >= 0) {
+                    let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
+                    for (let i = 0; i < tags.length; i++) {
+                        this.selectedTags.push(tags[i])
+                    }
+
+                }
             }
-
-            }
-
 
 
         },
         methods: {
             Save() {
 
-               const auth = {
-                        headers: {Authorization: 'JWT ' + this.$store.state.token}
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                for (let i = 0; i < this.selectedTags.length; i++) {
+                    if (this.selectedTags[i] === '') {
+                        let index = this.selectedTags.indexOf(this.selectedTags[i]);
+                        this.selectedTags.splice(index, 1);
 
                     }
-                    for(let i=0;i<this.selectedTags.length;i++){
-                        if(this.selectedTags[i] === ''){
-                            let index = this.selectedTags.indexOf(this.selectedTags[i]);
-                            this.selectedTags.splice(index, 1);
+                }
+                this.currentUserProfile.skills = this.selectedTags.join(',')
+
+                UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
+                    .then(resp => {
+                        if (this.currentUserProfile.user_type === 'developer') {
+
+                            this.$router.push({
+                                name: 'developer'
+                            })
+
+                        } else {
+                            this.$router.push({
+                                name: 'recruiter'
+                            })
 
                         }
-                    }
-                    this.currentUserProfile.skills = this.selectedTags.join(',')
-
-                    UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
-                        .then(resp => {
-                            if (this.currentUserProfile.user_type === 'developer') {
-
-                                this.$router.push({
-                                    name: 'developer'
-                                })
-
-                            } else {
-                                this.$router.push({
-                                    name: 'recruiter'
-                                })
-
-                            }
-                            return resp
+                        return resp
 
 
-                        })
-                        .catch(error => {
-                            return error
+                    })
+                    .catch(error => {
+                        return error
 
 
-                        });
+                    });
 
 
             },

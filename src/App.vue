@@ -14,21 +14,34 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            UsersService.authenticated(this.$store.state.user.pk, auth)
-                .then()
-                .catch(error => {
-                        this.$store.dispatch('setToken', null)
-                        this.$store.dispatch('setUser', null)
-                        this.$store.dispatch('setisLoggedIn', false)
-                        this.$store.dispatch('setUsertype', null)
-                        this.$store.dispatch('setUser_id', null)
-                        this.$router.push({
-                            name: 'home'
-                        })
-                        console.log(error)
+            if (this.$store.state.user.pk) {
+                UsersService.authenticated(this.$store.state.user.pk, auth)
+                    .then()
+                    .catch(error => {
+                            this.$store.dispatch('setToken', null)
+                            this.$store.dispatch('setUser', null)
+                            this.$store.dispatch('setisLoggedIn', false)
+                            this.$store.dispatch('setUsertype', null)
+                            this.$store.dispatch('setUser_id', null)
+                            this.$router.push({
+                                name: 'home'
+                            })
+                            return error
 
-                    }
-                )
+                        }
+                    )
+
+            } else {
+                this.$store.dispatch('setToken', null)
+                this.$store.dispatch('setUser', null)
+                this.$store.dispatch('setisLoggedIn', false)
+                this.$store.dispatch('setUsertype', null)
+                this.$store.dispatch('setUser_id', null)
+                this.$router.push({
+                    name: 'home'
+                })
+
+            }
 
 
         }

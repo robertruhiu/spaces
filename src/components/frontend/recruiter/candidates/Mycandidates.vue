@@ -382,7 +382,7 @@
 
                                                         </a-table-column>
 
-                                                       <!-----report--------->
+                                                        <!-----report--------->
                                                         <a-table-column
 
                                                                 dataIndex="profile"
@@ -424,12 +424,11 @@
                                                                         <a-menu-item
                                                                                 v-else
                                                                                 disabled
-                                                                                >
+                                                                        >
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
                                                                         </a-menu-item>
-
 
 
                                                                         <a-menu-item
@@ -714,56 +713,62 @@
                                             <a-row :gutter="8">
                                                 <a-col :span="8">
                                                     <a-card
-                                                    hoverable
-                                                    style="width: 10rem"
-                                            >
+                                                            hoverable
+                                                            style="width: 10rem"
+                                                    >
 
-                                                <a-card-meta
-                                                        title="$200">
-                                                    <template slot="description">
-                                                        <p>10 candidates</p>
-                                                        <a-button v-model="amount" @click="bundleamount(1)">Pick</a-button>
+                                                        <a-card-meta
+                                                                title="$200">
+                                                            <template slot="description">
+                                                                <p>10 candidates</p>
+                                                                <a-button v-model="amount" @click="bundleamount(1)">
+                                                                    Pick
+                                                                </a-button>
 
-                                                    </template>
+                                                            </template>
 
-                                                </a-card-meta>
-                                            </a-card>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                                    <a-card
-                                                    hoverable
-                                                    style="width: 10rem"
-                                            >
-
-                                                <a-card-meta
-                                                        title="$300">
-                                                    <template slot="description">
-                                                        <p>15 candidates</p>
-                                                        <a-button v-model="amount" @click="bundleamount(2)">Pick</a-button>
-
-                                                    </template>
-
-                                                </a-card-meta>
-                                            </a-card>
+                                                        </a-card-meta>
+                                                    </a-card>
 
                                                 </a-col>
                                                 <a-col :span="8">
                                                     <a-card
-                                                    hoverable
-                                                    style="width: 10rem"
-                                            >
+                                                            hoverable
+                                                            style="width: 10rem"
+                                                    >
 
-                                                <a-card-meta
-                                                        title="$500">
-                                                    <template slot="description">
-                                                        <p>25 candidates</p>
-                                                        <a-button v-model="amount" @click="bundleamount(3)">Pick</a-button>
+                                                        <a-card-meta
+                                                                title="$300">
+                                                            <template slot="description">
+                                                                <p>15 candidates</p>
+                                                                <a-button v-model="amount" @click="bundleamount(2)">
+                                                                    Pick
+                                                                </a-button>
 
-                                                    </template>
+                                                            </template>
 
-                                                </a-card-meta>
-                                            </a-card>
+                                                        </a-card-meta>
+                                                    </a-card>
+
+                                                </a-col>
+                                                <a-col :span="8">
+                                                    <a-card
+                                                            hoverable
+                                                            style="width: 10rem"
+                                                    >
+
+                                                        <a-card-meta
+                                                                title="$500">
+                                                            <template slot="description">
+                                                                <p>25 candidates</p>
+                                                                <a-button v-model="amount" @click="bundleamount(3)">
+                                                                    Pick
+                                                                </a-button>
+
+                                                            </template>
+
+                                                        </a-card-meta>
+                                                    </a-card>
 
                                                 </a-col>
                                             </a-row>
@@ -811,7 +816,7 @@
                     >
                         <p style="text-align: center;">Would you like to get a project recommendation or pick a
                             project?</p>
-                    <a-row :gutter="16">
+                        <a-row :gutter="16">
                             <a-col :span="12">
                                 <a @click="navigateTo({name:'projectlist'})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
@@ -836,11 +841,11 @@
                             </a-col>
                         </a-row>
 
-                    <div v-if="recentprojects">
+                        <div v-if="recentprojects">
                             <p>My Recent projects</p>
                             <p v-for="project in recentprojects"
                                :key="project">
-                                <a  v-if="recentprojects"
+                                <a v-if="recentprojects"
                                    @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:project.id,candidateId: candidateid,applicationId:applicationid}})">
                                     {{project.name}}
                                 </a>
@@ -853,7 +858,6 @@
                     </a-modal>
 
                 </div>
-
 
 
             </a-layout-content>
@@ -957,7 +961,7 @@
 
     //applicants structure on table
     class Candidate {
-        constructor(id, name, paid, verified_skills, user_id, stage, pk,test_stage, project, projectname,status) {
+        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status) {
             this.key = id;
             this.name = name;
             this.paid = paid;
@@ -1004,8 +1008,8 @@
                 paying: true,
                 visible: false,
                 recentprojects: [],
-                applicationid:null,
-                candidateid:null
+                applicationid: null,
+                candidateid: null
 
             }
         },
@@ -1021,103 +1025,104 @@
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
+            };
+            if (this.$store.state.user.pk) {
+                MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
+                    .then(resp => {
+                            if (resp.data.length !== 0) {
 
-            MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
-                .then(resp => {
-                        if (resp.data.length !== 0) {
+
+                                for (let i = 0; i < resp.data.length; i++) {
+                                    this.pickeddevs.push(resp.data[i])
+                                }
 
 
-                            for (let i = 0; i < resp.data.length; i++) {
-                                this.pickeddevs.push(resp.data[i])
                             }
 
 
                         }
+                    )
+                    .catch();
+                // all developer profile list api fetch
+                this.alldevsprofile = (await UsersService.devs()).data;
+                // all developer users list api fetch
+                this.alldevs = (await UsersService.allusers()).data;
+                // create a profile for each candidate comparision and matching between user,profile and devrequest model
+                for (let i = 0; i < this.alldevs.length; i++) { //all users
+                    for (let j = 0; j < this.pickeddevs.length; j++) { //all candidates
+                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                            if (this.alldevs[i].id === this.pickeddevs[j].developer && this.alldevsprofile[l].user === this.alldevs[i].id) {
 
+                                let verified_skills = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
+                                let paid = this.pickeddevs[j].paid
+                                let id = this.pickeddevs[j].developer
+                                let user_id = this.pickeddevs[j].developer
+                                let name = this.alldevs[i].username
+                                let stage = this.pickeddevs[j].stage
+                                let pk = this.pickeddevs[j].id
+                                let test_stage = this.pickeddevs[j].test_stage
+                                let project = this.pickeddevs[j].project
+                                let projectname = this.pickeddevs[j].name
+                                let status = this.pickeddevs[j].interviewstatus
 
-                    }
-                )
-                .catch();
-            // all developer profile list api fetch
-            this.alldevsprofile = (await UsersService.devs()).data;
-            // all developer users list api fetch
-            this.alldevs = (await UsersService.allusers()).data;
-            // create a profile for each candidate comparision and matching between user,profile and devrequest model
-            for (let i = 0; i < this.alldevs.length; i++) { //all users
-                for (let j = 0; j < this.pickeddevs.length; j++) { //all candidates
-                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                        if (this.alldevs[i].id === this.pickeddevs[j].developer && this.alldevsprofile[l].user === this.alldevs[i].id) {
+                                let onepickeddev = new Candidate(
+                                    id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status
+                                );
 
-                            let verified_skills = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
-                            let paid = this.pickeddevs[j].paid
-                            let id = this.pickeddevs[j].developer
-                            let user_id = this.pickeddevs[j].developer
-                            let name = this.alldevs[i].username
-                            let stage = this.pickeddevs[j].stage
-                            let pk = this.pickeddevs[j].id
-                            let test_stage = this.pickeddevs[j].test_stage
-                            let project = this.pickeddevs[j].project
-                            let projectname = this.pickeddevs[j].name
-                            let status = this.pickeddevs[j].interviewstatus
+                                this.candidateprofiles.push(onepickeddev)
 
-                            let onepickeddev = new Candidate(
-                                id, name, paid, verified_skills, user_id, stage, pk,test_stage, project, projectname,status
-                            );
-
-                            this.candidateprofiles.push(onepickeddev)
-
+                            }
                         }
+
+                    }
+                }
+                // candidates sorting
+                for (let i = 0; i < this.candidateprofiles.length; i++) {
+                    if (this.candidateprofiles[i].paid === true) {
+                        this.paidapplicants.push(this.candidateprofiles[i]);
+
+
+                    } else {
+                        this.unpaidapplicant.push(this.candidateprofiles[i])
+
+
+                    }
+                    // second part of sorting conditional coz the fist condition met
+                    if (this.candidateprofiles[i].stage === 'interview') {
+                        this.interviewstage.push(this.candidateprofiles[i])
+
+                    } else if (this.candidateprofiles[i].stage === 'test') {
+                        this.testingstage.push(this.candidateprofiles[i])
+
+                    } else if (this.candidateprofiles[i].stage === 'offer') {
+                        this.offerstage.push(this.candidateprofiles[i])
+
+
+                    } else if (this.candidateprofiles[i].stage === 'hired') {
+                        this.hirestage.push(this.candidateprofiles[i])
+
                     }
 
+
                 }
-            }
-            // candidates sorting
-            for (let i = 0; i < this.candidateprofiles.length; i++) {
-                if (this.candidateprofiles[i].paid === true) {
-                    this.paidapplicants.push(this.candidateprofiles[i]);
-
-
+                if (this.paidapplicants.length === 0) {
+                    this.active = false
                 } else {
-                    this.unpaidapplicant.push(this.candidateprofiles[i])
-
-
+                    this.active = true
                 }
-                // second part of sorting conditional coz the fist condition met
-                if (this.candidateprofiles[i].stage === 'interview') {
-                    this.interviewstage.push(this.candidateprofiles[i])
-
-                } else if (this.candidateprofiles[i].stage === 'test') {
-                    this.testingstage.push(this.candidateprofiles[i])
-
-                } else if (this.candidateprofiles[i].stage === 'offer') {
-                    this.offerstage.push(this.candidateprofiles[i])
-
-
-                } else if (this.candidateprofiles[i].stage === 'hired') {
-                    this.hirestage.push(this.candidateprofiles[i])
-
+                if (this.unpaidapplicant.length === 0) {
+                    this.paying = false
+                } else {
+                    this.paying = true
                 }
+                // recent projects
+                this.recentprojects = (await Projectsservice.myrecentprojects(this.$store.state.user.pk, auth)).data
 
+            }
 
-            }
-            if (this.paidapplicants.length === 0) {
-                this.active = false
-            } else {
-                this.active = true
-            }
-            if (this.unpaidapplicant.length === 0) {
-                this.paying = false
-            } else {
-                this.paying = true
-            }
-            // recent projects
-            this.recentprojects = (await Projectsservice.myrecentprojects(this.$store.state.user.pk, auth)).data
 
         },
-        computed: {
-
-        },
+        computed: {},
         methods: {
             navigateTo(route) {
                 this.$router.push(route)

@@ -10,8 +10,6 @@
                 {{currentUserProfile}}
 
 
-
-
             </a-layout-content>
 
         </a-layout>
@@ -21,13 +19,13 @@
 <script>
 
     import UsersService from '@/services/UsersService'
-     import CandidateSider from "../../layout/CandidateSider";
+    import CandidateSider from "../../layout/CandidateSider";
+
     export default {
         name: "DevDashboard",
         data() {
             return {
-                currentUserProfile :{}
-
+                currentUserProfile: {}
 
 
             }
@@ -36,14 +34,17 @@
             CandidateSider,
 
 
-
         },
         async mounted() {
             const auth = {
-                        headers: {Authorization: 'JWT ' + this.$store.state.token}
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-                    }
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk,auth)).data
+            }
+            if(this.$store.state.user.pk){
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            }
+
+
 
         },
         methods: {

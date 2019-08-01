@@ -35,7 +35,7 @@
 
                 <a-button-group style="margin-left: 1%">
                     <a-button type="primary" icon="share-alt">Share Job</a-button>
-                    <social-sharing url="https://vuejs.org/"
+                    <social-sharing url="https://mulan.herokuapp.com/"
                                     :title=job.title
                                     :description=job.description
                                     quote="Apply for this job at the link below."
@@ -46,7 +46,7 @@
                         </network>
 
                     </social-sharing>
-                    <social-sharing url="https://vuejs.org/"
+                    <social-sharing url="https://mulan.herokuapp.com/"
                                     :title=job.title
                                     :description=job.description
                                     :hashtags=job.tech_stack

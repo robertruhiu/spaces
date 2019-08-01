@@ -51,7 +51,8 @@ import {
     DatePicker,
     Steps,
     Timeline,
-    Skeleton
+    Skeleton,
+    Icon
 
 
 
@@ -89,7 +90,7 @@ Vue.use(DatePicker)
 Vue.use(Steps)
 Vue.use(Timeline)
 Vue.use(Skeleton)
-
+Vue.use(Icon)
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

@@ -136,7 +136,7 @@
 
                 </div>
 
-                <div v-if="currentUserProfile.user_type && currentUserProfile.user_type =='developer'" class="center"
+                <div v-if="currentUserProfile.user_type && currentUserProfile.user_type ==='developer'" class="center"
                      :style="{width: '60rem',boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important',border:'1px solid rgba(0,0,0,.125)'}">
 
                     <div>
@@ -370,7 +370,7 @@
 
                 </div>
 
-                <div v-if="currentUserProfile.user_type && currentUserProfile.user_type =='recruiter'" class="center"
+                <div v-if="currentUserProfile.user_type && currentUserProfile.user_type ==='recruiter'" class="center"
                      :style="{width: '60rem',boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important',border:'1px solid rgba(0,0,0,.125)'}">
 
                     <div>
@@ -574,12 +574,16 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            if(this.$store.state.user.pk){
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             let temptaglist = this.currentUserProfile.skills;
 
             let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
 
             this.tags = array
+
+            }
+
 
 
         },

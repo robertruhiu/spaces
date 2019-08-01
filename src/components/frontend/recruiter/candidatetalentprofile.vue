@@ -235,7 +235,8 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateProfileID, auth)).data
+            if(this.$store.state.user.pk){
+                this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateProfileID, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
             this.skilltags = this.currentUserProfile.skills.split(',');
             this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateProfileID, auth)).data
@@ -292,6 +293,9 @@
                     }
                 )
                 .catch();
+
+            }
+
 
 
         },
