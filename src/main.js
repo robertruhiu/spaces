@@ -5,15 +5,12 @@ import {sync} from 'vuex-router-sync'
 import store from '@/store/store'
 
 Vue.config.productionTip = false
-import 'ant-design-vue/dist/antd.css'
+
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
 import VeeValidate from 'vee-validate';
-import VueSelectImage from 'vue-select-image'
 import SocialSharing from 'vue-social-sharing'
-require('vue-select-image/dist/vue-select-image.css')
-Vue.use(VueSelectImage)
 Vue.use(SocialSharing)
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
@@ -41,7 +38,6 @@ import {
     Radio,
     Carousel,
     Form,
-    Icon,
     Input,
     InputNumber,
     Layout,
@@ -71,7 +67,6 @@ Vue.use(Card);
 Vue.use(Col);
 Vue.use(Popover);
 Vue.use(Form);
-Vue.use(Icon);
 Vue.use(Input);
 Vue.use(InputNumber);
 Vue.use(Layout);

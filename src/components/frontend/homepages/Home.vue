@@ -28,7 +28,7 @@
 
 
                     <a-col :span="14">
-                        <img src="../../../assets/images/props/header_bg.png" style="width: 100%;float: right;">
+                        <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/header_bg_hstf4v.png" style="width: 100%;float: right;">
                         <div>
 
                         </div>
@@ -149,7 +149,7 @@
             <div :style="{ background: '#fff', padding: '31px', minHeight: '400px' }">
                 <a-row style="margin-top: 5%">
                     <a-col :span="10">
-                        <img src="../../../assets/images/props/talent_profile_bg.png"
+                        <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/talent_profile_bg_wt23ka.png"
                              style="width: 100%;margin-top: 30%">
                     </a-col>
                     <a-col :span="14">
@@ -264,8 +264,7 @@
 
             <div :style="{  padding: '31px', minHeight: '400px' }">
 
-                <img class="" src="../../../assets/images/props/testimony_bg.png"
-                     style="margin-left: -15rem;width:97.5rem;position: absolute"/>
+
 
 
                 <a-row :gutter="48" :style="{marginTop: '7rem',padding:'0 3rem'}">
