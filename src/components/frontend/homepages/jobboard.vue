@@ -185,7 +185,9 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
-
+    var VueTruncate = require('vue-truncate-filter')
+    import Vue from 'vue'
+    Vue.use(VueTruncate)
 
     const plainOptions = ['Fulltime', 'Contract', 'Remote', 'Parttime']
     const defaultCheckedList = ['Fulltime', 'Contract', 'Remote', 'Parttime']

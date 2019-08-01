@@ -1,23 +1,17 @@
 const CompressionPlugin = require('compression-webpack-plugin');
-
+const zopfli = require('@gfx/zopfli');
 module.exports = {
-    mode: 'development',
-    rules: [
-        {
-            test: /\.gz$/,
-            enforce: 'pre',
-            use: 'gzip-loader'
-        }
-    ],
+    mode: 'production',
+
     plugins: [
         new CompressionPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.js$|\.css$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8
+            compressionOptions: {
+                numiterations: 15,
+            },
+            algorithm(input, compressionOptions, callback) {
+                return zopfli.gzip(input, compressionOptions, callback);
+            },
         }),
-
     ],
 
     optimization: {
@@ -43,5 +37,6 @@ module.exports = {
                 }
             }
         }
-    }
+    },
+
 };
