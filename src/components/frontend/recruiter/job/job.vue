@@ -169,7 +169,7 @@
                                                         </a-tab-pane>
 
                                                         <!-------new  candidates-------->
-                                                        <a-tab-pane v-if="newapplications" tab="New Applicants"
+                                                        <a-tab-pane v-if="newapplicant.length >0" tab="New Applicants"
                                                                     key="2">
 
                                                             <a-table :dataSource="newapplicant" :scroll="{ y: 340 }"
@@ -260,11 +260,11 @@
                                                                     <template slot-scope="text,record">
                                                                         <a-button-group>
                                                                             <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,true)"
+                                                                                    @click="pickrejectClick(record.action,record.profile,true,record.name)"
                                                                                     type="primary">pick
                                                                             </a-button>
                                                                             <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,false)">
+                                                                                    @click="pickrejectClick(record.action,record.profile,false,record.name)">
                                                                                 reject
                                                                             </a-button>
 
@@ -370,7 +370,7 @@
                                                                     <template slot-scope="text,record">
                                                                         <div style="margin-left: 5%">
                                                                             <a-button :size="small"
-                                                                                      @click="pickrecommedationClick(job.id,record.profile,true)"
+                                                                                      @click="pickrecommedationClick(job.id,record.profile,true,record.name)"
                                                                                       type="primary">pick
                                                                             </a-button>
 
@@ -519,8 +519,9 @@
 
 
                                                                         <a-menu-item
-                                                                                v-if="record.test_stage ==='complete'"
-                                                                                @click="handleTestMenuClick(record.action,record.profile,2)">
+                                                                                v-if="record.test_stage === 'complete'"
+                                                                                @click="handleTestMenuClick(record.action,record.profile,2)"
+                                                                                >
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
@@ -528,6 +529,8 @@
                                                                         <a-menu-item
                                                                                 v-else
                                                                                 disabled
+
+
                                                                         >
                                                                             <a-icon
                                                                                     type="calendar"/>
@@ -630,7 +633,7 @@
                                                             <div style="" slot="title">Interview
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                                <div v-if="record.interviewstatus === 'deleted' || record.interviewstatus === 'cancelled'"
+                                                                <div v-if="record.interviewstatus === 'deleted'"
                                                                      style="margin-left: 7%">
                                                                     <a-button :size="small"
                                                                               style="background-color: #673AB7;color: white"
@@ -648,9 +651,18 @@
                                                                         create
                                                                     </a-button>
                                                                 </div>
+                                                                <div v-else-if="record.interviewstatus === null"
+                                                                     style="margin-left: 7%">
+                                                                    <a-button :size="small"
+                                                                              style="background-color: #673AB7;color: white"
+                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                        <a-icon type="calendar"/>
+                                                                        create
+                                                                    </a-button>
+                                                                </div>
                                                                 <span v-else style="margin-left: 12%;">
                                                                     <a-button type="primary" ghost
-                                                                              @click="onEventClick(record.action,record.name,record.interviewstart,record.interviewend)">
+                                                                              @click="onEventClick(record.action,record.name,record.interviewstart,record.interviewend,record.color)">
                                                                         view
                                                                     </a-button>
 
@@ -1160,7 +1172,6 @@
                     <a-modal
                             title="Project assignments "
                             v-model="visible"
-                            @ok="handleOk"
                             style="top: 60px;"
                             :footer="null"
 
@@ -1228,7 +1239,7 @@
                                     :label-col="{ span: 5 }"
                                     :wrapper-col="{ span: 10 }"
                             >
-                                <a-input v-model="candidatename"/>
+                                <a-input v-model="candidatename" disabled />
                             </a-form-item>
 
 
@@ -1243,7 +1254,7 @@
                                         format="YYYY-MM-DD HH:mm"
                                         placeholder="Select Time"
                                         @change="onChange"
-                                        @ok="onOk"
+
                                 />
 
 
@@ -1257,7 +1268,7 @@
                                         format="YYYY-MM-DD HH:mm"
                                         placeholder="Select Time"
                                         @change="onChange"
-                                        @ok="onOk"
+
                                 />
 
 
@@ -1267,7 +1278,7 @@
                                          :wrapper-col="{ span: 3 }">
                                 <a-select
                                         defaultValue="blue"
-                                        @change="handleSelectChange"
+                                        v-model="eventcolor"
                                 >
                                     <a-select-option value="blue">
                                         <a-tag color="#029BE4" class="eventcolors"></a-tag>
@@ -1318,19 +1329,19 @@
 
                         <a-form
                                 :form="form"
-                                @submit="handleSubmit"
+
                         >
                             <a-form-item
                                     label="Interview with"
                                     :label-col="{ span: 5 }"
-                                    :wrapper-col="{ span: 18 }"
+                                    :wrapper-col="{ span: 10 }"
                             >
                                 <a-input v-model="interviewer" disabled/>
                             </a-form-item>
 
 
                             <a-form-item label="Start time "
-                                         :label-col="{ span: 4 }"
+                                         :label-col="{ span: 5 }"
                                          :wrapper-col="{ span: 8 }">
 
                                 <a-date-picker
@@ -1339,13 +1350,13 @@
                                         format="YYYY-MM-DD HH:mm"
                                         placeholder="Select Time"
                                         @change="onChange"
-                                        @ok="onOk"
+
                                 />
 
 
                             </a-form-item>
                             <a-form-item label="End time "
-                                         :label-col="{ span: 4 }"
+                                         :label-col="{ span: 5 }"
                                          :wrapper-col="{ span: 8 }">
                                 <a-date-picker
                                         v-model="interviewend"
@@ -1353,11 +1364,34 @@
                                         format="YYYY-MM-DD HH:mm"
                                         placeholder="Select Time"
                                         @change="onChange"
-                                        @ok="onOk"
+
                                 />
 
 
                             </a-form-item>
+                            <a-form-item label="Event color"
+                                     :label-col="{ span: 5 }"
+                                     :wrapper-col="{ span: 3 }">
+                            <a-select
+
+                                    v-model="eventcolor"
+
+                            >
+                                <a-select-option value="blue">
+                                    <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                </a-select-option>
+                                <a-select-option value="green">
+                                    <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                </a-select-option>
+                                <a-select-option value="purple">
+                                    <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                </a-select-option>
+                                <a-select-option value="tomato">
+                                    <a-tag color="tomato" class="eventcolors"></a-tag>
+                                </a-select-option>
+                            </a-select>
+
+                        </a-form-item>
 
 
                         </a-form>
@@ -1378,6 +1412,7 @@
 
 
                     </a-modal>
+
 
 
                 </div>
@@ -1493,13 +1528,19 @@
             key: 'interviewend',
 
         },
+        {
+            title: 'Color',
+            dataIndex: 'color',
+            key: 'color',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end,color) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1513,6 +1554,7 @@
             this.interviewstatus = status
             this.interviewstart = start
             this.interviewend = end
+            this.color = color
 
 
         }
@@ -1533,6 +1575,7 @@
 
         }
     }
+
 
     import moment from 'moment';
     import UsersService from '@/services/UsersService'
@@ -1588,7 +1631,8 @@
                 interviewstart: null,
                 interviewend: null,
                 interviewer: null,
-                interviewerapplicationid: null
+                interviewerapplicationid: null,
+                eventcolor:'blue'
 
 
             }
@@ -1635,7 +1679,7 @@
                         for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
 
                             if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
-                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 2);
                                 let stage = this.applicants[j].stage
                                 let id = this.applicants[j].id
                                 let pk = this.applicants[j].id
@@ -1648,8 +1692,9 @@
                                 let status = this.applicants[j].interviewstatus
                                 let start = this.applicants[j].interviewstarttime
                                 let end = this.applicants[j].interviewendtime
+                                let color = this.applicants[j].eventcolor
                                 let onepickeddev = new Applicant(
-                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end
+                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end,color
                                 );
 
                                 this.applicantprofile.push(onepickeddev)
@@ -1660,6 +1705,7 @@
 
                     }
                 }
+
                 // applicants sorting
                 for (let i = 0; i < this.applicantprofile.length; i++) {
                     if (this.applicantprofile[i].selected === false && this.applicantprofile[i].stage !== 'rejected') {
@@ -1756,8 +1802,8 @@
 
 
                 // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
-                if (this.pickedapplicants.length === 0) {
-                    this.active = false
+                if (this.pickedapplicants.length > 0) {
+                    this.active = true
                 } else if (this.newapplicant.length === 0) {
                     this.newapplications = false
                 } else if (this.recommmedcandidates.length === 0) {
@@ -1773,11 +1819,13 @@
         },
         methods: {
             moment,
-            onEventClick(application_id, name, start, end) {
+            onEventClick(application_id, name, start, end,color) {
                 this.interviewerapplicationid = application_id
                 this.interviewer = name
-                this.interviewstart = start
-                this.interviewend = end
+                this.interviewstart = moment(start)
+                this.interviewend = moment(end)
+                this.eventcolor = color
+
 
                 this.showEvent = true
 
@@ -1790,7 +1838,9 @@
                 this.interviewcandidateapplicant = application_id
 
 
+
             },
+
             async deleteEvent(interviewerapplicationid) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -1798,10 +1848,7 @@
                 }
                 Marketplace.pickreject(interviewerapplicationid, {interviewstatus: 'deleted'}, auth)
 
-                this.$router.push({
-                    name: 'job',
-                    params: {jobId: this.$store.state.route.params.jobId}
-                })
+                this.showEvent = false
 
             },
             async saveEvent(interviewerapplicationid, interviewstart, interviewend) {
@@ -1811,13 +1858,11 @@
                 }
                 Marketplace.pickreject(interviewerapplicationid, {
                     interviewstarttime: interviewstart,
-                    interviewendtime: interviewend
+                    interviewendtime: interviewend,
+                    eventcolor:this.eventcolor
                 }, auth)
 
-                this.$router.push({
-                    name: 'job',
-                    params: {jobId: this.$store.state.route.params.jobId}
-                })
+                this.showEvent = false
 
             },
             async cancelEvent(interviewerapplicationid) {
@@ -1828,10 +1873,7 @@
 
                 Marketplace.pickreject(interviewerapplicationid, {interviewstatus: 'cancelled'}, auth)
 
-                this.$router.push({
-                    name: 'job',
-                    params: {jobId: this.$store.state.route.params.jobId}
-                })
+                this.showEvent = false
 
             },
 
@@ -1863,10 +1905,6 @@
                 this.applicationid = application
             },
 
-            handleOk() {
-
-                this.visible = false
-            },
 
             //  enables current job to be updated
             handleSubmit: async function () {
@@ -2028,7 +2066,7 @@
             },
 
             //pick or reject from new applicants
-            pickrejectClick(job_id, candidate_id, key) {
+            pickrejectClick(job_id, candidate_id, key,name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -2044,7 +2082,7 @@
                             if (this.newapplicant.length === 0) {
                                 this.newapplications = false
                             }
-                            Marketplace.pickreject(job_id, {stage: 'active', selected: true}, auth)
+                            Marketplace.pickreject(job_id, {stage: 'active', selected: true,candidatename:name}, auth)
 
 
                         }
@@ -2058,7 +2096,7 @@
                             if (this.newapplicant.length === 0) {
                                 this.newapplications = false
                             }
-                            Marketplace.pickreject(job_id, {stage: 'rejected', selected: false}, auth)
+                            Marketplace.pickreject(job_id, {stage: 'rejected', selected: false,candidatename:name}, auth)
 
 
                         }
@@ -2069,7 +2107,7 @@
             },
 
             // pick from recommedation list
-            pickrecommedationClick(job_id, candidate_id, key) {
+            pickrecommedationClick(job_id, candidate_id, key,name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -2089,7 +2127,9 @@
                                     job: job_id,
                                     candidate: candidate_id,
                                     stage: 'active',
-                                    selected: true
+                                    selected: true,
+                                    recruiter:this.$store.state.user.pk,
+                                    candidatename:name
                                 },
                                 auth
                             )
@@ -2160,7 +2200,8 @@
                 Marketplace.pickreject(application_id, {
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
-                    interviewstatus: 'invite sent'
+                    interviewstatus: 'invite sent',
+                    eventcolor:this.eventcolor,
                 }, auth)
                 this.interviewmodal = false
             }

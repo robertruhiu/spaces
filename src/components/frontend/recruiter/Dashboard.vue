@@ -68,8 +68,8 @@
                                         <img class="poolavatar" src="../../../assets/images/statistics.svg">
                                     </a-col>
                                     <a-col span="16">
-                                        <p>Manage My Candidates</p>
-                                        <p style="margin: 0;">Manage and track devs picked from talent pool</p>
+                                        <p>Manage Candidates</p>
+                                        <p style="margin: 0;">Manage  devs picked from talent pool</p>
 
 
                                     </a-col>

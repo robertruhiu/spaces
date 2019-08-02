@@ -82,7 +82,7 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Verified
+                                                                    <div style="text-align: center" slot="title">Verified
                                                                         Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
@@ -269,7 +269,7 @@
                                                                     <template slot-scope="text,record">
                                                                         <div style="text-align: center">
                                                                             <a-button
-                                                                                    @click="payClick(record.action,record.profile)"
+                                                                                    @click="payClick(record.action,record.profile,record.name)"
                                                                                     type="primary">pay
                                                                             </a-button>
                                                                         </div>
@@ -504,12 +504,16 @@
                                                                 width="25%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Skills</div>
+                                                            <div style="text-align: center" slot="title">Skills</div>
                                                             <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                                <div style="text-align: center">
+                                                                    <span >
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+
+                                                                </div>
+
                                                             </template>
                                                         </a-table-column>
 
@@ -521,17 +525,69 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div style="" slot="title">Interview date
+                                                            <div style="" slot="title">Interview
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                                <span style="margin-left: 5%;">
+                                                                <div v-if="record.interviewstatus === 'deleted'"
+                                                                     style="margin-left: 7%">
                                                                     <a-button :size="small"
                                                                               style="background-color: #673AB7;color: white"
-                                                                              @click="showModal">
+                                                                              @click="onEventCreate(record.action,record.name)">
                                                                         <a-icon type="calendar"/>
                                                                         create
-                                                                </a-button>
+                                                                    </a-button>
+                                                                </div>
+                                                                <div v-else-if="record.interviewstatus === 'cancelled'"
+                                                                     style="margin-left: 7%">
+                                                                    <a-button :size="small"
+                                                                              style="background-color: #673AB7;color: white"
+                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                        <a-icon type="calendar"/>
+                                                                        create
+                                                                    </a-button>
+                                                                </div>
+                                                                <div v-else-if="record.interviewstatus === null"
+                                                                     style="margin-left: 7%">
+                                                                    <a-button :size="small"
+                                                                              style="background-color: #673AB7;color: white"
+                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                        <a-icon type="calendar"/>
+                                                                        create
+                                                                    </a-button>
+                                                                </div>
+                                                                <span v-else style="margin-left: 12%;">
+                                                                    <a-button type="primary" ghost
+                                                                              @click="onEventClick(record.action,record.name,record.interviewstart,record.interviewend,record.color)">
+                                                                        view
+                                                                    </a-button>
+
                                                                 </span>
+
+                                                            </template>
+
+
+                                                        </a-table-column>
+
+                                                        <!-----interview status--------->
+                                                        <a-table-column
+
+                                                                dataIndex="interviewstatus"
+                                                                key="interviewstatus"
+                                                                width="15%"
+
+                                                        >
+                                                            <div style="" slot="title">Interview status
+                                                            </div>
+                                                            <template slot-scope="text,record">
+                                                                <div style="text-align: center">
+                                                                    <span v-if="record.interviewstatus">
+                                                                        {{record.interviewstatus}}
+                                                                    </span>
+                                                                    <span v-else>
+                                                                    ---
+                                                                </span>
+                                                                </div>
+
 
                                                             </template>
 
@@ -550,7 +606,7 @@
                                                             </div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 25%">
-                                                            --
+                                                            <a>notes</a>
                                                         </span>
                                                             </template>
 
@@ -856,6 +912,200 @@
 
 
                     </a-modal>
+                    <!---create event--->
+                    <a-modal
+
+                            v-model="interviewmodal"
+
+
+                    >
+                        <template slot="title">
+
+
+                        </template>
+
+                        <a-form
+                                :form="form"
+
+                        >
+                            <a-form-item
+                                    label="Interview with"
+                                    :label-col="{ span: 5 }"
+                                    :wrapper-col="{ span: 10 }"
+                            >
+                                <a-input v-model="candidatename" disabled />
+                            </a-form-item>
+
+
+                            <a-form-item label="Start "
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 8 }">
+
+                                <a-date-picker
+                                        v-model="starttime"
+
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+
+                                />
+
+
+                            </a-form-item>
+                            <a-form-item label="Finish "
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 8 }">
+                                <a-date-picker
+                                        v-model="endtime"
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+
+                                />
+
+
+                            </a-form-item>
+                            <a-form-item label="Event color"
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 3 }">
+                                <a-select
+                                        defaultValue="blue"
+                                        v-model="eventcolor"
+                                >
+                                    <a-select-option value="blue">
+                                        <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="green">
+                                        <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="purple">
+                                        <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="tomato">
+                                        <a-tag color="tomato" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                </a-select>
+
+                            </a-form-item>
+
+
+                        </a-form>
+                        <template slot="footer">
+
+                            <a-button @click="CreateEvent(interviewcandidateapplicant)"
+                                      type="primary"
+                                      html-type="submit"
+                            >
+                                Save
+                            </a-button>
+
+                        </template>
+
+
+                    </a-modal>
+                    <!---edit event--->
+                    <a-modal
+
+                            v-model="showEvent"
+
+
+                    >
+                        <template slot="title">
+
+                            <span><a-button type="danger" @click="deleteEvent(interviewerapplicationid)" ghost
+                                            icon="delete"></a-button></span>
+
+
+                        </template>
+
+
+                        <a-form
+                                :form="form"
+
+                        >
+                            <a-form-item
+                                    label="Interview with"
+                                    :label-col="{ span: 5 }"
+                                    :wrapper-col="{ span: 10 }"
+                            >
+                                <a-input v-model="interviewer" disabled/>
+                            </a-form-item>
+
+
+                            <a-form-item label="Start time "
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 8 }">
+
+                                <a-date-picker
+                                        v-model="interviewstart"
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+
+                                />
+
+
+                            </a-form-item>
+                            <a-form-item label="End time "
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 8 }">
+                                <a-date-picker
+                                        v-model="interviewend"
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+
+                                />
+
+
+                            </a-form-item>
+                            <a-form-item label="Event color"
+                                     :label-col="{ span: 5 }"
+                                     :wrapper-col="{ span: 3 }">
+                            <a-select
+
+                                    v-model="eventcolor"
+
+                            >
+                                <a-select-option value="blue">
+                                    <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                </a-select-option>
+                                <a-select-option value="green">
+                                    <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                </a-select-option>
+                                <a-select-option value="purple">
+                                    <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                </a-select-option>
+                                <a-select-option value="tomato">
+                                    <a-tag color="tomato" class="eventcolors"></a-tag>
+                                </a-select-option>
+                            </a-select>
+
+                        </a-form-item>
+
+
+                        </a-form>
+                        <template slot="footer">
+                            <a-button key="submit" type="danger" ghost :loading="loading"
+                                      @click="cancelEvent(interviewerapplicationid)">
+                                Cancel event
+                            </a-button>
+                            <a-button
+                                    type="primary"
+                                    html-type="submit"
+                                    @click="saveEvent(interviewerapplicationid,interviewstart,interviewend)"
+                            >
+                                Save
+                            </a-button>
+
+                        </template>
+
+
+                    </a-modal>
 
                 </div>
 
@@ -955,13 +1205,31 @@
             key: 'interviewstatus',
 
         },
+        {
+            title: 'InterviewStart',
+            dataIndex: 'interviewstart',
+            key: 'interviewstart',
+
+        },
+        {
+            title: 'InterviewEnd',
+            dataIndex: 'interviewend',
+            key: 'interviewend',
+
+        },
+        {
+            title: 'Color',
+            dataIndex: 'color',
+            key: 'color',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Candidate {
-        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status) {
+        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status,start, end,color) {
             this.key = id;
             this.name = name;
             this.paid = paid;
@@ -973,6 +1241,9 @@
             this.project = project
             this.projectname = projectname
             this.interviewstatus = status
+            this.interviewstart = start
+            this.interviewend = end
+            this.color = color
 
 
         }
@@ -985,6 +1256,7 @@
     import RecruiterSider from "../../../layout/RecruiterSider";
     import MycandidatesHeader from '@/components/layout/MaincandidatesHeader'
     import Projectsservice from '@/services/Projects'
+    import moment from 'moment';
 
     export default {
         name: "Mycandidates",
@@ -1009,7 +1281,18 @@
                 visible: false,
                 recentprojects: [],
                 applicationid: null,
-                candidateid: null
+                candidateid: null,
+                interviewmodal: false,
+                candidatename: null,
+                starttime: null,
+                endtime: null,
+                interviewcandidateapplicant: null,
+                showEvent: false,
+                interviewstart: null,
+                interviewend: null,
+                interviewer: null,
+                interviewerapplicationid: null,
+                eventcolor:'blue'
 
             }
         },
@@ -1053,7 +1336,7 @@
                         for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
                             if (this.alldevs[i].id === this.pickeddevs[j].developer && this.alldevsprofile[l].user === this.alldevs[i].id) {
 
-                                let verified_skills = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
+                                let verified_skills = this.alldevsprofile[l].verified_skills.split(',').slice(0, 2);
                                 let paid = this.pickeddevs[j].paid
                                 let id = this.pickeddevs[j].developer
                                 let user_id = this.pickeddevs[j].developer
@@ -1064,9 +1347,12 @@
                                 let project = this.pickeddevs[j].project
                                 let projectname = this.pickeddevs[j].name
                                 let status = this.pickeddevs[j].interviewstatus
+                                let start = this.pickeddevs[j].interviewstarttime
+                                let end = this.pickeddevs[j].interviewendtime
+                                let color = this.pickeddevs[j].eventcolor
 
                                 let onepickeddev = new Candidate(
-                                    id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status
+                                    id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status,start, end,color
                                 );
 
                                 this.candidateprofiles.push(onepickeddev)
@@ -1124,6 +1410,77 @@
         },
         computed: {},
         methods: {
+            moment,
+            onEventClick(application_id, name, start, end,color) {
+                this.interviewerapplicationid = application_id
+                this.interviewer = name
+                this.interviewstart = moment(start)
+                this.interviewend = moment(end)
+                this.eventcolor = color
+
+
+                this.showEvent = true
+
+
+            },
+
+            onEventCreate(application_id, candidate_name) {
+                this.interviewmodal = true
+                this.candidatename = candidate_name;
+                this.interviewcandidateapplicant = application_id
+
+
+            },
+
+            async deleteEvent(interviewerapplicationid) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                MarketPlaceService.candidatemanager(interviewerapplicationid, {interviewstatus: 'deleted'}, auth)
+
+                this.showEvent = false
+
+            },
+
+            async saveEvent(interviewerapplicationid, interviewstart, interviewend) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                MarketPlaceService.candidatemanager(interviewerapplicationid, {
+                    interviewstarttime: interviewstart,
+                    interviewendtime: interviewend,
+                    eventcolor:this.eventcolor
+                }, auth)
+
+                this.showEvent = false
+
+            },
+            async cancelEvent(interviewerapplicationid) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+
+                MarketPlaceService.candidatemanager(interviewerapplicationid, {interviewstatus: 'cancelled'}, auth)
+
+                this.showEvent = false
+
+            },
+            async CreateEvent(application_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                MarketPlaceService.candidatemanager(application_id, {
+                    interviewstarttime: this.starttime,
+                    interviewendtime: this.endtime,
+                    interviewstatus: 'invite sent',
+                    eventcolor:this.eventcolor
+                }, auth)
+                this.interviewmodal = false
+            },
             navigateTo(route) {
                 this.$router.push(route)
             },
@@ -1254,7 +1611,7 @@
             },
 
             //pay or reject from new applicants
-            payClick(pk, candidate_id) {
+            payClick(pk, candidate_id,name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -1270,7 +1627,7 @@
                         if (this.unpaidapplicant.length === 0) {
                             this.paying = false
                         }
-                        MarketPlaceService.candidatemanager(pk, {stage: 'active', paid: true}, auth)
+                        MarketPlaceService.candidatemanager(pk, {stage: 'active', paid: true,candidatename:name}, auth)
 
 
                     }
@@ -1303,5 +1660,12 @@
 </script>
 
 <style scoped>
+    .eventcolors {
+        margin-top: 30%;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+
+    }
 
 </style>

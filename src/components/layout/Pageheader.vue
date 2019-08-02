@@ -2,41 +2,31 @@
     <a-layout-header
             :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
         <a-row>
+
             <a-col :span="6">
                 <span style="color: white;font-size: 17px;font-weight:bold">{{greeting}}
                     {{this.$store.state.user.first_name | capitalize}}</span>
-                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px">4 interviews
+                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px">{{events.length}} interviews
                     Today</p>
             </a-col>
+            <a-col :span="18">
+                <a-row >
+                    <a-col :span="6" v-for="interview in events" v-bind:key="interview">
+                        <a-card class="events">
+                            <p style="line-height: 0">{{interview.start}} - {{interview.end}}</p>
+                            <p>{{interview.title | capitalize}}</p>
+
+                        </a-card>
+                    </a-col>
 
 
-            <a-col :span="4">
-                <a-card class="events">
-                    <p style="line-height: 0">9:00 am - 10:30 am</p>
-                    <p>Dennis Ruhiu</p>
+                </a-row>
 
-                </a-card>
-            </a-col>
-            <a-col :span="4">
-                <a-card class="events">
-                    <p style="line-height: 0">1:00 pm - 2:00 pm</p>
-                    <p>Test User</p>
 
-                </a-card>
-            </a-col>
-            <a-col :span="4">
-                <a-card class="events">
-                    <p style="line-height: 0">2:30 pm - 3:30 pm</p>
-                    <p>Jessica Freeman</p>
 
-                </a-card>
-            </a-col>
-            <a-col :span="4">
-                <a-card class="events">
-                    <p style="line-height: 0">2:30 pm - 3:30 pm</p>
-                    <p>Jessica Freeman</p>
 
-                </a-card>
+
+
             </a-col>
 
 
@@ -47,20 +37,38 @@
 </template>
 
 <script>
+    import ACol from "ant-design-vue/es/grid/Col";
+
+    class Event {
+        constructor(id, title, start, end, color) {
+            this.key = id;
+            this.title = title
+            this.start = start;
+            this.end = end;
+            this.class = color
+
+
+        }
+    }
+
     import UsersService from '@/services/UsersService'
+    import Marketplace from '@/services/Marketplace'
+    import moment from 'moment';
 
     export default {
         name: "Pageheader",
+        components: {ACol},
         data() {
 
             return {
                 currentUserProfile: null,
-
                 greeting: null,
+                events: []
 
             }
         },
         async mounted() {
+            moment
             let today = new Date()
             let curHr = today.getHours()
 
@@ -80,6 +88,45 @@
 
             }
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            this.allevents = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
+            this.alldevrequests = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
+            for (let i = 0; i < this.allevents.length; i++) {
+
+                if (this.allevents[i].interviewstatus !== null) {
+
+                    let id = this.allevents[i].id
+                    let title = this.allevents[i].candidatename
+                    let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
+                    let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
+                    let color = this.allevents[i].eventcolor
+                    let one_event = new Event(
+                        id, title, start, end, color
+                    );
+                    this.events.push(one_event)
+
+
+                }
+
+
+            }
+            for (let i = 0; i < this.allevents.length; i++) {
+
+                if (this.alldevrequests[i].interviewstatus !== null) {
+
+                    let id = this.alldevrequests[i].id
+                    let title = this.alldevrequests[i].candidatename
+                    let start = moment(this.alldevrequests[i].interviewstarttime).format("HH:mm")
+                    let end = moment(this.alldevrequests[i].interviewendtime).format("HH:mm")
+                    let color = this.alldevrequests[i].eventcolor
+                    let one_event = new Event(
+                        id, title, start, end, color
+                    );
+                    this.events.push(one_event)
+
+
+                }
+
+            }
 
 
         },

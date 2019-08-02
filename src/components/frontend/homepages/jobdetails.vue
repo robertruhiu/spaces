@@ -17,7 +17,7 @@
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
                                     <a-button type="primary"
-                                              @click="ApplyJob(job.id,currentUserProfile.user,job.posted_by)">Apply</a-button>
+                                              @click="ApplyJob(job.id,currentUserProfile.user,job.posted_by,)">Apply</a-button>
 
                                 </span>
                                 <span style="float: right"
