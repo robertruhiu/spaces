@@ -23,6 +23,7 @@ import Multiselect from 'vue-multiselect'
 
 Vue.component('multiselect', Multiselect)
 import {
+    Spin,
     Drawer,
     Alert,
     Avatar,
@@ -91,6 +92,7 @@ Vue.use(Steps)
 Vue.use(Timeline)
 Vue.use(Skeleton)
 Vue.use(Icon)
+Vue.use(Spin)
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

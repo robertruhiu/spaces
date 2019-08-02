@@ -35,7 +35,7 @@
 
                 <a-button-group style="margin-left: 1%">
                     <a-button type="primary" icon="share-alt">Share Job</a-button>
-                    <social-sharing url="https://mulan.herokuapp.com/"
+                    <social-sharing :url=joburl
                                     :title=job.title
                                     :description=job.description
                                     quote="Apply for this job at the link below."
@@ -46,7 +46,7 @@
                         </network>
 
                     </social-sharing>
-                    <social-sharing url="https://mulan.herokuapp.com/"
+                    <social-sharing :url=joburl
                                     :title=job.title
                                     :description=job.description
                                     :hashtags=job.tech_stack
@@ -133,6 +133,7 @@
                     current_day: new Date()
                 },
                 bgColor: '#1372cc',
+                joburl:''
 
 
             }
@@ -151,6 +152,7 @@
 
             }
             this.job = (await Marketplace.specificjob(this.$route.params.jobId, auth)).data
+            this.joburl = `https://mulan.herokuapp.com/#/jobdetails/${this.job.id}`
 
 
         },

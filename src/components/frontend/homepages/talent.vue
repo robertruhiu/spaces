@@ -15,7 +15,9 @@
                                     :dataSource="dataSource"
                                     style="width: 80%;z-index: 0"
                                     placeholder="Search skills like react,javascript,vue python"
+                                    :filterOption="filterOption"
                                     v-model="search"
+
 
 
                             >
@@ -86,72 +88,77 @@
                     </a-col>
 
                     <a-col :span="14" style="margin-top: 6%;">
+                        <div v-if="loading" class="loading" style="text-align: center;margin-top: 20%;">
+                            <a-spin size="large"/>
+                        </div>
+                        <div v-else>
+                            <a-list style="padding-bottom: 2rem"
+                                    itemLayout="vertical"
+                                    size="large"
+                                    :pagination="pagination"
+                                    :dataSource="filteredList"
+                            >
+
+                                <a-list-item
+                                        slot="renderItem" slot-scope="item" key="item.title">
 
 
-                        <a-list style="padding-bottom: 2rem"
-                                itemLayout="vertical"
-                                size="large"
-                                :pagination="pagination"
-                                :dataSource="filteredList"
-                        >
+                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                        <a-col span="4" style="background-color:#0679FB;height: 100% ">
+                                            <a-avatar class="poolavatar"
+                                                      style="">
+                                                {{item.name}}
+                                            </a-avatar>
+                                        </a-col>
+                                        <a-col span="15" style="padding: 2%">
+                                            <p>Bio</p>
+                                            <p>{{item.about | truncate(100)}}<a
+                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                more</a>
+                                            </p>
 
-                            <a-list-item
-                                    slot="renderItem" slot-scope="item" key="item.title">
-
-
-                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                    <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                        <a-avatar class="poolavatar"
-                                                  style="">
-                                            {{item.name}}
-                                        </a-avatar>
-                                    </a-col>
-                                    <a-col span="15" style="padding: 2%">
-                                        <p>Bio</p>
-                                        <p>{{item.about | truncate(100)}}<a @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read more</a>
-                                        </p>
-
-                                        <p>
-                                            Skills :
-                                            <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+                                            <p>
+                                                Skills :
+                                                <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                        </p>
+                                            </p>
 
 
-                                    </a-col>
-                                    <a-col span="5">
-                                        <div style="padding-top: 1rem;">
+                                        </a-col>
+                                        <a-col span="5">
+                                            <div style="padding-top: 1rem;">
 
-                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                <a-icon type="environment"/>
-                                                {{item.location}}
-                                            </a-tag>
-                                            <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
-                                            </a-tag>
-
-
-                                        </div>
-                                        <div style="margin-top: 2rem">
-                                            <a-button type="primary" ghost @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                View Profile
-                                            </a-button>
-                                        </div>
+                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                    <a-icon type="environment"/>
+                                                    {{item.location}}
+                                                </a-tag>
+                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
+                                                </a-tag>
 
 
-                                    </a-col>
+                                            </div>
+                                            <div style="margin-top: 2rem">
+                                                <a-button type="primary" ghost
+                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                    View Profile
+                                                </a-button>
+                                            </div>
 
 
-                                </a-row>
+                                        </a-col>
 
 
-                            </a-list-item>
-                        </a-list>
+                                    </a-row>
+
+
+                                </a-list-item>
+                            </a-list>
+                        </div>
 
 
                     </a-col>
-
 
 
                 </a-row>
@@ -219,10 +226,13 @@
                 checkAll1: false,
                 mydevs: null,
                 tags: [],
+                loading: true,
+                dataSource: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                    'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
+                    'Android', 'Website', 'Mobile'],
 
-
-
-                dataSource: ['react', 'angular', 'javascript'],
 
                 plainOptions1,
 
@@ -260,6 +270,7 @@
         async mounted() {
             this.devs = (await UsersService.devs()).data;
             this.alldevs = (await UsersService.allusers()).data;
+            this.loading = false
             for (let j = 0; j < this.alldevs.length; j++) {
                 for (let i = 0; i < this.devs.length; i++) {
                     if (this.alldevs[j].id === this.devs[i].id) {
@@ -292,9 +303,9 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
-
-
-
+            filterOption(input, option) {
+                return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            },
             onClose() {
                 this.visible = false
             },
@@ -320,9 +331,7 @@
                     checkAll1: e.target.checked,
                 })
             },
-            filterOption(input, option) {
-                return option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
-            }
+
         },
         computed: {
             filteredList() {
@@ -347,47 +356,11 @@
         margin: 25% 25%;
     }
 
-    .talentcard {
-        margin-bottom: 1rem;
-    }
 
     .center {
         margin: auto;
         width: 60%;
 
-
-    }
-
-    .bio {
-
-        background-color: white;
-        min-height: 50vh;
-
-
-    }
-
-    .actions {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background-color: white;
-        min-height: 30vh;
-        margin: 1%;
-        padding: 4%;
-    }
-
-    .profile {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background-color: white;
-        margin: 1%;
-        padding: 4%;
-    }
-
-    .profilecard {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        min-height: 50vh;
-        margin-right: 3%;
-
-        padding: 1%;
-        position: fixed;
 
     }
 

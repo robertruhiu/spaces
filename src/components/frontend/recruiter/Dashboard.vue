@@ -41,7 +41,7 @@
                         </a>
 
 
-                        <router-link to="managejobs">
+                        <router-link to="managejobs" v-if="myjobs.length>0">
                             <a-col class="boxes" :span="6">
 
                                 <a-row class="ant-card actioncards">
@@ -60,7 +60,7 @@
 
                             </a-col>
                         </router-link>
-                        <router-link to="mycandidates">
+                        <router-link to="mycandidates" v-if="mycandidates.length >0">
 
                             <a-col class="boxes" :span="6">
                                 <a-row class="ant-card actioncards">
@@ -99,48 +99,52 @@
                     </a-row>
 
                 </div>
+
                 <div style="padding: 2% 1%;background-color: white;margin: 2% 1%">
-                    <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
-                        <a-col :span="12">
+                    <div v-if="loading" class="loading" style="text-align: center;">
+                        <a-spin />
+                    </div>
+                    <div v-else>
+                        <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
+                            <a-col :span="12">
 
-                            <h3 style="color: #1976D2;font-weight: bold">Your Recent Jobs</h3>
-
-
-                        </a-col>
-                        <a-col :span="12">
-                            <router-link to="managejobs">
-                                <a-button type="primary" style="float: right">
-                                    See more
-                                    <a-icon type="right"/>
-                                </a-button>
-                            </router-link>
+                                <h3 style="color: #1976D2;font-weight: bold">Your Recent Jobs</h3>
 
 
-                        </a-col>
+                            </a-col>
+                            <a-col :span="12">
+                                <router-link to="managejobs">
+                                    <a-button type="primary" style="float: right">
+                                        See more
+                                        <a-icon type="right"/>
+                                    </a-button>
+                                </router-link>
 
-                    </a-row>
-                    <a-row :gutter="16" style="margin-left: 1rem;margin-right: 1rem;margin-bottom: 1rem">
 
+                            </a-col>
 
-                        <a-col :span="12" v-for="job in myjobs" v-bind:key="job.id">
-                            <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                <h3 style="font-weight: bold">{{job.title}}</h3>
-                                <p>
+                        </a-row>
+                        <a-row :gutter="16" style="margin-left: 1rem;margin-right: 1rem;margin-bottom: 1rem">
+                            <div v-if="myjobs.length===1" >
+                                <a-col :span="12" :offset="6" v-for="job in myjobs" v-bind:key="job.id">
+                                <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                    <h3 style="font-weight: bold">{{job.title}}</h3>
+                                    <p>
                                               <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                </p>
+                                    </p>
 
-                                <p>
-                                    <a-alert style="color:#1976D2;border: 0 "
-                                             message="Applicant Tracker"
-                                             type="info"/>
-                                </p>
+                                    <p>
+                                        <a-alert style="color:#1976D2;border: 0 "
+                                                 message="Applicant Tracker"
+                                                 type="info"/>
+                                    </p>
 
-                                <p>
-                                    <a-row>
-                                        <a-col :span="8">
+                                    <p>
+                                        <a-row>
+                                            <a-col :span="8">
                                                             <span>
                                                                 Applicants
                                                                 <a-tag color="#9fc6f2"
@@ -148,8 +152,8 @@
                                                             </span>
 
 
-                                        </a-col>
-                                        <a-col :span="8">
+                                            </a-col>
+                                            <a-col :span="8">
                                             <span>
                                                 Testing Stage
 
@@ -157,31 +161,94 @@
                                                    style="color:white;border-radius: 50%">{{job.test}}</a-tag>
                                             </span>
 
-                                        </a-col>
-                                        <a-col :span="8">
+                                            </a-col>
+                                            <a-col :span="8">
                                             <span>
                                                   Interview Stage
                                             <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
                                             </span>
 
-                                        </a-col>
-                                    </a-row>
+                                            </a-col>
+                                        </a-row>
 
-                                </p>
-                                <div style="text-align: center">
+                                    </p>
+                                    <div style="text-align: center">
 
-                                    <a-button style="width: 60%"
-                                              @click="navigateTo({name:'job',params:{jobId: job.id}})"
-                                              type="primary" block>Manage Job
-                                    </a-button>
+                                        <a-button style="width: 60%"
+                                                  @click="navigateTo({name:'job',params:{jobId: job.id}})"
+                                                  type="primary" block>Manage Job
+                                        </a-button>
 
-                                </div>
+                                    </div>
 
 
-                            </a-card>
-                        </a-col>
+                                </a-card>
+                            </a-col>
 
-                    </a-row>
+                            </div>
+
+
+                            <a-col v-else :span="12" v-for="job in myjobs" v-bind:key="job.id">
+                                <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                    <h3 style="font-weight: bold">{{job.title}}</h3>
+                                    <p>
+                                              <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                    </p>
+
+                                    <p>
+                                        <a-alert style="color:#1976D2;border: 0 "
+                                                 message="Applicant Tracker"
+                                                 type="info"/>
+                                    </p>
+
+                                    <p>
+                                        <a-row>
+                                            <a-col :span="8">
+                                                            <span>
+                                                                Applicants
+                                                                <a-tag color="#9fc6f2"
+                                                                       style="color:white;border-radius: 50%">{{job.applicants}}</a-tag>
+                                                            </span>
+
+
+                                            </a-col>
+                                            <a-col :span="8">
+                                            <span>
+                                                Testing Stage
+
+                                            <a-tag color="#92DDDD"
+                                                   style="color:white;border-radius: 50%">{{job.test}}</a-tag>
+                                            </span>
+
+                                            </a-col>
+                                            <a-col :span="8">
+                                            <span>
+                                                  Interview Stage
+                                            <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
+                                            </span>
+
+                                            </a-col>
+                                        </a-row>
+
+                                    </p>
+                                    <div style="text-align: center">
+
+                                        <a-button style="width: 60%"
+                                                  @click="navigateTo({name:'job',params:{jobId: job.id}})"
+                                                  type="primary" block>Manage Job
+                                        </a-button>
+
+                                    </div>
+
+
+                                </a-card>
+                            </a-col>
+
+                        </a-row>
+                    </div>
 
 
                 </div>
@@ -539,10 +606,6 @@
                                 </a-row>
                             </a-form>
                         </tab-content>
-                        {{job}}
-
-
-
 
 
                     </form-wizard>
@@ -589,6 +652,7 @@
                 currentUserProfile: null,
                 jobs: null,
                 myjobs: [],
+                mycandidates:[],
                 visible: false,
                 job: {},
                 inputVisible: false,
@@ -600,6 +664,7 @@
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
                     'Android', 'Website', 'Mobile'],
                 selectedTags: [],
+                loading: true
 
             }
         },
@@ -619,38 +684,41 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            if(this.$store.state.user.pk){
+            if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
-            for (let i = 0; i < 2; i++) {
-                this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
-                let test = 0;
-                let interview = 0;
-                for (let j = 0; j < this.applicants.length; j++) {
-                    if (this.applicants[j].stage == 'test') {
-                        test++
+                this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
+                this.mycandidates = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
+                this.loading =false
+                for (let i = 0; i < 2; i++) {
+                    this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
+                    let test = 0;
+                    let interview = 0;
+                    for (let j = 0; j < this.applicants.length; j++) {
+                        if (this.applicants[j].stage === 'test') {
+                            test++
 
-                    } else if (this.applicants[j].stage == 'interview') {
-                        interview++
+                        } else if (this.applicants[j].stage === 'interview') {
+                            interview++
+
+                        }
 
                     }
+                    let skill_list = this.jobs[i].tech_stack.split(',');
+
+                    let id = this.jobs[i].id
+                    let title = this.jobs[i].title
+                    let skills = skill_list
+                    let applicants = this.applicants.length
+                    let onejob = new Job(
+                        id, title, skills, applicants, test, interview
+                    )
+
+
+                    this.myjobs.push(onejob)
+
 
                 }
-                let skill_list = this.jobs[i].tech_stack.split(',');
 
-                let id = this.jobs[i].id
-                let title = this.jobs[i].title
-                let skills = skill_list
-                let applicants = this.applicants.length
-                let onejob = new Job(
-                    id, title, skills, applicants, test, interview
-                )
-
-
-                this.myjobs.push(onejob)
-
-
-            }
             }
 
 

@@ -36,7 +36,9 @@
                             </a-input>
 
 
-                            <div v-if="errors.has('email')" style="color: #f5222d;" class="ant-form-explain">{{ errors.first('email') }}</div>
+                            <div v-if="errors.has('email')" style="color: #f5222d;" class="ant-form-explain">{{
+                                errors.first('email') }}
+                            </div>
 
 
                         </a-form-item>
@@ -56,13 +58,13 @@
                                         style="color: rgba(0,0,0,.25)"
                                 />
                             </a-input>
-                            <div v-if="errors.has('password')" style="color: #f5222d;" class="ant-form-explain">{{ errors.first('password') }}</div>
-
-
+                            <div v-if="errors.has('password')" style="color: #f5222d;" class="ant-form-explain">{{
+                                errors.first('password') }}
+                            </div>
 
 
                         </a-form-item>
-                        <a-form-item>
+                        <a-form-item v-if="loading === false">
 
                             <a
                                     class="login-form-forgot"
@@ -73,13 +75,26 @@
                             <a-button @click="login"
                                       type="primary"
                                       class="login-form-button"
+
                             >
                                 Log in
                             </a-button>
+
+
                             Or
                             <router-link to="/register">
                                 register now!
                             </router-link>
+                        </a-form-item>
+                        <a-form-item v-else >
+
+
+
+                            <div style="text-align: center;">
+                                <a-spin/>
+                            </div>
+
+
                         </a-form-item>
                     </a-form>
 
@@ -118,13 +133,16 @@
                 error: null,
                 usertype: null,
                 currentUserProfile: {},
+                loading: false
             }
         },
+
         methods: {
             login() {
+
                 this.$validator.validateAll().then((values) => {
                     if (values) {
-
+                        this.loading = true
                         AuthService.login({
                             email: this.email,
                             password: this.password
@@ -162,6 +180,7 @@
 
                                     })
                                     .catch(error => {
+                                        this.loading = false
                                         return error
 
 
@@ -170,16 +189,18 @@
 
                             })
                             .catch(error => {
+                                this.loading = false
                                 this.error = 'login details incorrect'
                                 return error
 
                             });
 
 
+                    }else {
+                        this.loading = false
                     }
                 })
             },
-
 
 
         }

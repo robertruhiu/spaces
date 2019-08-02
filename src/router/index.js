@@ -195,7 +195,8 @@ let router =  new Router({
         },
 
 
-    ]
+    ],
+
 })
 
 router.beforeEach((to, from, next) => {
@@ -207,9 +208,11 @@ router.beforeEach((to, from, next) => {
       return
     }
     next('/login')
+
   } else {
     next()
   }
 })
+
 
 export default router

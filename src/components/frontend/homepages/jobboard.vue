@@ -14,8 +14,10 @@
                             <a-auto-complete
                                     :dataSource="dataSource"
                                     style="width: 80%;z-index: 0"
+                                    :filterOption="filterOption"
                                     placeholder="Search skills like react,javascript,vue python"
                                     v-model="search"
+
 
                             >
 
@@ -83,72 +85,78 @@
                     </a-col>
 
                     <a-col :span="14">
+                        <div v-if="loading" class="loading" style="text-align: center;margin-top: 20%;">
+                            <a-spin size="large"/>
+                        </div>
 
-                        <a-list style="padding-bottom: 2%"
-                                itemLayout="vertical"
-                                size="large"
-                                :pagination="pagination"
-                                :dataSource="filteredList"
-                        >
+                        <div v-else>
+                            <a-list style="padding-bottom: 2%"
+                                    itemLayout="vertical"
+                                    size="large"
+                                    :pagination="pagination"
+                                    :dataSource="filteredList"
 
-                            <a-list-item
-                                    slot="renderItem" slot-scope="item" key="item.title">
+                            >
 
-
-                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                    <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                        <p class="jobtitle">{{item.title}}</p>
+                                <a-list-item
+                                        slot="renderItem" slot-scope="item" key="item.title">
 
 
-                                    </a-col>
-                                    <a-col span="15" style="padding: 2%">
+                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                        <a-col span="4" style="background-color:#0679FB;height: 100% ">
+                                            <p class="jobtitle">{{item.title}}</p>
 
-                                        <p>Job Description</p>
-                                        <p>{{item.description | truncate(100)}}<a
-                                                @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
-                                            more</a>
-                                        </p>
 
-                                        <p>
-                                            Skills looking for :
-                                            <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+                                        </a-col>
+                                        <a-col span="15" style="padding: 2%">
+
+                                            <p>Job Description</p>
+                                            <p>{{item.description | truncate(100)}}<a
+                                                    @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
+                                                more</a>
+                                            </p>
+
+                                            <p>
+                                                Skills looking for :
+                                                <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                        </p>
+                                            </p>
 
 
-                                    </a-col>
-                                    <a-col span="5">
-                                        <div style="padding-top: 1rem;">
+                                        </a-col>
+                                        <a-col span="5">
+                                            <div style="padding-top: 1rem;">
 
-                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                <a-icon type="environment"/>
-                                                {{item.location}}
-                                            </a-tag>
-                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                <a-icon type="bank"/>
-                                                {{item.company}}
-                                            </a-tag>
-
-
-                                        </div>
-                                        <div style="margin-top: 2rem">
-                                            <a-button type="primary" ghost
-                                                      @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">
-                                                View details
-                                            </a-button>
-                                        </div>
+                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                    <a-icon type="environment"/>
+                                                    {{item.location}}
+                                                </a-tag>
+                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                    <a-icon type="bank"/>
+                                                    {{item.company}}
+                                                </a-tag>
 
 
-                                    </a-col>
+                                            </div>
+                                            <div style="margin-top: 2rem">
+                                                <a-button type="primary" ghost
+                                                          @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">
+                                                    View details
+                                                </a-button>
+                                            </div>
 
 
-                                </a-row>
+                                        </a-col>
 
 
-                            </a-list-item>
-                        </a-list>
+                                    </a-row>
+
+
+                                </a-list-item>
+                            </a-list>
+                        </div>
 
 
                     </a-col>
@@ -185,8 +193,10 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
+
     var VueTruncate = require('vue-truncate-filter')
     import Vue from 'vue'
+
     Vue.use(VueTruncate)
 
     const plainOptions = ['Fulltime', 'Contract', 'Remote', 'Parttime']
@@ -209,8 +219,12 @@
                 checkedList1: defaultCheckedList1,
                 indeterminate1: true,
                 checkAll1: false,
-                dataSource: ['react', 'angular', 'javascript'],
-
+                dataSource: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                    'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
+                    'Android', 'Website', 'Mobile'],
+                loading: true,
                 plainOptions1,
 
                 pStyle: {
@@ -246,6 +260,7 @@
         async mounted() {
 
             this.jobs = (await Marketplace.alljobs()).data
+            this.loading = false
 
             for (let i = 0; i < this.jobs.length; i++) {
 
@@ -277,6 +292,9 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
+            filterOption(input, option) {
+                return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            },
 
             onChange(checkedList) {
                 this.indeterminate = !!checkedList.length && (checkedList.length < plainOptions.length)
@@ -300,9 +318,7 @@
                     checkAll1: e.target.checked,
                 })
             },
-            filterOption(input, option) {
-                return option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
-            }
+
         },
         computed: {
             filteredList() {

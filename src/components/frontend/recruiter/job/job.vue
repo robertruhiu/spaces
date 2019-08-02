@@ -564,6 +564,9 @@
                                                         Interview
                                                         <a-tag color="blue">{{interviewstage.length}}</a-tag>
                                                     </span>
+                                                    <a-alert style="margin-bottom: 1%"
+                                                             message="Interview notes enables you to write and keep notes on the candidate"
+                                                             type="info" closeText="Close Now"/>
                                                     <a-table :dataSource="interviewstage" :scroll="{ y: 340 }"
                                                              size="middle">
 
@@ -624,16 +627,33 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div style="" slot="title">Interview date
+                                                            <div style="" slot="title">Interview
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                                <span style="margin-left: 5%;">
+                                                                <div v-if="record.interviewstatus === 'deleted' || record.interviewstatus === 'cancelled'"
+                                                                     style="margin-left: 7%">
                                                                     <a-button :size="small"
                                                                               style="background-color: #673AB7;color: white"
                                                                               @click="onEventCreate(record.action,record.name)">
                                                                         <a-icon type="calendar"/>
                                                                         create
-                                                                </a-button>
+                                                                    </a-button>
+                                                                </div>
+                                                                <div v-else-if="record.interviewstatus === 'cancelled'"
+                                                                     style="margin-left: 7%">
+                                                                    <a-button :size="small"
+                                                                              style="background-color: #673AB7;color: white"
+                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                        <a-icon type="calendar"/>
+                                                                        create
+                                                                    </a-button>
+                                                                </div>
+                                                                <span v-else style="margin-left: 12%;">
+                                                                    <a-button type="primary" ghost
+                                                                              @click="onEventClick(record.action,record.name,record.interviewstart,record.interviewend)">
+                                                                        view
+                                                                    </a-button>
+
                                                                 </span>
 
                                                             </template>
@@ -679,7 +699,7 @@
                                                             </div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 25%">
-                                                            --
+                                                            <a>notes</a>
                                                         </span>
                                                             </template>
 
@@ -1136,7 +1156,7 @@
 
                         </a-tabs>
                     </div>
-
+                    <!---assign project--->
                     <a-modal
                             title="Project assignments "
                             v-model="visible"
@@ -1187,6 +1207,7 @@
                         </div>
 
                     </a-modal>
+                    <!---create event--->
                     <a-modal
 
                             v-model="interviewmodal"
@@ -1271,6 +1292,84 @@
                             <a-button @click="CreateEvent(interviewcandidateapplicant)"
                                       type="primary"
                                       html-type="submit"
+                            >
+                                Save
+                            </a-button>
+
+                        </template>
+
+
+                    </a-modal>
+                    <!---edit event--->
+                    <a-modal
+
+                            v-model="showEvent"
+
+
+                    >
+                        <template slot="title">
+
+                            <span><a-button type="danger" @click="deleteEvent(interviewerapplicationid)" ghost
+                                            icon="delete"></a-button></span>
+
+
+                        </template>
+
+
+                        <a-form
+                                :form="form"
+                                @submit="handleSubmit"
+                        >
+                            <a-form-item
+                                    label="Interview with"
+                                    :label-col="{ span: 5 }"
+                                    :wrapper-col="{ span: 18 }"
+                            >
+                                <a-input v-model="interviewer" disabled/>
+                            </a-form-item>
+
+
+                            <a-form-item label="Start time "
+                                         :label-col="{ span: 4 }"
+                                         :wrapper-col="{ span: 8 }">
+
+                                <a-date-picker
+                                        v-model="interviewstart"
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+                                        @ok="onOk"
+                                />
+
+
+                            </a-form-item>
+                            <a-form-item label="End time "
+                                         :label-col="{ span: 4 }"
+                                         :wrapper-col="{ span: 8 }">
+                                <a-date-picker
+                                        v-model="interviewend"
+                                        showTime
+                                        format="YYYY-MM-DD HH:mm"
+                                        placeholder="Select Time"
+                                        @change="onChange"
+                                        @ok="onOk"
+                                />
+
+
+                            </a-form-item>
+
+
+                        </a-form>
+                        <template slot="footer">
+                            <a-button key="submit" type="danger" ghost :loading="loading"
+                                      @click="cancelEvent(interviewerapplicationid)">
+                                Cancel event
+                            </a-button>
+                            <a-button
+                                    type="primary"
+                                    html-type="submit"
+                                    @click="saveEvent(interviewerapplicationid,interviewstart,interviewend)"
                             >
                                 Save
                             </a-button>
@@ -1382,13 +1481,25 @@
             key: 'interviewstatus',
 
         },
+        {
+            title: 'InterviewStart',
+            dataIndex: 'interviewstart',
+            key: 'interviewstart',
+
+        },
+        {
+            title: 'InterviewEnd',
+            dataIndex: 'interviewend',
+            key: 'interviewend',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1400,6 +1511,8 @@
             this.project = project
             this.projectname = projectname
             this.interviewstatus = status
+            this.interviewstart = start
+            this.interviewend = end
 
 
         }
@@ -1470,7 +1583,12 @@
                 candidatename: null,
                 starttime: null,
                 endtime: null,
-                interviewcandidateapplicant: null
+                interviewcandidateapplicant: null,
+                showEvent: false,
+                interviewstart: null,
+                interviewend: null,
+                interviewer: null,
+                interviewerapplicationid: null
 
 
             }
@@ -1528,8 +1646,10 @@
                                 let project = this.applicants[j].project
                                 let projectname = this.applicants[j].name
                                 let status = this.applicants[j].interviewstatus
+                                let start = this.applicants[j].interviewstarttime
+                                let end = this.applicants[j].interviewendtime
                                 let onepickeddev = new Applicant(
-                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status
+                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end
                                 );
 
                                 this.applicantprofile.push(onepickeddev)
@@ -1653,6 +1773,16 @@
         },
         methods: {
             moment,
+            onEventClick(application_id, name, start, end) {
+                this.interviewerapplicationid = application_id
+                this.interviewer = name
+                this.interviewstart = start
+                this.interviewend = end
+
+                this.showEvent = true
+
+
+            },
 
             onEventCreate(application_id, candidate_name) {
                 this.interviewmodal = true
@@ -1661,6 +1791,50 @@
 
 
             },
+            async deleteEvent(interviewerapplicationid) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.pickreject(interviewerapplicationid, {interviewstatus: 'deleted'}, auth)
+
+                this.$router.push({
+                    name: 'job',
+                    params: {jobId: this.$store.state.route.params.jobId}
+                })
+
+            },
+            async saveEvent(interviewerapplicationid, interviewstart, interviewend) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.pickreject(interviewerapplicationid, {
+                    interviewstarttime: interviewstart,
+                    interviewendtime: interviewend
+                }, auth)
+
+                this.$router.push({
+                    name: 'job',
+                    params: {jobId: this.$store.state.route.params.jobId}
+                })
+
+            },
+            async cancelEvent(interviewerapplicationid) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+
+                Marketplace.pickreject(interviewerapplicationid, {interviewstatus: 'cancelled'}, auth)
+
+                this.$router.push({
+                    name: 'job',
+                    params: {jobId: this.$store.state.route.params.jobId}
+                })
+
+            },
+
             disabledDate(current) {
                 // Can not select days before today and today
                 return current && current < moment().endOf('day');
