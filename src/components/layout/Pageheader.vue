@@ -6,7 +6,7 @@
             <a-col :span="6">
                 <span style="color: white;font-size: 17px;font-weight:bold">{{greeting}}
                     {{this.$store.state.user.first_name | capitalize}}</span>
-                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px">{{events.length}} interviews
+                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px">{{events.length}} interview(s)
                     Today</p>
             </a-col>
             <a-col :span="18">
@@ -90,9 +90,10 @@
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.allevents = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
             this.alldevrequests = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
+            let todayDate = moment().format("YYYY-MM-DD")
             for (let i = 0; i < this.allevents.length; i++) {
 
-                if (this.allevents[i].interviewstatus !== null) {
+                if (this.allevents[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate ) {
 
                     let id = this.allevents[i].id
                     let title = this.allevents[i].candidatename
@@ -111,7 +112,7 @@
             }
             for (let i = 0; i < this.allevents.length; i++) {
 
-                if (this.alldevrequests[i].interviewstatus !== null) {
+                if (this.alldevrequests[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate) {
 
                     let id = this.alldevrequests[i].id
                     let title = this.alldevrequests[i].candidatename

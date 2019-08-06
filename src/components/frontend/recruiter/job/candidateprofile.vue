@@ -255,6 +255,17 @@
 
         }
     }
+    class Event {
+        constructor(id, title, start, end, color) {
+            this.key = id;
+            this.title = title
+            this.start = start;
+            this.end = end;
+            this.class = color
+
+
+        }
+    }
 
 
     import UsersService from '@/services/UsersService'
@@ -264,6 +275,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import Projectsservice from '@/services/Projects'
+    import moment from 'moment';
 
 
     export default {
@@ -283,7 +295,8 @@
                 portoliolist: [],
                 portfolio: [],
                 job: {},
-                recentprojects: []
+                recentprojects: [],
+                events: []
             }
         },
         components: {
@@ -296,7 +309,7 @@
 
         },
         async mounted() {
-
+            moment
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -347,6 +360,26 @@
             // recent projects
             if(this.$store.state.user.pk){
                 this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+
+            }
+            this.allevents = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
+            for (let i = 0; i < this.allevents.length; i++) {
+
+                if (this.allevents[i].interviewstatus !== null ) {
+
+                    let id = this.allevents[i].id
+                    let title = this.allevents[i].candidatename
+                    let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
+                    let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
+                    let color = this.allevents[i].eventcolor
+                    let one_event = new Event(
+                        id, title, start, end, color
+                    );
+                    this.events.push(one_event)
+
+
+                }
+
 
             }
 

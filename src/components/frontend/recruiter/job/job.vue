@@ -711,7 +711,7 @@
                                                             </div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 25%">
-                                                            <a>notes</a>
+                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">notes</a>
                                                         </span>
                                                             </template>
 

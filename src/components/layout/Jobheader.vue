@@ -6,6 +6,7 @@
 
             <a-row>
                 <a-col :span="22">
+
                             <span>
                                 <a style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
                                 {{job.title}}</a>
