@@ -1,7 +1,11 @@
 <template>
     <div id="app">
 
-        <router-view/>
+
+
+        <router-view>
+
+        </router-view>
 
     </div>
 </template>
@@ -11,6 +15,11 @@
 
     export default {
         name: 'app',
+        data() {
+            return {
+                loading: true
+            }
+        },
         async mounted() {
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -44,6 +53,7 @@
                 })
 
             }
+            this.loading = false
 
 
         }
