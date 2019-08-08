@@ -1,25 +1,17 @@
-var BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
 module.exports = {
     configureWebpack: {
         performance: {
             hints: false
         },
         plugins: [
-        new BrotliGzipPlugin({
+            new BrotliPlugin({
             asset: '[path].br[query]',
-            algorithm: 'brotli',
-            test: /\.(js|css|html|svg)$/,
+            test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
-            minRatio: 0.8,
-            quality: 11
+            minRatio: 0.7
         }),
-        new BrotliGzipPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        })
+
 
     ],
 
