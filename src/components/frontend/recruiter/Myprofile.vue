@@ -9,7 +9,7 @@
             <a-layout-content>
                 <Pageheader/>
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
-                marginTop:'2%',marginLeft: '1%',marginRight:'1%' }">
+                marginTop:'7rem',marginLeft: '1%',marginRight:'1%' }">
                     <a-form :form="form">
                         <a-row :gutter="16">
                             <a-col :span="12">

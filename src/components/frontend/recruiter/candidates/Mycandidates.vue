@@ -340,7 +340,7 @@
                                                                 width="20%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Skills</div>
+                                                            <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
                                                                 <div style="text-align: center">
                                                         <span>
@@ -504,7 +504,7 @@
                                                                 width="25%"
 
                                                         >
-                                                            <div style="text-align: center" slot="title">Skills</div>
+                                                            <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
                                                                 <div style="text-align: center">
                                                                     <span >

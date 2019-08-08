@@ -8,7 +8,7 @@
                 <Pageheader/>
 
 
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }">
+                <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh',marginTop:'7rem' }">
                     <div v-if="loading" class="loading" style="text-align: center;">
                         <a-spin/>
                     </div>
@@ -21,14 +21,22 @@
                                     <p><span>Total Applicants: </span>
 
 
-                                        <span style="float: right"><a-badge :count=allapplicants
-                                                                            :numberStyle="{backgroundColor: '#9FC6F2'} "/></span>
+                                        <span style="float: right">
+                                            <a-tag color="#9FC6F2"
+                                                   style="color:white;border-radius: 50%">{{allapplicants}}</a-tag>
+
+                                        </span>
+
                                     </p>
-                                    <p><span>Testing Stage: </span><span style="float: right"><a-badge :count=testingstage
-                                                                                                       :numberStyle="{backgroundColor: '#92DDDD'} "/></span>
+                                    <p><span>Testing Stage: </span><span style="float: right">
+                                        <a-tag color="#92DDDD"
+                                               style="color:white;border-radius: 50%">{{testingstage}}</a-tag>
+                                        </span>
                                     </p>
-                                    <p><span>Interview Stage: </span><span style="float: right"><a-badge :count=interviewstage
-                                                                                                         :numberStyle="{backgroundColor: '#DA92D0'} "/></span>
+                                    <p><span>Interview Stage: </span><span style="float: right">
+                                        <a-tag color="#DA92D0"
+                                               style="color:white;border-radius: 50%">{{interviewstage}}</a-tag>
+                                        </span>
                                     </p>
 
 
@@ -144,10 +152,10 @@
                 myjobs: [],
                 applicants: null,
                 loading: true,
-                myapplicants:[],
-                allapplicants: '0',
-                testingstage: '0',
-                interviewstage: '0'
+                myapplicants: [],
+                allapplicants: 0,
+                testingstage: 0,
+                interviewstage: 0
 
 
             }
@@ -171,21 +179,7 @@
                 this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
                 this.myapplicants = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
                 this.loading = false
-                this.allapplicants = toString(this.myapplicants.length)
-                console.log(this.myapplicants)
-                let interview =[]
-                let test =[]
-                for(let j =0;j<this.myapplicants.length;j++){
 
-                    if(this.myapplicants[j].stage === 'test'){
-                        test.push(this.myapplicants[j])
-
-                    }else if(this.myapplicants[j].stage === 'interview'){
-                        interview.push(this.myapplicants[j])
-                    }
-                }
-                this.testingstage = toString(test.length)
-                this.interviewstage = toString(interview.length)
 
                 for (let i = 0; i < this.jobs.length; i++) {
                     this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
@@ -216,6 +210,29 @@
 
 
                 }
+                let all = []
+                let testnumber =[]
+                let interviewnumber =[]
+                for (let i = 0; i < this.myjobs.length; i++) {
+                    all.push(this.myjobs[i].applicants)
+                    testnumber.push(this.myjobs[i].test)
+                    interviewnumber.push(this.myjobs[i].interview)
+                }
+                this.allapplicants = all.reduce(
+                    function (total, num) {
+                        return total + num
+                    }
+                    , 0)
+                this.testingstage = testnumber.reduce(
+                    function (total, num) {
+                        return total + num
+                    }
+                    , 0)
+                this.interviewstage = interviewnumber.reduce(
+                    function (total, num) {
+                        return total + num
+                    }
+                    , 0)
             }
 
 

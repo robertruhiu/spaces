@@ -10,7 +10,7 @@
                 <Pageheader/>
 
 
-                <div :style="{ padding: '5px', background: '#fff', }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'7rem' }">
                     <a-row>
                         <a-col span="24">
 

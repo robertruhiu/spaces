@@ -82,13 +82,15 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Skills
+                                                                    <div style="margin-left: 40%" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                        <div style="text-align: center">
+                                                                            <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                        </div>
                                                                     </template>
                                                                 </a-table-column>
 
@@ -215,13 +217,16 @@
                                                                         width="25%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Skills
+                                                                    <div style="margin-left: 33%" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <span style="text-align: center;">
+                                                                        <div style="text-align: center">
+                                                                            <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -443,12 +448,15 @@
                                                                 width="25%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Skills</div>
+                                                            <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                                <div style="text-align: center">
+                                                                    <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                </div>
+
                                                             </template>
                                                         </a-table-column>
 
@@ -521,7 +529,7 @@
                                                                         <a-menu-item
                                                                                 v-if="record.test_stage === 'complete'"
                                                                                 @click="handleTestMenuClick(record.action,record.profile,2)"
-                                                                                >
+                                                                        >
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
@@ -613,12 +621,15 @@
                                                                 width="25%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Skills</div>
+                                                            <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                                <div style="text-align: center">
+                                                                    <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                </div>
+
                                                             </template>
                                                         </a-table-column>
 
@@ -1239,7 +1250,7 @@
                                     :label-col="{ span: 5 }"
                                     :wrapper-col="{ span: 10 }"
                             >
-                                <a-input v-model="candidatename" disabled />
+                                <a-input v-model="candidatename" disabled/>
                             </a-form-item>
 
 
@@ -1370,28 +1381,28 @@
 
                             </a-form-item>
                             <a-form-item label="Event color"
-                                     :label-col="{ span: 5 }"
-                                     :wrapper-col="{ span: 3 }">
-                            <a-select
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 3 }">
+                                <a-select
 
-                                    v-model="eventcolor"
+                                        v-model="eventcolor"
 
-                            >
-                                <a-select-option value="blue">
-                                    <a-tag color="#029BE4" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="green">
-                                    <a-tag color="#3BB679" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="purple">
-                                    <a-tag color="#a515ae" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="tomato">
-                                    <a-tag color="tomato" class="eventcolors"></a-tag>
-                                </a-select-option>
-                            </a-select>
+                                >
+                                    <a-select-option value="blue">
+                                        <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="green">
+                                        <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="purple">
+                                        <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="tomato">
+                                        <a-tag color="tomato" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                </a-select>
 
-                        </a-form-item>
+                            </a-form-item>
 
 
                         </a-form>
@@ -1412,7 +1423,6 @@
 
 
                     </a-modal>
-
 
 
                 </div>
@@ -1540,7 +1550,7 @@
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end,color) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1632,7 +1642,7 @@
                 interviewend: null,
                 interviewer: null,
                 interviewerapplicationid: null,
-                eventcolor:'blue'
+                eventcolor: 'blue'
 
 
             }
@@ -1694,7 +1704,7 @@
                                 let end = this.applicants[j].interviewendtime
                                 let color = this.applicants[j].eventcolor
                                 let onepickeddev = new Applicant(
-                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end,color
+                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color
                                 );
 
                                 this.applicantprofile.push(onepickeddev)
@@ -1819,7 +1829,7 @@
         },
         methods: {
             moment,
-            onEventClick(application_id, name, start, end,color) {
+            onEventClick(application_id, name, start, end, color) {
                 this.interviewerapplicationid = application_id
                 this.interviewer = name
                 this.interviewstart = moment(start)
@@ -1836,7 +1846,6 @@
                 this.interviewmodal = true
                 this.candidatename = candidate_name;
                 this.interviewcandidateapplicant = application_id
-
 
 
             },
@@ -1859,7 +1868,7 @@
                 Marketplace.pickreject(interviewerapplicationid, {
                     interviewstarttime: interviewstart,
                     interviewendtime: interviewend,
-                    eventcolor:this.eventcolor
+                    eventcolor: this.eventcolor
                 }, auth)
 
                 this.showEvent = false
@@ -2066,7 +2075,7 @@
             },
 
             //pick or reject from new applicants
-            pickrejectClick(job_id, candidate_id, key,name) {
+            pickrejectClick(job_id, candidate_id, key, name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -2082,7 +2091,7 @@
                             if (this.newapplicant.length === 0) {
                                 this.newapplications = false
                             }
-                            Marketplace.pickreject(job_id, {stage: 'active', selected: true,candidatename:name}, auth)
+                            Marketplace.pickreject(job_id, {stage: 'active', selected: true, candidatename: name}, auth)
 
 
                         }
@@ -2096,7 +2105,11 @@
                             if (this.newapplicant.length === 0) {
                                 this.newapplications = false
                             }
-                            Marketplace.pickreject(job_id, {stage: 'rejected', selected: false,candidatename:name}, auth)
+                            Marketplace.pickreject(job_id, {
+                                stage: 'rejected',
+                                selected: false,
+                                candidatename: name
+                            }, auth)
 
 
                         }
@@ -2107,7 +2120,7 @@
             },
 
             // pick from recommedation list
-            pickrecommedationClick(job_id, candidate_id, key,name) {
+            pickrecommedationClick(job_id, candidate_id, key, name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -2128,8 +2141,8 @@
                                     candidate: candidate_id,
                                     stage: 'active',
                                     selected: true,
-                                    recruiter:this.$store.state.user.pk,
-                                    candidatename:name
+                                    recruiter: this.$store.state.user.pk,
+                                    candidatename: name
                                 },
                                 auth
                             )
@@ -2201,7 +2214,7 @@
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
                     interviewstatus: 'invite sent',
-                    eventcolor:this.eventcolor,
+                    eventcolor: this.eventcolor,
                 }, auth)
                 this.interviewmodal = false
             }
