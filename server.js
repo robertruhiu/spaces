@@ -1,6 +1,4 @@
 const express = require('express');
-
-// const serveStatic = require('serve-static');
 let expressStaticGzip = require("express-static-gzip");
 let app = express();
 // app.use(serveStatic(__dirname + "/dist"));
