@@ -149,21 +149,28 @@
                             </span>
                             </p>
 
-                            <p>
-                                <a style="" v-if="application.project" @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
-                                    <strong>Project Assigned:</strong>      {{application.name}}
-                                                                    </a>
+                            <p v-if="picked">
+                                <a style="" v-if="application.project"
+                                   @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
+                                    <strong>Project Assigned:</strong> {{application.name}}
+                                </a>
                                 <a-button :size="small"
                                           style="background-color: #9c27b0;color: white"
-                                          v-else
+                                          v-else-if="application.id !== null"
                                           @click="showModal()">
                                     <a-icon type="codepen"/>
                                     Assign test
                                 </a-button>
 
                             </p>
-
-
+                            <p v-else>
+                                <a-button :size="small"
+                                          style="background-color: #9c27b0;color: white"
+                                          @click="Pick(currentUser.first_name)">
+                                    <a-icon type="user-add"/>
+                                    Pick
+                                </a-button>
+                            </p>
 
 
                         </div>
@@ -172,54 +179,54 @@
                     </a-col>
                 </a-row>
                 <a-modal
-                            title="Project assignments "
-                            v-model="visible"
-                            @ok="handleOk"
-                            style="top: 60px;"
-                            :footer="null"
+                        title="Project assignments "
+                        v-model="visible"
+                        @ok="handleOk"
+                        style="top: 60px;"
+                        :footer="null"
 
 
-                    >
-                        <p style="text-align: center;">Would you like to get a project recommendation or pick a
-                            project?</p>
-                        <a-row :gutter="16">
-                            <a-col :span="12">
-                                <a @click="navigateTo({name:'projectlist'})">
-                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
-                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%"
-                                             src="../../../../assets/images/pick.png">
-                                        <p style="text-align: center">Pick one by myself</p>
+                >
+                    <p style="text-align: center;">Would you like to get a project recommendation or pick a
+                        project?</p>
+                    <a-row :gutter="16">
+                        <a-col :span="12">
+                            <a @click="navigateTo({name:'projectlist'})">
+                                <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                    <img style="margin-left: 25%;width: 50%;margin-right: 25%"
+                                         src="../../../../assets/images/pick.png">
+                                    <p style="text-align: center">Pick one by myself</p>
 
-                                    </div>
+                                </div>
 
-                                </a>
-                            </a-col>
-                            <a-col :span="12">
-                                <a @click="navigateTo({name:'projectdetails',params:{jobId:job.id,candidateId: currentUser.id,applicationId:application.id}})">
-                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
-                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
-                                             src="../../../../assets/images/recommend.png">
-                                        <p style="text-align: center">Get recommendation</p>
+                            </a>
+                        </a-col>
+                        <a-col :span="12">
+                            <a @click="navigateTo({name:'projectdetails',params:{jobId:job.id,candidateId: currentUser.id,applicationId:application.id}})">
+                                <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                    <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
+                                         src="../../../../assets/images/recommend.png">
+                                    <p style="text-align: center">Get recommendation</p>
 
-                                    </div>
+                                </div>
 
-                                </a>
-                            </a-col>
-                        </a-row>
+                            </a>
+                        </a-col>
+                    </a-row>
                     <div v-if="recentprojects">
-                            <p>My Recent projects</p>
-                            <p v-for="project in recentprojects"
-                               :key="project">
-                                <a  v-if="recentprojects"
-                                   @click="navigateTo({name:'pickedprojectdetails',params:{projectId:project.id,jobId:job.id,candidateId: currentUser.id,applicationId:application.id}})">
-                                    {{project.name}}
-                                </a>
-                            </p>
+                        <p>My Recent projects</p>
+                        <p v-for="project in recentprojects"
+                           :key="project">
+                            <a v-if="recentprojects"
+                               @click="navigateTo({name:'pickedprojectdetails',params:{projectId:project.id,jobId:job.id,candidateId: currentUser.id,applicationId:application.id}})">
+                                {{project.name}}
+                            </a>
+                        </p>
 
 
-                        </div>
+                    </div>
 
-                    </a-modal>
+                </a-modal>
 
 
             </a-layout-content>
@@ -255,6 +262,7 @@
 
         }
     }
+
     class Event {
         constructor(id, title, start, end, color) {
             this.key = id;
@@ -296,7 +304,8 @@
                 portfolio: [],
                 job: {},
                 recentprojects: [],
-                events: []
+                events: [],
+                picked: true
             }
         },
         components: {
@@ -323,7 +332,18 @@
             const jobId = this.$store.state.route.params.jobId
             // current application
 
-            this.application = (await Marketplace.retrieveapplication(this.ApplicationId, auth)).data
+            await Marketplace.retrieveapplication(this.ApplicationId, auth)
+                .then(response => {
+                    this.application = response.data
+
+
+                })
+                .catch(error => {
+                    this.picked = false
+                    return error
+
+
+                })
             this.job = (await Marketplace.specificjob(jobId, auth)).data
 
 
@@ -358,14 +378,14 @@
 
             }
             // recent projects
-            if(this.$store.state.user.pk){
+            if (this.$store.state.user.pk) {
                 this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
 
             }
             this.allevents = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
             for (let i = 0; i < this.allevents.length; i++) {
 
-                if (this.allevents[i].interviewstatus !== null ) {
+                if (this.allevents[i].interviewstatus !== null) {
 
                     let id = this.allevents[i].id
                     let title = this.allevents[i].candidatename
@@ -384,7 +404,6 @@
             }
 
 
-
         },
         methods: {
             // acts as filters to project to be asigned under testing stage
@@ -399,6 +418,31 @@
 
             onChange(checkedValues) {
                 this.test = checkedValues
+            },
+            //pick recommended
+            async Pick(name) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.pickrecommended(
+                    {
+                        job: this.$store.state.route.params.jobId,
+                        candidate: this.$route.params.candidateId,
+                        stage: 'active',
+                        selected: true,
+                        recruiter: this.$store.state.user.pk,
+                        candidatename: name
+                    },
+                    auth
+                )
+                this.picked = true
+                this.$router.push({
+                    name: 'job',
+                    params: { jobId: this.$store.state.route.params.jobId}
+                })
+
+
             },
             logout() {
                 this.$store.dispatch('setToken', null);

@@ -9,12 +9,15 @@
                             <span>
                                 <span style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
                                 {{currentUser.username |capitalize}}</span>
-                                <span style="float: right" v-if="myapplicant.test_stage === 'complete'">
+                                <span v-if="myapplicant !== null">
+                                    <span style="float: right" v-if="myapplicant.test_stage === 'complete'">
                                     <a-button type="primary">Schedule Interview</a-button>
                                 </span>
+                                </span>
+
                             </span>
 
-                    <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;">
+                    <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;" v-if="myapplicant !== null">
                                 <span>
                     Job Application Stage :
                 </span>

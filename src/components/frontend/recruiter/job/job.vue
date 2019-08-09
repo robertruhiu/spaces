@@ -317,7 +317,7 @@
                                                                     <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
+                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})">profile</a>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -330,13 +330,16 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Skills
+                                                                    <div style="text-align: center;" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <span style="text-align: center;">
+                                                                        <div style="text-align: center;">
+                                                                            <span >
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -1748,7 +1751,7 @@
                 let allrecommedednouniquefilter = []
                 for (let x = 0; x < this.alldevsprofile.length; x++) {
                     for (let z = 0; z < this.tags.length; z++) {
-                        if (this.alldevsprofile[x].skills.includes(this.tags[z])) { // direct comparision direct match for now
+                        if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
                             let user_id = this.alldevsprofile[x].id
                             allrecommedednouniquefilter.push(user_id)
 

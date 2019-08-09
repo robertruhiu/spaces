@@ -177,6 +177,14 @@ let router =  new Router({
             }
         },
         {
+            path: '/recommendedprofile/:candidateId/:jobId',
+            name: 'recommendedprofile',
+            component: CandidateProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/mycandidatesprofile/:candidateId/:applicationId',
             name: 'mycandidatesprofile',
             component: MyCandidateProfile,
