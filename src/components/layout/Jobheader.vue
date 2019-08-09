@@ -175,7 +175,7 @@
 
 
             }
-            for (let i = 0; i < this.allevents.length; i++) {
+            for (let i = 0; i < this.alldevrequests.length; i++) {
 
                 if (this.alldevrequests[i].interviewstatus !== null) {
 
