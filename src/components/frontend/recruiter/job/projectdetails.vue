@@ -1,11 +1,7 @@
 <template>
     <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
         <RecruiterSider/>
-
-
         <a-layout :style="{backgroundColor:'#f8fafb',marginLeft: '200px' }">
-
-
             <a-layout-content>
                 <Jobheader/>
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',

@@ -55,9 +55,6 @@ import {
     Skeleton,
     Icon
 
-
-
-
 } from 'ant-design-vue';
 
 Vue.use(VueFormWizard)

@@ -20,6 +20,14 @@ export default {
     myrecentprojects(user_id,auth) {
         return Api().get(`projects/myrecentprojects/${user_id}`, auth)
     },
-
+    developerprojects(framework,auth) {
+        return Api().get(`projects/developerprojects/${framework}`, auth)
+    },
+    developerselectproject(project_id,auth) {
+        return Api().post(`projects/developerprojects/${project_id}`, auth)
+    },
+    developerprojectreport(developer_id, project_id, auth){
+        return Api().get(`projects/developerprojectreport/${developer_id}/${project_id}/`, auth)
+    },
 
 }

@@ -22,7 +22,13 @@ const  Projectlist = () => import('@/components/frontend/recruiter/projectlist')
 const  Calendar = () => import('@/components/frontend/recruiter/calendar')
 const  DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
 const  Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
+const Assessment = () => import('@/components/frontend/developer/Assessment')
 
+
+const DeveloperProjects = () => import('@/components/frontend/developer/DeveloperProjects')
+const DeveloperQuizes = () => import('@/components/frontend/developer/DeveloperQuizes')
+const DeveloperProjectDetails = () => import('@/components/frontend/developer/DeveloperProjectDetails')
+const DeveloperProjectReport = () =>import('@/components/frontend/developer/DeveloperProjectReport');
 
 Vue.use(Router);
 
@@ -184,7 +190,6 @@ let router =  new Router({
                 requiresAuth: true
             }
         },
-
         {
             path: '/candidatetalentprofile/:candidateProfileID',
             name: 'candidatetalentprofile',
@@ -193,8 +198,46 @@ let router =  new Router({
                 requiresAuth: true
             }
         },
-
-
+        {
+            path: '/assesment/',
+            name: 'assessment',
+            component: Assessment,
+            // meta: {
+            //     requiresAuth: true
+            // }
+        },
+        {
+            path: '/developerprojects/',
+            name: 'developerprojects',
+            component: DeveloperProjects,
+            // meta: {
+            //     requiresAuth: true
+            // }
+        },
+        {
+            path: '/quizes/',
+            name: 'developerquizes',
+            component: DeveloperQuizes,
+            // meta: {
+            //     requiresAuth: true
+            // }
+        },
+        {
+            path: '/developerprojectdetails/:projectId',
+            name: 'developerprojectdetails',
+            component: DeveloperProjectDetails,
+            // meta: {
+            //     requiresAuth: true
+            // }
+        },
+        {
+            path: '/developerprojectreport/:candidateId/:projectId/',
+            name: 'developerprojectreport',
+            component: DeveloperProjectReport,
+            // meta: {
+            //     requiresAuth: true
+            // }
+        },
     ],
 
 })

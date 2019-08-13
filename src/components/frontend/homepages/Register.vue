@@ -390,7 +390,7 @@
                                                     :wrapper-col="{ span:  24}"
                                             >
                                                 <a-input
-                                                         v-model="currentUserProfile.company"
+                                                        v-model="currentUserProfile.company"
 
                                                 />
 
@@ -405,7 +405,7 @@
                                                     :wrapper-col="{ span:  24}"
                                             >
                                                 <a-input
-                                                         v-model="currentUserProfile.company_url"
+                                                        v-model="currentUserProfile.company_url"
 
                                                 />
 
@@ -495,7 +495,6 @@
             </div>
 
 
-
         </a-layout-content>
 
         <Footer/>
@@ -558,11 +557,11 @@
                 inputVisible: false,
                 inputValue: '',
                 abouterror: null,
-                recommendationtags: ['Django', 'Html', 'Css', 'bootstrap','React','Java',
-                'React Native','Redux','Flask ','Go','Expressjs','Vuejs',
-                    'Angular','Ios','flutter','Ionic','Rails','Meteor','AI','Cybersecurity',
-                    'Blockchain','Arduino','Spring','Bitcoin','Kotlin','Scala','Nativescript ',
-                'Android','Website','Mobile'],
+                recommendationtags: ['Django', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                    'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
+                    'Android', 'Website', 'Mobile'],
                 selectedTags: [],
 
 
@@ -574,16 +573,15 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            if(this.$store.state.user.pk){
+            if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            let temptaglist = this.currentUserProfile.skills;
+                let temptaglist = this.currentUserProfile.skills;
 
-            let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
+                let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
 
-            this.tags = array
+                this.tags = array
 
             }
-
 
 
         },
@@ -634,7 +632,7 @@
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                     }
-                    this.currentUserProfile.stage ='complete'
+                    this.currentUserProfile.stage = 'complete'
                     this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                     this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                     UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -671,7 +669,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                this.currentUserProfile.stage ='complete'
+                this.currentUserProfile.stage = 'complete'
                 this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                 this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)

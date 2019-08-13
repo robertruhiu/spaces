@@ -14,7 +14,6 @@
                     <a-col :span="16">
 
                         <div style="padding-top: 1rem;" class='center'>
-
                             <a-auto-complete
                                     :dataSource="dataSource"
                                     style="width: 80%;z-index: 0"
@@ -29,8 +28,6 @@
                                     <a-icon slot="suffix" type="search" class="certain-category-icon"/>
                                 </a-input>
                             </a-auto-complete>
-
-
                         </div>
                     </a-col>
 
@@ -69,7 +66,7 @@
                         </a-list-item>
                     </a-list>
 
-
+  {{ projects}}
                 </div>
 
             </a-layout-content>
@@ -114,7 +111,7 @@
         },
         async mounted() {
             const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
+                headers: {Authorization: 'JWTproject_id ' + this.$store.state.token}
 
             };
 
