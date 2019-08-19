@@ -22,7 +22,15 @@ const  Projectlist = () => import('@/components/frontend/recruiter/projectlist')
 const  Calendar = () => import('@/components/frontend/recruiter/calendar')
 const  DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
 const  Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
-
+const Assessment = () => import('@/components/frontend/developer/Assessment')
+const DeveloperProfile = () => import('@/components/frontend/developer/Myprofile')
+const ManageApplications = () => import('@/components/frontend/developer/ManageApplications')
+const DeveloperProjects = () => import('@/components/frontend/developer/DeveloperProjects')
+const QuizzesList = () => import('@/components/frontend/developer/quiz/QuizzesList')
+const DeveloperProjectDetails = () => import('@/components/frontend/developer/DeveloperProjectDetails')
+const Report = () =>import('@/components/frontend/recruiter/Report');
+const Portfolio = () =>import('@/components/frontend/developer/Portfolio');
+const DevCalendar = () =>import('@/components/frontend/developer/DevCalendar');
 
 Vue.use(Router);
 
@@ -64,6 +72,22 @@ let router =  new Router({
             path: '/myprofile',
             name: 'myprofile',
             component: Myprofile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/developerprofile',
+            name: 'developerprofile',
+            component: DeveloperProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/portfolio',
+            name: 'portfolio',
+            component: Portfolio,
             meta: {
                 requiresAuth: true
             }
@@ -124,6 +148,14 @@ let router =  new Router({
             path: '/calendar',
             name: 'calendar',
             component: Calendar,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/devcalendar',
+            name: 'devcalendar',
+            component: DevCalendar,
             meta: {
                 requiresAuth: true
             }
@@ -201,8 +233,54 @@ let router =  new Router({
                 requiresAuth: true
             }
         },
-
-
+        {
+            path: '/assesment/',
+            name: 'assessment',
+            component: Assessment,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/developerprojects/',
+            name: 'developerprojects',
+            component: DeveloperProjects,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/quizlist',
+            name: 'quizlist',
+            component: QuizzesList,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/manageapplications',
+            name: 'manageapplications',
+            component: ManageApplications,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/developerprojectdetails/:projectId',
+            name: 'developerprojectdetails',
+            component: DeveloperProjectDetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/report/:candidateId/:projectId/',
+            name: 'report',
+            component: Report,
+            meta: {
+                requiresAuth: true
+            }
+        },
     ],
 
 })

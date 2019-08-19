@@ -273,7 +273,8 @@
             this.loading = false
             for (let j = 0; j < this.alldevs.length; j++) {
                 for (let i = 0; i < this.devs.length; i++) {
-                    if (this.alldevs[j].id === this.devs[i].id) {
+                    // if (this.alldevs[j].id === this.devs[i].id && this.devs[i].verified_skills !== null) {
+                    if (this.alldevs[j].id === this.devs[i].id ) {
                         let skill_list = this.devs[i].skills.split(',');
 
                         let id = this.devs[i].id

@@ -393,8 +393,16 @@
                                                             <div slot="title">Report status
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                        <span v-if="record.test_stage" style="margin-left: 20%">
-                                                            {{record.test_stage}}
+                                                        <span v-if="record.test_stage " style="margin-left: 20%">
+                                                            <span v-if="record.test_stage === 'complete'">
+                                                                <a @click="navigateTo({name:'report',params:{candidateId: record.profile,projectId:record.project}})">
+                                                                    report
+                                                                </a>
+                                                            </span>
+                                                            <span v-else>
+                                                                {{record.test_stage}}
+                                                            </span>
+
                                                         </span>
                                                                 <span v-else style="margin-left: 20%">
                                                             --

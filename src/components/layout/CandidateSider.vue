@@ -33,10 +33,24 @@
                 </router-link>
 
             </a-menu-item>
+            <a-menu-item key="4">
+                <router-link to="/portfolio">
+                    <a-icon type="file-done" />
+                    <span>My portfolio</span>
+                </router-link>
+
+            </a-menu-item>
+            <a-menu-item key="8">
+                <router-link to="/devcalendar">
+                    <a-icon type="calendar"/>
+                    <span>Calendar</span>
+                </router-link>
+
+            </a-menu-item>
 
 
             <a-menu-item key="6">
-                <router-link to="/talent">
+                <router-link to="/developerprofile">
                     <a-icon type="user"/>
                     <span>My profile</span>
                 </router-link>

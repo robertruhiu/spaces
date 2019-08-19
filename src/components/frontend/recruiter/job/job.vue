@@ -505,8 +505,16 @@
                                                             <div slot="title">Report status
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                        <span v-if="record.test_stage" style="margin-left: 20%">
-                                                            {{record.test_stage}}
+                                                        <span v-if="record.test_stage " style="margin-left: 20%">
+                                                            <span v-if="record.test_stage === 'complete'">
+                                                                <a @click="navigateTo({name:'report',params:{candidateId: record.profile,projectId:record.project}})">
+                                                                    report
+                                                                </a>
+                                                            </span>
+                                                            <span v-else>
+                                                                {{record.test_stage}}
+                                                            </span>
+
                                                         </span>
                                                                 <span v-else style="margin-left: 20%">
                                                             --
@@ -1218,7 +1226,7 @@
                                 </a>
                             </a-col>
                         </a-row>
-                        <div v-if="recentprojects">
+                        <div v-if="recentprojects.length >= 1">
                             <p>My Recent projects</p>
                             <p v-for="project in recentprojects"
                                :key="project">
@@ -1458,7 +1466,7 @@
         },
         {
             title: 'report',
-            dataIndex: 'profile',
+            dataIndex: 'report',
             key: 'report',
 
         },
@@ -1553,7 +1561,7 @@
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color,report) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1568,6 +1576,7 @@
             this.interviewstart = start
             this.interviewend = end
             this.color = color
+            this.report = report
 
 
         }
@@ -1706,8 +1715,9 @@
                                 let start = this.applicants[j].interviewstarttime
                                 let end = this.applicants[j].interviewendtime
                                 let color = this.applicants[j].eventcolor
+                                let report = this.applicants[j].report
                                 let onepickeddev = new Applicant(
-                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color
+                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color,report
                                 );
 
                                 this.applicantprofile.push(onepickeddev)

@@ -67,5 +67,11 @@ export default {
     },
     applyjob(newapplication,auth) {
         return Api().post(`marketplace/applyjob`,newapplication,auth)
+    },
+
+    pickedapplications(dev_id,auth){
+        return Api().get(`marketplace/pickedapplications/${dev_id} `, auth)
+
     }
+
 }

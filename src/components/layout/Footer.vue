@@ -1,15 +1,14 @@
 <template>
     <a-layout-footer style="min-height: 16rem;background-color: #1875d2;">
-        <a-row :gutter="48" :style="{marginTop: '5rem',padding:'0 6rem'}">
+        <a-row :gutter="16" :style="{marginTop: '2rem',padding:'0 6rem'}">
             <a-col :span="6">
-                <img class="imagecenter" src="../../assets/logo.svg" style="margin-top: 4rem;width: 50%">
+                <img class="imagecenter" src="../../assets/logo.svg" style="width: 70%">
             </a-col>
-
-        </a-row>
-        <footer id="footer">
+            <a-col :span="18">
+                <footer id="footer">
             <div class="footer-wrap">
                 <div class="ant-row">
-                    <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6">
+                    <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8">
                         <div class="footer-center"><h2 style="color: white">Services</h2>
                             <div>
                                 <router-link to="talent">
@@ -29,14 +28,14 @@
 
                         </div>
                     </div>
-                    <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6">
+                    <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8">
                         <div class="footer-center"><h2 style="color: white">Company</h2>
                             <div><router-link to="privacy">Privacy</router-link></div>
                             <div><router-link to="terms">Terms</router-link></div>
 
                         </div>
                     </div>
-                    <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6">
+                    <div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-8">
                         <div class="footer-center"><h2 style="color: white">Contact</h2>
 
                             <div class="icons-list">
@@ -61,23 +60,27 @@
                 </div>
             </div>
         </footer>
+            </a-col>
+
+
+        </a-row>
+
 
     </a-layout-footer>
 </template>
 
 <script>
 
+    import ACol from "ant-design-vue/es/grid/Col";
     export default {
         name: "Footer",
-
+        components: {ACol},
     }
 </script>
 
 <style scoped>
     .imagecenter {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+
 
     }
 

@@ -95,6 +95,8 @@
 </template>
 <script>
     import Largelogo from '@/assets/logobg.svg'
+    import VueCal from 'vue-cal'
+    import '../../../assets/css/vuecal.css'
 
     export default {
         name: 'calendarsiderfixed',

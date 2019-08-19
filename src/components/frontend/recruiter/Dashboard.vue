@@ -3,7 +3,7 @@
 
         <RecruiterSider/>
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#ffffff' }">
 
 
             <a-layout-content>
@@ -25,10 +25,12 @@
                             <a-col class="boxes" :span="6">
 
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
                                         <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Post a Job</p>
                                         <p style="margin: 0;">Get devs for your vacancy</p>
 
@@ -45,12 +47,14 @@
                             <a-col class="boxes" :span="6">
 
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
                                         <img class="poolavatar" src="../../../assets/images/cv.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Manage Jobs</p>
-                                        <p style="margin: 0;">Monitor and manage job applications</p>
+                                        <p style="margin: 0;">Manage job applications</p>
 
 
                                     </a-col>
@@ -64,12 +68,14 @@
 
                             <a-col class="boxes" :span="6">
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
                                         <img class="poolavatar" src="../../../assets/images/statistics.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Manage Candidates</p>
-                                        <p style="margin: 0;">Manage  devs picked from talent pool</p>
+                                        <p style="margin: 0;">Manage  devs picked from talent</p>
 
 
                                     </a-col>
@@ -81,10 +87,12 @@
                         <router-link to="talent">
                             <a-col class="boxes" :span="6">
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
                                         <img class="poolavatar" src="../../../assets/images/star.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Browse the Talent Pool</p>
                                         <p style="margin: 0;">View more devs from our pool</p>
 
@@ -100,7 +108,7 @@
 
                 </div>
 
-                <div style="padding: 2% 1%;background-color: white;margin: 2% 1%">
+                <div style="padding: 2% 1%;background-color: white;margin: 1% 1%" v-if="myjobs.length >0 ">
                     <div v-if="loading" class="loading" style="text-align: center;">
                         <a-spin />
                     </div>
@@ -856,7 +864,7 @@
     }
 
     .poolavatar {
-        width: 80%;
+        width: 30%;
         margin-top: 0.5rem;
     }
 
@@ -873,7 +881,7 @@
 
     .actioncards {
         width: 16rem;
-        border-radius: 3%;
+        border-radius: 0;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         padding: 0.89rem;
     }

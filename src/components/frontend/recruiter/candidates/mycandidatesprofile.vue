@@ -13,7 +13,7 @@
                 <a-row style="padding: 1% 1%">
                     <a-col :span="16" style=" padding-left: 15px;padding-right: 15px;">
                         <div class="profile" style="padding-bottom: 2%">
-                            <a-row>applicant
+                            <a-row>
 
                                 <a-col :span="22">
                                     <p>About</p>
@@ -171,6 +171,7 @@
 
                     </a-col>
                 </a-row>
+
                 <a-modal
                             title="Project assignments "
                             v-model="visible"
