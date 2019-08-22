@@ -269,31 +269,24 @@
 
         async mounted() {
             this.devs = (await UsersService.devs()).data;
-            this.alldevs = (await UsersService.allusers()).data;
             this.loading = false
-            for (let j = 0; j < this.alldevs.length; j++) {
-                for (let i = 0; i < this.devs.length; i++) {
-                    // if (this.alldevs[j].id === this.devs[i].id && this.devs[i].verified_skills !== null) {
-                    if (this.alldevs[j].id === this.devs[i].id ) {
-                        let skill_list = this.devs[i].skills.split(',');
+            for (let i = 0; i < this.devs.length; i++) {
 
-                        let id = this.devs[i].id
-                        let name = this.alldevs[j].first_name[0].toUpperCase() + this.alldevs[j].last_name[0].toUpperCase()
-                        let skills = skill_list
-                        let about = this.devs[i].about
-                        let location = this.devs[i].country
-                        let availabilty = this.devs[i].availabilty
-                        let onedev = new Developer(
-                            id, name, skills, about, location, availabilty
-                        )
+                let skill_list = this.devs[i].skills.split(',');
+
+                let id = this.devs[i].user.id
+                let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
+                let skills = skill_list
+                let about = this.devs[i].about
+                let location = this.devs[i].country
+                let availabilty = this.devs[i].availabilty
+                let onedev = new Developer(
+                    id, name, skills, about, location, availabilty
+                )
 
 
-                        this.listData.push(onedev)
+                this.listData.push(onedev)
 
-                    }
-
-
-                }
             }
 
 

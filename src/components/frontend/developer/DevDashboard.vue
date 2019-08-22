@@ -17,7 +17,7 @@
                     <a-row :gutter="16" style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
 
 
-                        <router-link to="/assesment">
+                        <router-link to="/assessment">
                             <a-col class="boxes" :span="6">
 
                                 <a-row class="ant-card actioncards">

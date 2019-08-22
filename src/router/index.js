@@ -31,6 +31,7 @@ const DeveloperProjectDetails = () => import('@/components/frontend/developer/De
 const Report = () =>import('@/components/frontend/recruiter/Report');
 const Portfolio = () =>import('@/components/frontend/developer/Portfolio');
 const DevCalendar = () =>import('@/components/frontend/developer/DevCalendar');
+const TakeQuiz = () =>import('@/components/frontend/developer/quiz/takequiz');
 
 Vue.use(Router);
 
@@ -185,6 +186,14 @@ let router =  new Router({
             }
         },
         {
+            path: '/assignedproject/:projectId/:applicationId/:type',
+            name: 'assignedproject',
+            component: DeveloperProjectDetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/mypickedprojectdetails/:projectId/:candidateId/:applicationId',
             name: 'mypickedprojectdetails',
             component: MyProjectdetails,
@@ -234,7 +243,7 @@ let router =  new Router({
             }
         },
         {
-            path: '/assesment/',
+            path: '/assessment',
             name: 'assessment',
             component: Assessment,
             meta: {
@@ -277,6 +286,14 @@ let router =  new Router({
             path: '/report/:candidateId/:projectId/',
             name: 'report',
             component: Report,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/takequiz/:candidateId/:quizId/',
+            name: 'takequiz',
+            component: TakeQuiz,
             meta: {
                 requiresAuth: true
             }

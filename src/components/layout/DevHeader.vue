@@ -124,7 +124,7 @@
                         ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].company
+                    let title = this.allevents[i].recruiter.company
                     let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
                     let color = this.allevents[i].eventcolor
@@ -146,7 +146,7 @@
                      ) {
 
                     let id = this.alldevrequests[i].id
-                    let title = this.alldevrequests[i].company
+                    let title = this.alldevrequests[i].recruiter.company
                     let start = moment(this.alldevrequests[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.alldevrequests[i].interviewendtime).format("HH:mm")
                     let color = this.alldevrequests[i].eventcolor

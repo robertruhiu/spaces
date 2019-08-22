@@ -82,7 +82,8 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="text-align: center" slot="title">Verified
+                                                                    <div style="text-align: center" slot="title">
+                                                                        Verified
                                                                         Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
@@ -364,8 +365,8 @@
                                                             <template slot-scope="text,record">
                                                                 <span style="margin-left: 15%;">
                                                                     <a style="margin-left: 15%;" v-if="record.project"
-                                                                       @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,applicationId: record.action}})">
-                                                                        {{record.projectname}}
+                                                                       @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:record.project.id,candidateId: record.profile,applicationId: record.action}})">
+                                                                        {{record.projectname.name}}
                                                                     </a>
 
                                                                     <a-button :size="small"
@@ -515,7 +516,7 @@
                                                             <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
                                                                 <div style="text-align: center">
-                                                                    <span >
+                                                                    <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
@@ -941,7 +942,7 @@
                                     :label-col="{ span: 5 }"
                                     :wrapper-col="{ span: 10 }"
                             >
-                                <a-input v-model="candidatename" disabled />
+                                <a-input v-model="candidatename" disabled/>
                             </a-form-item>
 
 
@@ -1072,28 +1073,28 @@
 
                             </a-form-item>
                             <a-form-item label="Event color"
-                                     :label-col="{ span: 5 }"
-                                     :wrapper-col="{ span: 3 }">
-                            <a-select
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 3 }">
+                                <a-select
 
-                                    v-model="eventcolor"
+                                        v-model="eventcolor"
 
-                            >
-                                <a-select-option value="blue">
-                                    <a-tag color="#029BE4" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="green">
-                                    <a-tag color="#3BB679" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="purple">
-                                    <a-tag color="#a515ae" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="tomato">
-                                    <a-tag color="tomato" class="eventcolors"></a-tag>
-                                </a-select-option>
-                            </a-select>
+                                >
+                                    <a-select-option value="blue">
+                                        <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="green">
+                                        <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="purple">
+                                        <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="tomato">
+                                        <a-tag color="tomato" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                </a-select>
 
-                        </a-form-item>
+                            </a-form-item>
 
 
                         </a-form>
@@ -1237,7 +1238,7 @@
 
     //applicants structure on table
     class Candidate {
-        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status,start, end,color) {
+        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status, start, end, color) {
             this.key = id;
             this.name = name;
             this.paid = paid;
@@ -1300,7 +1301,7 @@
                 interviewend: null,
                 interviewer: null,
                 interviewerapplicationid: null,
-                eventcolor:'blue'
+                eventcolor: 'blue'
 
             }
         },
@@ -1326,7 +1327,72 @@
                                 for (let i = 0; i < resp.data.length; i++) {
                                     this.pickeddevs.push(resp.data[i])
                                 }
+                                // create a profile for each candidate comparision and matching between user,profile and devrequest model
+                                for (let j = 0; j < this.pickeddevs.length; j++) { // all user profiles
 
+                                    let verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
+                                    let paid = this.pickeddevs[j].paid
+                                    let id = this.pickeddevs[j].id
+                                    let user_id = this.pickeddevs[j].developer.user.id
+                                    let name = this.pickeddevs[j].developer.user.first_name
+                                    let stage = this.pickeddevs[j].stage
+                                    let pk = this.pickeddevs[j].id
+                                    let test_stage = this.pickeddevs[j].test_stage
+                                    let project = this.pickeddevs[j].project
+                                    let projectname = this.pickeddevs[j].project
+                                    let status = this.pickeddevs[j].interviewstatus
+                                    let start = this.pickeddevs[j].interviewstarttime
+                                    let end = this.pickeddevs[j].interviewendtime
+                                    let color = this.pickeddevs[j].eventcolor
+
+                                    let onepickeddev = new Candidate(
+                                        id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status, start, end, color
+                                    );
+
+                                    this.candidateprofiles.push(onepickeddev)
+
+                                }
+
+
+                                // candidates sorting
+                                for (let i = 0; i < this.candidateprofiles.length; i++) {
+                                    if (this.candidateprofiles[i].paid === true) {
+                                        this.paidapplicants.push(this.candidateprofiles[i]);
+
+
+                                    } else {
+                                        this.unpaidapplicant.push(this.candidateprofiles[i])
+
+
+                                    }
+                                    // second part of sorting conditional coz the fist condition met
+                                    if (this.candidateprofiles[i].stage === 'interview') {
+                                        this.interviewstage.push(this.candidateprofiles[i])
+
+                                    } else if (this.candidateprofiles[i].stage === 'test') {
+                                        this.testingstage.push(this.candidateprofiles[i])
+
+                                    } else if (this.candidateprofiles[i].stage === 'offer') {
+                                        this.offerstage.push(this.candidateprofiles[i])
+
+
+                                    } else if (this.candidateprofiles[i].stage === 'hired') {
+                                        this.hirestage.push(this.candidateprofiles[i])
+
+                                    }
+
+
+                                }
+                                if (this.paidapplicants.length === 0) {
+                                    this.active = false
+                                } else {
+                                    this.active = true
+                                }
+                                if (this.unpaidapplicant.length === 0) {
+                                    this.paying = false
+                                } else {
+                                    this.paying = true
+                                }
 
                             }
 
@@ -1334,81 +1400,8 @@
                         }
                     )
                     .catch();
-                // all developer profile list api fetch
-                this.alldevsprofile = (await UsersService.devs()).data;
-                // all developer users list api fetch
-                this.alldevs = (await UsersService.allusers()).data;
-                // create a profile for each candidate comparision and matching between user,profile and devrequest model
-                for (let i = 0; i < this.alldevs.length; i++) { //all users
-                    for (let j = 0; j < this.pickeddevs.length; j++) { //all candidates
-                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                            if (this.alldevs[i].id === this.pickeddevs[j].developer && this.alldevsprofile[l].user === this.alldevs[i].id) {
-
-                                let verified_skills = this.alldevsprofile[l].verified_skills.split(',').slice(0, 2);
-                                let paid = this.pickeddevs[j].paid
-                                let id = this.pickeddevs[j].developer
-                                let user_id = this.pickeddevs[j].developer
-                                let name = this.alldevs[i].username
-                                let stage = this.pickeddevs[j].stage
-                                let pk = this.pickeddevs[j].id
-                                let test_stage = this.pickeddevs[j].test_stage
-                                let project = this.pickeddevs[j].project
-                                let projectname = this.pickeddevs[j].name
-                                let status = this.pickeddevs[j].interviewstatus
-                                let start = this.pickeddevs[j].interviewstarttime
-                                let end = this.pickeddevs[j].interviewendtime
-                                let color = this.pickeddevs[j].eventcolor
-
-                                let onepickeddev = new Candidate(
-                                    id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status,start, end,color
-                                );
-
-                                this.candidateprofiles.push(onepickeddev)
-
-                            }
-                        }
-
-                    }
-                }
-                // candidates sorting
-                for (let i = 0; i < this.candidateprofiles.length; i++) {
-                    if (this.candidateprofiles[i].paid === true) {
-                        this.paidapplicants.push(this.candidateprofiles[i]);
 
 
-                    } else {
-                        this.unpaidapplicant.push(this.candidateprofiles[i])
-
-
-                    }
-                    // second part of sorting conditional coz the fist condition met
-                    if (this.candidateprofiles[i].stage === 'interview') {
-                        this.interviewstage.push(this.candidateprofiles[i])
-
-                    } else if (this.candidateprofiles[i].stage === 'test') {
-                        this.testingstage.push(this.candidateprofiles[i])
-
-                    } else if (this.candidateprofiles[i].stage === 'offer') {
-                        this.offerstage.push(this.candidateprofiles[i])
-
-
-                    } else if (this.candidateprofiles[i].stage === 'hired') {
-                        this.hirestage.push(this.candidateprofiles[i])
-
-                    }
-
-
-                }
-                if (this.paidapplicants.length === 0) {
-                    this.active = false
-                } else {
-                    this.active = true
-                }
-                if (this.unpaidapplicant.length === 0) {
-                    this.paying = false
-                } else {
-                    this.paying = true
-                }
                 // recent projects
                 this.recentprojects = (await Projectsservice.myrecentprojects(this.$store.state.user.pk, auth)).data
 
@@ -1419,7 +1412,7 @@
         computed: {},
         methods: {
             moment,
-            onEventClick(application_id, name, start, end,color) {
+            onEventClick(application_id, name, start, end, color) {
                 this.interviewerapplicationid = application_id
                 this.interviewer = name
                 this.interviewstart = moment(start)
@@ -1459,7 +1452,7 @@
                 MarketPlaceService.candidatemanager(interviewerapplicationid, {
                     interviewstarttime: interviewstart,
                     interviewendtime: interviewend,
-                    eventcolor:this.eventcolor
+                    eventcolor: this.eventcolor
                 }, auth)
 
                 this.showEvent = false
@@ -1485,7 +1478,7 @@
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
                     interviewstatus: 'invite sent',
-                    eventcolor:this.eventcolor
+                    eventcolor: this.eventcolor
                 }, auth)
                 this.interviewmodal = false
             },
@@ -1619,7 +1612,7 @@
             },
 
             //pay or reject from new applicants
-            payClick(pk, candidate_id,name) {
+            payClick(pk, candidate_id, name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -1635,7 +1628,11 @@
                         if (this.unpaidapplicant.length === 0) {
                             this.paying = false
                         }
-                        MarketPlaceService.candidatemanager(pk, {stage: 'active', paid: true,candidatename:name}, auth)
+                        MarketPlaceService.candidatemanager(pk, {
+                            stage: 'active',
+                            paid: true,
+                            candidatename: name
+                        }, auth)
 
 
                     }

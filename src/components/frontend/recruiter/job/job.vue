@@ -85,7 +85,7 @@
                                                                     <div style="margin-left: 40%" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <div style="text-align: center">
+                                                                        <div style="text-align: center">
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -334,7 +334,7 @@
                                                                     </div>
                                                                     <template slot-scope="tags">
                                                                         <div style="text-align: center;">
-                                                                            <span >
+                                                                            <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
@@ -435,7 +435,9 @@
                                                         >
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
+
                                                         <span style="margin-left: 15%">
+
                                                             <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile
 
                                                             </a>
@@ -502,7 +504,7 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div slot="title">Report status
+                                                            <div slot="title">Project status
                                                             </div>
                                                             <template slot-scope="text,record">
                                                         <span v-if="record.test_stage " style="margin-left: 20%">
@@ -1561,7 +1563,7 @@
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color,report) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color, report) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1678,8 +1680,8 @@
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 // all developer profile list api fetch
                 this.alldevsprofile = (await UsersService.devs()).data;
-                // all developer users list api fetch
-                this.alldevs = (await UsersService.allusers()).data;
+
+
                 const jobId = this.$store.state.route.params.jobId
                 // current job
                 this.job = (await Marketplace.specificjob(jobId, auth)).data
@@ -1695,39 +1697,47 @@
                 // getting applicants for job
                 this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
 
+
+
                 // create a profile for each applicant comparision and matching between user,profile and applicant model
-                for (let i = 0; i < this.alldevs.length; i++) { //all users
-                    for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
-                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
 
-                            if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
-                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 2);
-                                let stage = this.applicants[j].stage
-                                let id = this.applicants[j].id
-                                let pk = this.applicants[j].id
-                                let user_id = this.applicants[j].candidate
-                                let name = this.alldevs[i].username
-                                let selected = this.applicants[j].selected
-                                let test_stage = this.applicants[j].test_stage
-                                let project = this.applicants[j].project
-                                let projectname = this.applicants[j].name
-                                let status = this.applicants[j].interviewstatus
-                                let start = this.applicants[j].interviewstarttime
-                                let end = this.applicants[j].interviewendtime
-                                let color = this.applicants[j].eventcolor
-                                let report = this.applicants[j].report
-                                let onepickeddev = new Applicant(
-                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color,report
-                                );
+                for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
 
-                                this.applicantprofile.push(onepickeddev)
 
-                            }
+                    let tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
+                    let stage = this.applicants[j].stage
+                    let id = this.applicants[j].id
+                    let pk = this.applicants[j].id
+                    let user_id = this.applicants[j].candidate.id
+                    let name = this.applicants[j].candidate.user.first_name
+                    let selected = this.applicants[j].selected
+                    let test_stage = this.applicants[j].test_stage
+                    let project = ''
+                    let projectname = ''
+                    if (test_stage) {
+                        project = this.applicants[j].project.id
+                        projectname = this.applicants[j].project.name
 
-                        }
+                    } else {
+                        project = null
+                        projectname = null
 
                     }
+
+                    let status = this.applicants[j].interviewstatus
+                    let start = this.applicants[j].interviewstarttime
+                    let end = this.applicants[j].interviewendtime
+                    let color = this.applicants[j].eventcolor
+                    let report = this.applicants[j].report
+                    let onepickeddev = new Applicant(
+                        id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color, report
+                    );
+
+                    this.applicantprofile.push(onepickeddev)
+
+
                 }
+
 
                 // applicants sorting
                 for (let i = 0; i < this.applicantprofile.length; i++) {
@@ -1785,39 +1795,37 @@
                 let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
                 let allapplicants = []
                 for (let x = 0; x < this.applicants.length; x++) {
-                    allapplicants.push(this.applicants[x].candidate)
+                    allapplicants.push(this.applicants[x].candidate.id)
                 }
                 let recommededlist = allrecommended.diff(allapplicants);
 
 
                 // create a profile for each recommended comparision and matching between user,profile
                 if (recommededlist.length > 0) {
-                    for (let i = 0; i < this.alldevs.length; i++) { //all users
-                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                            for (let k = 0; k < recommededlist.length; k++) {
-                                if (this.alldevs[i].id === recommededlist[k] && this.alldevsprofile[l].user === this.alldevs[i].id) {
 
-                                    let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                                    let stage = 'recommended'
-                                    let id = this.alldevs[i].id
-                                    let pk = this.alldevs[i].id
-                                    let user_id = this.alldevs[i].id
-                                    let name = this.alldevs[i].username
-                                    let selected = false
-                                    let onerecommed = new Recommended(
-                                        id, name, stage, tags, user_id, selected, pk
-                                    );
+                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                        for (let k = 0; k < recommededlist.length; k++) {
+                            if (this.alldevsprofile[l].id === recommededlist[k]) {
 
-                                    this.recommmedcandidates.push(onerecommed)
+                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                let stage = 'recommended'
+                                let id = this.alldevsprofile[l].id
+                                let pk = this.alldevsprofile[l].id
+                                let user_id = this.alldevsprofile[l].id
+                                let name = this.alldevsprofile[l].user.first_name
+                                let selected = false
+                                let onerecommed = new Recommended(
+                                    id, name, stage, tags, user_id, selected, pk
+                                );
 
-                                }
+                                this.recommmedcandidates.push(onerecommed)
 
                             }
 
                         }
 
-
                     }
+
 
                 } else {
                     this.recommended = false

@@ -29,5 +29,8 @@ export default {
     developerprojectreport(developer_id, project_id, auth){
         return Api().get(`projects/developerprojectreport/${developer_id}/${project_id}/`, auth)
     },
+    getverified(auth){
+        return Api().get('projects/frameworks',auth)
+    }
 
 }

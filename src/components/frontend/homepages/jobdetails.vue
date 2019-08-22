@@ -17,20 +17,22 @@
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
                                     <a-button type="primary"
-                                              @click="ApplyJob(job.id,currentUserProfile.user,job.posted_by,)">Apply</a-button>
+                                              @click="ApplyJob(job.id,currentUserProfile.user.id,job.posted_by,job.company)">Apply</a-button>
+
 
                                 </span>
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === true  ">
-                                    <a-button type="primary"
-                                              >Manage Job application</a-button>
+                                    <a-button type="primary" @click="navigateTo({name:'manageapplications'})"
+                                    >Manage Job application</a-button>
 
                                 </span>
                             </span>
 
                         </div>
                         <div>
-                            <a-alert v-if="currentUserProfile.user_type ==='developer' && applied " message="Job application successful" type="success" closeText="Close Now" />
+                            <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
+                                     message="Job application successful" type="success" closeText="Close Now"/>
                             <p><strong>Company name:</strong> {{job.company}}
                                 <span style="margin-left: 5%">
                                     Location : {{job.location}}
@@ -77,7 +79,7 @@
                 skills: null,
                 currentUserProfile: {},
                 applied: false,
-                myjobs:[]
+                myjobs: []
 
             }
         },
@@ -91,26 +93,31 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            if(this.$store.state.user.pk){
+            if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
-            this.skills = this.job.tech_stack.split(',');
-            this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
-            if(this.myjobs.length >0){
-                for(let i =0;i<this.myjobs.length;i++){
-                    if(this.job.id === this.myjobs[i].job){
-                        this.applied = true
+                this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
+                this.skills = this.job.tech_stack.split(',');
+                this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
+
+                if (this.myjobs.length > 0) {
+                    for(let i =0;i<this.myjobs.length;i++){
+                        if(this.myjobs[i].job.id === this.$route.params.jobId){
+                            this.applied =true
+                        }
                     }
+                }else{
+                    this.applied = false
                 }
             }
-            }
-
 
 
         },
         methods: {
+            navigateTo(route) {
+                this.$router.push(route)
+            },
 
-            ApplyJob(job, dev,recruiter) {
+            ApplyJob(job, dev, recruiter, company) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -119,14 +126,14 @@
                     {
                         job: job,
                         candidate: dev,
-                        recruiter:recruiter,
+                        recruiter: recruiter,
                         stage: 'new',
-                        selected: false
+                        selected: false,
+                        company: company
                     },
                     auth
                 )
                     .then(
-
                         this.applied = true
                     )
                     .catch(error => {

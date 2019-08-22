@@ -174,62 +174,68 @@
                                         advantage <br>
                                         of some of our
                                         filters to easily access<br> candidates </p>
+
                                     <div v-if="loading" class="loading" style="text-align: center;margin-top: 25%;">
                                         <a-spin size="large"/>
                                     </div>
+
                                     <div v-else>
                                         <div v-for="item in listData" v-bind:key="item.id" style=";padding: 1rem;
                             ">
-                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                    <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                        <a-avatar class="poolavatar"
-                                                  style="">
-                                            {{item.name}}
-                                        </a-avatar>
-                                    </a-col>
-                                    <a-col span="15" style="padding: 2%">
-                                        <p>Bio</p>
-                                        <p>{{item.about | truncate(100)}}<a @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read more</a>
-                                        </p>
+                                            <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                                <a-col span="4" style="background-color:#0679FB;height: 100% ">
+                                                    <a-avatar class="poolavatar"
+                                                              style="">
+                                                        {{item.name}}
+                                                    </a-avatar>
+                                                </a-col>
+                                                <a-col span="15" style="padding: 2%">
+                                                    <p>Bio</p>
+                                                    <p>{{item.about | truncate(100)}}<a
+                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                        more</a>
+                                                    </p>
 
-                                        <p>
-                                            Skills :
-                                            <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+                                                    <p>
+                                                        Skills :
+                                                        <span style="" v-for="skill in item.skills"
+                                                              v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                        </p>
+                                                    </p>
 
 
-                                    </a-col>
-                                    <a-col span="5">
-                                        <div style="padding-top: 1rem;">
+                                                </a-col>
+                                                <a-col span="5">
+                                                    <div style="padding-top: 1rem;">
 
-                                            <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                <a-icon type="environment"/>
-                                                {{item.location}}
-                                            </a-tag>
-                                            <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
-                                            </a-tag>
+                                                        <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                            <a-icon type="environment"/>
+                                                            {{item.location}}
+                                                        </a-tag>
+                                                        <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                            {{item.availabilty}}
+
+                                                        </a-tag>
 
 
+                                                    </div>
+                                                    <div style="margin-top: 2rem">
+                                                        <a-button type="primary" ghost
+                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                            View Profile
+                                                        </a-button>
+                                                    </div>
+
+
+                                                </a-col>
+
+
+                                            </a-row>
                                         </div>
-                                        <div style="margin-top: 2rem">
-                                            <a-button type="primary" ghost @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                View Profile
-                                            </a-button>
-                                        </div>
-
-
-                                    </a-col>
-
-
-                                </a-row>
-                                    </div>
 
                                     </div>
-
-
 
 
                                 </div>
@@ -372,6 +378,7 @@
             this.about = about;
             this.location = location;
             this.availabilty = availabilty
+
         }
     }
 
@@ -381,6 +388,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
+
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
 
@@ -408,31 +416,27 @@
         async mounted() {
 
             this.devs = (await UsersService.devs()).data;
-            this.alldevs = (await UsersService.allusers()).data;
             this.loading = false
-            for (let j = 0; j < this.alldevs.length; j++) {
-                for (let i = 0; i < this.devs.length; i++) {
-                    if (this.alldevs[j].id === this.devs[i].id) {
-                        let skill_list = this.devs[i].skills.split(',');
 
-                        let id = this.devs[i].id
-                        let name = this.alldevs[j].first_name[0].toUpperCase() + this.alldevs[j].last_name[0].toUpperCase()
-                        let skills = skill_list
-                        let about = this.devs[i].about
-                        let location = this.devs[i].country
-                        let availabilty = this.devs[i].availabilty
-                        let onedev = new Developer(
-                            id, name, skills, about, location, availabilty
-                        )
+            for (let i = 0; i < this.devs.length; i++) {
 
+                let skill_list = this.devs[i].skills.split(',');
 
-                        this.listData.push(onedev)
-
-                    }
+                let id = this.devs[i].user.id
+                let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
+                let skills = skill_list
+                let about = this.devs[i].about
+                let location = this.devs[i].country
+                let availabilty = this.devs[i].availabilty
+                let onedev = new Developer(
+                    id, name, skills, about, location, availabilty
+                )
 
 
-                }
+                this.listData.push(onedev)
+
             }
+
 
         },
         methods: {

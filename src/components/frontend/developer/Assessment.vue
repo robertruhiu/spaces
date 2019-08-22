@@ -62,21 +62,9 @@
 </template>
 
 <script>
-    class Project {
-        constructor(id, name, skills, image, framework, duration, brief) {
-            this.id = id;
-            this.name = name;
-            this.skills = skills;
-            this.image = image;
-            this.framework = framework;
-            this.duration = duration;
-            this.brief = brief;
-        }
-    }
 
-    import UsersService from '@/services/UsersService';
-    import Projects from '@/services/Projects';
 
+    import UsersService from '@/services/UsersService'
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
     import ACol from "ant-design-vue/es/grid/Col";
@@ -88,7 +76,8 @@
             return {
                 currentUserProfile: {},
                 recommendedprojects: [],
-                allprojects: [],
+
+
 
             }
         },
@@ -103,32 +92,10 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data;
-                Projects.developerprojects(this.framework, auth)
-                    .then(resp => {
-                        this.projects = resp.data
-                        for (let i = 0; i < this.projects.length; i++) {
-                            let skill_list = this.projects[i].tags.split(',');
 
-                            let id = this.projects[i].id
-                            let name = this.projects[i].name
-                            let skills = skill_list
-                            let image = this.projects[i].projectimage1
-                            let brief = this.projects[i].brief
-                            let framework = this.projects[i].framework.name
-                            let duration = this.projects[i].duration
-                            let oneproject = new Project(
-                                id, name, skills, image, framework, duration, brief
-                            )
-
-                            this.recommendedprojects.push(oneproject);
-
-                        }
-
-
-                    })
-                    .catch()
             }
 
 

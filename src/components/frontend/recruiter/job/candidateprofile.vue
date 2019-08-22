@@ -49,23 +49,20 @@
                         </div>
                         <div class="bio">
                             <a-tabs defaultActiveKey="1">
-                                <a-tab-pane key="1">
+                                <a-tab-pane key="1" v-if="takenquizzes.length >0">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
                                         Skills
                                     </span>
                                     <p>Quizzes taken by Candidate</p>
-                                    Javascript :
-                                    <a-progress :percent="30"/>
-                                    java:
-                                    <a-progress :percent="50"/>
-                                    React:
-                                    <a-progress :percent="70"/>
-                                    Angular:
-                                    <a-progress :percent="89"/>
+                                    <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                                        {{takenquiz.quiz.subject.name}}:
+                                        <a-progress :percent="takenquiz.score"/>
+                                    </div>
+
                                 </a-tab-pane>
 
-                                <a-tab-pane key="2">
+                                <a-tab-pane key="2" v-if="portfolio.length>0">
                                     <span slot="tab">
                                         <a-icon type="solution"/>
                                         Projects portfolio
@@ -95,7 +92,7 @@
 
                                 </a-tab-pane>
 
-                                <a-tab-pane key="3">
+                                <a-tab-pane key="3" v-if="experiences.length>0">
                                     <span slot="tab">
                                         <a-icon type="hourglass"/>
                                         Work experience
@@ -148,11 +145,15 @@
                                 </a-tag>
                             </span>
                             </p>
+                            <div v-if="application.test_stage ==='complete'">
+                                <a>View Project Report</a>
 
-                            <p v-if="picked">
+                            </div>
+                            <div v-else>
+                                <p v-if="picked">
                                 <a style="" v-if="application.project"
-                                   @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
-                                    <strong>Project Assigned:</strong> {{application.name}}
+                                   @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project.id,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
+                                    <strong>Project Assigned:</strong> {{application.project.name}}
                                 </a>
                                 <a-button :size="small"
                                           style="background-color: #9c27b0;color: white"
@@ -171,6 +172,12 @@
                                     Pick
                                 </a-button>
                             </p>
+                            <p v-if="application.projectstarttime">
+                            Project starttime: {{application.projectstarttime}}
+                        </p>
+                            </div>
+
+
 
 
                         </div>
@@ -222,6 +229,7 @@
                                 {{project.name}}
                             </a>
                         </p>
+
 
 
                     </div>
@@ -284,6 +292,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Projectsservice from '@/services/Projects'
     import moment from 'moment';
+    import QuizService from '@/services/QuizService';
 
 
     export default {
@@ -305,7 +314,8 @@
                 job: {},
                 recentprojects: [],
                 events: [],
-                picked: true
+                picked: true,
+                takenquizzes: [],
             }
         },
         components: {
@@ -329,6 +339,8 @@
             this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateId, auth)).data
             this.experienceslist = (await UsersService.experience(this.$route.params.candidateId, auth)).data
             this.ApplicationId = this.$store.state.route.params.applicationId
+            this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
+
             const jobId = this.$store.state.route.params.jobId
             // current application
 

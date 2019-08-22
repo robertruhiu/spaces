@@ -2,205 +2,166 @@
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
         <CandidateSider/>
 
-        <a-layout-content>
-            <div style="max-width: 1000p; margin: auto; padding: 0px 0;">
-                <div class="hero" :style="{width: '100%',backgroundColor:'#004ec7',height:'250px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8',}">
-                    <div class="hero-body">
-                        <div class="container">
-                            <h1 class="title">
-                                {{selected_project.name}}
-                            </h1>
-                            <h2 class="subtitl">
-                                Brief : {{selected_project.brief}}
-                                <br>
-                                Description : {{selected_project.description}}
-                                <br>
-                                Level : {{selected_project.level}}
-                                <br>
-                                Concepts Tested : {{selected_project.concept}}
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <!--                {{selected_project}}-->
+        <a-layout-content style="background-color: white">
+            <DevHeader/>
 
-                <div class="container" style="background-color: white; padding: 24px; max-width: 1000px; margin-top: 12px">
-                    <div class="columns">
-                        <div class="column is-8">
-                            <div class="container">
-                                <h5 class="title">Project Details</h5>
-                                <a-carousel arrows>
-                                    <div
-                                            slot="prevArrow" slot-scope="props"
-                                            class="custom-slick-arrow"
-                                            style="left: 10px;zIndex: 1"
-                                    >
-                                        <a-icon type="left-circle"/>
-                                    </div>
-                                    <div
-                                            slot="nextArrow" slot-scope="props"
-                                            class="custom-slick-arrow"
-                                            style="right: 10px"
-                                    >
-                                        <a-icon type="right-circle"/>
-                                    </div>
-                                    <div><img alt="example" :src=selected_project.projectimage1
-                                              slot="cover"/></div>
-                                    <div><img alt="example" :src=selected_project.projectimage2
-                                              slot="cover"/></div>
-                                </a-carousel>
+            <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
+                marginTop:'0%',marginLeft: '1%',marginRight:'1%' }">
 
+                <a-row gutter="8">
+                    <a-col :span="14">
+
+
+                        <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
+                            <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/>
                             </div>
-                            <div>
-                                <a-tabs defaultActiveKey="1">
-                                    <!--                                    <a-tab-pane tab="Project Overview" key="1" style="height: 200px">-->
-
-                                    <!--                                    </a-tab-pane>-->
-                                    <!--                            <a-tab-pane tab="Project Resources" key="2" forceRender>Content of Tab Pane 2</a-tab-pane>-->
-                                    <a-tab-pane tab="Project Requirements" key="1">
-                                        {{selected_project.requirement1}}<br>
-                                        {{selected_project.requirement2}}<br>
-                                        {{selected_project.requirement3}}<br>
-                                        {{selected_project.requirement4}}<br>
-                                        {{selected_project.requirement5}}<br>
-                                        {{selected_project.requirement6}}<br>
-                                        {{selected_project.requirement7}}<br>
-                                        {{selected_project.requirement8}}<br>
-                                        {{selected_project.requirement9}}<br>
-                                        {{selected_project.requirement10}}<br>
-                                    </a-tab-pane>
-                                    <a-tab-pane tab="Environment Variables" key="2" forceRender>
-                                        {{selected_project.framework.name}} <br>
-                                        {{selected_project.framework.language.name}}
-
-                                    </a-tab-pane>
-
-                                    <template slot="renderTabBar" slot-scope="props, DefaultTabBar">
-                                        <component :is="DefaultTabBar" {...props}/>
-                                    </template>
-                                </a-tabs>
+                            <div v-if="project.projectimage2 "><img style="width: 100%" :src="project.projectimage2"/>
                             </div>
-                            <!--                            {{ selected_project}}-->
+                            <div v-if="project.projectimage3 "><img style="width: 100%" :src="project.projectimage3"/>
+                            </div>
+                            <div v-if="project.projectimage4 "><img :src="project.projectimage4"/></div>
+                            <div v-if="project.projectimage5 "><img :src="project.projectimage5"/></div>
+                            <div v-if="project.projectimage6 "><img :src="project.projectimage6"/></div>
+                            <div v-if="project.projectimage7 "><img :src="project.projectimage7"/></div>
+                            <div v-if="project.projectimage8 "><img :src="project.projectimage8"/></div>
+                            <div v-if="project.projectimage9 "><img :src="project.projectimage9"/></div>
+                            <div v-if="project.projectimage10 "><img :src="project.projectimage10"/></div>
+                        </a-carousel>
+                        <div v-if="project.hasvideo">
+                            <youtube :video-id="project.projectimage2" :player-vars="playerVars"></youtube>
                         </div>
-                        <div class="column is-4">
+                        <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
+                            <h4><strong>Project name:</strong> {{project.name}}</h4>
+                            <p>{{project.description}}</p>
 
-                            <div v-if='project_stage == "invite_accepted"'>
-                                <h1 class="subtitle"> Set Time to take test</h1>
-                                <h3>Select Date and Time of the test</h3>
+                        </div>
+
+
+                    </a-col>
+                    <a-col :span="10" style="padding: 0 1%;">
+                        <div style="border:1px solid #e8e8e8;;padding: 2%;">
+                            <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.test_stage==='invite_sent'">
+                                <p>Accept Project invitation(This will allow you to set time and get access to our
+                                    IDE</p>
+                                <a-button type="primary" @click="Accept(application.id)">Accept</a-button>
+                            </div>
+                            <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.test_stage==='accepted'">
+                                <p>Pick Date and time of choice to take the project</p>
                                 <a-date-picker
-                                        showTime
                                         format="YYYY-MM-DD HH:mm:ss"
-                                        placeholder="Select Date and Time"
-                                        @change="onChange"
-                                        @ok="onOk"
+                                        :disabledDate="disabledDate"
+                                        v-model="projectstarttime"
+
+                                        :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
                                 />
-                            </div>
-                            <div v-else-if='project_stage=="time_set"'>
-                                <h1 class="subtitle">Date Information</h1>
-                                You are set to take this test at {{ date}}.
-                                An email has been sent to you with access information to your workspace
-                            </div>
-                            <div v-else-if='project_stage=="link_available"'>
-                                <h1 class="subtitle">Link Information</h1>
-                                Follow this <a :href="server_url">link</a> to access your workspace.
-                                <a :href="server_url">Workspace</a>.
-                                <a-button @click="setProjectStage('project_completed')">End Test</a-button>
+                                <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id)">Submit</a-button>
 
                             </div>
-                            <div v-else-if='project_stage=="project_completed"'>
-                                <h1 class="subtitle">Project Completed</h1>
-                                Congratulations on completing your test.
-                                Your project has been submitted for analysis
-                                <a-button @click="checkReportStatus">Check report status</a-button>
+                            <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.test_stage ==='timeset'">
+                                <p>IDE link</p>
+                                <a target="_blank" :href="server_url">{{server_url}}</a>
+                                <br>
+                                <a-button type="primary"  @click="finish(application.id)">Close/Finish project</a-button>
+
+
                             </div>
-                            <div v-else-if='project_stage=="analysis_complete"'>
-                                <h1 class="subtitle">Report</h1>
-                                Follow this link to view the report.
-                                <a href="https://beta.codeln.com/sample">Report </a>
+
+                            <div>
+                                <p style="margin-left: 5%"><strong>Requirements</strong></p>
+                                <ol>
+                                    <li v-if="project.requirement1">{{project.requirement1}}</li>
+                                    <li v-if="project.requirement2">{{project.requirement2}}</li>
+                                    <li v-if="project.requirement3">{{project.requirement3}}</li>
+                                    <li v-if="project.requirement4">{{project.requirement4}}</li>
+                                    <li v-if="project.requirement5">{{project.requirement5}}</li>
+                                    <li v-if="project.requirement6">{{project.requirement6}}</li>
+                                    <li v-if="project.requirement7">{{project.requirement7}}</li>
+                                    <li v-if="project.requirement8">{{project.requirement8}}</li>
+                                    <li v-if="project.requirement9">{{project.requirement9}}</li>
+                                    <li v-if="project.requirement10">{{project.requirement10}}</li>
+
+
+                                </ol>
                             </div>
+
 
                         </div>
-                    </div>
-                </div>
+
+
+                    </a-col>
+                </a-row>
+
+
             </div>
+
+
         </a-layout-content>
     </a-layout>
 </template>
 
 <script>
 
-    import UsersService from '@/services/UsersService'
+
     import Projects from '@/services/Projects'
     import CandidateSider from "../../layout/CandidateSider";
-    import CandidateHeader from "../../layout/CandidateHeader";
+    import DevHeader from "../../layout/DevHeader";
+    import Marketplace from '@/services/Marketplace'
+    import moment from 'moment';
 
     export default {
         name: "DeveloperProjectDetails",
         data() {
             return {
-                currentUserProfile: {},
-                project: [
-                    {
-                        "id": 1,
-                        "name": "Travely App",
-                        "owner": 1,
-                        "brief": "Market place for rentals and housing bookings.",
-                        "description": "You have been approached by a client to design an online marketplace that allows users to discover and book rental homes and apartments.",
-                        "level": "Basic",
-                        "concept": null,
-                        "projectimage1": "https://preview.ibb.co/kkJyUq/travel1.png",
-                        "projectimage2": "https://preview.ibb.co/iicspq/travel2.png",
-                        "projectimage3": null,
-                        "projectimage4": null,
-                        "projectimage5": null,
-                        "projectimage6": null,
-                        "projectimage7": null,
-                        "projectimage8": null,
-                        "projectimage9": null,
-                        "projectimage10": null,
-                        "requirement1": "Replicate the designs in each of the sample screenshot",
-                        "requirement2": "Use javascript and Css effects to ensure your design stands out.",
-                        "requirement3": "Present an improved UI/UX for the Application (interactive design)",
-                        "requirement4": "Stock images will be provided to replicate UI",
-                        "requirement5": "Design should be responsive across devices and browsers",
-                        "requirement6": "Feel free to use dummy text",
-                        "requirement7": null,
-                        "requirement8": null,
-                        "requirement9": null,
-                        "requirement10": null,
-                        "framework": 6,
-                        "devtype": 1,
-                        "projecttype": 1,
-                        "hasvideo": false
-                    },
-                ],
-                selected_project: [],
-                project_stage: 'invite_accepted',
-                date: Date(),
+                application: {},
+                project: null,
                 report: [],
                 server_url: "http://codelnide.codeln.com:8080/dashboard/#/ide/che/Elohor-Thomas",
+                projectstarttime:null
             }
         },
         components: {
-            CandidateHeader,
+            DevHeader,
             CandidateSider,
         },
         async mounted() {
+
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             };
             if (this.$store.state.user.pk) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
                 const projectId = this.$store.state.route.params.projectId;
-                this.selected_project = (await Projects.projectdetails(projectId, auth)).data;
+                this.project = (await Projects.projectdetails(projectId, auth)).data;
+                if (this.$store.state.route.params.type === 'job') {
+                    this.application = (await Marketplace.jobmanagerview(this.$store.state.route.params.applicationId, auth)).data
+
+                } else {
+                    this.application = (await Marketplace.talentpickedmanagerview(this.$store.state.route.params.applicationId, auth)).data
+                }
+
 
             }
+
+
         },
         methods: {
+            moment,
             navigateTo(route) {
                 this.$router.push(route);
             },
+            range(start, end) {
+                const result = [];
+                for (let i = start; i < end; i++) {
+                    result.push(i);
+                }
+                return result;
+            },
+            disabledDate(current) {
+                // Can not select days before today and today
+                return current && current < moment().endOf('day');
+            },
+
             callback(key) {
                 console.log(key);
             },
@@ -215,21 +176,44 @@
                 const projectId = this.$store.state.route.params.projectId;
                 console.log(Projects.developerprojectreport(this.currentUserProfile.user, projectId, auth));
                 this.setProjectStage('analysis_complete');
-                // console.log(this.report);
-                // console.log(this.project_stage);
 
 
             },
+            async Accept(application_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                this.application.test_stage = 'accepted'
+                Marketplace.pickreject(application_id, {test_stage: 'accepted'}, auth)
+
+            },
+            async Settime(application_id){
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                this.application.test_stage = 'timeset'
+                Marketplace.pickreject(application_id, {test_stage:'timeset',projectstarttime: this.projectstarttime}, auth)
+            },
+            async finish(application_id){
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                this.application.test_stage = 'complete'
+                Marketplace.pickreject(application_id, {test_stage:'complete'}, auth)
+            },
 
             onChange(value, dateString) {
-                // eslint-disable-next-line no-console
+
                 console.log('Selected Time: ', value);
                 console.log('Formatted Selected Time: ', dateString);
             },
             onOk(value) {
                 this.date = value;
                 this.project_stage = 'link_available';
-                // console.log('onOk: ', value);
+
             }
         },
     }

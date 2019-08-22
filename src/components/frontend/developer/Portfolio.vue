@@ -43,21 +43,25 @@
                             </a-row>
                         </div>
                         <div class="bio">
-                            <a-tabs defaultActiveKey="1">
+                            <a-tabs defaultActiveKey="1" >
                                 <a-tab-pane key="1">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
                                         Skills
                                     </span>
                                     <p>Quizzes taken by Candidate</p>
-                                    Javascript :
-                                    <a-progress :percent="30"/>
-                                    java:
-                                    <a-progress :percent="50"/>
-                                    React:
-                                    <a-progress :percent="70"/>
-                                    Angular:
-                                    <a-progress :percent="89"/>
+                                    <div v-if="takenquizzes.length>0">
+                                        <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                                        {{takenquiz.quiz.subject.name}}:
+                                        <a-progress :percent="takenquiz.score"/>
+                                    </div>
+                                    </div>
+                                    <div v-else>
+
+                                        <p>Take a quiz under <a @click="navigateTo({name:'assessment'})">get verified</a> and it will appear here</p>
+                                    </div>
+
+
                                 </a-tab-pane>
 
                                 <a-tab-pane key="2">
@@ -66,8 +70,8 @@
                                         Projects portfolio
                                     </span>
                                     <div style="padding:0 2%">
-
-                                        <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                        <div v-if="portfolio.length>0">
+                                            <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
                                              v-for="item in portfolio" v-bind:key="item.id">
                                             <p style="font-weight: 700">{{item.title}}</p>
                                             <p>
@@ -83,6 +87,14 @@
                                             <a :href=" item.demo" target="_blank">view project</a>
 
                                         </div>
+                                        </div>
+                                        <div v-else>
+                                            <p>You can self test yourself under get verified and build a project
+                                                or await a recruiter to asign you one.</p>
+                                            <p>More projects and quizzes you have done will make your profile more appealing to them</p>
+                                        </div>
+
+
 
 
                                     </div>
@@ -198,6 +210,7 @@
     import CandidateSider from "../../layout/CandidateSider";
     import PortfolioHeader from "../../layout/PortfolioHeader";
     import UsersService from '@/services/UsersService'
+    import QuizService from '@/services/QuizService';
     export default {
         name: "Portfolio",
         data() {
@@ -211,6 +224,7 @@
                 experiences: [],
                 portoliolist: [],
                 portfolio: [],
+                takenquizzes: [],
 
 
 
@@ -231,6 +245,8 @@
             this.verified_skills = this.currentUserProfile.verified_skills.split(',');
             this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
             this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
+            this.takenquizzes = (await QuizService.taken(this.$store.state.user.pk, auth)).data;
+
 
             for (let i = 0; i < this.portfoliolist.length; i++) {
                 let id = this.portfoliolist[i]
@@ -262,6 +278,11 @@
 
 
             }
+        },
+        methods:{
+            navigateTo(route) {
+                this.$router.push(route)
+            },
         }
     }
 </script>

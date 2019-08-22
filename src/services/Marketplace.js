@@ -47,13 +47,13 @@ export default {
         return Api().patch(`marketplace/pickreject/${jobapplication_id} `, Currentapplication,auth)
     },
     retrieveapplication(jobapplication_id, auth) {
-        return Api().get(`marketplace/pickreject/${jobapplication_id} `, auth)
+        return Api().get(`marketplace/applicationprofile/${jobapplication_id} `, auth)
     },
     candidatemanager(candidatemanagement_id,CurrentCandidate, auth) {
-        return Api().patch(`marketplace/candidatemanager/${candidatemanagement_id} `, CurrentCandidate,auth)
+        return Api().patch(`marketplace/candidateinfoupdater/${candidatemanagement_id} `, CurrentCandidate,auth)
     },
     retrievecandidate(application_id, auth) {
-        return Api().get(`marketplace/candidatemanager/${application_id} `, auth)
+        return Api().get(`marketplace/candidateinfo/${application_id} `, auth)
     },
 
     unpublishjob(job_id,Currentjob, auth) {
@@ -72,6 +72,12 @@ export default {
     pickedapplications(dev_id,auth){
         return Api().get(`marketplace/pickedapplications/${dev_id} `, auth)
 
+    },
+    jobmanagerview(application_id,auth){
+        return Api().get(`marketplace/jobmanagerview/${application_id} `, auth)
+    },
+    talentpickedmanagerview(application_id,auth){
+        return Api().get(`marketplace/talentpickedmanagerview/${application_id} `, auth)
     }
 
 }
