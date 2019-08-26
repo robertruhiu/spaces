@@ -32,6 +32,7 @@ const Report = () =>import('@/components/frontend/recruiter/Report');
 const Portfolio = () =>import('@/components/frontend/developer/Portfolio');
 const DevCalendar = () =>import('@/components/frontend/developer/DevCalendar');
 const TakeQuiz = () =>import('@/components/frontend/developer/quiz/takequiz');
+const SelfverifyProject = () =>import('@/components/frontend/developer/SelfverifyProject');
 
 Vue.use(Router);
 
@@ -189,6 +190,14 @@ let router =  new Router({
             path: '/assignedproject/:projectId/:applicationId/:type',
             name: 'assignedproject',
             component: DeveloperProjectDetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/selfverifyproject/:applicationId',
+            name: 'selfverifyproject',
+            component: SelfverifyProject,
             meta: {
                 requiresAuth: true
             }

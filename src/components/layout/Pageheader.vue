@@ -97,7 +97,7 @@
                 if (this.allevents[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].candidatename
+                    let title = this.allevents[i].candidate.user.first_name
                     let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
                     let color = this.allevents[i].eventcolor
@@ -116,7 +116,7 @@
                 if (this.alldevrequests[i].interviewstatus !== null && moment(this.alldevrequests[i].interviewstarttime).format("YYYY-MM-DD") === todayDate) {
 
                     let id = this.alldevrequests[i].id
-                    let title = this.alldevrequests[i].candidatename
+                    let title = this.alldevrequests[i].candidate.user.first_name
                     let start = moment(this.alldevrequests[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.alldevrequests[i].interviewendtime).format("HH:mm")
                     let color = this.alldevrequests[i].eventcolor
@@ -129,6 +129,7 @@
                 }
 
             }
+            console.log(this.events)
 
 
         },

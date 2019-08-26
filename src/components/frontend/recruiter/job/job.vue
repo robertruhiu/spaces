@@ -140,6 +140,12 @@
                                                                                         assign project test
                                                                                     </a-menu-item>
                                                                                     <a-menu-item
+                                                                                            @click="handleMenuClick(record.action,record.profile,2)">
+                                                                                        <a-icon
+                                                                                                type="calendar"/>
+                                                                                        interview candidate
+                                                                                    </a-menu-item>
+                                                                                    <a-menu-item
                                                                                             @click="handleMenuClick(record.action,record.profile,3)">
                                                                                         <a-icon
                                                                                                 type="close"/>
@@ -830,14 +836,48 @@
                                                         <!-----offer letter--------->
                                                         <a-table-column
 
-                                                                dataIndex="offer"
-                                                                key="offer"
+                                                                dataIndex="offerletter"
+                                                                key="offerletter"
+                                                                width="10%"
+
+                                                        >
+                                                            <div style="text-align: center" slot="title">Make offer
+                                                            </div>
+                                                            <template slot-scope="text, record">
+                                                                <div style="text-align: center">
+                                                                    <a-button v-if="record.offerletter === null "
+                                                                              type="primary" size="small"
+                                                                              @click="openWidget()">Upload offer letter
+                                                                    </a-button>
+                                                                    <a v-else :href="record.offerletter"
+                                                                       target="_blank">{{record.offerletter}}</a>
+                                                                </div>
+
+
+                                                            </template>
+
+                                                        </a-table-column>
+
+                                                        <!-----offer letter status--------->
+                                                        <a-table-column
+
+                                                                dataIndex="offerstatus"
+                                                                key="offerstatus"
                                                                 width="20%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Make offer</div>
+                                                            <div style="text-align: center" slot="title">Offer Status
+                                                            </div>
                                                             <template slot-scope="text, record">
-                                                                <a style="margin-left: 25%">offer letter</a>
+                                                                <div style="text-align: center">
+                                                                    <span v-if="record.offerstatus">
+                                                                    {{record.offerstatus}}
+                                                                </span>
+                                                                    <span v-else>
+                                                                    --
+                                                                </span>
+                                                                </div>
+
 
                                                             </template>
 
@@ -1490,12 +1530,7 @@
             key: 'notes',
 
         },
-        {
-            title: 'offer',
-            dataIndex: 'offer',
-            key: 'offer',
 
-        },
         {
             title: 'Stage',
             dataIndex: 'stage',
@@ -1557,13 +1592,26 @@
             key: 'color',
 
         },
+        {
+            title: 'Offer Status',
+            dataIndex: 'offerstatus',
+            key: 'offerstatus',
+
+        },
+        {
+            title: 'Offer letter',
+            dataIndex: 'offerletter',
+            key: 'offerletter',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color, report) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
+                    end, color, report, offerstatus, offerletter) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1579,6 +1627,8 @@
             this.interviewend = end
             this.color = color
             this.report = report
+            this.offerstatus = offerstatus
+            this.offerletter = offerletter
 
 
         }
@@ -1637,9 +1687,9 @@
                 inputVisible: false,
                 inputValue: '',
                 visible: false,
-                active: true,
-                newapplications: true,
-                recommended: true,
+                active: false,
+                newapplications: false,
+                recommended: false,
                 amount: null,
                 deadline: null,
                 candidate: null,
@@ -1698,7 +1748,6 @@
                 this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
 
 
-
                 // create a profile for each applicant comparision and matching between user,profile and applicant model
 
                 for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
@@ -1729,8 +1778,11 @@
                     let end = this.applicants[j].interviewendtime
                     let color = this.applicants[j].eventcolor
                     let report = this.applicants[j].report
+                    let offerstatus = this.applicants[j].offerstatus
+                    let offerletter = this.applicants[j].offerletter
                     let onepickeddev = new Applicant(
-                        id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end, color, report
+                        id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
+                        end, color, report, offerstatus, offerletter
                     );
 
                     this.applicantprofile.push(onepickeddev)
@@ -1823,6 +1875,7 @@
                             }
 
                         }
+                        this.recommended = true
 
                     }
 
@@ -1835,10 +1888,10 @@
                 // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
                 if (this.pickedapplicants.length > 0) {
                     this.active = true
-                } else if (this.newapplicant.length === 0) {
-                    this.newapplications = false
-                } else if (this.recommmedcandidates.length === 0) {
-                    this.recommended = false
+                } else if (this.newapplicant.length > 0) {
+                    this.newapplications = true
+                } else if (this.recommmedcandidates.length > 0) {
+                    this.recommended = true
                 }
 
                 // recent projects
@@ -2129,7 +2182,7 @@
                             Marketplace.pickreject(job_id, {
                                 stage: 'rejected',
                                 selected: false,
-                                candidatename: name
+
                             }, auth)
 
 
@@ -2141,7 +2194,7 @@
             },
 
             // pick from recommedation list
-            pickrecommedationClick(job_id, candidate_id, key, name) {
+            pickrecommedationClick(job_id, candidate_id, key) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -2151,6 +2204,7 @@
                         if (this.recommmedcandidates[i].profile === candidate_id) {
                             this.recommmedcandidates[i].stage = 'active'
                             this.pickedapplicants.push(this.recommmedcandidates[i])
+                            this.active = true
                             let index = this.recommmedcandidates.indexOf(this.recommmedcandidates[i]);
                             this.recommmedcandidates.splice(index, 1);
                             if (this.recommmedcandidates.length === 0) {
@@ -2163,7 +2217,7 @@
                                     stage: 'active',
                                     selected: true,
                                     recruiter: this.$store.state.user.pk,
-                                    candidatename: name
+
                                 },
                                 auth
                             )
@@ -2237,8 +2291,18 @@
                     interviewstatus: 'invite sent',
                     eventcolor: this.eventcolor,
                 }, auth)
+
+                for (let i = 0; i < this.interviewstage.length; i++) {
+                    if (this.interviewstage[i].action === application_id) {
+                        this.interviewstage[i].interviewstarttime = moment(this.starttime)
+                        this.interviewstage[i].interviewendtime = moment(this.endtime)
+                        this.interviewstage[i].interviewstatus = 'invite sent'
+                    }
+                }
                 this.interviewmodal = false
-            }
+            },
+            // upload offer letter
+
 
 
         },

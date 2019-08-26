@@ -33,12 +33,20 @@
                                             Company : {{application.company}}
 
                                             <br>
-                                            Stage:
+                                            <span>
+                                                Stage:
                                             <a-tag color="#9C27B0"
                                                    style="text-align: center;width: 4rem;">
                                                 {{application.stage}}
                                             </a-tag>
+                                                <a-button type="primary" size="small"
+                                                          @click="Withdrawapplication(application.key)">
+                                            withdraw
+                                        </a-button>
+                                            </span>
+
                                         </div>
+
 
                                     </a-timeline-item>
 
@@ -64,20 +72,23 @@
 
                                             <br>
                                             <div v-if="application.project">
-                                                <p>
-                                                    Project assigned: <span></span>
-                                                    <a  @click="navigateTo({name:'assignedproject',params:{projectId:application.project.id,applicationId:application.key,type:application.type}})">
-                                                        {{application.project.name}}
-                                                    </a>
-                                                </p>
+
+                                                Project assigned: <span></span>
+                                                <a @click="navigateTo({name:'assignedproject',params:{projectId:application.project.id,applicationId:application.key,type:application.type}})">
+                                                    {{application.project.name}}
+                                                </a>
 
 
                                             </div>
                                             <div v-else>
-                                                <p>Project assignment pending</p>
+                                                Project assignment pending
 
 
                                             </div>
+                                            <a-button style="background-color: #fa5580;color: white;" size="small"
+                                                      @click="Withdrawapplicationtest(application.key)">
+                                                withdraw
+                                            </a-button>
 
                                         </div>
 
@@ -103,16 +114,20 @@
                                             Company : {{application.company}}
 
                                             <br>
-                                            <div v-if="application.start">
-                                                <p>Interview:<span>{{application.start}}</span></p>
+                                            <div v-if="application.start !=='Invalid date'">
+                                                Interview: <span><a-button style="margin-left: 2%" type="primary"
+                                                                           size="small"
+                                                                           @click="showEvent(application.key,application)"><a-icon
+                                                    type="calendar"/>View</a-button></span>
 
 
                                             </div>
                                             <div v-else>
-                                                <p>Interview time not yet set</p>
+                                                Interview time not yet set
 
 
                                             </div>
+
                                         </div>
 
                                     </a-timeline-item>
@@ -142,6 +157,11 @@
                                                 {{application.stage}}
                                             </a-tag>
                                         </div>
+                                        <a-button type="primary" size="small"
+                                                  @click="Withdrawapplicationoffer(application.key)">
+                                            withdraw
+                                        </a-button>
+
 
                                     </a-timeline-item>
 
@@ -154,6 +174,29 @@
 
 
                     </a-row>
+                    <a-modal
+                            :title="currentinterview.company"
+                            v-model="visible"
+                            @ok="handleOk"
+
+                    >
+                        <p>Interview starttime : {{currentinterview.start}}</p>
+                        <p>Interview endtime {{currentinterview.end}}</p>
+                        <template slot="footer">
+                            <a-button key="submit" type="danger" ghost :loading="loading"
+                                      @click="Withdrawapplicationinterview(currentinterview.key)">
+                                reject invite
+                            </a-button>
+                            <a-button
+                                    type="primary"
+                                    html-type="submit"
+                                    @click="saveEvent(interviewerapplicationid,interviewstart,interviewend)"
+                            >
+                                Accept
+                            </a-button>
+
+                        </template>
+                    </a-modal>
 
 
                 </div>
@@ -192,10 +235,12 @@
         data() {
             return {
                 applications: [],
-                active:[],
+                active: [],
                 testing: [],
-                interview:[],
-                offers:[]
+                interview: [],
+                offers: [],
+                visible: false,
+                currentinterview: {}
 
             }
         },
@@ -215,7 +260,6 @@
 
             this.alldevjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
             this.alldevjobpicked = (await Marketplace.pickedapplications(this.$store.state.user.pk, auth)).data
-
             // application creation for jobs applied or picked from recommended list
             for (let i = 0; i < this.alldevjobs.length; i++) {
 
@@ -255,23 +299,127 @@
 
             }
             // sort out the varios applications to active,testing,active,offer
-            for(let i =0;i<this.applications.length;i++){
-                if(this.applications[i].stage === 'active' || this.applications[i].stage === 'new' ){
+            for (let i = 0; i < this.applications.length; i++) {
+                if (this.applications[i].stage === 'active' || this.applications[i].stage === 'new') {
                     this.active.push(this.applications[i])
-                }else if (this.applications[i].stage ==='test'){
+                } else if (this.applications[i].stage === 'test') {
                     this.testing.push(this.applications[i])
-                }else if (this.applications[i].stage ==='interview'){
+                } else if (this.applications[i].stage === 'interview') {
                     this.interview.push(this.applications[i])
-                }else if (this.applications[i].stage ==='offer'){
+                } else if (this.applications[i].stage === 'offer') {
                     this.offers.push(this.applications[i])
                 }
 
             }
+
+
         },
-        methods :{
+
+        methods: {
             navigateTo(route) {
                 this.$router.push(route)
             },
+            showEvent(application_id, application) {
+                this.visible = true
+                this.currentinterview = application
+            },
+
+            // set of withdraws per stage
+            Withdrawapplication(application) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                Marketplace.pickreject(application, {
+                    stage: 'rejected',
+                    selected: false,
+                }, auth)
+                    .then(resp => {
+                            for (let i = 0; i < this.active.length; i++) {
+                                if (this.active[i].key === application) {
+                                    this.active[i].stage = 'withdrawn'
+                                    let index = this.active.indexOf(this.active[i]);
+                                    this.active.splice(index, 1);
+                                }
+                            }
+                            return resp
+
+                        }
+                    )
+                    .catch()
+            },
+            Withdrawapplicationtest(application) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                Marketplace.pickreject(application, {
+                    stage: 'rejected',
+                    selected: false,
+                }, auth)
+                    .then(resp => {
+                            for (let i = 0; i < this.testing.length; i++) {
+                                if (this.testing[i].key === application) {
+                                    this.testing[i].stage = 'withdrawn'
+                                    let index = this.testing.indexOf(this.testing[i]);
+                                    this.testing.splice(index, 1);
+                                }
+                            }
+                            return resp
+
+                        }
+                    )
+                    .catch()
+
+            },
+            Withdrawapplicationinterview(application) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                Marketplace.pickreject(application, {
+                    stage: 'rejected',
+                    selected: false,
+                }, auth)
+                    .then(resp => {
+                            for (let i = 0; i < this.interview.length; i++) {
+                                if (this.interview[i].key === application) {
+                                    this.interview[i].stage = 'withdrawn'
+                                    let index = this.interview.indexOf(this.interview[i]);
+                                    this.interview.splice(index, 1);
+                                }
+                            }
+                            return resp
+
+                        }
+                    )
+                    .catch()
+
+            },
+            Withdrawapplicationoffer(application) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                Marketplace.pickreject(application, {
+                    stage: 'rejected',
+                    selected: false,
+                }, auth)
+                    .then(resp => {
+                            for (let i = 0; i < this.offers.length; i++) {
+                                if (this.offers[i].key === application) {
+                                    this.offers[i].stage = 'withdrawn'
+                                    let index = this.offers.indexOf(this.offers[i]);
+                                    this.offers.splice(index, 1);
+                                }
+                            }
+                            return resp
+
+                        }
+                    )
+                    .catch()
+
+            }
         }
 
     }

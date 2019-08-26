@@ -142,6 +142,12 @@
                                                                                                 type="codepen"/>
                                                                                         assign project test
                                                                                     </a-menu-item>
+                                                                                    <a-menu-item
+                                                                                            @click="handleMenuClick(record.action,record.profile,2)">
+                                                                                        <a-icon
+                                                                                                type="calendar"/>
+                                                                                        interview candidate
+                                                                                    </a-menu-item>
 
                                                                                     <a-menu-item
                                                                                             @click="handleMenuClick(record.action,record.profile,3)">
