@@ -600,6 +600,7 @@
                                                     <a-table :dataSource="interviewstage" :scroll="{ y: 340 }"
                                                              size="middle">
 
+
                                                         <!-----name--------->
                                                         <a-table-column
                                                                 dataIndex="name"
@@ -696,7 +697,9 @@
                                                                         view
                                                                     </a-button>
 
+
                                                                 </span>
+
 
                                                             </template>
 
@@ -743,6 +746,8 @@
                                                         <span style="margin-left: 25%">
                                                             <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">notes</a>
                                                         </span>
+
+
                                                             </template>
 
                                                         </a-table-column>
@@ -1361,6 +1366,7 @@
                             </a-form-item>
 
 
+
                         </a-form>
                         <template slot="footer">
 
@@ -1702,11 +1708,10 @@
                 endtime: null,
                 interviewcandidateapplicant: null,
                 showEvent: false,
-                interviewstart: null,
-                interviewend: null,
                 interviewer: null,
                 interviewerapplicationid: null,
-                eventcolor: 'blue'
+                eventcolor: 'blue',
+
 
 
             }
@@ -1721,6 +1726,7 @@
 
         },
         async mounted() {
+
 
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -2110,7 +2116,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                if (id === 1) { // coding
+                if (id === 1) {
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
                             this.interviewstage[i].stage = 'test'
@@ -2202,11 +2208,7 @@
                 if (key) {
                     for (let i = 0; i < this.recommmedcandidates.length; i++) {
                         if (this.recommmedcandidates[i].profile === candidate_id) {
-                            this.recommmedcandidates[i].stage = 'active'
-                            this.pickedapplicants.push(this.recommmedcandidates[i])
-                            this.active = true
-                            let index = this.recommmedcandidates.indexOf(this.recommmedcandidates[i]);
-                            this.recommmedcandidates.splice(index, 1);
+
                             if (this.recommmedcandidates.length === 0) {
                                 this.recommended = false
                             }
@@ -2221,6 +2223,22 @@
                                 },
                                 auth
                             )
+                                .then(resp => {
+                                        this.recommmedcandidates[i].stage = 'active'
+                                        this.recommmedcandidates[i].key = resp.data.id
+                                        this.recommmedcandidates[i].action = resp.data.id
+                                        this.recommmedcandidates[i].interviewstart = null
+                                        this.recommmedcandidates[i].interviewend = null
+                                        this.recommmedcandidates[i].interviewstatus = null
+
+                                        this.pickedapplicants.push(this.recommmedcandidates[i])
+                                        this.active = true
+
+                                        let index = this.recommmedcandidates.indexOf(this.recommmedcandidates[i]);
+                                        this.recommmedcandidates.splice(index, 1);
+                                    }
+                                )
+                                .catch()
 
 
                         }
@@ -2285,24 +2303,204 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
+
                 Marketplace.pickreject(application_id, {
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
                     interviewstatus: 'invite sent',
                     eventcolor: this.eventcolor,
                 }, auth)
+                    .then(resp => {
+                            self.Datarefresh()
+                        return resp
 
-                for (let i = 0; i < this.interviewstage.length; i++) {
-                    if (this.interviewstage[i].action === application_id) {
-                        this.interviewstage[i].interviewstarttime = moment(this.starttime)
-                        this.interviewstage[i].interviewendtime = moment(this.endtime)
-                        this.interviewstage[i].interviewstatus = 'invite sent'
-                    }
-                }
+                        }
+                    )
+                    .catch()
+
+
                 this.interviewmodal = false
             },
             // upload offer letter
+            async Datarefresh(){
+                const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
+            };
+            if (this.$store.state.user.pk) {
+                this.applicants=[]
+                this.newapplicant =[]
+                this.pickedapplicants =[]
+                this.interviewstage =[]
+                this.testingstage =[]
+                this.offerstage =[]
+                this.hirestage =[]
+
+                const jobId = this.$store.state.route.params.jobId
+                // current job
+                this.job = (await Marketplace.specificjob(jobId, auth)).data
+
+
+                this.projects = Projectsservice.allprojects(auth)
+
+                // getting applicants for job
+                this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
+
+
+                // create a profile for each applicant comparision and matching between user,profile and applicant model
+
+                for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
+
+
+                    let tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
+                    let stage = this.applicants[j].stage
+                    let id = this.applicants[j].id
+                    let pk = this.applicants[j].id
+                    let user_id = this.applicants[j].candidate.id
+                    let name = this.applicants[j].candidate.user.first_name
+                    let selected = this.applicants[j].selected
+                    let test_stage = this.applicants[j].test_stage
+                    let project = ''
+                    let projectname = ''
+                    if (test_stage) {
+                        project = this.applicants[j].project.id
+                        projectname = this.applicants[j].project.name
+
+                    } else {
+                        project = null
+                        projectname = null
+
+                    }
+
+                    let status = this.applicants[j].interviewstatus
+                    let start = this.applicants[j].interviewstarttime
+                    let end = this.applicants[j].interviewendtime
+                    let color = this.applicants[j].eventcolor
+                    let report = this.applicants[j].report
+                    let offerstatus = this.applicants[j].offerstatus
+                    let offerletter = this.applicants[j].offerletter
+                    let onepickeddev = new Applicant(
+                        id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
+                        end, color, report, offerstatus, offerletter
+                    );
+
+                    this.applicantprofile.push(onepickeddev)
+
+
+                }
+
+
+
+                // applicants sorting
+                for (let i = 0; i < this.applicantprofile.length; i++) {
+                    if (this.applicantprofile[i].selected === false && this.applicantprofile[i].stage !== 'rejected') {
+                        this.newapplicant.push(this.applicantprofile[i])
+                    } else if (this.applicantprofile[i].selected) {
+                        this.pickedapplicants.push(this.applicantprofile[i])
+
+                    }
+                    // second part of sorting conditional coz the fist condition met
+                    if (this.applicantprofile[i].stage === 'interview') {
+                        this.interviewstage.push(this.applicantprofile[i])
+
+                    } else if (this.applicantprofile[i].stage === 'test') {
+                        this.testingstage.push(this.applicantprofile[i])
+
+                    } else if (this.applicantprofile[i].stage === 'offer') {
+                        this.offerstage.push(this.applicantprofile[i])
+
+
+                    } else if (this.applicantprofile[i].stage === 'hired') {
+                        this.hirestage.push(this.applicantprofile[i])
+
+                    }
+
+
+                }
+
+
+                // system recommend candidates (all candidates with matching skill tags - current applicants)
+                let allrecommedednouniquefilter = []
+                for (let x = 0; x < this.alldevsprofile.length; x++) {
+                    for (let z = 0; z < this.tags.length; z++) {
+                        if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                            let user_id = this.alldevsprofile[x].id
+                            allrecommedednouniquefilter.push(user_id)
+
+                        }
+                    }
+                }
+
+                // allows unique filter under codeln recommended candidates id
+                function onlyUnique(value, index, self) {
+                    return self.indexOf(value) === index;
+                }
+
+                // finds the difference to eliminate candidates already picked/selected or applied from recommended
+                Array.prototype.diff = function (a) {
+                    return this.filter(function (i) {
+                        return a.indexOf(i) < 0;
+                    });
+                };
+
+
+                let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
+                let allapplicants = []
+                for (let x = 0; x < this.applicants.length; x++) {
+                    allapplicants.push(this.applicants[x].candidate.id)
+                }
+                let recommededlist = allrecommended.diff(allapplicants);
+
+
+                // create a profile for each recommended comparision and matching between user,profile
+                if (recommededlist.length > 0) {
+
+                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                        for (let k = 0; k < recommededlist.length; k++) {
+                            if (this.alldevsprofile[l].id === recommededlist[k]) {
+
+                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                let stage = 'recommended'
+                                let id = this.alldevsprofile[l].id
+                                let pk = this.alldevsprofile[l].id
+                                let user_id = this.alldevsprofile[l].id
+                                let name = this.alldevsprofile[l].user.first_name
+                                let selected = false
+                                let onerecommed = new Recommended(
+                                    id, name, stage, tags, user_id, selected, pk
+                                );
+
+                                this.recommmedcandidates.push(onerecommed)
+
+                            }
+
+                        }
+                        this.recommended = true
+
+                    }
+
+
+                } else {
+                    this.recommended = false
+                }
+
+
+                // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
+                if (this.pickedapplicants.length > 0) {
+                    this.active = true
+                } else if (this.newapplicant.length > 0) {
+                    this.newapplications = true
+                } else if (this.recommmedcandidates.length > 0) {
+                    this.recommended = true
+                }
+
+                // recent projects
+                this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+
+            }
+
+            },
 
 
         },
