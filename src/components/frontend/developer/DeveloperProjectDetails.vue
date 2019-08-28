@@ -40,7 +40,8 @@
                     </a-col>
                     <a-col :span="10" style="padding: 0 1%;">
                         <div style="border:1px solid #e8e8e8;;padding: 2%;">
-                            <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.test_stage==='invite_sent'">
+                            <div style="margin-left: 5%;margin-bottom: 2%"
+                                 v-if="application.test_stage==='invite_sent'">
                                 <p>Accept Project invitation(This will allow you to set time and get access to our
                                     IDE</p>
                                 <a-button type="primary" @click="Accept(application.id)">Accept</a-button>
@@ -54,14 +55,20 @@
 
                                         :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
                                 />
-                                <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id)">Submit</a-button>
+                                <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id)">
+                                    Submit
+                                </a-button>
+                                <br>
+                                <span v-if="timeseterror">
+                                    <span style="color:red ">* Please pick a time to continue</span>
+                                </span>
 
                             </div>
                             <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.test_stage ==='timeset'">
                                 <p>IDE link</p>
                                 <a target="_blank" :href="server_url">{{server_url}}</a>
                                 <br>
-                                <a-button type="primary"  @click="finish(application.id)">Close/Finish project</a-button>
+                                <a-button type="primary" @click="finish(application.id)">Close/Finish project</a-button>
 
 
                             </div>
@@ -116,7 +123,8 @@
                 project: null,
                 report: [],
                 server_url: "http://codelnide.codeln.com:8080/dashboard/#/ide/che/Elohor-Thomas",
-                projectstarttime:null
+                projectstarttime: null,
+                timeseterror:false
             }
         },
         components: {
@@ -188,21 +196,29 @@
                 Marketplace.pickreject(application_id, {test_stage: 'accepted'}, auth)
 
             },
-            async Settime(application_id){
+            async Settime(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                this.application.test_stage = 'timeset'
-                Marketplace.pickreject(application_id, {test_stage:'timeset',projectstarttime: this.projectstarttime}, auth)
+                if (this.projectstarttime !== null) {
+                    this.application.test_stage = 'timeset'
+                    Marketplace.pickreject(application_id, {
+                        test_stage: 'timeset',
+                        projectstarttime: this.projectstarttime
+                    }, auth)
+                }else {
+                    this.timeseterror = true
+                }
+
             },
-            async finish(application_id){
+            async finish(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
                 this.application.test_stage = 'complete'
-                Marketplace.pickreject(application_id, {test_stage:'complete'}, auth)
+                Marketplace.pickreject(application_id, {test_stage: 'complete'}, auth)
             },
 
             onChange(value, dateString) {

@@ -85,7 +85,7 @@
 
 
                                             </div>
-                                            <a-button style="background-color: #fa5580;color: white;" size="small"
+                                            <a-button type="primary" size="small"
                                                       @click="Withdrawapplicationtest(application.key)">
                                                 withdraw
                                             </a-button>

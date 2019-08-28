@@ -150,32 +150,26 @@
 
                             </div>
                             <div v-else>
-                                <p v-if="picked">
+
                                 <a style="" v-if="application.project"
                                    @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project.id,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
                                     <strong>Project Assigned:</strong> {{application.project.name}}
                                 </a>
                                 <a-button :size="small"
                                           style="background-color: #9c27b0;color: white"
-                                          v-else-if="application.id !== null"
+                                          v-if="application.stage === 'test' && application.project === null"
                                           @click="showModal()">
                                     <a-icon type="codepen"/>
                                     Assign test
                                 </a-button>
 
-                            </p>
-                            <p v-else>
-                                <a-button :size="small"
-                                          style="background-color: #9c27b0;color: white"
-                                          @click="Pick(currentUser.first_name)">
-                                    <a-icon type="user-add"/>
-                                    Pick
-                                </a-button>
-                            </p>
+
+
                             <p v-if="application.projectstarttime">
                             Project starttime: {{application.projectstarttime}}
                         </p>
                             </div>
+
 
 
 
@@ -432,30 +426,30 @@
                 this.test = checkedValues
             },
             //pick recommended
-            async Pick(name) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                Marketplace.pickrecommended(
-                    {
-                        job: this.$store.state.route.params.jobId,
-                        candidate: this.$route.params.candidateId,
-                        stage: 'active',
-                        selected: true,
-                        recruiter: this.$store.state.user.pk,
-                        candidatename: name
-                    },
-                    auth
-                )
-                this.picked = true
-                this.$router.push({
-                    name: 'job',
-                    params: { jobId: this.$store.state.route.params.jobId}
-                })
-
-
-            },
+            // async Pick(name) {
+            //     const auth = {
+            //         headers: {Authorization: 'JWT ' + this.$store.state.token}
+            //
+            //     }
+            //     Marketplace.pickrecommended(
+            //         {
+            //             job: this.$store.state.route.params.jobId,
+            //             candidate: this.$route.params.candidateId,
+            //             stage: 'active',
+            //             selected: true,
+            //             recruiter: this.$store.state.user.pk,
+            //             candidatename: name
+            //         },
+            //         auth
+            //     )
+            //     this.picked = true
+            //     this.$router.push({
+            //         name: 'job',
+            //         params: { jobId: this.$store.state.route.params.jobId}
+            //     })
+            //
+            //
+            // },
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)

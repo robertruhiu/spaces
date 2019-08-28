@@ -372,7 +372,7 @@
                                                                 <span style="margin-left: 15%;">
                                                                     <a style="margin-left: 15%;" v-if="record.project"
                                                                        @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:record.project.id,candidateId: record.profile,applicationId: record.action}})">
-                                                                        {{record.projectname.name}}
+                                                                        {{record.projectname}}
                                                                     </a>
 
                                                                     <a-button :size="small"
@@ -1148,7 +1148,7 @@
         },
         {
             title: 'report',
-            dataIndex: 'profile',
+            dataIndex: 'report',
             key: 'report',
 
         },
@@ -1170,12 +1170,7 @@
             key: 'notes',
 
         },
-        {
-            title: 'offer',
-            dataIndex: 'offer',
-            key: 'offer',
 
-        },
         {
             title: 'Stage',
             dataIndex: 'stage',
@@ -1195,7 +1190,6 @@
             key: 'action',
 
         },
-
         {
             title: 'Test_stage',
             dataIndex: 'test_stage',
@@ -1238,13 +1232,26 @@
             key: 'color',
 
         },
+        {
+            title: 'Offer Status',
+            dataIndex: 'offerstatus',
+            key: 'offerstatus',
+
+        },
+        {
+            title: 'Offer letter',
+            dataIndex: 'offerletter',
+            key: 'offerletter',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Candidate {
-        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status, start, end, color) {
+        constructor(id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status,
+                    start, end, color, report, offerstatus, offerletter) {
             this.key = id;
             this.name = name;
             this.paid = paid;
@@ -1259,6 +1266,9 @@
             this.interviewstart = start
             this.interviewend = end
             this.color = color
+            this.report = report
+            this.offerstatus = offerstatus
+            this.offerletter = offerletter
 
 
         }
@@ -1344,15 +1354,29 @@
                                     let stage = this.pickeddevs[j].stage
                                     let pk = this.pickeddevs[j].id
                                     let test_stage = this.pickeddevs[j].test_stage
-                                    let project = this.pickeddevs[j].project
-                                    let projectname = this.pickeddevs[j].project
+                                    let project = ''
+                                    let projectname = ''
+                                    if (test_stage) {
+                                        project = this.pickeddevs[j].project.id
+                                        projectname = this.pickeddevs[j].project.name
+
+                                    } else {
+                                        project = null
+                                        projectname = null
+
+                                    }
                                     let status = this.pickeddevs[j].interviewstatus
                                     let start = this.pickeddevs[j].interviewstarttime
                                     let end = this.pickeddevs[j].interviewendtime
                                     let color = this.pickeddevs[j].eventcolor
+                                    let report = this.pickeddevs[j].report
+                                    let offerstatus = this.pickeddevs[j].offerstatus
+                                    let offerletter = this.pickeddevs[j].offerletter
 
                                     let onepickeddev = new Candidate(
-                                        id, name, paid, verified_skills, user_id, stage, pk, test_stage, project, projectname, status, start, end, color
+                                        id, name, paid, verified_skills, user_id, stage, pk,
+                                        test_stage, project, projectname, status, start, end,
+                                        color, report, offerstatus, offerletter
                                     );
 
                                     this.candidateprofiles.push(onepickeddev)
@@ -1415,7 +1439,7 @@
 
 
         },
-        computed: {},
+
         methods: {
             moment,
             onEventClick(application_id, name, start, end, color) {
@@ -1480,12 +1504,31 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self =this;
                 MarketPlaceService.candidatemanager(application_id, {
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
                     interviewstatus: 'invite sent',
                     eventcolor: this.eventcolor
                 }, auth)
+                    .then(resp => {
+                        this.pickeddevs = []
+                        this.paiddevs = []
+                        this.alldevsprofile = []
+                        this.alldevs = []
+                        this.candidateprofiles = []
+                        this.unpaidapplicant = []
+                        this.paidapplicants = []
+                        this.interviewstage = []
+                        this.testingstage = []
+                        this.offerstage = []
+                        this.hirestage = []
+                        this.recentprojects = []
+                        self.Datarefresh()
+                        return resp
+
+                    })
+                    .catch()
                 this.interviewmodal = false
             },
             navigateTo(route) {
@@ -1497,12 +1540,30 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
                 if (id === 1) { // testing
                     for (let i = 0; i < this.paidapplicants.length; i++) {
                         if (this.paidapplicants[i].profile === profile) {
-                            this.paidapplicants[i].stage = 'test'
-                            this.testingstage.push(this.paidapplicants[i])
+
                             MarketPlaceService.candidatemanager(action, {stage: 'test'}, auth)
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
 
                         }
                     }
@@ -1510,19 +1571,52 @@
                 } else if (id === 2) { // interview
                     for (let i = 0; i < this.paidapplicants.length; i++) {
                         if (this.paidapplicants[i].profile === profile) {
-                            this.paidapplicants[i].stage = 'interview'
-                            this.interviewstage.push(this.paidapplicants[i])
                             MarketPlaceService.candidatemanager(action, {stage: 'interview'}, auth)
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
                         }
                     }
 
                 } else if (id === 3) { // reject
                     for (let i = 0; i < this.paidapplicants.length; i++) {
                         if (this.paidapplicants[i].profile === profile) {
-                            this.paidapplicants[i].stage = 'rejected'
+
                             MarketPlaceService.candidatemanager(action, {stage: 'rejected', paid: false}, auth)
-                            let index = this.paidapplicants.indexOf(this.paidapplicants[i]);
-                            this.paidapplicants.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -1535,14 +1629,30 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
                 if (id === 2) { // interview
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
-                            this.testingstage[i].stage = 'interview'
-                            this.interviewstage.push(this.testingstage[i])
                             MarketPlaceService.candidatemanager(action, {stage: 'interview'}, auth)
-                            let index = this.testingstage.indexOf(this.testingstage[i]);
-                            this.testingstage.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
 
                         }
                     }
@@ -1550,21 +1660,54 @@
                 } else if (id === 3) { // offer
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
-                            this.testingstage[i].stage = 'offer'
-                            this.offerstage.push(this.testingstage[i])
+
                             MarketPlaceService.candidatemanager(action, {stage: 'offer'}, auth)
-                            let index = this.testingstage.indexOf(this.testingstage[i]);
-                            this.testingstage.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
                         }
                     }
 
                 } else if (id === 4) { // reject
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
-                            this.testingstage[i].stage = 'rejected'
+
                             MarketPlaceService.candidatemanager(action, {stage: 'rejected', paid: false}, auth)
-                            let index = this.testingstage.indexOf(this.testingstage[i]);
-                            this.testingstage.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -1573,20 +1716,37 @@
 
             },
 
-            // handles movement on the testing stage keys 1,2,3
+            // handles movement on the interview stage keys 1,2,3
             handleInterviewClick(action, profile, id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
                 if (id === 1) { // coding
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
-                            this.interviewstage[i].stage = 'test'
-                            this.testingstage.push(this.interviewstage[i])
+
                             MarketPlaceService.candidatemanager(action, {stage: 'test'}, auth)
-                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
-                            this.interviewstage.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
 
                         }
                     }
@@ -1594,11 +1754,27 @@
                 } else if (id === 2) { // offer
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
-                            this.interviewstage[i].stage = 'offer'
-                            this.offerstage.push(this.interviewstage[i])
+
                             MarketPlaceService.candidatemanager(action, {stage: 'offer'}, auth)
-                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
-                            this.interviewstage.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -1607,8 +1783,25 @@
                         if (this.interviewstage[i].profile === profile) {
                             this.interviewstage[i].stage = 'rejected'
                             MarketPlaceService.candidatemanager(action, {stage: 'rejected', paid: false}, auth)
-                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
-                            this.interviewstage.splice(index, 1);
+                                .then(resp => {
+                                    this.pickeddevs = []
+                                    this.paiddevs = []
+                                    this.alldevsprofile = []
+                                    this.alldevs = []
+                                    this.candidateprofiles = []
+                                    this.unpaidapplicant = []
+                                    this.paidapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recentprojects = []
+                                    self.Datarefresh()
+                                    return resp
+
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -1623,14 +1816,13 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
 
                 for (let i = 0; i < this.unpaidapplicant.length; i++) {
                     if (this.unpaidapplicant[i].profile === candidate_id) {
-                        this.unpaidapplicant[i].stage = 'active'
-                        this.paidapplicants.push(this.unpaidapplicant[i])
+
                         this.active = true
-                        let index = this.unpaidapplicant.indexOf(this.unpaidapplicant[i]);
-                        this.unpaidapplicant.splice(index, 1);
+
                         if (this.unpaidapplicant.length === 0) {
                             this.paying = false
                         }
@@ -1639,6 +1831,24 @@
                             paid: true,
                             candidatename: name
                         }, auth)
+                            .then(resp => {
+                                this.pickeddevs = []
+                                this.paiddevs = []
+                                this.alldevsprofile = []
+                                this.alldevs = []
+                                this.candidateprofiles = []
+                                this.unpaidapplicant = []
+                                this.paidapplicants = []
+                                this.interviewstage = []
+                                this.testingstage = []
+                                this.offerstage = []
+                                this.hirestage = []
+                                this.recentprojects = []
+                                self.Datarefresh()
+                                return resp
+
+                            })
+                            .catch()
 
 
                     }
@@ -1663,6 +1873,116 @@
                     this.amount = 300
                 } else {
                     this.amount = 500
+                }
+
+            },
+            async Datarefresh() {
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                if (this.$store.state.user.pk) {
+                    MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
+                        .then(resp => {
+                                if (resp.data.length !== 0) {
+
+
+                                    for (let i = 0; i < resp.data.length; i++) {
+                                        this.pickeddevs.push(resp.data[i])
+                                    }
+                                    // create a profile for each candidate comparision and matching between user,profile and devrequest model
+                                    for (let j = 0; j < this.pickeddevs.length; j++) { // all user profiles
+
+                                        let verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
+                                        let paid = this.pickeddevs[j].paid
+                                        let id = this.pickeddevs[j].id
+                                        let user_id = this.pickeddevs[j].developer.user.id
+                                        let name = this.pickeddevs[j].developer.user.first_name
+                                        let stage = this.pickeddevs[j].stage
+                                        let pk = this.pickeddevs[j].id
+                                        let test_stage = this.pickeddevs[j].test_stage
+                                        let project = ''
+                                        let projectname = ''
+                                        if (test_stage) {
+                                            project = this.pickeddevs[j].project.id
+                                            projectname = this.pickeddevs[j].project.name
+
+                                        } else {
+                                            project = null
+                                            projectname = null
+
+                                        }
+                                        let status = this.pickeddevs[j].interviewstatus
+                                        let start = this.pickeddevs[j].interviewstarttime
+                                        let end = this.pickeddevs[j].interviewendtime
+                                        let color = this.pickeddevs[j].eventcolor
+                                        let report = this.pickeddevs[j].report
+                                        let offerstatus = this.pickeddevs[j].offerstatus
+                                        let offerletter = this.pickeddevs[j].offerletter
+
+                                        let onepickeddev = new Candidate(
+                                            id, name, paid, verified_skills, user_id, stage, pk,
+                                            test_stage, project, projectname, status, start, end,
+                                            color, report, offerstatus, offerletter
+                                        );
+
+                                        this.candidateprofiles.push(onepickeddev)
+
+                                    }
+
+
+                                    // candidates sorting
+                                    for (let i = 0; i < this.candidateprofiles.length; i++) {
+                                        if (this.candidateprofiles[i].paid === true) {
+                                            this.paidapplicants.push(this.candidateprofiles[i]);
+
+
+                                        } else {
+                                            this.unpaidapplicant.push(this.candidateprofiles[i])
+
+
+                                        }
+                                        // second part of sorting conditional coz the fist condition met
+                                        if (this.candidateprofiles[i].stage === 'interview') {
+                                            this.interviewstage.push(this.candidateprofiles[i])
+
+                                        } else if (this.candidateprofiles[i].stage === 'test') {
+                                            this.testingstage.push(this.candidateprofiles[i])
+
+                                        } else if (this.candidateprofiles[i].stage === 'offer') {
+                                            this.offerstage.push(this.candidateprofiles[i])
+
+
+                                        } else if (this.candidateprofiles[i].stage === 'hired') {
+                                            this.hirestage.push(this.candidateprofiles[i])
+
+                                        }
+
+
+                                    }
+                                    if (this.paidapplicants.length === 0) {
+                                        this.active = false
+                                    } else {
+                                        this.active = true
+                                    }
+                                    if (this.unpaidapplicant.length === 0) {
+                                        this.paying = false
+                                    } else {
+                                        this.paying = true
+                                    }
+
+                                }
+
+
+                            }
+                        )
+                        .catch();
+
+
+                    // recent projects
+                    this.recentprojects = (await Projectsservice.myrecentprojects(this.$store.state.user.pk, auth)).data
+
                 }
 
             }

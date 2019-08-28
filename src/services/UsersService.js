@@ -34,5 +34,6 @@ export default {
   },
   update (user_id,currentUserProfile,auth) {
     return Api().patch(`updater/${user_id} `,currentUserProfile,auth)
-  }
+  },
+
 }

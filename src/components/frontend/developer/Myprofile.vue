@@ -7,7 +7,7 @@
                 <DevHeader/>
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',marginTop:'1%',
                 marginLeft: '1%',marginRight:'1%' }">
-                <a-form :form="form">
+                    <a-form :form="form">
                         <a-row :gutter="16">
                             <a-col :span="12">
 
@@ -65,22 +65,22 @@
                                         >
                                             <a-select
 
-                                                          placeholder="Select a option and change input text above"
-                                                          v-model="currentUserProfile.availabilty"
-                                                >
-                                                    <a-select-option value="contract">
-                                                        contract
-                                                    </a-select-option>
-                                                    <a-select-option value="fulltime">
-                                                        fulltime
-                                                    </a-select-option>
-                                                    <a-select-option value="parttime">
-                                                        part time
-                                                    </a-select-option>
-                                                    <a-select-option value="remote">
-                                                        remote
-                                                    </a-select-option>
-                                                </a-select>
+                                                    placeholder="Select a option and change input text above"
+                                                    v-model="currentUserProfile.availabilty"
+                                            >
+                                                <a-select-option value="contract">
+                                                    contract
+                                                </a-select-option>
+                                                <a-select-option value="fulltime">
+                                                    fulltime
+                                                </a-select-option>
+                                                <a-select-option value="parttime">
+                                                    part time
+                                                </a-select-option>
+                                                <a-select-option value="remote">
+                                                    remote
+                                                </a-select-option>
+                                            </a-select>
                                         </a-form-item>
 
                                     </a-col>
@@ -93,60 +93,66 @@
                             <a-col :span="12" style="padding: 2% 4%">
                                 <a-col :span="24">
                                     <a-form-item
-                                label="What are your tech skills "
-                                :label-col="{ span: 24 }"
-                                :wrapper-col="{ span:  24}"
-                        >
-                            <template v-for="(tag, index) in tags">
-                                <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                                    <a-tag :key="tag"
-                                           :afterClose="() => handleClose(tag)" color="#2db7f5">
-                                        {{`${tag.slice(0, 20)}...`}}
-                                    </a-tag>
-                                </a-tooltip>
-                                <a-tag v-else :key="tag" :closable="index >= 0"
-                                       :afterClose="() => handleClose(tag)" color="#2db7f5">
-                                    {{tag}}
-                                </a-tag>
-                            </template>
-                            <a-input
-                                    v-if="inputVisible"
-                                    ref="input"
-                                    type="text"
-                                    size="small"
-                                    :style="{ width: '78px' }"
-                                    :value="inputValue"
-                                    @change="handleInputChange"
-                                    @blur="handleInputConfirm"
-                                    @keyup.enter="handleInputConfirm"
-                            />
-                            <a-tag v-else @click="showInput"
-                                   style="background: #fff; borderStyle: dashed;">
-                                <a-icon type="plus"/>
-                                New Tag
-                            </a-tag>
-                        </a-form-item>
+                                            label="What are your tech skills "
+                                            :label-col="{ span: 24 }"
+                                            :wrapper-col="{ span:  24}"
+                                    >
+                                        <template v-for="(tag, index) in tags">
+                                            <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                                                <a-tag :key="tag"
+                                                       :afterClose="() => handleClose(tag)" color="#2db7f5">
+                                                    {{`${tag.slice(0, 20)}...`}}
+                                                </a-tag>
+                                            </a-tooltip>
+                                            <a-tag v-else :key="tag" :closable="index >= 0"
+                                                   :afterClose="() => handleClose(tag)" color="#2db7f5">
+                                                {{tag}}
+                                            </a-tag>
+                                        </template>
+                                        <a-input
+                                                v-if="inputVisible"
+                                                ref="input"
+                                                type="text"
+                                                size="small"
+                                                :style="{ width: '78px' }"
+                                                :value="inputValue"
+                                                @change="handleInputChange"
+                                                @blur="handleInputConfirm"
+                                                @keyup.enter="handleInputConfirm"
+                                        />
+                                        <a-tag v-else @click="showInput"
+                                               style="background: #fff; borderStyle: dashed;">
+                                            <a-icon type="plus"/>
+                                            New Tag
+                                        </a-tag>
+                                    </a-form-item>
                                 </a-col>
                                 <a-col :span="24">
-                                        <a-form-item
-                                                label="Bio"
-                                                :label-col="{ span: 24 }"
-                                                :wrapper-col="{ span:  24}"
-                                        >
-                                            <a-textarea name="bio"
-                                                        maxlength="300"
-                                                        v-model="currentUserProfile.about"
-                                                        placeholder="Tell us something about yourself"
-                                                        :rows="6"/>
+                                    <a-form-item
+                                            label="Bio"
+                                            :label-col="{ span: 24 }"
+                                            :wrapper-col="{ span:  24}"
+                                    >
+                                        <a-textarea name="bio"
+                                                    maxlength="300"
+                                                    v-model="currentUserProfile.about"
+                                                    placeholder="Tell us something about yourself"
+                                                    :rows="6"/>
 
-                                        </a-form-item>
+                                    </a-form-item>
 
-                                    </a-col>
+                                </a-col>
 
                             </a-col>
                         </a-row>
-                        <div style="text-align: center">
+                        <div style="text-align: center" v-if="loading === false">
                             <a-button @click="Save" type="primary" style="width: 15rem">Save</a-button>
+
+                        </div>
+                        <div style="text-align: center" v-else>
+                             <div style="text-align: center;">
+                                <a-spin/>
+                            </div>
 
                         </div>
 
@@ -173,6 +179,7 @@
         data() {
 
             return {
+                loading: false,
                 currentUserProfile: null,
                 tags: [],
                 inputVisible: false,
@@ -201,7 +208,7 @@
 
 
         },
-        methods :{
+        methods: {
             Save() {
 
                 const auth = {
@@ -216,6 +223,8 @@
                     }
                 }
                 this.currentUserProfile.skills = this.tags.join(',')
+                this.currentUserProfile.user = this.$store.state.user.pk
+                this.loading = true
 
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {

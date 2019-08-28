@@ -101,6 +101,43 @@
 
 
                                 </a-tab-pane>
+                                <a-tab-pane key="4">
+                                    <span slot="tab">
+                                        <a-icon type="solution"/>
+                                        Personal portfolio
+                                    </span>
+                                    <div style="padding:0 2%">
+                                        <div v-if="portfolio.length>0">
+                                            <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                             v-for="item in portfolio" v-bind:key="item.id">
+                                            <p style="font-weight: 700">{{item.title}}</p>
+                                            <p>
+                                                Tools used:
+                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                       :key="tag">
+                                                    {{tag}}
+                                                </a-tag>
+
+                                            </p>
+                                            <p>{{item.description}}
+                                            </p>
+                                            <a :href=" item.demo" target="_blank">view project</a>
+
+                                        </div>
+                                        </div>
+                                        <div v-else>
+                                            <p>You can self test yourself under get verified and build a project
+                                                or await a recruiter to asign you one.</p>
+                                            <p>More projects and quizzes you have done will make your profile more appealing to them</p>
+                                        </div>
+
+
+
+
+                                    </div>
+
+
+                                </a-tab-pane>
 
                                 <a-tab-pane key="3">
                                     <span slot="tab">

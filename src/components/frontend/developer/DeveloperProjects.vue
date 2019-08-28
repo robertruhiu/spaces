@@ -140,9 +140,10 @@
                     <a-col :span="10" style="padding: 0 1%;">
                         <div style="border:1px solid #e8e8e8;;padding: 2%;">
                             <div style="margin-left: 5%;margin-bottom: 2%">
+
                                 <p>Accept Project (This will allow you to set time and get access to our
                                     IDE</p>
-                                <a-button type="primary" @click="Accept(project.id,project)">Accept</a-button>
+                                <a-button type="primary" @click="Accept(project.id,project,pickedframework)">Accept</a-button>
                                 <a-button type="primary" style="margin-left: 1%" ghost
                                           @click="SelfverifyProject(pickedframework)">
                                     <a-icon type="redo"/>
@@ -237,6 +238,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
+
                 this.visible = false
                 this.projectchoice = true
                 this.pickedframework = framework
@@ -248,16 +250,18 @@
 
 
             },
-            Accept(project, projectobject) {
+            Accept(project, projectobject,pickedframework) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
+                console.log(pickedframework)
                 Projects.selfassessprojectcreate(
                     {
                         stage: 'invite_accepted',
                         candidate: this.$store.state.user.pk,
-                        project: project
+                        project: project,
+                        frameworktested:pickedframework
                     }
                     , auth)
                     .then(resp => {

@@ -94,7 +94,7 @@
                             <span style="color: #f5222d;" v-show="errors.has('password_confirmation')"
                                   class="help is-danger">{{ errors.first('password_confirmation') }}</span>
                         </a-form-item>
-                        <a-form-item>
+                        <a-form-item v-if="loading === false">
 
 
                             <a-button @click="register"
@@ -103,6 +103,16 @@
                             >
                                 Register
                             </a-button>
+
+                        </a-form-item>
+                        <a-form-item v-else >
+
+
+
+                            <div style="text-align: center;">
+                                <a-spin/>
+                            </div>
+
 
                         </a-form-item>
                     </a-form>
@@ -362,6 +372,7 @@
                                     </a-col>
                                 </a-row>
                             </tab-content>
+                            {{currentUserProfile}}
 
                         </form-wizard>
 
@@ -546,6 +557,9 @@
         },
         data() {
             return {
+                loading:false,
+                savedevdetails:false,
+                saverecruiterdetails:false,
                 usertype: null,
                 firstname: '',
                 lastname: '',
@@ -601,6 +615,7 @@
             register() {
                 this.$validator.validateAll().then((values) => {
                     if (values) {
+                        this.loading = true
 
                         AuthService.register({
                             first_name: this.firstname,
@@ -635,6 +650,7 @@
 
                     }
                     this.currentUserProfile.stage ='complete'
+                    this.currentUserProfile.user = this.$store.state.user.pk
                     this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                     this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                     UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -721,7 +737,7 @@
             },
 
             handleInputConfirm() {
-                const inputValue = this.inputValue
+                const inputValue = this.inputValue.toLowerCase()
                 let tags = this.tags
                 if (inputValue && tags.indexOf(inputValue) === -1) {
                     tags = [...tags, inputValue]
