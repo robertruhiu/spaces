@@ -20,18 +20,25 @@ export default {
   talentuser (id) {
     return Api().get(`gettalent/${id} `)
   },
-  experience (id,auth) {
-    return Api().get(`getexperience/${id} `,auth)
+  experience (candidate_id,auth) {
+    return Api().get(`getexperience/${candidate_id} `,auth)
   },
-  portfolio (id,auth) {
-    return Api().get(`getportofolio/${id} `,auth)
+  newexperience (Experience,auth) {
+    return Api().post('newexperience ',Experience,auth)
   },
-  getallexperiences () {
-    return Api().get(`getallexperience`,)
+  updateexperience (experience_id,Experience,auth) {
+    return Api().patch(`updateexperience/${experience_id} `,Experience,auth)
   },
-  getallportfolios () {
-    return Api().get(`getallportofolio`,)
+  portfolio (portfolio_id,auth) {
+    return Api().get(`getportofolio/${portfolio_id} `,auth)
   },
+  newportfolio (Portfolio,auth) {
+    return Api().post('newportfolio ',Portfolio,auth)
+  },
+  updateportfolio (portfolio_id,Portfolio,auth) {
+    return Api().patch(`updateportfolio/${portfolio_id} `,Portfolio,auth)
+  },
+
   update (user_id,currentUserProfile,auth) {
     return Api().patch(`updater/${user_id} `,currentUserProfile,auth)
   },

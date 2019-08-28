@@ -39,6 +39,7 @@
 
                     </a-col>
                     <a-col :span="10" style="padding: 0 1%;">
+
                         <div style="border:1px solid #e8e8e8;;padding: 2%;">
                             <div style="margin-left: 5%;margin-bottom: 2%"
                                  v-if="application.test_stage==='invite_sent'">
@@ -124,7 +125,8 @@
                 report: [],
                 server_url: "http://codelnide.codeln.com:8080/dashboard/#/ide/che/Elohor-Thomas",
                 projectstarttime: null,
-                timeseterror:false
+                timeseterror: false,
+                type: ''
             }
         },
         components: {
@@ -140,6 +142,8 @@
             if (this.$store.state.user.pk) {
 
                 const projectId = this.$store.state.route.params.projectId;
+                this.type = this.$store.state.route.params.type
+                console.log(this.type)
                 this.project = (await Projects.projectdetails(projectId, auth)).data;
                 if (this.$store.state.route.params.type === 'job') {
                     this.application = (await Marketplace.jobmanagerview(this.$store.state.route.params.applicationId, auth)).data
@@ -193,7 +197,14 @@
 
                 };
                 this.application.test_stage = 'accepted'
-                Marketplace.pickreject(application_id, {test_stage: 'accepted'}, auth)
+                if (this.type === 'job') {
+                    Marketplace.pickreject(application_id, {test_stage: 'accepted'}, auth)
+
+                } else {
+                    Marketplace.candidatemanager(application_id, {test_stage: 'accepted'}, auth)
+
+                }
+
 
             },
             async Settime(application_id) {
@@ -203,11 +214,21 @@
                 };
                 if (this.projectstarttime !== null) {
                     this.application.test_stage = 'timeset'
-                    Marketplace.pickreject(application_id, {
-                        test_stage: 'timeset',
-                        projectstarttime: this.projectstarttime
-                    }, auth)
-                }else {
+                    if (this.type === 'job') {
+                        Marketplace.pickreject(application_id, {
+                            test_stage: 'timeset',
+                            projectstarttime: this.projectstarttime
+                        }, auth)
+
+                    } else {
+                        Marketplace.candidatemanager(application_id, {
+                            test_stage: 'timeset',
+                            projectstarttime: this.projectstarttime
+                        }, auth)
+
+                    }
+
+                } else {
                     this.timeseterror = true
                 }
 
@@ -218,7 +239,14 @@
 
                 };
                 this.application.test_stage = 'complete'
-                Marketplace.pickreject(application_id, {test_stage: 'complete'}, auth)
+                if (this.type === 'job') {
+                    Marketplace.pickreject(application_id, {test_stage: 'complete'}, auth)
+
+                } else {
+                    Marketplace.candidatemanager(application_id, {test_stage: 'complete'}, auth)
+
+                }
+
             },
 
             onChange(value, dateString) {

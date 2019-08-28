@@ -40,7 +40,7 @@
                                                 {{application.stage}}
                                             </a-tag>
                                                 <a-button type="primary" size="small"
-                                                          @click="Withdrawapplication(application.key)">
+                                                          @click="Withdrawapplication(application.key,application.type)">
                                             withdraw
                                         </a-button>
                                             </span>
@@ -85,10 +85,10 @@
 
 
                                             </div>
-                                            <a-button type="primary" size="small"
-                                                      @click="Withdrawapplicationtest(application.key)">
+                                            <a
+                                                    @click="Withdrawapplicationtest(application.key,application.type)">
                                                 withdraw
-                                            </a-button>
+                                            </a>
 
                                         </div>
 
@@ -158,7 +158,7 @@
                                             </a-tag>
                                         </div>
                                         <a-button type="primary" size="small"
-                                                  @click="Withdrawapplicationoffer(application.key)">
+                                                  @click="Withdrawapplicationoffer(application.key,application.type)">
                                             withdraw
                                         </a-button>
 
@@ -184,7 +184,7 @@
                         <p>Interview endtime {{currentinterview.end}}</p>
                         <template slot="footer">
                             <a-button key="submit" type="danger" ghost :loading="loading"
-                                      @click="Withdrawapplicationinterview(currentinterview.key)">
+                                      @click="Withdrawapplicationinterview(currentinterview.key,currentinterview.type)">
                                 reject invite
                             </a-button>
                             <a-button
@@ -325,99 +325,232 @@
             },
 
             // set of withdraws per stage
-            Withdrawapplication(application) {
+            Withdrawapplication(application, type) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                Marketplace.pickreject(application, {
-                    stage: 'rejected',
-                    selected: false,
-                }, auth)
-                    .then(resp => {
-                            for (let i = 0; i < this.active.length; i++) {
-                                if (this.active[i].key === application) {
-                                    this.active[i].stage = 'withdrawn'
-                                    let index = this.active.indexOf(this.active[i]);
-                                    this.active.splice(index, 1);
+                if (type === 'job') {
+                    Marketplace.pickreject(application, {
+                        stage: 'rejected',
+                        selected: false,
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.active.length; i++) {
+                                    if (this.active[i].key === application) {
+                                        this.active[i].stage = 'withdrawn'
+                                        let index = this.active.indexOf(this.active[i]);
+                                        this.active.splice(index, 1);
+                                    }
                                 }
+                                return resp
+
                             }
-                            return resp
+                        )
+                        .catch()
 
-                        }
-                    )
-                    .catch()
-            },
-            Withdrawapplicationtest(application) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                };
-                Marketplace.pickreject(application, {
-                    stage: 'rejected',
-                    selected: false,
-                }, auth)
-                    .then(resp => {
-                            for (let i = 0; i < this.testing.length; i++) {
-                                if (this.testing[i].key === application) {
-                                    this.testing[i].stage = 'withdrawn'
-                                    let index = this.testing.indexOf(this.testing[i]);
-                                    this.testing.splice(index, 1);
+                } else {
+                    Marketplace.candidatemanager(application, {
+                        stage: 'rejected',
+                        interviewstarttime: null,
+                        interviewendtime: null,
+                        test_stage: null,
+                        project: null,
+                        report: null,
+                        interviewstatus: null,
+                        projectstarttime: null,
+                        offerstatus: null,
+                        offerletter: null,
+                        demolink: null
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.active.length; i++) {
+                                    if (this.active[i].key === application) {
+                                        this.active[i].stage = 'withdrawn'
+                                        let index = this.active.indexOf(this.active[i]);
+                                        this.active.splice(index, 1);
+                                    }
                                 }
+                                return resp
+
                             }
-                            return resp
+                        )
+                        .catch()
 
-                        }
-                    )
-                    .catch()
-
-            },
-            Withdrawapplicationinterview(application) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                };
-                Marketplace.pickreject(application, {
-                    stage: 'rejected',
-                    selected: false,
-                }, auth)
-                    .then(resp => {
-                            for (let i = 0; i < this.interview.length; i++) {
-                                if (this.interview[i].key === application) {
-                                    this.interview[i].stage = 'withdrawn'
-                                    let index = this.interview.indexOf(this.interview[i]);
-                                    this.interview.splice(index, 1);
-                                }
-                            }
-                            return resp
-
-                        }
-                    )
-                    .catch()
+                }
 
             },
-            Withdrawapplicationoffer(application) {
+
+            Withdrawapplicationtest(application, type) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                Marketplace.pickreject(application, {
-                    stage: 'rejected',
-                    selected: false,
-                }, auth)
-                    .then(resp => {
-                            for (let i = 0; i < this.offers.length; i++) {
-                                if (this.offers[i].key === application) {
-                                    this.offers[i].stage = 'withdrawn'
-                                    let index = this.offers.indexOf(this.offers[i]);
-                                    this.offers.splice(index, 1);
+                if (type === 'job') {
+                    Marketplace.pickreject(application, {
+                        stage: 'rejected',
+                        selected: false,
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.testing.length; i++) {
+                                    if (this.testing[i].key === application) {
+                                        this.testing[i].stage = 'withdrawn'
+                                        let index = this.testing.indexOf(this.testing[i]);
+                                        this.testing.splice(index, 1);
+                                    }
                                 }
-                            }
-                            return resp
+                                return resp
 
-                        }
-                    )
-                    .catch()
+                            }
+                        )
+                        .catch()
+
+                } else {
+                    Marketplace.candidatemanager(application, {
+                        stage: 'rejected',
+                        interviewstarttime: null,
+                        interviewendtime: null,
+                        test_stage: null,
+                        project: null,
+                        report: null,
+                        interviewstatus: null,
+                        projectstarttime: null,
+                        offerstatus: null,
+                        offerletter: null,
+                        demolink: null
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.testing.length; i++) {
+                                    if (this.testing[i].key === application) {
+                                        this.testing[i].stage = 'withdrawn'
+                                        let index = this.testing.indexOf(this.testing[i]);
+                                        this.testing.splice(index, 1);
+                                    }
+                                }
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                }
+
+
+            },
+
+            Withdrawapplicationinterview(application, type) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                if (type === 'job') {
+                    Marketplace.pickreject(application, {
+                        stage: 'rejected',
+                        selected: false,
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.interview.length; i++) {
+                                    if (this.interview[i].key === application) {
+                                        this.interview[i].stage = 'withdrawn'
+                                        let index = this.interview.indexOf(this.interview[i]);
+                                        this.interview.splice(index, 1);
+                                    }
+                                }
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                } else {
+                    Marketplace.candidatemanager(application, {
+                        stage: 'rejected',
+                        interviewstarttime: null,
+                        interviewendtime: null,
+                        test_stage: null,
+                        project: null,
+                        report: null,
+                        interviewstatus: null,
+                        projectstarttime: null,
+                        offerstatus: null,
+                        offerletter: null,
+                        demolink: null
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.interview.length; i++) {
+                                    if (this.interview[i].key === application) {
+                                        this.interview[i].stage = 'withdrawn'
+                                        let index = this.interview.indexOf(this.interview[i]);
+                                        this.interview.splice(index, 1);
+                                    }
+                                }
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                }
+
+
+            },
+
+            Withdrawapplicationoffer(application, type) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                if (type === 'job') {
+                    Marketplace.pickreject(application, {
+                        stage: 'rejected',
+                        selected: false,
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.offers.length; i++) {
+                                    if (this.offers[i].key === application) {
+                                        this.offers[i].stage = 'withdrawn'
+                                        let index = this.offers.indexOf(this.offers[i]);
+                                        this.offers.splice(index, 1);
+                                    }
+                                }
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                } else {
+                    Marketplace.candidatemanager(application, {
+                        stage: 'rejected',
+                        interviewstarttime: null,
+                        interviewendtime: null,
+                        test_stage: null,
+                        project: null,
+                        report: null,
+                        interviewstatus: null,
+                        projectstarttime: null,
+                        offerstatus: null,
+                        offerletter: null,
+                        demolink: null
+
+
+                    }, auth)
+                        .then(resp => {
+                                for (let i = 0; i < this.offers.length; i++) {
+                                    if (this.offers[i].key === application) {
+                                        this.offers[i].stage = 'withdrawn'
+                                        let index = this.offers.indexOf(this.offers[i]);
+                                        this.offers.splice(index, 1);
+                                    }
+                                }
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                }
+
 
             }
         }

@@ -119,6 +119,9 @@
                                                             <a-tag v-else-if="record.stage === 'offer'"
                                                                    color="#03A9F4"
                                                                    style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
+                                                            <a-tag v-else-if="record.stage === 'rejected'"
+                                                                   color="#e04a6d"
+                                                                   style="text-align: center;width: 4rem;">withdrew</a-tag>
                                                         </span>
                                                                     </template>
 

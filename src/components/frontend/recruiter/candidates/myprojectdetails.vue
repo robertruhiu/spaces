@@ -149,7 +149,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                Marketplace.candidatemanager(application, {test_stage: 'invite sent', project: project,name:name}, auth)
+                Marketplace.candidatemanager(application, {test_stage: 'invite_sent', project: project,name:name}, auth)
                 this.$router.push({
                     name: 'mycandidates',
 
