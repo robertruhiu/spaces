@@ -240,6 +240,8 @@
 
 
                 </a-row>
+
+                <!--Create project--->
                 <a-modal
                         title="New portfolio project"
                         v-model="createproject"
@@ -262,8 +264,11 @@
                                 :wrapper-col="{ span: 24 }"
                         >
                             <a-input v-model="projecttitle"
+                                     v-validate.disable="'required'" name="project_title"
 
                             />
+                            <span style="color: #f5222d;" v-show="errors.has('project_title')"
+                                  class="help is-danger">{{ errors.first('project_title') }}</span>
                         </a-form-item>
                         <a-form-item
                                 label="Demo link"
@@ -271,8 +276,12 @@
                                 :wrapper-col="{ span: 24 }"
                         >
                             <a-input v-model="projectdemo"
+                                     v-validate.disable="{required: true,url: {require_protocol: true }}"
+                                     name="project_demo"
 
                             />
+                            <span style="color: #f5222d;" v-show="errors.has('project_demo')"
+                                  class="help is-danger">{{ errors.first('project_demo') }}</span>
                         </a-form-item>
                         <a-form-item
                                 label="Repository link"
@@ -280,8 +289,12 @@
                                 :wrapper-col="{ span: 24 }"
                         >
                             <a-input v-model="projectrepo"
+                                     v-validate.disable="{required: true,url: {require_protocol: true }}"
+                                     name="project_repo"
 
                             />
+                            <span style="color: #f5222d;" v-show="errors.has('project_repo')"
+                                  class="help is-danger">{{ errors.first('project_repo') }}</span>
                         </a-form-item>
 
                         <a-form-item
@@ -324,7 +337,11 @@
                                 :label-col="{ span: 24 }"
                                 :wrapper-col="{ span: 24 }"
                         >
-                            <a-textarea placeholder="About the project" :rows="4" v-model="projectdescription"/>
+                            <a-textarea maxlength="400" placeholder="About the project" :rows="4"
+                                        v-model="projectdescription"
+                                        v-validate.disable="'required'" name="project_description"/>
+                            <span style="color: #f5222d;" v-show="errors.has('project_description')"
+                                  class="help is-danger">{{ errors.first('project_description') }}</span>
                         </a-form-item>
 
 
@@ -332,12 +349,16 @@
 
                 </a-modal>
 
+                <!--edit project--->
                 <a-modal
-                        title="editproject"
+                        title="Edit project"
                         v-model="editproject"
 
                 >
                     <template slot="footer">
+                        <a-button key="delete" type="danger" ghost @click="DeleteProject(currentproject.key)">
+                            Delete
+                        </a-button>
 
                         <a-button key="submit" type="primary" :loading="loading" @click="UpdateProject">
                             Save
@@ -354,8 +375,11 @@
                                 :wrapper-col="{ span: 24 }"
                         >
                             <a-input v-model="currentproject.title"
+                                     v-validate.disable="'required'" name="project_title"
 
                             />
+                            <span style="color: #f5222d;" v-show="errors.has('project_title')"
+                                  class="help is-danger">{{ errors.first('project_title') }}</span>
 
                         </a-form-item>
                         <a-form-item
@@ -364,8 +388,12 @@
                                 :wrapper-col="{ span: 24 }"
                         >
                             <a-input v-model="currentproject.demo"
+                                     v-validate.disable="{required: true,url: {require_protocol: true }}"
+                                     name="project_demo"
 
                             />
+                            <span style="color: #f5222d;" v-show="errors.has('project_demo')"
+                                  class="help is-danger">{{ errors.first('project_demo') }}</span>
                         </a-form-item>
                         <a-form-item
                                 label="Repository link"
@@ -373,8 +401,12 @@
                                 :wrapper-col="{ span: 24 }"
                         >
                             <a-input v-model="currentproject.repo"
+                                     v-validate.disable="{required: true,url: {require_protocol: true }}"
+                                     name="project_repo"
 
                             />
+                            <span style="color: #f5222d;" v-show="errors.has('project_repo')"
+                                  class="help is-danger">{{ errors.first('project_repo') }}</span>
 
                         </a-form-item>
                         <a-form-item
@@ -419,35 +451,297 @@
                                 :label-col="{ span: 24 }"
                                 :wrapper-col="{ span: 24 }"
                         >
-                            <a-textarea placeholder="About the project" :rows="4" v-model="currentproject.description"/>
+                            <a-textarea maxlength="400" placeholder="About the project" :rows="4"
+                                        v-model="currentproject.description"
+                                        v-validate.disable="'required'" name="project_description"/>
+                            <span style="color: #f5222d;" v-show="errors.has('project_description')"
+                                  class="help is-danger">{{ errors.first('project_description') }}</span>
                         </a-form-item>
 
 
                     </a-form>
                 </a-modal>
 
+                <!--Create experience--->
                 <a-modal
-                        title="createexperience"
+                        title="New Work Experience"
                         v-model="createexperience"
-                        @ok="handleOk"
+                        style="top: 5px"
+
                 >
                     <template slot="footer">
 
-                        <a-button key="submit" type="primary" :loading="loading" @click="handleOk">
+                        <a-button key="submit" type="primary" @click="SavenewExperience">
                             Save
                         </a-button>
                     </template>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <a-form
+                            :form="form"
+
+                    >
+                        <a-form-item
+                                label="Job title"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+                            <a-input v-model="experiencetitle"
+                                     v-validate.disable="'required'"
+                                     name="experiencetitle"
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('experience_title')"
+                                  class="help is-danger">{{ errors.first('experience_title') }}</span>
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Company"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+                            <a-input v-model="experiencecompany"
+                                     v-validate.disable="'required'"
+                                     name="experience_company"
+
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('experience_company')"
+                                  class="help is-danger">{{ errors.first('experience_company') }}</span>
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Duration in months"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+
+                            <a-input-number :min="1" :max="200" v-model="experienceduration"
+                                            v-validate.disable="'required'"
+                                            name="experience_duration"
+
+                            />
+                            months
+                            <span style="color: #f5222d;" v-show="errors.has('experience_duration')"
+                                  class="help is-danger">{{ errors.first('experience_duration') }}</span>
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Location"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+
+                            <country-select
+                                    name="location"
+                                    v-model="experiencelocation"
+                                    class="ant-input"
+                                    v-validate.disable="'required'"
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('location')"
+                                  class="help is-danger">{{ errors.first('location') }}</span>
+                        </a-form-item>
+
+
+                        <a-form-item
+                                label="Technologies used "
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span:  24}"
+                        >
+                            <template v-for="(tag, index) in experiencetags">
+                                <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                                    <a-tag :key="tag"
+                                           :afterClose="() => handleClose1(tag)" color="#2db7f5">
+                                        {{`${tag.slice(0, 20)}...`}}
+                                    </a-tag>
+                                </a-tooltip>
+                                <a-tag v-else :key="tag" :closable="index >= 0"
+                                       :afterClose="() => handleClose1(tag)" color="#2db7f5">
+                                    {{tag}}
+                                </a-tag>
+                            </template>
+                            <a-input
+                                    v-if="inputVisible1"
+                                    ref="input"
+                                    type="text"
+                                    size="small"
+                                    :style="{ width: '78px' }"
+                                    :value="inputValue1"
+                                    @change="handleInputChange1"
+                                    @blur="handleInputConfirm1"
+                                    @keyup.enter="handleInputConfirm1"
+                            />
+                            <a-tag v-else @click="showInput1"
+                                   style="background: #fff; borderStyle: dashed;">
+                                <a-icon type="plus"/>
+                                New Tag
+                            </a-tag>
+
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Work description"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+                            <a-textarea maxlength="400"
+                                        placeholder="A description of your role and responsibilites(400 char max)"
+                                        :rows="4"
+                                        v-model="experiencedescription"
+                                        v-validate.disable="'required'"
+                                        name="experiencedescription"
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('experience_description')"
+                                  class="help is-danger">{{ errors.first('experience_description') }}</span>
+
+                        </a-form-item>
+
+
+                    </a-form>
+
                 </a-modal>
 
+                <!--edit experience--->
                 <a-modal
-                        title="editexperience"
+                        title="Edit work experience"
                         v-model="editexperience"
-                        @ok="handleOk"
+                        style="top: 5px"
+
                 >
-                    {{currentexperience}}
+                    <template slot="footer">
+                        <a-button key="delete" type="danger" ghost @click="DeleteExperience(currentexperience.key)">
+                            Delete
+                        </a-button>
+
+                        <a-button key="submit" type="primary" @click="UpdateExperience">
+                            Save
+                        </a-button>
+                    </template>
+                    <a-form
+                            :form="form"
+
+                    >
+                        <a-form-item
+                                label="Job title"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+                            <a-input v-model="currentexperience.title"
+                                     v-validate.disable="'required'"
+                                     name="experience_title"
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('experience_title')"
+                                  class="help is-danger">{{ errors.first('experience_title') }}</span>
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Company"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+                            <a-input v-model="currentexperience.company"
+                                     v-validate.disable="'required'"
+                                     name="experience_company"
+
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('experience_company')"
+                                  class="help is-danger">{{ errors.first('experience_company') }}</span>
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Duration in months"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+
+                            <a-input-number :min="1" :max="200" v-model="currentexperience.duration"
+                                            v-validate.disable="'required'"
+                                            name="experience_duration"
+
+                            />
+                            months
+                            <span style="color: #f5222d;" v-show="errors.has('experience_duration')"
+                                  class="help is-danger">{{ errors.first('experience_duration') }}</span>
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Location"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+
+                            <country-select
+                                    name="location"
+                                    v-model="currentexperience.location"
+                                    class="ant-input"
+                                    v-validate.disable="'required'"
+
+                            />
+                            current:{{currentexperience.location}}
+                            <span style="color: #f5222d;" v-show="errors.has('location')"
+                                  class="help is-danger">{{ errors.first('location') }}</span>
+                        </a-form-item>
+
+
+                        <a-form-item
+                                label="Technologies used "
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span:  24}"
+                        >
+                            <template v-for="(tag, index) in experiencetags">
+                                <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                                    <a-tag :key="tag"
+                                           :afterClose="() => handleClose1(tag)" color="#2db7f5">
+                                        {{`${tag.slice(0, 20)}...`}}
+                                    </a-tag>
+                                </a-tooltip>
+                                <a-tag v-else :key="tag" :closable="index >= 0"
+                                       :afterClose="() => handleClose1(tag)" color="#2db7f5">
+                                    {{tag}}
+                                </a-tag>
+                            </template>
+                            <a-input
+                                    v-if="inputVisible1"
+                                    ref="input"
+                                    type="text"
+                                    size="small"
+                                    :style="{ width: '78px' }"
+                                    :value="inputValue1"
+                                    @change="handleInputChange1"
+                                    @blur="handleInputConfirm1"
+                                    @keyup.enter="handleInputConfirm1"
+                            />
+                            <a-tag v-else @click="showInput1"
+                                   style="background: #fff; borderStyle: dashed;">
+                                <a-icon type="plus"/>
+                                New Tag
+                            </a-tag>
+
+
+                        </a-form-item>
+                        <a-form-item
+                                label="Work description"
+                                :label-col="{ span: 24 }"
+                                :wrapper-col="{ span: 24 }"
+                        >
+                            <a-textarea maxlength="400"
+                                        placeholder="A description of your role and responsibilites(400 char max)"
+                                        :rows="4"
+                                        v-model="currentexperience.description"
+                                        v-validate.disable="'required'"
+                                        name="experience_description"
+
+                            />
+                            <span style="color: #f5222d;" v-show="errors.has('experience_description')"
+                                  class="help is-danger">{{ errors.first('experience_description') }}</span>
+
+                        </a-form-item>
+
+
+                    </a-form>
+
                 </a-modal>
 
             </a-layout-content>
@@ -488,6 +782,10 @@
     import UsersService from '@/services/UsersService'
     import QuizService from '@/services/QuizService';
     import Projects from '@/services/Projects'
+    import Vue from 'vue'
+    import VeeValidate from 'vee-validate';
+
+    Vue.use(VeeValidate);
 
     export default {
         name: "Portfolio",
@@ -511,6 +809,7 @@
                 currentproject: {},
                 currentexperience: {},
                 projecttags: [],
+                experiencetags: [],
                 inputVisible: false,
                 inputValue: '',
                 portfoliotags: [],
@@ -520,7 +819,13 @@
                 projectdemo: '',
                 projectrepo: '',
                 projectdescription: '',
-                projecttech: ''
+                projecttech: '',
+                experiencetitle: '',
+                experiencecompany: '',
+                experienceduration: '',
+                experiencelocation: '',
+                experiencetech: '',
+                experiencedescription: ''
 
 
             }
@@ -596,7 +901,7 @@
                 this.projecttech = alltags
 
             },
-            // create
+
             showInput() {
                 this.inputVisible = true
                 this.$nextTick(function () {
@@ -641,84 +946,305 @@
 
             EditExperience(experience) {
                 this.currentexperience = experience
+                this.experiencetags = experience.tags
                 this.editexperience = true
+            },
+            async Refresh() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
+                this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
+
+
+                for (let i = 0; i < this.portfoliolist.length; i++) {
+                    let id = this.portfoliolist[i].id
+                    let title = this.portfoliolist[i].title
+                    let description = this.portfoliolist[i].description
+                    let demo = this.portfoliolist[i].demo_link
+                    let tech_used = this.portfoliolist[i].tech_tags.split(',');
+                    let repo = this.portfoliolist[i].repository_link
+
+                    let one_portfolio = new Portfolio(
+                        id, title, description, demo, tech_used, repo
+                    );
+                    this.portfolio.push(one_portfolio)
+
+
+                }
+                for (let i = 0; i < this.experienceslist.length; i++) {
+                    let id = this.experienceslist[i].id
+                    let title = this.experienceslist[i].title
+                    let description = this.experienceslist[i].description
+                    let company = this.experienceslist[i].company
+                    let location = this.experienceslist[i].location
+                    let duration = this.experienceslist[i].duration
+                    let tech_used = this.experienceslist[i].tech_tags.split(',');
+
+                    let one_experience = new Experience(
+                        id, title, description, company, location, duration, tech_used
+                    );
+                    this.experiences.push(one_experience)
+
+
+                }
+
+
             },
 
             SavenewProject() {
+                let self = this;
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.$validator.validate().then(valid => {
+                    if (valid) {
+                        UsersService.newportfolio(
+                            {
+                                candidate: this.$store.state.user.pk,
+                                title: this.projecttitle,
+                                description: this.projectdescription,
+                                repository_link: this.projectrepo,
+                                demo_link: this.projectdemo,
+                                tech_tags: this.projecttech
 
+                            },
+                            auth)
+                            .then(resp => {
+                                    this.portfolio = []
+                                    this.portfoliolist = []
+                                    this.experienceslist = []
+                                    this.experiences = []
+                                    this.createproject = false
+                                    this.projecttitle = ''
+                                    this.projectdemo = ''
+                                    this.projectrepo = ''
+                                    this.projectdescription = ''
+                                    this.projecttech = ''
+                                    self.Refresh()
 
-                UsersService.newportfolio(
-                    {
-                        candidate: this.$store.state.user.pk,
-                        title: this.projecttitle,
-                        description: this.projectdescription,
-                        repository_link: this.projectrepo,
-                        demo_link: this.projectdemo,
-                        tech_tags: this.projecttech
+                                    return resp
 
-                    },
-                    auth)
-                    .then(resp => {
-                            this.createproject = true
-                            this.projecttitle = ''
-                            this.projectdemo = ''
-                            this.projectrepo = ''
-                            this.projectdescription = ''
-                            this.projecttech = ''
+                                }
+                            )
+                            .catch()
 
-                            return resp
+                    }
+                })
 
-                        }
-                    )
-                    .catch()
 
             },
+
             UpdateProject() {
                 let self = this;
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                this.currentproject.tags = this.projecttags.join(", ")
-                UsersService.updateportfolio(this.currentproject.key,
-                    {
-                        title: this.currentproject.title,
-                        description: this.currentproject.description,
-                        repository_link: this.currentproject.repo,
-                        demo_link: this.currentproject.demo,
-                        tech_tags: this.currentproject.tags
-                    },
-                    auth)
+                this.$validator.validate().then(valid => {
+                    if (valid) {
+                        this.currentproject.tags = this.projecttags.join(", ")
+                        UsersService.updateportfolio(this.currentproject.key,
+                            {
+                                title: this.currentproject.title,
+                                description: this.currentproject.description,
+                                repository_link: this.currentproject.repo,
+                                demo_link: this.currentproject.demo,
+                                tech_tags: this.currentproject.tags
+                            },
+                            auth)
+                            .then(resp => {
+                                    this.portfolio = []
+                                    this.portfoliolist = []
+                                    this.experienceslist = []
+                                    this.experiences = []
+                                    this.editproject = false
+                                    self.Refresh()
+
+
+                                    return resp
+
+                                }
+                            )
+                            .catch()
+                    }
+                })
+
+
+            },
+
+            SavenewExperience() {
+                let self = this;
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.$validator.validate().then(valid => {
+                    if (valid) {
+                        UsersService.newexperience(
+                            {
+                                candidate: this.$store.state.user.pk,
+                                title: this.experiencetitle,
+                                description: this.experiencedescription,
+                                company: this.experiencecompany,
+                                tech_tags: this.experiencetech,
+                                location: this.experiencelocation,
+                                duration: this.experienceduration
+
+                            },
+                            auth)
+                            .then(resp => {
+                                    this.portfolio = []
+                                    this.portfoliolist = []
+                                    this.experienceslist = []
+                                    this.experiences = []
+                                    this.createexperience = false
+
+                                    this.experiencetitle = ''
+                                    this.experiencecompany = ''
+                                    this.experienceduration = ''
+                                    this.experiencelocation = ''
+                                    this.experiencetech = ''
+                                    this.experiencedescription = ''
+
+                                    self.Refresh()
+
+                                    return resp
+
+                                }
+                            )
+                            .catch()
+                    }
+                })
+
+
+            },
+
+            UpdateExperience() {
+                let self = this;
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.$validator.validate().then(valid => {
+                    if (valid) {
+                        this.currentexperience.tags = this.experiencetags.join(", ")
+                        UsersService.updateexperience(this.currentexperience.key,
+                            {
+                                title: this.currentexperience.title,
+                                description: this.currentexperience.description,
+                                company: this.currentexperience.company,
+                                duration: this.currentexperience.duration,
+                                tech_tags: this.currentexperience.tags,
+                                location: this.currentexperience.location,
+
+
+                            },
+                            auth)
+                            .then(resp => {
+                                    this.portfolio = []
+                                    this.portfoliolist = []
+                                    this.experienceslist = []
+                                    this.experiences = []
+
+                                    this.editexperience = false
+                                    self.Refresh()
+
+
+                                    return resp
+
+                                }
+                            )
+                            .catch()
+
+                    }
+                })
+
+
+            },
+
+            handleClose1(removedTag) {
+                const tags = this.experiencetags.filter(tag => tag !== removedTag)
+                this.experiencetags = tags
+                let alltags = this.experiencetags.join(", ")
+                this.experiencetech = alltags
+
+            },
+
+            showInput1() {
+                this.inputVisible1 = true
+                this.$nextTick(function () {
+                    this.$refs.input.focus()
+                })
+            },
+
+            handleInputChange1(e) {
+                this.inputValue1 = e.target.value
+            },
+
+            handleInputConfirm1() {
+                const inputValue = this.inputValue1
+                let experiencetags = this.experiencetags
+                if (inputValue && experiencetags.indexOf(inputValue) === -1) {
+                    experiencetags = [...experiencetags, inputValue]
+                }
+
+                let alltags = experiencetags.join(", ")
+                this.experiencetech = alltags
+                Object.assign(this, {
+                    experiencetags,
+                    inputVisible1: false,
+                    inputValue1: '',
+                })
+            },
+            DeleteProject(portfolio_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                let self = this;
+                UsersService.deleteportfolio(portfolio_id,auth)
                     .then(resp => {
-                            this.currentproject = {}
                             this.portfolio = []
-                            this.experiences = []
-                            this.codelnprojects = []
                             this.portfoliolist = []
                             this.experienceslist = []
-                            this.takenquizzes = []
+                            this.experiences = []
                             this.editproject = false
-
-                            self.Datarefresh
-
-
+                            self.Refresh()
                             return resp
 
                         }
                     )
                     .catch()
 
+
+            },
+            DeleteExperience(experience_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                let self = this;
+                UsersService.deleteexperience(experience_id,auth)
+                    .then(resp => {
+                            this.portfolio = []
+                            this.portfoliolist = []
+                            this.experienceslist = []
+                            this.experiences = []
+                            this.editproject = false
+                            self.Refresh()
+                            return resp
+
+                        }
+                    )
+                    .catch()
             }
         },
-        Datarefresh() {
-            console.log('hi')
 
-        }
     }
 </script>
 
