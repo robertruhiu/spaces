@@ -10,10 +10,14 @@
                     <a-row gutter="8">
                         <a-col :span="14">
 
+
                             <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
-                                <div v-if="project.projectimage1 "><img :src="project.projectimage1"/></div>
-                                <div v-if="project.projectimage2 "><img :src="project.projectimage2"/></div>
-                                <div v-if="project.projectimage3 "><img :src="project.projectimage3"/></div>
+                                <div v-if="project.projectimage1 "><img style="width: 100%"
+                                                                        :src="project.projectimage1"/></div>
+                                <div v-if="project.projectimage2 "><img style="width: 100%"
+                                                                        :src="project.projectimage2"/></div>
+                                <div v-if="project.projectimage3 "><img style="width: 100%"
+                                                                        :src="project.projectimage3"/></div>
                                 <div v-if="project.projectimage4 "><img :src="project.projectimage4"/></div>
                                 <div v-if="project.projectimage5 "><img :src="project.projectimage5"/></div>
                                 <div v-if="project.projectimage6 "><img :src="project.projectimage6"/></div>
@@ -51,9 +55,15 @@
 
                                 </ol>
                                 <div style="margin-left: 5%" v-if="application.project === null">
-                                    <a-button type="primary" @click="AssignProject(project.id,ApplicationId,project.name,job.id)">Assign
+                                    <a-button type="primary" @click="AssignProject(ApplicationId,project.id,job.id)">
+                                        Assign
                                         project to {{candidate.username}}
                                     </a-button>
+
+
+
+
+
                                 </div>
 
                             </div>
@@ -92,7 +102,8 @@
                 },
                 candidate: {},
                 ApplicationId: null,
-                application : {}
+                application: {},
+                project_id: null
 
             }
         },
@@ -109,7 +120,7 @@
             const jobId = this.$store.state.route.params.jobId
             const DevId = this.$store.state.route.params.candidateId
             this.ApplicationId = this.$store.state.route.params.applicationId
-            const project_id = this.$store.state.route.params.projectId
+            this.project_id = this.$store.state.route.params.projectId
             // current application
 
             this.application = (await Marketplace.retrieveapplication(this.ApplicationId, auth)).data
@@ -118,38 +129,40 @@
             // current job
             this.job = (await Marketplace.specificjob(jobId, auth)).data
             this.candidate = (await UsersService.retrieveuser(DevId, auth)).data
-            if(project_id ){
-                this.project = (await Projectsservice.projectdetails(project_id, auth)).data
+            if (this.project_id) {
+                this.project = (await Projectsservice.projectdetails(this.project_id, auth)).data
 
 
-            }else {
+            } else {
                 Projectsservice.projects(jobId, auth)
-                .then(resp => {
-                    this.project = resp.data[0]
+                    .then(resp => {
+                        this.project = resp.data[0]
 
 
-                })
-                .catch()
+                    })
+                    .catch()
 
 
             }
 
 
-
-
-
         },
         methods: {
-            AssignProject(project, application,projectname,job) {
+            async AssignProject(application, project, job,) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                Marketplace.pickreject(application, {test_stage: 'invite sent', project: project,name:projectname}, auth)
-                this.$router.push({
-                    name: 'job',
-                    params: { jobId: job }
-                })
+
+                Marketplace.pickreject(application, {test_stage:'invite_sent',project:project}, auth)
+                    .then(
+                        this.$router.push({
+                            name: 'job',
+                            params: {jobId: job}
+                        })
+                    )
+                    .catch()
+
 
             }
         }

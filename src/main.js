@@ -53,7 +53,8 @@ import {
     Steps,
     Timeline,
     Skeleton,
-    Icon
+    Icon,
+    Row
 
 } from 'ant-design-vue';
 
@@ -90,6 +91,7 @@ Vue.use(Timeline)
 Vue.use(Skeleton)
 Vue.use(Icon)
 Vue.use(Spin)
+Vue.use(Row)
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

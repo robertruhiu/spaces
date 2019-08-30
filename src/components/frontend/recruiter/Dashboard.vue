@@ -3,14 +3,14 @@
 
         <RecruiterSider/>
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#ffffff' }">
 
 
             <a-layout-content>
                 <Pageheader/>
 
 
-                <div :style="{ padding: '5px', background: '#fff', }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'7rem' }">
                     <a-row>
                         <a-col span="24">
 
@@ -25,28 +25,36 @@
                             <a-col class="boxes" :span="6">
 
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
-                                        <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Post a Job</p>
-                                        <p style="  margin: 0;">Get devs for your vacancy</p>
+                                        <p style="margin: 0;">Get devs for your vacancy</p>
 
 
                                     </a-col>
+
                                 </a-row>
+
                             </a-col>
                         </a>
+
+
                         <router-link to="managejobs" v-if="myjobs.length>0">
                             <a-col class="boxes" :span="6">
 
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
-                                        <img class="poolavatar" src="../../../assets/images/cv.svg">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar" src="../../../assets/images/cv.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Manage Jobs</p>
-                                        <p style="margin: 0;">Monitor and manage job applications</p>
+                                        <p style="margin: 0;">Manage job applications</p>
 
 
                                     </a-col>
@@ -60,12 +68,14 @@
 
                             <a-col class="boxes" :span="6">
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
-                                        <img class="poolavatar" src="../../../assets/images/statistics.svg">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar" src="../../../assets/images/statistics.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Manage Candidates</p>
-                                        <p style="margin: 0;">Manage devs picked from talent pool</p>
+                                        <p style="margin: 0;">Manage devs picked from talent</p>
 
 
                                     </a-col>
@@ -77,10 +87,12 @@
                         <router-link to="talent">
                             <a-col class="boxes" :span="6">
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="8">
-                                        <img class="poolavatar" src="../../../assets/images/star.svg">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar" src="../../../assets/images/star.svg">
+                                        </div>
                                     </a-col>
-                                    <a-col span="16">
+                                    <a-col span="24" style="text-align: center">
                                         <p>Browse the Talent Pool</p>
                                         <p style="margin: 0;">View more devs from our pool</p>
 
@@ -96,14 +108,17 @@
 
                 </div>
 
-                <div style="padding: 2% 1%;background-color: white;margin: 2% 1%">
+                <div style="padding: 2% 1%;background-color: white;margin: 1% 1%" v-if="myjobs.length >0 ">
                     <div v-if="loading" class="loading" style="text-align: center;">
                         <a-spin/>
                     </div>
                     <div v-else>
                         <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
                             <a-col :span="12">
+
                                 <h3 style="color: #1976D2;font-weight: bold">Your Recent Jobs</h3>
+
+
                             </a-col>
                             <a-col :span="12">
                                 <router-link to="managejobs">
@@ -177,7 +192,10 @@
 
                                     </a-card>
                                 </a-col>
+
                             </div>
+
+
                             <a-col v-else :span="12" v-for="job in myjobs" v-bind:key="job.id">
                                 <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                     <h3 style="font-weight: bold">{{job.title}}</h3>
@@ -236,6 +254,7 @@
 
                                 </a-card>
                             </a-col>
+
                         </a-row>
                     </div>
 
@@ -249,27 +268,32 @@
                         :visible="visible"
                         :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
                 >
-                    <form-wizard @on-complete="onComplete"
-                                 shape="tab"
-                                 color="#007BFF"
-                                 title=""
-                                 subtitle=""
-                    >
-                        <tab-content title="Job details"
-                                     icon="ti-user">
-                            <a-form :form="form">
+                    <a-steps :current="current">
+                        <a-step v-for="item in steps" :key="item.title" :title="item.title"/>
+                    </a-steps>
+                    <a-form :form="form">
+                        <div class="steps-content">
+                            <div v-if="current === 0">
                                 <a-row :gutter="32">
                                     <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item label="Title">
+                                        <a-form-item label="Job Title">
+
+
                                             <a-input v-model="job.title">
 
                                             </a-input>
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'title'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
+
+
                                         </a-form-item>
                                     </a-col>
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Job role">
                                             <a-select
-
                                                     placeholder="Select a option"
                                                     v-model="job.job_role"
                                             >
@@ -295,16 +319,16 @@
                                                     Data Scientist
                                                 </a-select-option>
                                             </a-select>
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'role'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
-
                                     </a-col>
-
-
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Developer Experience">
                                             <a-select
-
                                                     placeholder="Select a option"
                                                     v-model="job.dev_experience"
                                             >
@@ -320,15 +344,19 @@
                                                 <a-select-option value="Senior">
                                                     Senior
                                                 </a-select-option>
-
                                             </a-select>
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'experience'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
                                     </a-col>
+                                </a-row>
+                                <a-row>
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Contract type">
                                             <a-select
-
                                                     placeholder="Select a option"
                                                     v-model="job.engagement_type"
                                             >
@@ -347,28 +375,39 @@
                                                 <a-select-option value="Freelance">
                                                     Freelance
                                                 </a-select-option>
-
                                             </a-select>
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'engagement'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
                                     </a-col>
-
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Location">
                                             <country-select v-model="job.location"
                                                             class="ant-input"
                                             />
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'location'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
                                     </a-col>
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Salary range per month ">
                                             <a-input placeholder="1000-1500$" v-model="job.remuneration">
-
                                             </a-input>
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'remuneration'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
                                     </a-col>
+                                </a-row>
+                                <a-row>
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Deadline ">
                                             <a-date-picker v-model="job.deadline"
@@ -378,206 +417,51 @@
                                                            :disabledTime="disabledDateTime"
                                                            :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
                                             />
-
-
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'deadline'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
-
                                     </a-col>
                                     <a-col :span="12" style="padding-right: 1%">
                                         <a-form-item label="Developers needed ">
                                             <a-input-number :min="1" v-model="job.num_devs_wanted"/>
 
-
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'num_devs_wanted'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
-
                                     </a-col>
-
-
                                 </a-row>
 
 
-                            </a-form>
-                        </tab-content>
-                        <tab-content title="Skills of interest"
-                                     icon="ti-settings">
-                            <a-row :gutter="16">
-                                <a-col :span="24">
-
-                                    <a-form-item>
-                                        <p>Pick skills you are looking for</p>
-                                        <div>
-
-                                            <template v-for=" tag in recommendationtags">
-                                                <a-checkable-tag style="border-color: blue;font-size: 14px"
-                                                                 :key="tag"
-                                                                 :checked="selectedTags.indexOf(tag) > -1"
-                                                                 @change="(checked) => handleChange(tag, checked)"
-                                                >
-                                                    {{tag}}
-                                                </a-checkable-tag>
-                                            </template>
-                                        </div>
-
-
-                                    </a-form-item>
-                                </a-col>
-                                <a-col :span="24">
-                                    <a-form-item
-                                            label="Job description "
-                                            :label-col="{ span: 24 }"
-                                            :wrapper-col="{ span:  24}"
-                                    >
-
-                                        <a-textarea v-model="job.description"
-                                                    placeholder="A bit about the job"
-                                                    :rows="6"/>
-                                    </a-form-item>
-
-                                </a-col>
-                            </a-row>
-                        </tab-content>
-                        <tab-content title="Job review"
-                                     icon="ti-settings">
-                            <a-form :form="form">
+                            </div>
+                            <div v-if="current === 1">
                                 <a-row :gutter="16">
-                                    <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item label="Title">
-                                            <a-input v-model="job.title">
-
-                                            </a-input>
-                                        </a-form-item>
-                                    </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item label="Job role">
-                                            <a-select
-
-                                                    placeholder="Select a option and change input text above"
-                                                    v-model="job.job_role"
-                                            >
-                                                <a-select-option value="Full Stack Developer">
-                                                    Full Stack Developer
-                                                </a-select-option>
-                                                <a-select-option value="Frontend Developer">
-                                                    Frontend Developer
-                                                </a-select-option>
-                                                <a-select-option value="Backend  Developer">
-                                                    Backend Developer
-                                                </a-select-option>
-                                                <a-select-option value="Android  Developer">
-                                                    Android Developer
-                                                </a-select-option>
-                                                <a-select-option value="Graphic Designer">
-                                                    Graphic Designer
-                                                </a-select-option>
-                                                <a-select-option value="IOS Developer">
-                                                    IOS Developer
-                                                </a-select-option>
-                                                <a-select-option value="Data Scientist">
-                                                    Data Scientist
-                                                </a-select-option>
-                                            </a-select>
-                                        </a-form-item>
-
-
-                                    </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item label="Developer Experience">
-                                            <a-select
-
-                                                    placeholder="Select a option and change input text above"
-                                                    v-model="job.dev_experience"
-                                            >
-                                                <a-select-option value="Entry">
-                                                    Entry
-                                                </a-select-option>
-                                                <a-select-option value="Junior">
-                                                    Junior
-                                                </a-select-option>
-                                                <a-select-option value="Mid-Level">
-                                                    Mid-Level
-                                                </a-select-option>
-                                                <a-select-option value="Senior">
-                                                    Senior
-                                                </a-select-option>
-
-                                            </a-select>
-                                        </a-form-item>
-
-                                    </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item label="Contract type">
-                                            <a-select
-
-
-                                                    v-model="job.engagement_type"
-                                            >
-                                                <a-select-option value="Full-time">
-                                                    Full-time
-                                                </a-select-option>
-                                                <a-select-option value="Part-time">
-                                                    Part-time
-                                                </a-select-option>
-                                                <a-select-option value="Contract">
-                                                    Contract
-                                                </a-select-option>
-                                                <a-select-option value="Remote">
-                                                    Remote
-                                                </a-select-option>
-                                                <a-select-option value="Freelance">
-                                                    Freelance
-                                                </a-select-option>
-
-                                            </a-select>
-                                        </a-form-item>
-
-                                    </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item>
-                                            <span>Location : {{job.location}}</span>
-                                            <country-select v-model="job.location"
-                                                            class="ant-input"
-                                            />
-                                        </a-form-item>
-
-                                    </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
-                                        <a-form-item label="Salary range ">
-                                            <a-input placeholder="1000-1500$" v-model="job.remuneration">
-
-                                            </a-input>
-                                        </a-form-item>
-
-                                    </a-col>
                                     <a-col :span="24">
-
                                         <a-form-item>
-                                            <p>Pick skills you are looking for</p>
+                                            <p style="margin-bottom: 0">Pick skills you are looking for</p>
                                             <div>
-
                                                 <template v-for=" tag in recommendationtags">
-                                                    <a-checkable-tag style="border-color: blue;font-size: 14px"
+                                                    <a-checkable-tag style="border-color: blue;font-size: 12px"
                                                                      :key="tag"
                                                                      :checked="selectedTags.indexOf(tag) > -1"
                                                                      @change="(checked) => handleChange(tag, checked)"
                                                     >
                                                         {{tag}}
                                                     </a-checkable-tag>
+
                                                 </template>
+                                                <span v-for="error in errorlist1" v-bind:key="error">
+                                                <span v-if="error === 'tech_stack'" style="color: red">
+                                                    * please pick atleast 1
+                                                </span>
+                                            </span>
                                             </div>
-
-
                                         </a-form-item>
-                                        <a-form-item label="Application Deadline">
-                                            <a-date-picker v-model="job.deadline"
-                                                           format="YYYY-MM-DD HH:mm:ss"
-                                                           :disabledDate="disabledDate"
-                                                           :disabledTime="disabledDateTime"
-                                                           :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
-                                            />
-                                        </a-form-item>
-
                                     </a-col>
                                     <a-col :span="24">
                                         <a-form-item
@@ -585,19 +469,78 @@
                                                 :label-col="{ span: 24 }"
                                                 :wrapper-col="{ span:  24}"
                                         >
-
                                             <a-textarea v-model="job.description"
-                                                        placeholder="A bit about the job"
+                                                        placeholder="About the job"
                                                         :rows="6"/>
+                                            <span v-for="error in errorlist1" v-bind:key="error">
+                                                <span v-if="error === 'description'" style="color: red">
+                                                    * required field
+                                                </span>
+                                            </span>
                                         </a-form-item>
-
                                     </a-col>
                                 </a-row>
-                            </a-form>
-                        </tab-content>
+                            </div>
+                            <div v-if="current === 2">
+                                <p>Preview of how job will appear on job board</p>
+                                <div class="jobdetails">
+                                    <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
+                            <span>
+                                <span style="font-weight: 700;font-size: large">{{job.title}}</span>
 
+                            </span>
 
-                    </form-wizard>
+                                    </div>
+                                    <div>
+
+                                        <p><strong>Company name:</strong> {{job.company}}
+                                            <span style="margin-left: 5%">
+                                    Location : {{job.location}}
+                                </span>
+
+                                        </p>
+                                        <p>Monthly renumeration * : {{job.remuneration}}</p>
+
+                                        <p>
+                                            Skills looking for :
+                                            <span style="" v-for="skill in selectedTags" v-bind:key="skill">
+                                    <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+                                </span>
+                                        </p>
+                                        <p>Application Deadline : {{job.deadline}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: 700">Job Details</p>
+                                        <p>{{job.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="steps-action">
+                            <a-button
+                                    v-if="current < steps.length - 1"
+                                    type="primary" @click="next(current)"
+                            >
+                                Next
+                            </a-button>
+                            <a-button
+                                    v-if="current == steps.length - 1"
+                                    type="primary"
+                                    @click="done"
+
+                            >
+                                Done
+                            </a-button>
+                            <a-button
+                                    v-if="current>0"
+                                    style="margin-left: 8px"
+                                    @click="prev"
+                            >
+                                Previous
+                            </a-button>
+                        </div>
+
+                    </a-form>
 
                 </a-drawer>
 
@@ -629,7 +572,6 @@
     import Pageheader from '@/components/layout/Pageheader'
     import RecruiterSider from "../../layout/RecruiterSider";
     import moment from 'moment';
-    import {FormWizard, TabContent} from 'vue-form-wizard'
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
 
@@ -643,7 +585,19 @@
                 myjobs: [],
                 mycandidates: [],
                 visible: false,
-                job: {},
+                job: {
+                    title: null,
+                    job_role: null,
+                    dev_experience: null,
+                    engagement_type: null,
+                    location: null,
+                    remuneration: null,
+                    deadline: null,
+                    num_devs_wanted: null,
+                    tech_stack: null,
+                    description: null
+
+                },
                 inputVisible: false,
                 currentUser: {},
                 inputValue: '',
@@ -653,7 +607,20 @@
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
                     'Android', 'Website', 'Mobile'],
                 selectedTags: [],
-                loading: true
+                loading: true,
+                errorlist: [],
+                errorlist1: [],
+                current: 0,
+                steps: [{
+                    title: 'Job details',
+
+                }, {
+                    title: 'Skills of interest',
+
+                }, {
+                    title: 'Job Review',
+
+                }],
 
             }
         },
@@ -662,8 +629,6 @@
             ACol,
             Pageheader,
             RecruiterSider,
-            FormWizard,
-            TabContent,
 
 
         },
@@ -725,32 +690,8 @@
             onBreakpoint(broken) {
                 return broken;
             },
-            async onComplete() {
 
 
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                Marketplace.createjob(this.job, auth)
-                    .then(resp => {
-                        this.visible = false
-                        this.$router.push({
-                            name: 'managejobs'
-                        })
-
-
-                    })
-                    .catch(error => {
-                        this.visible = false
-                        this.$router.push({
-                            name: 'recruiter'
-                        })
-
-                    });
-
-
-            },
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)
@@ -817,6 +758,81 @@
                 let alltags = this.selectedTags.join(", ")
                 this.job.tech_stack = alltags
             },
+            next(current) {
+
+
+                if (current === 0) {
+                    this.errorlist = []
+
+                    let list1 = {
+                        title: this.job.title,
+                        role: this.job.job_role,
+                        experience: this.job.dev_experience,
+                        engagement: this.job.engagement_type
+                        ,
+                        location: this.job.location,
+                        renumeration: this.job.remuneration,
+                        deadline: this.job.deadline,
+                        num_devs_wanted: this.job.num_devs_wanted
+                    }
+                    for (const [key, value] of Object.entries(list1)) {
+
+                        if (value === null || value === undefined) {
+
+                            this.errorlist.push(key)
+                        }
+                    }
+                    if (this.errorlist.length === 0) {
+                        this.current++
+                    }
+
+
+                } else if (current === 1) {
+                    this.errorlist1 = []
+                    let list1 = {
+                        tech_stack: this.job.tech_stack,
+                        description: this.job.description
+                    }
+                    for (const [key, value] of Object.entries(list1)) {
+
+                        if (value === null || value === undefined) {
+                            this.errorlist1.push(key)
+                        }
+                    }
+                    if (this.errorlist1.length === 0) {
+                        this.current++
+                    }
+
+
+                }
+
+
+            },
+            prev() {
+                this.current--
+            },
+            async done() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.createjob(this.job, auth)
+                    .then(resp => {
+                        this.visible = false
+                        this.$router.push({
+                            name: 'managejobs'
+                        })
+
+
+                    })
+                    .catch(error => {
+                        this.visible = false
+                        this.$router.push({
+                            name: 'recruiter'
+                        })
+
+                    });
+            }
 
         },
 
@@ -845,7 +861,7 @@
     }
 
     .poolavatar {
-        width: 80%;
+        width: 30%;
         margin-top: 0.5rem;
     }
 
@@ -862,9 +878,25 @@
 
     .actioncards {
         width: 16rem;
-        border-radius: 3%;
+        border-radius: 0;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         padding: 0.89rem;
+    }
+
+    .steps-content {
+        margin-top: 16px;
+
+
+    }
+
+    .steps-action {
+        margin-top: 24px;
+    }
+    .jobdetails {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+        padding: 2%;
+
     }
 
 

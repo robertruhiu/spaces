@@ -159,7 +159,7 @@
                     if (this.allevents[i].interviewstatus !== null ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].candidatename
+                    let title = this.allevents[i].candidate.user.first_name
                     let start = moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD HH:mm:ss")
                     let end = moment(this.allevents[i].interviewendtime).format("YYYY-MM-DD HH:mm:ss")
                     let color = this.allevents[i].eventcolor
@@ -175,12 +175,12 @@
 
 
             }
-            for (let i = 0; i < this.allevents.length; i++) {
+            for (let i = 0; i < this.alldevrequests.length; i++) {
 
                 if (this.alldevrequests[i].interviewstatus !== null) {
 
                     let id = this.alldevrequests[i].id
-                    let title = this.alldevrequests[i].candidatename
+                    let title = this.alldevrequests[i].developer.user.first_name
                     let start = moment(this.alldevrequests[i].interviewstarttime).format("YYYY-MM-DD HH:mm:ss")
                     let end = moment(this.alldevrequests[i].interviewendtime).format("YYYY-MM-DD HH:mm:ss")
                     let color = this.alldevrequests[i].eventcolor

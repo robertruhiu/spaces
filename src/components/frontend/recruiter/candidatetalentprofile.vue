@@ -50,23 +50,20 @@
                     <a-col :span="14" style=" ">
                         <div class="bio">
                             <a-tabs defaultActiveKey="1">
-                                <a-tab-pane key="1">
+                                <a-tab-pane key="1" v-if="takenquizzes.length >0">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
                                         Skills
                                     </span>
                                     <p>Quizzes taken by Candidate</p>
-                                    Javascript :
-                                    <a-progress :percent="30"/>
-                                    java:
-                                    <a-progress :percent="50"/>
-                                    React:
-                                    <a-progress :percent="70"/>
-                                    Angular:
-                                    <a-progress :percent="89"/>
+                                    <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                                        {{takenquiz.quiz.subject.name}}:
+                                        <a-progress :percent="takenquiz.score"/>
+                                    </div>
+
                                 </a-tab-pane>
 
-                                <a-tab-pane key="2">
+                                <a-tab-pane key="2" v-if="portfolio.length >0">
                                     <span slot="tab">
                                         <a-icon type="solution"/>
                                         Projects portfolio
@@ -96,7 +93,7 @@
 
                                 </a-tab-pane>
 
-                                <a-tab-pane key="3">
+                                <a-tab-pane key="3" v-if="experiences.length>0">
                                     <span slot="tab">
                                         <a-icon type="hourglass"/>
                                         Work experience
@@ -142,7 +139,7 @@
                             <div v-for="dev in pickeddevs" :key="dev">
 
                                 <a-button v-if="dev === currentUser.id" style="margin-left: 1rem;" type="primary"
-                                          @click="navigateTo({name:'mycandidates'})" >
+                                          @click="navigateTo({name:'mycandidates'})">
                                     manage candidate
                                 </a-button>
 
@@ -151,7 +148,6 @@
                                       @click="pickcandidate(currentUser.id)">
                                 Add to my Candidates
                             </a-button>
-
 
 
                         </div>
@@ -201,6 +197,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
+    import QuizService from '@/services/QuizService';
 
 
     export default {
@@ -219,7 +216,8 @@
                 portoliolist: [],
                 portfolio: [],
                 picked: false,
-                pickeddevs: []
+                pickeddevs: [],
+                takenquizzes: [],
             }
         },
         components: {
@@ -235,67 +233,67 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            if(this.$store.state.user.pk){
+            if (this.$store.state.user.pk) {
                 this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateProfileID, auth)).data
-            this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
-            this.skilltags = this.currentUserProfile.skills.split(',');
-            this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateProfileID, auth)).data
-            this.experienceslist = (await UsersService.experience(this.$route.params.candidateProfileID, auth)).data
+                this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
+                this.skilltags = this.currentUserProfile.skills.split(',');
+                this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateProfileID, auth)).data
+                this.experienceslist = (await UsersService.experience(this.$route.params.candidateProfileID, auth)).data
+                this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
 
 
-            for (let i = 0; i < this.portfoliolist.length; i++) {
-                let id = this.portfoliolist[i]
-                let title = this.portfoliolist[i].title
-                let description = this.portfoliolist[i].description
-                let demo = this.portfoliolist[i].demo_link
-                let tech_used = this.portfoliolist[i].tech_tags.split(',');
+                for (let i = 0; i < this.portfoliolist.length; i++) {
+                    let id = this.portfoliolist[i]
+                    let title = this.portfoliolist[i].title
+                    let description = this.portfoliolist[i].description
+                    let demo = this.portfoliolist[i].demo_link
+                    let tech_used = this.portfoliolist[i].tech_tags.split(',');
 
-                let one_portfolio = new Portfolio(
-                    id, title, description, demo, tech_used
-                );
-                this.portfolio.push(one_portfolio)
-
-
-            }
-            for (let i = 0; i < this.experienceslist.length; i++) {
-                let id = this.experienceslist[i]
-                let title = this.experienceslist[i].title
-                let description = this.experienceslist[i].description
-                let company = this.experienceslist[i].company
-                let location = this.experienceslist[i].location
-                let duration = this.experienceslist[i].duration
-                let tech_used = this.experienceslist[i].tech_tags.split(',');
-
-                let one_experience = new Experience(
-                    id, title, description, company, location, duration, tech_used
-                );
-                this.experiences.push(one_experience)
+                    let one_portfolio = new Portfolio(
+                        id, title, description, demo, tech_used
+                    );
+                    this.portfolio.push(one_portfolio)
 
 
-            }
+                }
+                for (let i = 0; i < this.experienceslist.length; i++) {
+                    let id = this.experienceslist[i]
+                    let title = this.experienceslist[i].title
+                    let description = this.experienceslist[i].description
+                    let company = this.experienceslist[i].company
+                    let location = this.experienceslist[i].location
+                    let duration = this.experienceslist[i].duration
+                    let tech_used = this.experienceslist[i].tech_tags.split(',');
 
-            MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
-                .then(resp => {
-                        if (resp.data.length !== 0 ) {
+                    let one_experience = new Experience(
+                        id, title, description, company, location, duration, tech_used
+                    );
+                    this.experiences.push(one_experience)
 
 
-                            for (let i = 0; i < resp.data.length; i++) {
-                                this.pickeddevs.push(Number(resp.data[i].developer))
-                            }
-                            for (let j = 0; j < this.pickeddevs.length; j++) {
-                                if (this.currentUser.id === this.pickeddevs[j]) {
-                                    this.picked = true
+                }
+
+                MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
+                    .then(resp => {
+                            if (resp.data.length !== 0) {
+
+
+                                for (let i = 0; i < resp.data.length; i++) {
+                                    this.pickeddevs.push(Number(resp.data[i].developer))
+                                }
+                                for (let j = 0; j < this.pickeddevs.length; j++) {
+                                    if (this.currentUser.id === this.pickeddevs[j]) {
+                                        this.picked = true
+                                    }
                                 }
                             }
+
+
                         }
-
-
-                    }
-                )
-                .catch();
+                    )
+                    .catch();
 
             }
-
 
 
         },
@@ -314,10 +312,10 @@
                 this.pickeddevs.push(dev)
 
                 let picked_developers = {
-                    owner:this.$store.state.user.pk,
+                    owner: this.$store.state.user.pk,
                     developer: dev,
-                    paid:false,
-                    stage:'new'
+                    paid: false,
+                    stage: 'new'
                 }
 
                 MarketPlaceService.pickdeveloper(picked_developers, auth)

@@ -13,7 +13,7 @@
                 <a-row style="padding: 1% 1%">
                     <a-col :span="16" style=" padding-left: 15px;padding-right: 15px;">
                         <div class="profile" style="padding-bottom: 2%">
-                            <a-row>applicant
+                            <a-row>
 
                                 <a-col :span="22">
                                     <p>About</p>
@@ -49,23 +49,20 @@
                         </div>
                         <div class="bio">
                             <a-tabs defaultActiveKey="1">
-                                <a-tab-pane key="1">
+                                <a-tab-pane key="1" v-if="takenquizzes.length >0">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
                                         Skills
                                     </span>
                                     <p>Quizzes taken by Candidate</p>
-                                    Javascript :
-                                    <a-progress :percent="30"/>
-                                    java:
-                                    <a-progress :percent="50"/>
-                                    React:
-                                    <a-progress :percent="70"/>
-                                    Angular:
-                                    <a-progress :percent="89"/>
+                                    <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                                        {{takenquiz.quiz.subject.name}}:
+                                        <a-progress :percent="takenquiz.score"/>
+                                    </div>
+
                                 </a-tab-pane>
 
-                                <a-tab-pane key="2">
+                                <a-tab-pane key="2" v-if="portfolio.length >0">
                                     <span slot="tab">
                                         <a-icon type="solution"/>
                                         Projects portfolio
@@ -95,7 +92,7 @@
 
                                 </a-tab-pane>
 
-                                <a-tab-pane key="3">
+                                <a-tab-pane key="3" v-if="experiences.length >0">
                                     <span slot="tab">
                                         <a-icon type="hourglass"/>
                                         Work experience
@@ -150,9 +147,10 @@
                             </p>
 
                             <p>
-                                <a style="" v-if="application.project" @click="navigateTo({name:'pickedprojectdetails',params:{projectId:application.project,candidateId: currentUser.id,jobId:job.id,applicationId: application.id}})">
-                                    <strong>Project Assigned:</strong>      {{application.name}}
-                                                                    </a>
+                                <a style="" v-if="application.project"
+                                   @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:application.project.id,candidateId: currentUserProfile.id,applicationId: application.id}})">
+                                    <strong>Project Assigned:</strong> {{application.project.name}}
+                                </a>
                                 <a-button :size="small"
                                           style="background-color: #9c27b0;color: white"
                                           v-else
@@ -164,64 +162,63 @@
                             </p>
 
 
-
-
                         </div>
 
 
                     </a-col>
                 </a-row>
+
                 <a-modal
-                            title="Project assignments "
-                            v-model="visible"
-                            @ok="handleOk"
-                            style="top: 60px;"
-                            :footer="null"
+                        title="Project assignments "
+                        v-model="visible"
+                        @ok="handleOk"
+                        style="top: 60px;"
+                        :footer="null"
 
 
-                    >
-                        <p style="text-align: center;">Would you like to get a project recommendation or pick a
-                            project?</p>
+                >
+                    <p style="text-align: center;">Would you like to get a project recommendation or pick a
+                        project?</p>
                     <a-row :gutter="16">
-                            <a-col :span="12">
-                                <a @click="navigateTo({name:'projectlist'})">
-                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
-                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%"
-                                             src="../../../../assets/images/pick.png">
-                                        <p style="text-align: center">Pick one by myself</p>
+                        <a-col :span="12">
+                            <a @click="navigateTo({name:'projectlist'})">
+                                <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                    <img style="margin-left: 25%;width: 50%;margin-right: 25%"
+                                         src="../../../../assets/images/pick.png">
+                                    <p style="text-align: center">Pick one by myself</p>
 
-                                    </div>
+                                </div>
 
-                                </a>
-                            </a-col>
-                            <a-col :span="12">
-                                <a @click="navigateTo({name:'myprojectdetails',params:{userId: recruiter,candidateId:currentUser.id,applicationId:application.id}})">
-                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
-                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
-                                             src="../../../../assets/images/recommend.png">
-                                        <p style="text-align: center">Get recommendation</p>
+                            </a>
+                        </a-col>
+                        <a-col :span="12">
+                            <a @click="navigateTo({name:'myprojectdetails',params:{userId: recruiter,candidateId:currentUser.id,applicationId:application.id}})">
+                                <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                    <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
+                                         src="../../../../assets/images/recommend.png">
+                                    <p style="text-align: center">Get recommendation</p>
 
-                                    </div>
+                                </div>
 
-                                </a>
-                            </a-col>
-                        </a-row>
+                            </a>
+                        </a-col>
+                    </a-row>
 
                     <div v-if="recentprojects">
-                            <p>My Recent projects</p>
-                            <p v-for="project in recentprojects"
-                               :key="project">
-                                <a  v-if="recentprojects"
-                                   @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:project.id,candidateId: currentUser.id,applicationId:application.id}})">
-                                    {{project.name}}
-                                </a>
-                            </p>
+                        <p>My Recent projects</p>
+                        <p v-for="project in recentprojects"
+                           :key="project">
+                            <a v-if="recentprojects"
+                               @click="navigateTo({name:'mypickedprojectdetails',params:{projectId:project.id,candidateId: currentUser.id,applicationId:application.id}})">
+                                {{project.name}}
+                            </a>
+                        </p>
 
 
-                        </div>
+                    </div>
 
 
-                    </a-modal>
+                </a-modal>
 
 
             </a-layout-content>
@@ -266,6 +263,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import Projectsservice from '@/services/Projects'
+    import QuizService from '@/services/QuizService';
 
 
     export default {
@@ -274,7 +272,6 @@
 
             return {
                 currentUserProfile: {},
-                currentUser: {},
                 skilltags: [],
                 visible: false,
                 inputVisible: false,
@@ -285,7 +282,8 @@
                 portoliolist: [],
                 portfolio: [],
                 recentprojects: [],
-                recruiter:null
+                recruiter: null,
+                takenquizzes: [],
             }
         },
         components: {
@@ -303,15 +301,14 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateId, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
             this.skilltags = this.currentUserProfile.skills.split(',');
+            this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
             this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateId, auth)).data
             this.experienceslist = (await UsersService.experience(this.$route.params.candidateId, auth)).data
             this.recruiter = this.$store.state.user.pk
             // current application
-             this.application = (await Marketplace.retrievecandidate(this.$route.params.applicationId, auth)).data
-
+            this.application = (await Marketplace.retrievecandidate(this.$route.params.applicationId, auth)).data
 
 
 

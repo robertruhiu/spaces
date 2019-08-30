@@ -23,12 +23,16 @@ const  Calendar = () => import('@/components/frontend/recruiter/calendar')
 const  DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
 const  Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
 const Assessment = () => import('@/components/frontend/developer/Assessment')
-
-
+const DeveloperProfile = () => import('@/components/frontend/developer/Myprofile')
+const ManageApplications = () => import('@/components/frontend/developer/ManageApplications')
 const DeveloperProjects = () => import('@/components/frontend/developer/DeveloperProjects')
-const DeveloperQuizes = () => import('@/components/frontend/developer/DeveloperQuizes')
+const QuizzesList = () => import('@/components/frontend/developer/quiz/QuizzesList')
 const DeveloperProjectDetails = () => import('@/components/frontend/developer/DeveloperProjectDetails')
-const DeveloperProjectReport = () =>import('@/components/frontend/developer/DeveloperProjectReport');
+const Report = () =>import('@/components/frontend/recruiter/Report');
+const Portfolio = () =>import('@/components/frontend/developer/Portfolio');
+const DevCalendar = () =>import('@/components/frontend/developer/DevCalendar');
+const TakeQuiz = () =>import('@/components/frontend/developer/quiz/takequiz');
+const SelfverifyProject = () =>import('@/components/frontend/developer/SelfverifyProject');
 
 Vue.use(Router);
 
@@ -70,6 +74,22 @@ let router =  new Router({
             path: '/myprofile',
             name: 'myprofile',
             component: Myprofile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/developerprofile',
+            name: 'developerprofile',
+            component: DeveloperProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/portfolio',
+            name: 'portfolio',
+            component: Portfolio,
             meta: {
                 requiresAuth: true
             }
@@ -135,6 +155,14 @@ let router =  new Router({
             }
         },
         {
+            path: '/devcalendar',
+            name: 'devcalendar',
+            component: DevCalendar,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/projectdetails/:jobId/:candidateId/:applicationId',
             name: 'projectdetails',
             component: Projectdetails,
@@ -154,6 +182,22 @@ let router =  new Router({
             path: '/pickedprojectdetails/:projectId/:jobId/:candidateId/:applicationId',
             name: 'pickedprojectdetails',
             component: Projectdetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/assignedproject/:projectId/:applicationId/:type',
+            name: 'assignedproject',
+            component: DeveloperProjectDetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/selfverifyproject/:applicationId',
+            name: 'selfverifyproject',
+            component: SelfverifyProject,
             meta: {
                 requiresAuth: true
             }
@@ -183,6 +227,14 @@ let router =  new Router({
             }
         },
         {
+            path: '/recommendedprofile/:candidateId/:jobId',
+            name: 'recommendedprofile',
+            component: CandidateProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/mycandidatesprofile/:candidateId/:applicationId',
             name: 'mycandidatesprofile',
             component: MyCandidateProfile,
@@ -190,6 +242,7 @@ let router =  new Router({
                 requiresAuth: true
             }
         },
+
         {
             path: '/candidatetalentprofile/:candidateProfileID',
             name: 'candidatetalentprofile',
@@ -199,44 +252,60 @@ let router =  new Router({
             }
         },
         {
-            path: '/assesment/',
+            path: '/assessment',
             name: 'assessment',
             component: Assessment,
-            // meta: {
-            //     requiresAuth: true
-            // }
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/developerprojects/',
             name: 'developerprojects',
             component: DeveloperProjects,
-            // meta: {
-            //     requiresAuth: true
-            // }
+            meta: {
+                requiresAuth: true
+            }
         },
         {
-            path: '/quizes/',
-            name: 'developerquizes',
-            component: DeveloperQuizes,
-            // meta: {
-            //     requiresAuth: true
-            // }
+            path: '/quizlist',
+            name: 'quizlist',
+            component: QuizzesList,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/manageapplications',
+            name: 'manageapplications',
+            component: ManageApplications,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/developerprojectdetails/:projectId',
             name: 'developerprojectdetails',
             component: DeveloperProjectDetails,
-            // meta: {
-            //     requiresAuth: true
-            // }
+            meta: {
+                requiresAuth: true
+            }
         },
         {
-            path: '/developerprojectreport/:candidateId/:projectId/',
-            name: 'developerprojectreport',
-            component: DeveloperProjectReport,
-            // meta: {
-            //     requiresAuth: true
-            // }
+            path: '/report/:candidateId/:projectId/',
+            name: 'report',
+            component: Report,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/takequiz/:candidateId/:quizId/',
+            name: 'takequiz',
+            component: TakeQuiz,
+            meta: {
+                requiresAuth: true
+            }
         },
     ],
 

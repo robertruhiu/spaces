@@ -1,6 +1,7 @@
 <template>
 
-    <a-layout-header style="border-bottom: 1px solid #e8e8e8;background-color: white;padding: 0;height: 61px "
+    <a-layout-header
+            style="border-bottom: 1px solid #e8e8e8;background-color: white;padding: 0;height: 61px; "
                      >
 
                 <span style="float: right;padding-right: 5%">

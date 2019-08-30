@@ -9,7 +9,7 @@
             <a-layout-content>
                 <Pageheader/>
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
-                marginTop:'2%',marginLeft: '1%',marginRight:'1%' }">
+                marginTop:'7rem',marginLeft: '1%',marginRight:'1%' }">
                     <a-form :form="form">
                         <a-row :gutter="16">
                             <a-col :span="12">
@@ -114,8 +114,14 @@
 
                             </a-col>
                         </a-row>
-                        <div style="text-align: center">
+                        <div style="text-align: center" v-if="loading === false">
                             <a-button @click="Save" type="primary" style="width: 15rem">Save</a-button>
+
+                        </div>
+                        <div style="text-align: center" v-else>
+                             <div style="text-align: center;">
+                                <a-spin/>
+                            </div>
 
                         </div>
 
@@ -146,6 +152,7 @@
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
                     'Android', 'Website', 'Mobile'],
                 selectedTags: [],
+                loading:false
 
 
             }
@@ -189,7 +196,9 @@
 
                     }
                 }
+                this.loading = true
                 this.currentUserProfile.skills = this.selectedTags.join(',')
+                this.currentUserProfile.user = this.$store.state.user.pk
 
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {

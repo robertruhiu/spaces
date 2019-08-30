@@ -29,5 +29,23 @@ export default {
     developerprojectreport(developer_id, project_id, auth){
         return Api().get(`projects/developerprojectreport/${developer_id}/${project_id}/`, auth)
     },
+    getverified(auth){
+        return Api().get('projects/frameworks',auth)
+    },
+    selfverifyproject(developer_id,framework,auth){
+        return Api().get(`projects/selfverifyproject/${developer_id}/${framework}`,auth)
+    },
+    selfassessprojectcreate(currentAssess,auth) {
+        return Api().post('createassess',currentAssess, auth)
+    },
+    myprojects(dev_id,auth) {
+        return Api().get(`myprojects/${dev_id}`, auth)
+    },
+    myprojectdetails(assessmentapplication_id,auth) {
+        return Api().get(`myprojectdetails/${assessmentapplication_id}`, auth)
+    },
+    myprojectdetailspatch(assessmentapplication_id,currentAssess,auth) {
+        return Api().patch(`myprojectdetailsupdater/${assessmentapplication_id}`,currentAssess, auth)
+    },
 
 }

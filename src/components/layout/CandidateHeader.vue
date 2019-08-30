@@ -8,13 +8,16 @@
                 <a-col :span="24">
                             <span>
                                 <span style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
-                                {{currentUser.username |capitalize}}</span>
-                                <span style="float: right" v-if="myapplicant.test_stage === 'complete'">
+                                {{currentUserProfile.user.first_name |capitalize}}</span>
+                                <span v-if="myapplicant !== null">
+                                    <span style="float: right" v-if="myapplicant.test_stage === 'complete'">
                                     <a-button type="primary">Schedule Interview</a-button>
                                 </span>
+                                </span>
+
                             </span>
 
-                    <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;">
+                    <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;" v-if="myapplicant !== null">
                                 <span>
                     Job Application Stage :
                 </span>
@@ -42,8 +45,7 @@
         data() {
 
             return {
-                currentUserProfile: {},
-                currentUser: {},
+                currentUserProfile: null,
                 allapplicant: null,
                 myapplicant: null
 
@@ -67,7 +69,7 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateId, auth)).data
+
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
             this.allapplicant = (await Marketplace.joboneapplicant(this.$route.params.candidateId, this.$route.params.jobId, auth)).data
             this.myapplicant = this.allapplicant[0]

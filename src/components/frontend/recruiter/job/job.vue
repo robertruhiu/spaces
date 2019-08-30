@@ -82,13 +82,15 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Skills
+                                                                    <div style="margin-left: 40%" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                                        <div style="text-align: center">
+                                                                            <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                        </div>
                                                                     </template>
                                                                 </a-table-column>
 
@@ -136,6 +138,12 @@
                                                                                         <a-icon
                                                                                                 type="codepen"/>
                                                                                         assign project test
+                                                                                    </a-menu-item>
+                                                                                    <a-menu-item
+                                                                                            @click="handleMenuClick(record.action,record.profile,2)">
+                                                                                        <a-icon
+                                                                                                type="calendar"/>
+                                                                                        interview candidate
                                                                                     </a-menu-item>
                                                                                     <a-menu-item
                                                                                             @click="handleMenuClick(record.action,record.profile,3)">
@@ -215,13 +223,16 @@
                                                                         width="25%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Skills
+                                                                    <div style="margin-left: 33%" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <span style="text-align: center;">
+                                                                        <div style="text-align: center">
+                                                                            <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -312,7 +323,7 @@
                                                                     <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
+                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})">profile</a>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -325,13 +336,16 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Skills
+                                                                    <div style="text-align: center;" slot="title">Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
-                                                        <span style="text-align: center;">
+                                                                        <div style="text-align: center;">
+                                                                            <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -427,7 +441,9 @@
                                                         >
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
+
                                                         <span style="margin-left: 15%">
+
                                                             <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile
 
                                                             </a>
@@ -443,12 +459,15 @@
                                                                 width="25%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Skills</div>
+                                                            <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                                <div style="text-align: center">
+                                                                    <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                </div>
+
                                                             </template>
                                                         </a-table-column>
 
@@ -491,11 +510,19 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div slot="title">Report status
+                                                            <div slot="title">Project status
                                                             </div>
                                                             <template slot-scope="text,record">
-                                                        <span v-if="record.test_stage" style="margin-left: 20%">
-                                                            {{record.test_stage}}
+                                                        <span v-if="record.test_stage " style="margin-left: 20%">
+                                                            <span v-if="record.test_stage === 'complete'">
+                                                                <a @click="navigateTo({name:'report',params:{candidateId: record.profile,projectId:record.project}})">
+                                                                    report
+                                                                </a>
+                                                            </span>
+                                                            <span v-else>
+                                                                {{record.test_stage}}
+                                                            </span>
+
                                                         </span>
                                                                 <span v-else style="margin-left: 20%">
                                                             --
@@ -521,7 +548,7 @@
                                                                         <a-menu-item
                                                                                 v-if="record.test_stage === 'complete'"
                                                                                 @click="handleTestMenuClick(record.action,record.profile,2)"
-                                                                                >
+                                                                        >
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
@@ -573,6 +600,7 @@
                                                     <a-table :dataSource="interviewstage" :scroll="{ y: 340 }"
                                                              size="middle">
 
+
                                                         <!-----name--------->
                                                         <a-table-column
                                                                 dataIndex="name"
@@ -613,12 +641,15 @@
                                                                 width="25%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Skills</div>
+                                                            <div style="margin-left: 33%" slot="title">Skills</div>
                                                             <template slot-scope="tags">
-                                                        <span style="text-align: center">
+                                                                <div style="text-align: center">
+                                                                    <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                </div>
+
                                                             </template>
                                                         </a-table-column>
 
@@ -666,7 +697,9 @@
                                                                         view
                                                                     </a-button>
 
+
                                                                 </span>
+
 
                                                             </template>
 
@@ -713,6 +746,8 @@
                                                         <span style="margin-left: 25%">
                                                             <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">notes</a>
                                                         </span>
+
+
                                                             </template>
 
                                                         </a-table-column>
@@ -806,14 +841,48 @@
                                                         <!-----offer letter--------->
                                                         <a-table-column
 
-                                                                dataIndex="offer"
-                                                                key="offer"
+                                                                dataIndex="offerletter"
+                                                                key="offerletter"
+                                                                width="10%"
+
+                                                        >
+                                                            <div style="text-align: center" slot="title">Make offer
+                                                            </div>
+                                                            <template slot-scope="text, record">
+                                                                <div style="text-align: center">
+                                                                    <a-button v-if="record.offerletter === null "
+                                                                              type="primary" size="small"
+                                                                              @click="openWidget()">Upload offer letter
+                                                                    </a-button>
+                                                                    <a v-else :href="record.offerletter"
+                                                                       target="_blank">{{record.offerletter}}</a>
+                                                                </div>
+
+
+                                                            </template>
+
+                                                        </a-table-column>
+
+                                                        <!-----offer letter status--------->
+                                                        <a-table-column
+
+                                                                dataIndex="offerstatus"
+                                                                key="offerstatus"
                                                                 width="20%"
 
                                                         >
-                                                            <div style="margin-left: 25%" slot="title">Make offer</div>
+                                                            <div style="text-align: center" slot="title">Offer Status
+                                                            </div>
                                                             <template slot-scope="text, record">
-                                                                <a style="margin-left: 25%">offer letter</a>
+                                                                <div style="text-align: center">
+                                                                    <span v-if="record.offerstatus">
+                                                                    {{record.offerstatus}}
+                                                                </span>
+                                                                    <span v-else>
+                                                                    --
+                                                                </span>
+                                                                </div>
+
 
                                                             </template>
 
@@ -1204,7 +1273,7 @@
                                 </a>
                             </a-col>
                         </a-row>
-                        <div v-if="recentprojects">
+                        <div v-if="recentprojects.length >= 1">
                             <p>My Recent projects</p>
                             <p v-for="project in recentprojects"
                                :key="project">
@@ -1239,7 +1308,7 @@
                                     :label-col="{ span: 5 }"
                                     :wrapper-col="{ span: 10 }"
                             >
-                                <a-input v-model="candidatename" disabled />
+                                <a-input v-model="candidatename" disabled/>
                             </a-form-item>
 
 
@@ -1370,28 +1439,28 @@
 
                             </a-form-item>
                             <a-form-item label="Event color"
-                                     :label-col="{ span: 5 }"
-                                     :wrapper-col="{ span: 3 }">
-                            <a-select
+                                         :label-col="{ span: 5 }"
+                                         :wrapper-col="{ span: 3 }">
+                                <a-select
 
-                                    v-model="eventcolor"
+                                        v-model="eventcolor"
 
-                            >
-                                <a-select-option value="blue">
-                                    <a-tag color="#029BE4" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="green">
-                                    <a-tag color="#3BB679" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="purple">
-                                    <a-tag color="#a515ae" class="eventcolors"></a-tag>
-                                </a-select-option>
-                                <a-select-option value="tomato">
-                                    <a-tag color="tomato" class="eventcolors"></a-tag>
-                                </a-select-option>
-                            </a-select>
+                                >
+                                    <a-select-option value="blue">
+                                        <a-tag color="#029BE4" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="green">
+                                        <a-tag color="#3BB679" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="purple">
+                                        <a-tag color="#a515ae" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                    <a-select-option value="tomato">
+                                        <a-tag color="tomato" class="eventcolors"></a-tag>
+                                    </a-select-option>
+                                </a-select>
 
-                        </a-form-item>
+                            </a-form-item>
 
 
                         </a-form>
@@ -1412,7 +1481,6 @@
 
 
                     </a-modal>
-
 
 
                 </div>
@@ -1445,7 +1513,7 @@
         },
         {
             title: 'report',
-            dataIndex: 'profile',
+            dataIndex: 'report',
             key: 'report',
 
         },
@@ -1467,12 +1535,7 @@
             key: 'notes',
 
         },
-        {
-            title: 'offer',
-            dataIndex: 'offer',
-            key: 'offer',
 
-        },
         {
             title: 'Stage',
             dataIndex: 'stage',
@@ -1534,13 +1597,26 @@
             key: 'color',
 
         },
+        {
+            title: 'Offer Status',
+            dataIndex: 'offerstatus',
+            key: 'offerstatus',
+
+        },
+        {
+            title: 'Offer letter',
+            dataIndex: 'offerletter',
+            key: 'offerletter',
+
+        },
 
     ];
 
 
     //applicants structure on table
     class Applicant {
-        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end,color) {
+        constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
+                    end, color, report, offerstatus, offerletter) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1555,6 +1631,9 @@
             this.interviewstart = start
             this.interviewend = end
             this.color = color
+            this.report = report
+            this.offerstatus = offerstatus
+            this.offerletter = offerletter
 
 
         }
@@ -1613,9 +1692,9 @@
                 inputVisible: false,
                 inputValue: '',
                 visible: false,
-                active: true,
-                newapplications: true,
-                recommended: true,
+                active: false,
+                newapplications: false,
+                recommended: false,
                 amount: null,
                 deadline: null,
                 candidate: null,
@@ -1628,11 +1707,9 @@
                 endtime: null,
                 interviewcandidateapplicant: null,
                 showEvent: false,
-                interviewstart: null,
-                interviewend: null,
                 interviewer: null,
                 interviewerapplicationid: null,
-                eventcolor:'blue'
+                eventcolor: 'blue',
 
 
             }
@@ -1648,6 +1725,7 @@
         },
         async mounted() {
 
+
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -1656,8 +1734,8 @@
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 // all developer profile list api fetch
                 this.alldevsprofile = (await UsersService.devs()).data;
-                // all developer users list api fetch
-                this.alldevs = (await UsersService.allusers()).data;
+
+
                 const jobId = this.$store.state.route.params.jobId
                 // current job
                 this.job = (await Marketplace.specificjob(jobId, auth)).data
@@ -1673,38 +1751,49 @@
                 // getting applicants for job
                 this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
 
+
                 // create a profile for each applicant comparision and matching between user,profile and applicant model
-                for (let i = 0; i < this.alldevs.length; i++) { //all users
-                    for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
-                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
 
-                            if (this.alldevs[i].id === this.applicants[j].candidate && this.alldevsprofile[l].user === this.alldevs[i].id) {
-                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 2);
-                                let stage = this.applicants[j].stage
-                                let id = this.applicants[j].id
-                                let pk = this.applicants[j].id
-                                let user_id = this.applicants[j].candidate
-                                let name = this.alldevs[i].username
-                                let selected = this.applicants[j].selected
-                                let test_stage = this.applicants[j].test_stage
-                                let project = this.applicants[j].project
-                                let projectname = this.applicants[j].name
-                                let status = this.applicants[j].interviewstatus
-                                let start = this.applicants[j].interviewstarttime
-                                let end = this.applicants[j].interviewendtime
-                                let color = this.applicants[j].eventcolor
-                                let onepickeddev = new Applicant(
-                                    id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start, end,color
-                                );
+                for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
 
-                                this.applicantprofile.push(onepickeddev)
 
-                            }
+                    let tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
+                    let stage = this.applicants[j].stage
+                    let id = this.applicants[j].id
+                    let pk = this.applicants[j].id
+                    let user_id = this.applicants[j].candidate.id
+                    let name = this.applicants[j].candidate.user.first_name
+                    let selected = this.applicants[j].selected
+                    let test_stage = this.applicants[j].test_stage
+                    let project = ''
+                    let projectname = ''
+                    if (test_stage) {
+                        project = this.applicants[j].project.id
+                        projectname = this.applicants[j].project.name
 
-                        }
+                    } else {
+                        project = null
+                        projectname = null
 
                     }
+
+                    let status = this.applicants[j].interviewstatus
+                    let start = this.applicants[j].interviewstarttime
+                    let end = this.applicants[j].interviewendtime
+                    let color = this.applicants[j].eventcolor
+                    let report = this.applicants[j].report
+                    let offerstatus = this.applicants[j].offerstatus
+                    let offerletter = this.applicants[j].offerletter
+                    let onepickeddev = new Applicant(
+                        id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
+                        end, color, report, offerstatus, offerletter
+                    );
+
+                    this.applicantprofile.push(onepickeddev)
+
+
                 }
+
 
                 // applicants sorting
                 for (let i = 0; i < this.applicantprofile.length; i++) {
@@ -1738,7 +1827,7 @@
                 let allrecommedednouniquefilter = []
                 for (let x = 0; x < this.alldevsprofile.length; x++) {
                     for (let z = 0; z < this.tags.length; z++) {
-                        if (this.alldevsprofile[x].skills.includes(this.tags[z])) { // direct comparision direct match for now
+                        if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
                             let user_id = this.alldevsprofile[x].id
                             allrecommedednouniquefilter.push(user_id)
 
@@ -1762,39 +1851,38 @@
                 let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
                 let allapplicants = []
                 for (let x = 0; x < this.applicants.length; x++) {
-                    allapplicants.push(this.applicants[x].candidate)
+                    allapplicants.push(this.applicants[x].candidate.id)
                 }
                 let recommededlist = allrecommended.diff(allapplicants);
 
 
                 // create a profile for each recommended comparision and matching between user,profile
                 if (recommededlist.length > 0) {
-                    for (let i = 0; i < this.alldevs.length; i++) { //all users
-                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                            for (let k = 0; k < recommededlist.length; k++) {
-                                if (this.alldevs[i].id === recommededlist[k] && this.alldevsprofile[l].user === this.alldevs[i].id) {
 
-                                    let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                                    let stage = 'recommended'
-                                    let id = this.alldevs[i].id
-                                    let pk = this.alldevs[i].id
-                                    let user_id = this.alldevs[i].id
-                                    let name = this.alldevs[i].username
-                                    let selected = false
-                                    let onerecommed = new Recommended(
-                                        id, name, stage, tags, user_id, selected, pk
-                                    );
+                    for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                        for (let k = 0; k < recommededlist.length; k++) {
+                            if (this.alldevsprofile[l].id === recommededlist[k]) {
 
-                                    this.recommmedcandidates.push(onerecommed)
+                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                let stage = 'recommended'
+                                let id = this.alldevsprofile[l].id
+                                let pk = this.alldevsprofile[l].id
+                                let user_id = this.alldevsprofile[l].id
+                                let name = this.alldevsprofile[l].user.first_name
+                                let selected = false
+                                let onerecommed = new Recommended(
+                                    id, name, stage, tags, user_id, selected, pk
+                                );
 
-                                }
+                                this.recommmedcandidates.push(onerecommed)
 
                             }
 
                         }
-
+                        this.recommended = true
 
                     }
+
 
                 } else {
                     this.recommended = false
@@ -1804,10 +1892,10 @@
                 // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
                 if (this.pickedapplicants.length > 0) {
                     this.active = true
-                } else if (this.newapplicant.length === 0) {
-                    this.newapplications = false
-                } else if (this.recommmedcandidates.length === 0) {
-                    this.recommended = false
+                } else if (this.newapplicant.length > 0) {
+                    this.newapplications = true
+                } else if (this.recommmedcandidates.length > 0) {
+                    this.recommended = true
                 }
 
                 // recent projects
@@ -1819,7 +1907,7 @@
         },
         methods: {
             moment,
-            onEventClick(application_id, name, start, end,color) {
+            onEventClick(application_id, name, start, end, color) {
                 this.interviewerapplicationid = application_id
                 this.interviewer = name
                 this.interviewstart = moment(start)
@@ -1836,7 +1924,6 @@
                 this.interviewmodal = true
                 this.candidatename = candidate_name;
                 this.interviewcandidateapplicant = application_id
-
 
 
             },
@@ -1859,7 +1946,7 @@
                 Marketplace.pickreject(interviewerapplicationid, {
                     interviewstarttime: interviewstart,
                     interviewendtime: interviewend,
-                    eventcolor:this.eventcolor
+                    eventcolor: this.eventcolor
                 }, auth)
 
                 this.showEvent = false
@@ -1945,12 +2032,27 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
+
                 if (id === 1) { // testing
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
-                            this.pickedapplicants[i].stage = 'test'
-                            this.testingstage.push(this.pickedapplicants[i])
                             Marketplace.pickreject(action, {stage: 'test'}, auth)
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
 
                         }
                     }
@@ -1958,19 +2060,44 @@
                 } else if (id === 2) { // interview
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
-                            this.pickedapplicants[i].stage = 'interview'
-                            this.interviewstage.push(this.pickedapplicants[i])
                             Marketplace.pickreject(action, {stage: 'interview'}, auth)
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
                         }
                     }
 
                 } else if (id === 3) { // reject
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
-                            this.pickedapplicants[i].stage = 'rejected'
+
                             Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
-                            let index = this.pickedapplicants.indexOf(this.pickedapplicants[i]);
-                            this.pickedapplicants.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -1983,14 +2110,26 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
                 if (id === 2) { // interview
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
-                            this.testingstage[i].stage = 'interview'
-                            this.interviewstage.push(this.testingstage[i])
                             Marketplace.pickreject(action, {stage: 'interview'}, auth)
-                            let index = this.testingstage.indexOf(this.testingstage[i]);
-                            this.testingstage.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
 
                         }
                     }
@@ -1998,21 +2137,45 @@
                 } else if (id === 3) { // offer
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
-                            this.testingstage[i].stage = 'offer'
-                            this.offerstage.push(this.testingstage[i])
                             Marketplace.pickreject(action, {stage: 'offer'}, auth)
-                            let index = this.testingstage.indexOf(this.testingstage[i]);
-                            this.testingstage.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
                         }
                     }
 
                 } else if (id === 4) { // reject
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
-                            this.testingstage[i].stage = 'rejected'
+
                             Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
-                            let index = this.testingstage.indexOf(this.testingstage[i]);
-                            this.testingstage.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -2021,20 +2184,32 @@
 
             },
 
-            // handles movement on the testing stage keys 1,2,3
+            // handles movement on the interview stage keys 1,2,3
             handleInterviewClick(action, profile, id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                if (id === 1) { // coding
+                let self = this;
+                if (id === 1) {
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
-                            this.interviewstage[i].stage = 'test'
-                            this.testingstage.push(this.interviewstage[i])
                             Marketplace.pickreject(action, {stage: 'test'}, auth)
-                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
-                            this.interviewstage.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
 
                         }
                     }
@@ -2042,21 +2217,45 @@
                 } else if (id === 2) { // offer
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
-                            this.interviewstage[i].stage = 'offer'
-                            this.offerstage.push(this.interviewstage[i])
+
                             Marketplace.pickreject(action, {stage: 'offer'}, auth)
-                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
-                            this.interviewstage.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
                         }
                     }
 
                 } else if (id === 3) { // reject
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
-                            this.interviewstage[i].stage = 'rejected'
                             Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
-                            let index = this.interviewstage.indexOf(this.interviewstage[i]);
-                            this.interviewstage.splice(index, 1);
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
                         }
                     }
 
@@ -2066,23 +2265,34 @@
             },
 
             //pick or reject from new applicants
-            pickrejectClick(job_id, candidate_id, key,name) {
+            pickrejectClick(job_id, candidate_id, key, name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
                 if (key) {
                     for (let i = 0; i < this.newapplicant.length; i++) {
+
                         if (this.newapplicant[i].profile === candidate_id) {
-                            this.newapplicant[i].stage = 'active'
-                            this.pickedapplicants.push(this.newapplicant[i])
+
                             this.active = true
-                            let index = this.newapplicant.indexOf(this.newapplicant[i]);
-                            this.newapplicant.splice(index, 1);
-                            if (this.newapplicant.length === 0) {
-                                this.newapplications = false
-                            }
-                            Marketplace.pickreject(job_id, {stage: 'active', selected: true,candidatename:name}, auth)
+
+                            Marketplace.pickreject(job_id, {stage: 'active', selected: true, candidatename: name}, auth)
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
 
 
                         }
@@ -2091,12 +2301,29 @@
                     for (let i = 0; i < this.newapplicant.length; i++) {
                         if (this.newapplicant[i].profile === candidate_id) {
 
-                            let index = this.newapplicant.indexOf(this.newapplicant[i]);
-                            this.newapplicant.splice(index, 1);
+
                             if (this.newapplicant.length === 0) {
                                 this.newapplications = false
                             }
-                            Marketplace.pickreject(job_id, {stage: 'rejected', selected: false,candidatename:name}, auth)
+                            Marketplace.pickreject(job_id, {
+                                stage: 'rejected',
+                                selected: false,
+
+                            }, auth)
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
 
 
                         }
@@ -2107,7 +2334,7 @@
             },
 
             // pick from recommedation list
-            pickrecommedationClick(job_id, candidate_id, key,name) {
+            pickrecommedationClick(job_id, candidate_id, key) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -2115,24 +2342,40 @@
                 if (key) {
                     for (let i = 0; i < this.recommmedcandidates.length; i++) {
                         if (this.recommmedcandidates[i].profile === candidate_id) {
-                            this.recommmedcandidates[i].stage = 'active'
-                            this.pickedapplicants.push(this.recommmedcandidates[i])
-                            let index = this.recommmedcandidates.indexOf(this.recommmedcandidates[i]);
-                            this.recommmedcandidates.splice(index, 1);
+
                             if (this.recommmedcandidates.length === 0) {
                                 this.recommended = false
                             }
+                            let self = this;
                             Marketplace.pickrecommended(
                                 {
                                     job: job_id,
                                     candidate: candidate_id,
                                     stage: 'active',
                                     selected: true,
-                                    recruiter:this.$store.state.user.pk,
-                                    candidatename:name
+                                    recruiter: this.$store.state.user.pk,
+
                                 },
                                 auth
                             )
+                                .then(resp => {
+                                        this.applicants = []
+                                        this.newapplicant = []
+                                        this.pickedapplicants = []
+                                        this.interviewstage = []
+                                        this.testingstage = []
+                                        this.offerstage = []
+                                        this.hirestage = []
+                                        this.recommmedcandidates = []
+                                        this.applicantprofile = []
+                                        self.Datarefresh()
+                                        this.active = true
+                                        return resp
+
+
+                                    }
+                                )
+                                .catch()
 
 
                         }
@@ -2197,14 +2440,207 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                let self = this;
+
                 Marketplace.pickreject(application_id, {
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
                     interviewstatus: 'invite sent',
-                    eventcolor:this.eventcolor,
+                    eventcolor: this.eventcolor,
                 }, auth)
+                    .then(resp => {
+                            this.applicants = []
+                            this.newapplicant = []
+                            this.pickedapplicants = []
+                            this.interviewstage = []
+                            this.testingstage = []
+                            this.offerstage = []
+                            this.hirestage = []
+                            this.recommmedcandidates = []
+                            this.applicantprofile = []
+                            self.Datarefresh()
+                            return resp
+
+                        }
+                    )
+                    .catch()
+
+
                 this.interviewmodal = false
-            }
+            },
+            // upload offer letter
+            async Datarefresh() {
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                if (this.$store.state.user.pk) {
+
+
+                    const jobId = this.$store.state.route.params.jobId
+                    // current job
+                    this.job = (await Marketplace.specificjob(jobId, auth)).data
+
+
+                    this.projects = Projectsservice.allprojects(auth)
+
+                    // getting applicants for job
+                    this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
+
+
+                    // create a profile for each applicant comparision and matching between user,profile and applicant model
+
+                    for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
+
+
+                        let tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
+                        let stage = this.applicants[j].stage
+                        let id = this.applicants[j].id
+                        let pk = this.applicants[j].id
+                        let user_id = this.applicants[j].candidate.id
+                        let name = this.applicants[j].candidate.user.first_name
+                        let selected = this.applicants[j].selected
+                        let test_stage = this.applicants[j].test_stage
+                        let project = ''
+                        let projectname = ''
+                        if (test_stage) {
+                            project = this.applicants[j].project.id
+                            projectname = this.applicants[j].project.name
+
+                        } else {
+                            project = null
+                            projectname = null
+
+                        }
+
+                        let status = this.applicants[j].interviewstatus
+                        let start = this.applicants[j].interviewstarttime
+                        let end = this.applicants[j].interviewendtime
+                        let color = this.applicants[j].eventcolor
+                        let report = this.applicants[j].report
+                        let offerstatus = this.applicants[j].offerstatus
+                        let offerletter = this.applicants[j].offerletter
+                        let onepickeddev = new Applicant(
+                            id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
+                            end, color, report, offerstatus, offerletter
+                        );
+
+                        this.applicantprofile.push(onepickeddev)
+
+
+                    }
+
+
+                    // applicants sorting
+                    for (let i = 0; i < this.applicantprofile.length; i++) {
+                        if (this.applicantprofile[i].selected === false && this.applicantprofile[i].stage !== 'rejected') {
+                            this.newapplicant.push(this.applicantprofile[i])
+                        } else if (this.applicantprofile[i].selected) {
+                            this.pickedapplicants.push(this.applicantprofile[i])
+
+                        }
+                        // second part of sorting conditional coz the fist condition met
+                        if (this.applicantprofile[i].stage === 'interview') {
+                            this.interviewstage.push(this.applicantprofile[i])
+
+                        } else if (this.applicantprofile[i].stage === 'test') {
+                            this.testingstage.push(this.applicantprofile[i])
+
+                        } else if (this.applicantprofile[i].stage === 'offer') {
+                            this.offerstage.push(this.applicantprofile[i])
+
+
+                        } else if (this.applicantprofile[i].stage === 'hired') {
+                            this.hirestage.push(this.applicantprofile[i])
+
+                        }
+
+
+                    }
+
+
+                    // system recommend candidates (all candidates with matching skill tags - current applicants)
+                    let allrecommedednouniquefilter = []
+                    for (let x = 0; x < this.alldevsprofile.length; x++) {
+                        for (let z = 0; z < this.tags.length; z++) {
+                            if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                                let user_id = this.alldevsprofile[x].id
+                                allrecommedednouniquefilter.push(user_id)
+
+                            }
+                        }
+                    }
+
+                    // allows unique filter under codeln recommended candidates id
+                    function onlyUnique(value, index, self) {
+                        return self.indexOf(value) === index;
+                    }
+
+                    // finds the difference to eliminate candidates already picked/selected or applied from recommended
+                    Array.prototype.diff = function (a) {
+                        return this.filter(function (i) {
+                            return a.indexOf(i) < 0;
+                        });
+                    };
+
+
+                    let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
+                    let allapplicants = []
+                    for (let x = 0; x < this.applicants.length; x++) {
+                        allapplicants.push(this.applicants[x].candidate.id)
+                    }
+                    let recommededlist = allrecommended.diff(allapplicants);
+
+
+                    // create a profile for each recommended comparision and matching between user,profile
+                    if (recommededlist.length > 0) {
+
+                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                            for (let k = 0; k < recommededlist.length; k++) {
+                                if (this.alldevsprofile[l].id === recommededlist[k]) {
+
+                                    let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                    let stage = 'recommended'
+                                    let id = this.alldevsprofile[l].id
+                                    let pk = this.alldevsprofile[l].id
+                                    let user_id = this.alldevsprofile[l].id
+                                    let name = this.alldevsprofile[l].user.first_name
+                                    let selected = false
+                                    let onerecommed = new Recommended(
+                                        id, name, stage, tags, user_id, selected, pk
+                                    );
+
+                                    this.recommmedcandidates.push(onerecommed)
+
+                                }
+
+                            }
+                            this.recommended = true
+
+                        }
+
+
+                    } else {
+                        this.recommended = false
+                    }
+
+
+                    // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
+                    if (this.pickedapplicants.length > 0) {
+                        this.active = true
+                    } else if (this.newapplicant.length > 0) {
+                        this.newapplications = true
+                    } else if (this.recommmedcandidates.length > 0) {
+                        this.recommended = true
+                    }
+
+                    // recent projects
+                    this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+
+                }
+
+            },
 
 
         },

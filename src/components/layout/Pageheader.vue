@@ -1,6 +1,7 @@
 <template>
     <a-layout-header
-            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
+            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',
+            borderBottom: '1px solid #e8e8e8',position:'fixed',zIndex: '1' }">
         <a-row>
 
             <a-col :span="6">
@@ -96,7 +97,7 @@
                 if (this.allevents[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].candidatename
+                    let title = this.allevents[i].candidate.user.first_name
                     let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
                     let color = this.allevents[i].eventcolor
@@ -110,12 +111,12 @@
 
 
             }
-            for (let i = 0; i < this.allevents.length; i++) {
+            for (let i = 0; i < this.alldevrequests.length; i++) {
 
-                if (this.alldevrequests[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate) {
+                if (this.alldevrequests[i].interviewstatus !== null && moment(this.alldevrequests[i].interviewstarttime).format("YYYY-MM-DD") === todayDate) {
 
                     let id = this.alldevrequests[i].id
-                    let title = this.alldevrequests[i].candidatename
+                    let title = this.alldevrequests[i].candidate.user.first_name
                     let start = moment(this.alldevrequests[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.alldevrequests[i].interviewendtime).format("HH:mm")
                     let color = this.alldevrequests[i].eventcolor
@@ -128,6 +129,7 @@
                 }
 
             }
+            console.log(this.events)
 
 
         },

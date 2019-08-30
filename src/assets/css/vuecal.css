@@ -997,3 +997,21 @@
     color: white;
 }
 
+.vuecal__cell-events-count {
+  width: 18px;
+  height: 2px;
+  color: transparent;
+}
+
+/* Dot indicator */
+.vuecal__cell-events-count {
+  width: 4px;
+  min-width: 0;
+  height: 4px;
+  padding: 0;
+  color: transparent;
+}
+
+/* Cell background indicator */
+.vuecal__cell--has-events {background-color: #fffacd;}
+.vuecal__cell-events-count {display: none;}

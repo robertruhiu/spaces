@@ -15,9 +15,9 @@
                         <a-col :span="14">
 
                             <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
-                                <div v-if="project.projectimage1 "><img :src="project.projectimage1"/></div>
-                                <div v-if="project.projectimage2 "><img :src="project.projectimage2"/></div>
-                                <div v-if="project.projectimage3 "><img :src="project.projectimage3"/></div>
+                                <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/></div>
+                                <div v-if="project.projectimage2 "><img style="width: 100%" :src="project.projectimage2"/></div>
+                                <div v-if="project.projectimage3 "><img style="width: 100%" :src="project.projectimage3"/></div>
                                 <div v-if="project.projectimage4 "><img :src="project.projectimage4"/></div>
                                 <div v-if="project.projectimage5 "><img :src="project.projectimage5"/></div>
                                 <div v-if="project.projectimage6 "><img :src="project.projectimage6"/></div>
@@ -149,7 +149,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                Marketplace.candidatemanager(application, {test_stage: 'invite sent', project: project,name:name}, auth)
+                Marketplace.candidatemanager(application, {test_stage: 'invite_sent', project: project,name:name}, auth)
                 this.$router.push({
                     name: 'mycandidates',
 
