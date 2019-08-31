@@ -1,7 +1,5 @@
 import Api from '@/services/Api'
 export default {
-
-
     projects(job_id,auth) {
         return Api().get(`projects/projects/${job_id}`, auth)
     },

@@ -63,34 +63,29 @@
 
                                             :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
                                     />
-                                    <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id)">
+                                    <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id), ScheduleJob(application)">
                                         Submit
                                     </a-button>
                                     <br>
                                     <span v-if="timeseterror">
                                     <span style="color:red ">* Please pick a time to continue</span>
                                 </span>
-
                                 </div>
                                 <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='time_set'">
+                                    Your test is set for {{time}}.
+                                    Depending on your location test details will be emailed to you.
+                                </div>
+                                <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='approved'">
                                     <p>IDE link</p>
                                     <a target="_blank" :href="server_url">{{server_url}}</a>
                                     <br>
                                     <a-button type="primary" @click="Finish(application.id)">Close/Finish project
                                     </a-button>
-
-
                                 </div>
                                 <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='project_completed'">
                                     <p>Project analysis</p>
-
                                     <span>We are currently analysing the project and a report will be generated</span>
-
-
-
-
                                 </div>
-
                                 <div>
                                     <p style="margin-left: 5%"><strong>Requirements</strong></p>
                                     <ol>
@@ -128,15 +123,9 @@
 
                                     </ol>
                                 </div>
-
-
                             </div>
-
-
                         </a-col>
                     </a-row>
-
-
                 </div>
             </a-layout-content>
         </a-layout>
@@ -147,6 +136,7 @@
 
 <script>
     import Projects from '@/services/Projects'
+    import ServerManagement from '@/services/ServerManagement'
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
     import moment from 'moment';
@@ -158,7 +148,7 @@
                 application: {},
                 projectstarttime: null,
                 timeseterror: false,
-                server_url: "http://codelnide.codeln.com:8080/dashboard/#/ide/che/Elohor-Thomas",
+                server_url: "http://codelnide.codeln.com",
             }
         },
         components: {
@@ -189,6 +179,19 @@
                 // Can not select days before today and today
                 return current && current < moment().endOf('day');
             },
+            // },
+            async ScheduleJob(application) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                ServerManagement.schedulejob(
+                    {
+                        project: application,
+                        type: 'create_server',
+                        time: this.projectstarttime
+                    }, auth)
+            },
             async Settime(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -199,12 +202,11 @@
                     Projects.myprojectdetailspatch(application_id, {
                         stage: 'time_set',
                         projectstarttime: this.projectstarttime
-                    }, auth)
-                } else {
+                    }, auth);
+                }
+                else {
                     this.timeseterror = true
                 }
-
-
             },
             async Finish(application_id) {
                 const auth = {

@@ -10,8 +10,6 @@
 
                 <a-row gutter="8">
                     <a-col :span="14">
-
-
                         <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
                             <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/>
                             </div>
@@ -35,11 +33,8 @@
                             <p>{{project.description}}</p>
 
                         </div>
-
-
                     </a-col>
                     <a-col :span="10" style="padding: 0 1%;">
-
                         <div style="border:1px solid #e8e8e8;;padding: 2%;">
                             <div style="margin-left: 5%;margin-bottom: 2%"
                                  v-if="application.test_stage==='invite_sent'">
@@ -70,10 +65,7 @@
                                 <a target="_blank" :href="server_url">{{server_url}}</a>
                                 <br>
                                 <a-button type="primary" @click="finish(application.id)">Close/Finish project</a-button>
-
-
                             </div>
-
                             <div>
                                 <p style="margin-left: 5%"><strong>Requirements</strong></p>
                                 <ol>
@@ -91,31 +83,20 @@
 
                                 </ol>
                             </div>
-
-
                         </div>
-
-
                     </a-col>
                 </a-row>
-
-
             </div>
-
-
         </a-layout-content>
     </a-layout>
 </template>
 
 <script>
-
-
     import Projects from '@/services/Projects'
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
-
     export default {
         name: "DeveloperProjectDetails",
         data() {
@@ -134,13 +115,10 @@
             CandidateSider,
         },
         async mounted() {
-
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
-
             };
             if (this.$store.state.user.pk) {
-
                 const projectId = this.$store.state.route.params.projectId;
                 this.type = this.$store.state.route.params.type
                 console.log(this.type)
@@ -151,11 +129,7 @@
                 } else {
                     this.application = (await Marketplace.talentpickedmanagerview(this.$store.state.route.params.applicationId, auth)).data
                 }
-
-
             }
-
-
         },
         methods: {
             moment,
@@ -173,7 +147,6 @@
                 // Can not select days before today and today
                 return current && current < moment().endOf('day');
             },
-
             callback(key) {
                 console.log(key);
             },
@@ -194,7 +167,6 @@
             async Accept(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
-
                 };
                 this.application.test_stage = 'accepted'
                 if (this.type === 'job') {
@@ -202,15 +174,11 @@
 
                 } else {
                     Marketplace.candidatemanager(application_id, {test_stage: 'accepted'}, auth)
-
                 }
-
-
             },
             async Settime(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
-
                 };
                 if (this.projectstarttime !== null) {
                     this.application.test_stage = 'timeset'
@@ -219,36 +187,27 @@
                             test_stage: 'timeset',
                             projectstarttime: this.projectstarttime
                         }, auth)
-
                     } else {
                         Marketplace.candidatemanager(application_id, {
                             test_stage: 'timeset',
                             projectstarttime: this.projectstarttime
                         }, auth)
-
                     }
-
                 } else {
                     this.timeseterror = true
                 }
-
             },
             async finish(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
-
                 };
                 this.application.test_stage = 'complete'
                 if (this.type === 'job') {
                     Marketplace.pickreject(application_id, {test_stage: 'complete'}, auth)
-
                 } else {
                     Marketplace.candidatemanager(application_id, {test_stage: 'complete'}, auth)
-
                 }
-
             },
-
             onChange(value, dateString) {
 
                 console.log('Selected Time: ', value);

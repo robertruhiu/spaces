@@ -11,7 +11,6 @@
                             Start a new project or complete the existing ones.
                         </h3>
                     </a-col>
-
                 </a-row>
                 <a-row>
                     <a-col span="6">
@@ -56,18 +55,12 @@
                             </a-row>
                         </a-col>
                     </div>
-
-
                 </a-row>
-
-
             </div>
             <a-modal
                     title="Frameworks(Pick one)"
                     v-model="visible"
                     :footer="null"
-
-
             >
                 <a-row :gutter="16">
                     <a-col span="6" v-for="framework in frameworkchoices" v-bind:key="framework">
@@ -104,13 +97,9 @@
                     :footer="null"
                     width="1000px"
                     style="top: 10px;"
-
-
             >
                 <a-row gutter="8" v-if="project !== null">
                     <a-col :span="14">
-
-
                         <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
                             <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/>
                             </div>
