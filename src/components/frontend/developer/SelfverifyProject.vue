@@ -63,7 +63,7 @@
 
                                             :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
                                     />
-                                    <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id), ScheduleJob(application)">
+                                    <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id), ScheduleJob(application.id)">
                                         Submit
                                     </a-button>
                                     <br>
@@ -72,7 +72,7 @@
                                 </span>
                                 </div>
                                 <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='time_set'">
-                                    Your test is set for {{time}}.
+                                    Your test is set for {{application.projectstarttime | date_format}}.
                                     Depending on your location test details will be emailed to you.
                                 </div>
                                 <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='approved'">
@@ -179,15 +179,14 @@
                 // Can not select days before today and today
                 return current && current < moment().endOf('day');
             },
-            // },
-            async ScheduleJob(application) {
+            async ScheduleJob(application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
                 ServerManagement.schedulejob(
                     {
-                        project: application,
+                        project_id: application_id,
                         type: 'create_server',
                         time: this.projectstarttime
                     }, auth)
