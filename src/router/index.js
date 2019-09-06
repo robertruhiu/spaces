@@ -35,6 +35,7 @@ const TakeQuiz = () =>import('@/components/frontend/developer/quiz/takequiz');
 const SelfverifyProject = () =>import('@/components/frontend/developer/SelfverifyProject');
 
 const Cart = () =>  import('@/components/frontend/recruiter/cart/Cart');
+const Checkout = () =>  import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
 
 let router =  new Router({
@@ -312,6 +313,14 @@ let router =  new Router({
             path: '/cart',
             name: 'cart',
             component: Cart,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/checkout',
+            name: 'checkout',
+            component: Checkout,
             meta: {
                 requiresAuth: true
             }

@@ -26,7 +26,9 @@
                             <a-button type="primary" @click="RemoveDeveloper(item.id)">Remove</a-button>
                             <template class="ant-card-actions" slot="actions">
                                 <p> Total Amount: {{ item.cart.total_amount}}</p>
-                                <p>Checkout</p>
+                                <router-link to="/checkout">
+                                    <p>Checkout</p>
+                                </router-link>
                             </template>
                         </a-card>
                     </div>
