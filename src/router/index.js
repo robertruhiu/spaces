@@ -34,6 +34,7 @@ const DevCalendar = () =>import('@/components/frontend/developer/DevCalendar');
 const TakeQuiz = () =>import('@/components/frontend/developer/quiz/takequiz');
 const SelfverifyProject = () =>import('@/components/frontend/developer/SelfverifyProject');
 
+const Cart = () =>  import('@/components/frontend/recruiter/cart/Cart');
 Vue.use(Router);
 
 let router =  new Router({
@@ -303,6 +304,14 @@ let router =  new Router({
             path: '/takequiz/:candidateId/:quizId/',
             name: 'takequiz',
             component: TakeQuiz,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/cart',
+            name: 'cart',
+            component: Cart,
             meta: {
                 requiresAuth: true
             }

@@ -10,39 +10,44 @@
 
                     <a-row gutter="8">
                         <a-col :span="14">
-
-
                             <a-carousel v-if="application.project.hasvideo === false" autoplay
                                         style="border:1px solid #e8e8e8;">
-                                <div v-if="application.project.projectimage1 "><img style="width: 100%"
-                                                                                    :src="application.project.projectimage1"/>
+                                <div v-if="application.project.projectimage1 ">
+                                    <img style="width: 100%" :src="application.project.projectimage1"/>
                                 </div>
-                                <div v-if="application.project.projectimage2 "><img style="width: 100%"
-                                                                                    :src="application.project.projectimage2"/>
+                                <div v-if="application.project.projectimage2 ">
+                                    <img style="width: 100%" :src="application.project.projectimage2"/>
                                 </div>
-                                <div v-if="application.project.projectimage3 "><img style="width: 100%"
-                                                                                    :src="application.project.projectimage3"/>
+                                <div v-if="application.project.projectimage3 ">
+                                    <img style="width: 100%" :src="application.project.projectimage3"/>
                                 </div>
-                                <div v-if="application.project.projectimage4 "><img
-                                        :src="application.project.projectimage4"/></div>
-                                <div v-if="application.project.projectimage5 "><img
-                                        :src="application.project.projectimage5"/></div>
-                                <div v-if="application.project.projectimage6 "><img
-                                        :src="application.project.projectimage6"/></div>
-                                <div v-if="application.project.projectimage7 "><img
-                                        :src="application.project.projectimage7"/></div>
-                                <div v-if="application.project.projectimage8 "><img
-                                        :src="application.project.projectimage8"/></div>
-                                <div v-if="application.project.projectimage9 "><img
-                                        :src="application.project.projectimage9"/></div>
-                                <div v-if="application.project.projectimage10 "><img
-                                        :src="application.project.projectimage10"/></div>
+                                <div v-if="application.project.projectimage4 ">
+                                    <img :src="application.project.projectimage4"/>
+                                </div>
+                                <div v-if="application.project.projectimage5 ">
+                                    <img :src="application.project.projectimage5"/>
+                                </div>
+                                <div v-if="application.project.projectimage6 ">
+                                    <img :src="application.project.projectimage6"/>
+                                </div>
+                                <div v-if="application.project.projectimage7 ">
+                                    <img :src="application.project.projectimage7"/>
+                                </div>
+                                <div v-if="application.project.projectimage8 ">
+                                    <img :src="application.project.projectimage8"/>
+                                </div>
+                                <div v-if="application.project.projectimage9 ">
+                                    <img :src="application.project.projectimage9"/>
+                                </div>
+                                <div v-if="application.project.projectimage10 ">
+                                    <img :src="application.project.projectimage10"/>
+                                </div>
                             </a-carousel>
                             <div v-if="application.project.hasvideo">
                                 <youtube :video-id="application.project.projectimage2"
                                          :player-vars="playerVars"></youtube>
                             </div>
-                            <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
+                            <div style="border:1px solid #e8e8e8;padding: 4%;margin-top: 4%;">
                                 <h4><strong>Project name:</strong> {{application.project.name}}</h4>
                                 <p>{{application.project.description}}</p>
 
@@ -51,10 +56,8 @@
 
                         </a-col>
                         <a-col :span="10" style="padding: 0 1%;">
-                            <div style="border:1px solid #e8e8e8;;padding: 2%;">
-
-                                <div style="margin-left: 5%;margin-bottom: 2%"
-                                     v-if="application.stage==='invite_accepted'">
+                            <div style="border:1px solid #e8e8e8;;padding: 4%;">
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage==='invite_accepted'">
                                     <p>Pick Date and time of choice to take the project</p>
                                     <a-date-picker
                                             format="YYYY-MM-DD HH:mm:ss"
@@ -63,29 +66,54 @@
 
                                             :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
                                     />
-                                    <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id), ScheduleJob(application.id)">
+                                    <a-button type="primary" style="margin-left: 2%"
+                                              @click="Settime(application.id), ScheduleJob(application.id)">
                                         Submit
                                     </a-button>
                                     <br>
                                     <span v-if="timeseterror">
-                                    <span style="color:red ">* Please pick a time to continue</span>
-                                </span>
+                                        <span style="color:red ">* Please pick a time to continue</span>
+                                    </span>
                                 </div>
-                                <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='time_set'">
-                                    Your test is set for {{application.projectstarttime | date_format}}.
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='time_set'">
+                                    Your test is set for {{application.projectstarttime}}.
                                     Depending on your location test details will be emailed to you.
                                 </div>
-                                <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='approved'">
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='approved'">
+                                    <div v-if="application.test_mode === 'automated_test'">
+                                        You have successfully booked your test with Codeln.
+                                        At the appointed time a link to the worspace will be available here.
+                                    </div>
+                                    <div v-if="application.test_mode === 'manual_test'">
+                                        A Codeln representative will contact you for details of your Test
+                                    </div>
+                                </div>
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='link_available'">
                                     <p>IDE link</p>
-                                    <a target="_blank" :href="server_url">{{server_url}}</a>
-                                    <br>
-                                    <a-button type="primary" @click="Finish(application.id)">Close/Finish project
-                                    </a-button>
+                                        <a target="_blank" :href="server_url">{{server_url}}</a>
+                                        <br>
+                                        <a-button type="primary" @click="Finish(application.id)">Close/Finish project
+                                        </a-button>
                                 </div>
-                                <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='project_completed'">
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='in_progress'">
+                                    <p>Project In Progress</p>
+                                    <p>Time remaining : {{ application.projectstarttime }}</p>
+                                </div>
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='project_completed'">
+                                    <p>Project Submitted</p>
+                                    <span>Congratulations on completeing your Codeln Test.
+                                        Your Project has been submitted for Analysis</span>
+                                </div>
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='analysis_started'">
                                     <p>Project analysis</p>
-                                    <span>We are currently analysing the project and a report will be generated</span>
+                                    <span>We are currently analysing the project and a
+                                        report will be generated as soon as it is complete</span>
                                 </div>
+                                <div style="margin-left: 5%;margin-bottom: 4%" v-if="application.stage ==='analysis_complete'">
+                                    <p>Project Report</p>
+                                    <span>Click here to view your project report</span>
+                                </div>
+                                <hr>
                                 <div>
                                     <p style="margin-left: 5%"><strong>Requirements</strong></p>
                                     <ol>
@@ -202,8 +230,7 @@
                         stage: 'time_set',
                         projectstarttime: this.projectstarttime
                     }, auth);
-                }
-                else {
+                } else {
                     this.timeseterror = true
                 }
             },

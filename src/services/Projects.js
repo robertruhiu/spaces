@@ -21,9 +21,6 @@ export default {
     developerprojects(framework,auth) {
         return Api().get(`projects/developerprojects/${framework}`, auth)
     },
-    developerselectproject(project_id,auth) {
-        return Api().post(`projects/developerprojects/${project_id}`, auth)
-    },
     developerprojectreport(developer_id, project_id, auth){
         return Api().get(`projects/developerprojectreport/${developer_id}/${project_id}/`, auth)
     },
@@ -36,7 +33,7 @@ export default {
     selfassessprojectcreate(currentAssess,auth) {
         return Api().post('createassess',currentAssess, auth)
     },
-    myprojects(dev_id,auth) {
+    myprojects(dev_id, auth) {
         return Api().get(`myprojects/${dev_id}`, auth)
     },
     myprojectdetails(assessmentapplication_id,auth) {
@@ -45,5 +42,7 @@ export default {
     myprojectdetailspatch(assessmentapplication_id,currentAssess,auth) {
         return Api().patch(`myprojectdetailsupdater/${assessmentapplication_id}`,currentAssess, auth)
     },
-
+    developerselectproject(project_id,auth) {
+        return Api().post(`projects/developerprojects/${project_id}`, auth)
+    },
 }
