@@ -9,6 +9,7 @@
 
 
         </div>
+        <hide-at breakpoint="mediumAndBelow">
         <div class="ant-menu-horizontal " :style="{ lineHeight: '64px',float: 'right',borderBottom: 0}">
 
             <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent</router-link>
@@ -34,6 +35,9 @@
 
 
         </div>
+        </hide-at>
+
+
 
 
     </a-layout-header>
@@ -42,9 +46,15 @@
 </template>
 
 <script>
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     export default {
         name: "Header",
+        components: {
+
+            hideAt, showAt
+
+        },
         methods: {
 
             logout() {

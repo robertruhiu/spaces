@@ -13,50 +13,58 @@
                                    :md="{span: 18, offset: 4 }"
                                    :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
                                 <show-at breakpoint="mediumAndBelow">
-                                    <div style="margin-top: 4rem">
-                                    <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">Hire
-                                        Skilled
-                                        Developers
-                                        Faster</h1>
+                                    <div style="margin-top: 3rem">
+                                        <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                            Hire
+                                            Skilled
+                                            Developers
+                                            Faster</h1>
 
-                                    <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a click
-                                        away</h4>
-                                    <router-link to="/talent">
-                                        <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">Hire a
-                                            Dev
-                                        </a-button>
-                                    </router-link>
-                                    <router-link to="/jobs">
-                                        <a-button type="primary" style="margin-left: 1rem;height: 2.6rem;width: 8rem"
-                                                  ghost>Get hired
-                                        </a-button>
-                                    </router-link>
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a
+                                            click
+                                            away</h4>
+                                        <router-link to="/talent">
+                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
+                                                Hire a
+                                                Dev
+                                            </a-button>
+                                        </router-link>
+                                        <router-link to="/jobs">
+                                            <a-button type="primary"
+                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                      ghost>Get hired
+                                            </a-button>
+                                        </router-link>
 
 
-                                </div>
+                                    </div>
                                 </show-at>
                                 <hide-at breakpoint="mediumAndBelow">
                                     <div style="margin-top: 8rem">
-                                    <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">Hire
-                                        Skilled
-                                        Developers
-                                        Faster</h1>
+                                        <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                            Hire
+                                            Skilled
+                                            Developers
+                                            Faster</h1>
 
-                                    <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a click
-                                        away</h4>
-                                    <router-link to="/talent">
-                                        <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">Hire a
-                                            Dev
-                                        </a-button>
-                                    </router-link>
-                                    <router-link to="/jobs">
-                                        <a-button type="primary" style="margin-left: 1rem;height: 2.6rem;width: 8rem"
-                                                  ghost>Get hired
-                                        </a-button>
-                                    </router-link>
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a
+                                            click
+                                            away</h4>
+                                        <router-link to="/talent">
+                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
+                                                Hire a
+                                                Dev
+                                            </a-button>
+                                        </router-link>
+                                        <router-link to="/jobs">
+                                            <a-button type="primary"
+                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                      ghost>Get hired
+                                            </a-button>
+                                        </router-link>
 
 
-                                </div>
+                                    </div>
                                 </hide-at>
 
 
@@ -103,113 +111,61 @@
 
                     </div>
                     <!-----how it works---->
-                    <div :style="{ background: '#fff', padding: '0rem', minHeight: '60vh' }">
-                        <div style="background-color: #ffffff;margin: 0 12%">
+                    <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">
+                        <div style="background-color: #ffffff;">
                             <div style="text-align: center">
                                 <h2 class="headers">How Codeln Works</h2>
-                            <p>Our process is optimised to enable you to identify and onboard talent</p>
+                                <p>Our process is optimised to enable you to identify and onboard talent</p>
                             </div>
 
 
-
-                            <a-row style="padding: 3%">
+                            <a-row gutter="16" style="padding: 3%">
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
+                                    <img class="imagecenter" src="../../../assets/images/props/search.png"/>
 
+                                    <p style="text-align: center;font-size: 1rem">
+                                        We provide
+                                        you a unique
+                                        pool of verified developers
+                                        with varied technologies.You can easily filter them to identify
+                                        potential
+                                        candidates
+                                        for your job
 
-                                    <a-row class="ant-card actioncards">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar1" src="../../../assets/images/props/search.png">
-                                        </div>
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p
-                                                style="padding: 0 10%;font-size: 1rem">
-                                            We
-                                            provide
-                                            you a unique
-                                            pool of verified developers
-                                            with varied technologies.You can easily filter them to identify potential
-                                            candidates
-                                            for your job
-
-
-                                        </p>
-
-
-                                    </a-col>
-
-                                </a-row>
-
-
-
-
+                                    </p>
 
                                 </a-col>
+
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
+                                    <img class="imagecenter" src="../../../assets/images/props/pick.png"/>
 
+                                    <p style="text-align: center;font-size: 1rem">
+                                        We believe in
+                                        transparency
+                                        thus we ensure developer profiles encompass their verified skills,work
+                                        experience and past projects.
 
-                                    <a-row class="ant-card actioncards">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar2" src="../../../assets/images/props/pick.png">
-                                        </div>
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p
-                                                style="padding: 0 10%;font-size: 1rem">
-                                            We believe in
-                                            transparency
-                                            thus we ensure developer profiles encompass their verified skills,work
-                                            experience and past projects.
-
-
-                                        </p>
-
-
-                                    </a-col>
-
-                                </a-row>
-
-
-
-
+                                    </p>
 
                                 </a-col>
+
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
-                                    <a-row class="ant-card actioncards">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar1" src="../../../assets/images/props/coding.png">
-                                        </div>
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p
-                                                style="padding: 0 10%;font-size: 1rem">
-                                            Once you have picked talent you can take advantage of
-                                            our robust applicant tracking system to manage your candidates
+                                    <img class="imagecenter" src="../../../assets/images/props/coding.png"/>
 
+                                    <p style="text-align: center;font-size: 1rem">
+                                        Once you have picked talent you can take advantage of
+                                        our robust applicant tracking system to manage your candidates
 
-                                        </p>
-
-
-                                    </a-col>
-
-                                </a-row>
-
-
-
-
-
+                                    </p>
 
 
                                 </a-col>
@@ -217,42 +173,42 @@
                         </div>
 
                     </div>
-                    <!-----services---->
+                    <!--                    &lt;!&ndash;-&#45;&#45;services&#45;&#45;&ndash;&gt;-->
 
-                    <div :style="{  minHeight: '55vh' }">
-                        <h2 class="headers" style="text-align: center">
-                            Our Services
-                        </h2>
-
-
-                        <a-row  :style="{padding:'3%'}">
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                   :md="{span: 24, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                    <!--                    <div :style="{  minHeight: '55vh' }">-->
+                    <!--                        <h2 class="headers" style="text-align: center">-->
+                    <!--                            Our Services-->
+                    <!--                        </h2>-->
 
 
-                            </a-col>
+                    <!--                        <a-row  :style="{padding:'3%'}">-->
+                    <!--                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"-->
+                    <!--                                   :md="{span: 24, offset: 0 }"-->
+                    <!--                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">-->
 
 
-                        </a-row>
+                    <!--                            </a-col>-->
 
 
-                    </div>
+                    <!--                        </a-row>-->
+
+
+                    <!--                    </div>-->
                     <!-----talent---->
 
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '400px' }">
                         <a-row style="margin-top: 0">
                             <hide-at breakpoint="mediumAndBelow">
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 10, offset: 0 }"
                                        :lg="{span: 10, offset: 0 }" :xl="{span: 10, offset: 0 }">
-                                <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/talent_profile_bg_wt23ka.png"
-                                     style="width: 100%;margin-top: 30%">
-                            </a-col>
+                                    <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/talent_profile_bg_wt23ka.png"
+                                         style="width: 100%;margin-top: 30%">
+                                </a-col>
                             </hide-at>
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                       :md="{span: 24, offset: 0 }"
-                                       :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
+                                   :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
                                 <div>
 
                                     <h2 class="headers">Our Talent Pool</h2>
@@ -266,112 +222,117 @@
                                     </div>
 
                                     <div v-else>
-                                        <div v-for="item in listData" v-bind:key="item.id" style="
+
+                                        <show-at breakpoint="mediumAndBelow">
+                                            <div>
+                                                <div v-for="item in listData" v-bind:key="item.id"
+                                                     style="margin-bottom: 1rem">
+
+                                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+
+                                                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                               :md="{span: 24, offset: 0 }"
+                                                               :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
+                                                               style="padding: 2%">
+                                                            <p>Bio</p>
+                                                            <p>{{item.about | truncate(100)}}<a
+                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                                more</a>
+                                                            </p>
+
+                                                            <p>
+                                                                Skills :
+                                                                <span style="" v-for="skill in  item.skills.slice(0,3)"
+                                                                      v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                                            </p>
+
+                                                            <div style="margin-bottom: 1%">
+                                                                <a-button type="primary" ghost
+                                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                                    View Profile
+                                                                </a-button>
+                                                            </div>
+
+
+                                                        </a-col>
+
+
+                                                    </a-row>
+                                                </div>
+                                            </div>
+
+                                        </show-at>
+
+
+                                        <hide-at breakpoint="mediumAndBelow">
+                                            <div style="padding: 2%">
+                                                <div v-for="item in listData" v-bind:key="item.id" style="
 
                             ">
-                                            <show-at breakpoint="mediumAndBelow">
-                                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+                                                    <div style="margin-bottom: 1rem">
+                                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                                            <a-col span="4"
+                                                                   style="background-color:#0679FB;height: 100% ">
+                                                                <a-avatar class="poolavatar"
+                                                                >
+                                                                    {{item.name}}
+                                                                </a-avatar>
+                                                            </a-col>
+                                                            <a-col span="15" style="padding: 2%">
+                                                                <p>Bio</p>
+                                                                <p>{{item.about | truncate(100)}}<a
+                                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                                    more</a>
+                                                                </p>
 
-                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                       :md="{span: 24, offset: 0 }"
-                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }" style="padding: 2%">
-                                                    <p>Bio</p>
-                                                    <p>{{item.about | truncate(100)}}<a
-                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                        more</a>
-                                                    </p>
-
-                                                    <p>
-                                                        Skills :
-                                                        <span style="" v-for="skill in item.skills"
-                                                              v-bind:key="skill.id">
+                                                                <p>
+                                                                    Skills :
+                                                                    <span style="" v-for="skill in item.skills"
+                                                                          v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                                    </p>
+                                                                </p>
 
-                                                        <div style="margin-bottom: 1%">
-                                                        <a-button type="primary" ghost
-                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                            View Profile
-                                                        </a-button>
+
+                                                            </a-col>
+                                                            <a-col span="5">
+                                                                <div style="padding-top: 1rem;">
+
+                                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                                        <a-icon type="environment"/>
+                                                                        {{item.location}}
+                                                                    </a-tag>
+                                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                                        {{item.availabilty}}
+
+                                                                    </a-tag>
+
+
+                                                                </div>
+                                                                <div style="margin-top: 2rem">
+                                                                    <a-button type="primary" ghost
+                                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                                        View Profile
+                                                                    </a-button>
+                                                                </div>
+
+
+                                                            </a-col>
+
+
+                                                        </a-row>
                                                     </div>
 
 
+                                                </div>
+                                            </div>
 
-                                                </a-col>
+                                        </hide-at>
 
-
-
-
-                                            </a-row>
-                                            </show-at>
-
-
-
-
-                                            <hide-at breakpoint="mediumAndBelow">
-                                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                                <a-col :xs="{span: 4, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                       :md="{span: 4, offset: 0 }"
-                                       :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }" style="background-color:#0679FB;height: 100% ">
-                                                    <div class="poolavatar">{{item.name}}</div>
-                                                </a-col>
-                                                <a-col :xs="{span: 20, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                       :md="{span: 25, offset: 0 }"
-                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }" style="padding: 2%">
-                                                    <p>Bio</p>
-                                                    <p>{{item.about | truncate(100)}}<a
-                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                        more</a>
-                                                    </p>
-
-                                                    <p>
-                                                        Skills :
-                                                        <span style="" v-for="skill in item.skills"
-                                                              v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                                    </p>
-
-
-
-                                                </a-col>
-
-                                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                       :md="{span: 5, offset: 0 }"
-                                       :lg="{span: 5, offset: 0 }" :xl="{span: 5, offset: 0 }">
-                                                    <div style="padding-top: 1rem;">
-
-                                                        <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                            <a-icon type="environment"/>
-                                                            {{item.location}}
-                                                        </a-tag>
-                                                        <a-tag color="#F7E7F5" style="color: #B82EA4">
-                                                            {{item.availabilty}}
-
-                                                        </a-tag>
-
-
-                                                    </div>
-                                                    <div style="margin-top: 2rem">
-                                                        <a-button type="primary" ghost
-                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                            View Profile
-                                                        </a-button>
-                                                    </div>
-
-
-                                                </a-col>
-
-
-
-
-                                            </a-row>
-                                            </hide-at>
-
-                                        </div>
 
                                     </div>
 
@@ -400,8 +361,7 @@
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '50vh' }">
 
 
-                                <h2 class="headers" style="text-align: center">Why Should You Hire with us</h2>
-
+                        <h2 class="headers" style="text-align: center">Why Should You Hire with us</h2>
 
 
                         <a-row :gutter="16" :style="{padding:'3%'}">
@@ -432,7 +392,8 @@
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/analytics.png"/>
                                 <h3 style="text-align: center">Robust Applicant System</h3>
-                                <p style="text-align: center;font-size: 1rem">We ensure that you enjoy a fluid candidate management
+                                <p style="text-align: center;font-size: 1rem">We ensure that you enjoy a fluid candidate
+                                    management
                                     from when you identify them up to your choice to hire them.</p>
 
 
@@ -448,8 +409,8 @@
                         </h2>
                         <a-row :gutter="16" :style="{padding:'3%'}">
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                       :md="{span: 6, offset: 0 }"
-                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
                                 <img class="imagecenter" style="width: 70%;margin-top: 1rem"
                                      src="../../../assets/images/props/b_mest.png"
@@ -458,14 +419,15 @@
 
                             </a-col>
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                       :md="{span: 6, offset: 0 }"
-                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="padding-left: 0;padding-right: 0">
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                   style="padding-left: 0;padding-right: 0">
                                 <img style="width: 30%" class="imagecenter" src="../../../assets/images/props/b_7a.png"
                                 />
                             </a-col>
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                       :md="{span: 6, offset: 0 }"
-                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
                                 <img class="imagecenter" style="width: 50%;margin-top: 0.5rem"
                                      src="../../../assets/images/props/b_DIV.png"
@@ -474,8 +436,9 @@
 
                             </a-col>
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                       :md="{span: 6, offset: 0 }"
-                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="padding-left: 0;padding-right: 0">
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                   style="padding-left: 0;padding-right: 0">
                                 <img class="imagecenter" style="width: 40%;margin-top: 1rem"
                                      src="../../../assets/images/props/b_enpact.png"
                                 />
@@ -531,7 +494,7 @@
                 alldevs: null,
                 listData: [],
                 loading: true,
-                tempdata:[]
+                tempdata: []
 
             }
         },
@@ -546,7 +509,8 @@
         },
         async mounted() {
 
-            this.devs = (await UsersService.devs()).data;
+            this.devs = (await UsersService.sliceddevs()).data
+
             this.loading = false
 
             for (let i = 0; i < this.devs.length; i++) {
@@ -564,10 +528,9 @@
                 )
 
 
-                this.tempdata.push(onedev)
+                this.listData.push(onedev)
 
             }
-            this.listData = this.tempdata.slice(3)
 
 
         },
@@ -653,9 +616,11 @@
     }
 
     .poolavatar {
-        color:white;
-
-        font-size: 2rem;
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 30px;
+        background-color: #0679FB;
         margin: 29% 14%;
     }
 
@@ -676,18 +641,17 @@
         margin-right: auto;
 
     }
+
     .actioncards {
-
-        border-radius: 0;
-
-
 
 
     }
+
     .poolavatar1 {
         width: 20%;
         margin-top: 0.5rem;
     }
+
     .poolavatar2 {
         width: 14%;
         margin-top: 0.5rem;
