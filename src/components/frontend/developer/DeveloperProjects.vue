@@ -4,17 +4,20 @@
 
         <a-layout-content style="background-color: white">
             <DevHeader/>
-            <div style="padding: 2%">
+            <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                 <a-row style="margin-bottom: 2%">
-                    <a-col span="24">
-                        <h3 style="color: #1976D2;font-weight: bold">
+                    <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
+                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
+                        <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">
                             Start a new project or complete the existing ones.
                         </h3>
                     </a-col>
 
                 </a-row>
-                <a-row>
-                    <a-col span="6">
+                <a-row gutter="16" style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
+                    <a-col class="tracker"
+                                   :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                         <a-row class="ant-card actioncards">
                             <a @click="showModal" style="text-decoration: none;color: black">
                                 <a-col span="24">
@@ -34,7 +37,8 @@
 
                     </a-col>
                     <div v-if="projectlist.length >0">
-                        <a-col span="6" v-for="project in projectlist" v-bind:key="project">
+                        <a-col class="tracker" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }"v-for="project in projectlist" v-bind:key="project">
                             <a-row class="ant-card actioncards1">
                                 <a style="text-decoration: none;color: black"
                                    @click="navigateTo({name:'selfverifyproject',params:{applicationId:project.id}})"
@@ -70,7 +74,8 @@
 
             >
                 <a-row :gutter="16">
-                    <a-col span="6" v-for="framework in frameworkchoices" v-bind:key="framework">
+                    <a-col :xs="{span: 12, offset: 0  }" :sm="{span: 8, offset: 0 }" :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="framework in frameworkchoices" v-bind:key="framework">
                         <a
                                 @click="SelfverifyProject(framework.name)">
                             <a-row class="ant-card actioncards2">
@@ -108,7 +113,8 @@
 
             >
                 <a-row gutter="8" v-if="project !== null">
-                    <a-col :span="14">
+                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }">
 
 
                         <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
@@ -137,7 +143,8 @@
 
 
                     </a-col>
-                    <a-col :span="10" style="padding: 0 1%;">
+                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
                         <div style="border:1px solid #e8e8e8;;padding: 2%;">
                             <div style="margin-left: 5%;margin-bottom: 2%">
 
@@ -346,5 +353,8 @@
 
     .ant-carousel >>> .slick-slide h3 {
         color: #fff;
+    }
+    .tracker{
+        margin-bottom: 1rem;
     }
 </style>

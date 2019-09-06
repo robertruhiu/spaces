@@ -1,12 +1,29 @@
 <template>
-    <a-layout-header
-            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
-        <a-row>
+    <div>
+        <show-at breakpoint="mediumAndBelow">
+            <a-layout-header :style="{width: '100%',backgroundColor:'#ffffff',height:'5rem',padding: '1px 30px 0',
+            borderBottom: '1px solid #e8e8e8'}">
+                <img v-bind:style="logo"
+                 style="width: 120px;height: 31px;margin-top: 1rem;margin-bottom: 6%;margin-left: 9%"
+                 v-bind:src="defaultlogo"
+            >
 
-            <a-col :span="6">
-                <span style="color: white;font-size: 17px;font-weight:bold">
+
+
+        </a-layout-header>
+        </show-at>
+        <hide-at breakpoint="mediumAndBelow">
+            <a-layout-header :style="{width: '100%',backgroundColor:'#004ec7',height:'6rem',padding: '1px 30px 0',
+            borderBottom: '1px solid #e8e8e8'}">
+
+
+                <a-row>
+
+            <a-col :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 1 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" >
+                <span style="color: white;font-size: 1rem;font-weight:bold">
                    {{this.$store.state.user.first_name | capitalize}} {{this.$store.state.user.last_name | capitalize}} </span>
-                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px"> <strong>My Rank:</strong> 300/2500</p>
+                <p style="color: white;font-size: 0.9rem;font-weight: bold;line-height: 3px"> <strong>My Rank:</strong> 300/2500</p>
 
 
             </a-col>
@@ -16,7 +33,12 @@
 
         </a-row>
 
-    </a-layout-header>
+
+
+        </a-layout-header>
+        </hide-at>
+    </div>
+
 
 </template>
 
@@ -25,12 +47,15 @@
 
     import UsersService from '@/services/UsersService'
     import ARow from "ant-design-vue/es/grid/Row";
+    import Largelogo from '@/assets/logobg.svg'
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     export default {
         name: "PortfolioHeader",
         components: {
             ARow,
             ACol,
+            hideAt, showAt
 
         },
         data() {
@@ -39,7 +64,8 @@
 
                 currentUser: null,
                 skills: [],
-                verified_skills: []
+                verified_skills: [],
+                defaultlogo: Largelogo,
 
 
             }

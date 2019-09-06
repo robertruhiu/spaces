@@ -4,89 +4,131 @@
         <div>
             <a-layout :style="{background:'#fff'}">
                 <pageheader></pageheader>
-                <a-layout-content :style="{ padding: '0 0px', marginTop: '3%' }">
+                <a-layout-content :style="{ padding: '0 0px', marginTop: '2rem' }">
+                    <!-----header---->
 
                     <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
                         <a-row>
-                            <a-col :span="10">
-                                <div style="margin-top: 15%;margin-left: 14%">
-                                    <h1 style="font-size:45px;font-weight: 700;color: #007BFF;margin-bottom: 0">Hire
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 18, offset: 4 }"
+                                   :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
+                                <show-at breakpoint="mediumAndBelow">
+                                    <div style="margin-top: 4rem">
+                                    <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">Hire
                                         Skilled
                                         Developers
                                         Faster</h1>
 
-                                    <h4 style="color: #55A7FF;font-size: 22px">Your ideal developer is only a click
+                                    <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a click
                                         away</h4>
                                     <router-link to="/talent">
-                                        <a-button type="primary" :size="large">Hire a Developer</a-button>
+                                        <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">Hire a
+                                            Dev
+                                        </a-button>
                                     </router-link>
                                     <router-link to="/jobs">
-                                        <a-button type="primary" style="margin-left: 1rem" ghost :size="large">Find a
-                                            job
+                                        <a-button type="primary" style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                  ghost>Get hired
                                         </a-button>
                                     </router-link>
 
 
                                 </div>
+                                </show-at>
+                                <hide-at breakpoint="mediumAndBelow">
+                                    <div style="margin-top: 8rem">
+                                    <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">Hire
+                                        Skilled
+                                        Developers
+                                        Faster</h1>
 
-                            </a-col>
+                                    <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a click
+                                        away</h4>
+                                    <router-link to="/talent">
+                                        <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">Hire a
+                                            Dev
+                                        </a-button>
+                                    </router-link>
+                                    <router-link to="/jobs">
+                                        <a-button type="primary" style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                  ghost>Get hired
+                                        </a-button>
+                                    </router-link>
 
-
-                            <a-col :span="14">
-                                <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/header_bg_hstf4v.png"
-                                     style="width: 100%;float: right;">
-                                <div>
 
                                 </div>
+                                </hide-at>
+
+
                             </a-col>
+                            <hide-at breakpoint="mediumAndBelow">
+
+
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 24, offset: 0 }"
+                                       :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
+                                    <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/header_bg_hstf4v.png"
+                                         style="width: 100%;float: right;">
+                                    <div>
+
+                                    </div>
+                                </a-col>
+                            </hide-at>
 
 
                         </a-row>
-                        <a-row :style="{ padding: '0 5%'  }">
-                            <div class="press">
-                                <div>
-                                    <a-row>
-                                        <a-col :span="6"><img class="pressitemtech"
-                                                              src="../../../assets/images/props/b_tc.png">
-                                        </a-col>
-                                        <a-col :span="6"><img class="pressitemseed"
-                                                              src="../../../assets/images/props/b_ss.png">
-                                        </a-col>
-                                        <a-col :span="6"><img class="pressitemdisrupt"
-                                                              src="../../../assets/images/props/b_da.png">
-                                        </a-col>
-                                        <a-col :span="6"><img class="pressitemforbes"
-                                                              src="../../../assets/images/props/b_f.png">
-                                        </a-col>
-                                    </a-row>
+                        <hide-at breakpoint="mediumAndBelow">
+                            <a-row :style="{ padding: '0 5%'  }">
+                                <div class="press">
+                                    <div>
+                                        <a-row>
+                                            <a-col :span="6"><img class="pressitemtech"
+                                                                  src="../../../assets/images/props/b_tc.png">
+                                            </a-col>
+                                            <a-col :span="6"><img class="pressitemseed"
+                                                                  src="../../../assets/images/props/b_ss.png">
+                                            </a-col>
+                                            <a-col :span="6"><img class="pressitemdisrupt"
+                                                                  src="../../../assets/images/props/b_da.png">
+                                            </a-col>
+                                            <a-col :span="6"><img class="pressitemforbes"
+                                                                  src="../../../assets/images/props/b_f.png">
+                                            </a-col>
+                                        </a-row>
+                                    </div>
                                 </div>
-                            </div>
-                        </a-row>
+                            </a-row>
+                        </hide-at>
 
 
                     </div>
-                    <div :style="{ background: '#fff', padding: '0rem', minHeight: '70vh' }">
+                    <!-----how it works---->
+                    <div :style="{ background: '#fff', padding: '0rem', minHeight: '60vh' }">
                         <div style="background-color: #ffffff;margin: 0 12%">
-                            <h3 class="smallheader">works</h3>
-                            <h2 class="headers">How Codeln Works</h2>
-                            <p>Our process is optimised to enable you to <br> identify and onboard talent</p>
-
-                            <a-row>
-                                <a-col :span="8">
-                                    <a-card class="workscard"
-
-                                    >
-                                        <img src="../../../assets/images/props/path1.png"
-                                             style="margin: 0 25%;position: absolute">
-                                        <img
-                                                alt="example"
-                                                src="../../../assets/images/props/search.png"
-                                                style="width: 20%;margin: 0 38%;margin-top: 9%"
-                                        />
+                            <div style="text-align: center">
+                                <h2 class="headers">How Codeln Works</h2>
+                            <p>Our process is optimised to enable you to identify and onboard talent</p>
+                            </div>
 
 
-                                        <h5 class="ant-card-meta-description"
-                                            style="margin-top: 10%;position: absolute;padding: 0 10%;font-size: 16px">We
+
+                            <a-row style="padding: 3%">
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 8, offset: 0 }"
+                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                       style="margin-bottom: 1rem">
+
+
+                                    <a-row class="ant-card actioncards">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar1" src="../../../assets/images/props/search.png">
+                                        </div>
+                                    </a-col>
+                                    <a-col span="24" style="text-align: center">
+                                        <p
+                                                style="padding: 0 10%;font-size: 1rem">
+                                            We
                                             provide
                                             you a unique
                                             pool of verified developers
@@ -95,101 +137,189 @@
                                             for your job
 
 
-                                        </h5>
+                                        </p>
 
-                                    </a-card>
+
+                                    </a-col>
+
+                                </a-row>
+
+
+
+
+
                                 </a-col>
-                                <a-col :span="8">
-                                    <a-card class="workscard"
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 8, offset: 0 }"
+                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                       style="margin-bottom: 1rem">
 
 
-                                    >
-                                        <img src="../../../assets/images/props/path2.png"
-                                             style="margin: 0 25%;position: absolute">
-                                        <img
-                                                alt="example"
-                                                src="../../../assets/images/props/pick.png"
-                                                style="width: 20%;margin: 0 38%;margin-top: 9%"
-                                        />
+                                    <a-row class="ant-card actioncards">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar2" src="../../../assets/images/props/pick.png">
+                                        </div>
+                                    </a-col>
+                                    <a-col span="24" style="text-align: center">
+                                        <p
+                                                style="padding: 0 10%;font-size: 1rem">
+                                            We believe in
+                                            transparency
+                                            thus we ensure developer profiles encompass their verified skills,work
+                                            experience and past projects.
 
 
-                                        <h5 class="ant-card-meta-description"
-                                            style="margin-top: 10%;position: absolute;padding: 0 10%;font-size: 16px">We
-                                            provide
-                                            you a unique
-                                            pool of verified developers
-                                            with varied technologies.You can easily filter them to identify potential
-                                            candidates
-                                            for your job
+                                        </p>
 
 
-                                        </h5>
+                                    </a-col>
 
-                                    </a-card>
+                                </a-row>
+
+
+
+
+
                                 </a-col>
-                                <a-col :span="8">
-                                    <a-card class="workscard"
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 8, offset: 0 }"
+                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                       style="margin-bottom: 1rem">
+                                    <a-row class="ant-card actioncards">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar1" src="../../../assets/images/props/coding.png">
+                                        </div>
+                                    </a-col>
+                                    <a-col span="24" style="text-align: center">
+                                        <p
+                                                style="padding: 0 10%;font-size: 1rem">
+                                            Once you have picked talent you can take advantage of
+                                            our robust applicant tracking system to manage your candidates
 
 
-                                    >
-                                        <img src="../../../assets/images/props/path3.png"
-                                             style="margin: 0 25%;position: absolute">
-                                        <img
-                                                alt="example"
-                                                src="../../../assets/images/props/coding.png"
-                                                style="width: 20%;margin: 0 38%;margin-top: 9%"
-                                        />
+                                        </p>
 
 
-                                        <h5 class="ant-card-meta-description"
-                                            style="margin-top: 10%;position: absolute;padding: 0 10%;font-size: 16px">We
-                                            provide
-                                            you a unique
-                                            pool of verified developers
-                                            with varied technologies.You can easily filter them to identify potential
-                                            candidates
-                                            for your job
+                                    </a-col>
+
+                                </a-row>
 
 
-                                        </h5>
 
-                                    </a-card>
+
+
+
+
                                 </a-col>
                             </a-row>
                         </div>
 
                     </div>
+                    <!-----services---->
+
+                    <div :style="{  minHeight: '55vh' }">
+                        <h2 class="headers" style="text-align: center">
+                            Our Services
+                        </h2>
+
+
+                        <a-row  :style="{padding:'3%'}">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+
+
+                            </a-col>
+
+
+                        </a-row>
+
+
+                    </div>
+                    <!-----talent---->
 
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '400px' }">
-                        <a-row style="margin-top: 5%">
-                            <a-col :span="10">
+                        <a-row style="margin-top: 0">
+                            <hide-at breakpoint="mediumAndBelow">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 10, offset: 0 }"
+                                       :lg="{span: 10, offset: 0 }" :xl="{span: 10, offset: 0 }">
                                 <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/talent_profile_bg_wt23ka.png"
                                      style="width: 100%;margin-top: 30%">
                             </a-col>
-                            <a-col :span="14">
-                                <div style="margin-left: 7%">
-                                    <h3 class="smallheader">talent pool</h3>
+                            </hide-at>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 24, offset: 0 }"
+                                       :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
+                                <div>
+
                                     <h2 class="headers">Our Talent Pool</h2>
-                                    <p>We believe that your ideal developer <br>should be only a click away,take
-                                        advantage <br>
+                                    <p>We believe that your ideal developer should be only a click away,take
+                                        advantage
                                         of some of our
-                                        filters to easily access<br> candidates </p>
+                                        filters to easily access candidates </p>
 
                                     <div v-if="loading" class="loading" style="text-align: center;margin-top: 25%;">
                                         <a-spin size="large"/>
                                     </div>
 
                                     <div v-else>
-                                        <div v-for="item in listData" v-bind:key="item.id" style=";padding: 1rem;
+                                        <div v-for="item in listData" v-bind:key="item.id" style="
+
                             ">
-                                            <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                                <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                                    <a-avatar class="poolavatar"
-                                                              style="">
-                                                        {{item.name}}
-                                                    </a-avatar>
+                                            <show-at breakpoint="mediumAndBelow">
+                                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+
+                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 24, offset: 0 }"
+                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }" style="padding: 2%">
+                                                    <p>Bio</p>
+                                                    <p>{{item.about | truncate(100)}}<a
+                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                        more</a>
+                                                    </p>
+
+                                                    <p>
+                                                        Skills :
+                                                        <span style="" v-for="skill in item.skills"
+                                                              v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                                    </p>
+
+                                                        <div style="margin-bottom: 1%">
+                                                        <a-button type="primary" ghost
+                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                            View Profile
+                                                        </a-button>
+                                                    </div>
+
+
+
                                                 </a-col>
-                                                <a-col span="15" style="padding: 2%">
+
+
+
+
+                                            </a-row>
+                                            </show-at>
+
+
+
+
+                                            <hide-at breakpoint="mediumAndBelow">
+                                                <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                                <a-col :xs="{span: 4, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 4, offset: 0 }"
+                                       :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }" style="background-color:#0679FB;height: 100% ">
+                                                    <div class="poolavatar">{{item.name}}</div>
+                                                </a-col>
+                                                <a-col :xs="{span: 20, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 25, offset: 0 }"
+                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }" style="padding: 2%">
                                                     <p>Bio</p>
                                                     <p>{{item.about | truncate(100)}}<a
                                                             @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
@@ -206,8 +336,12 @@
                                                     </p>
 
 
+
                                                 </a-col>
-                                                <a-col span="5">
+
+                                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 5, offset: 0 }"
+                                       :lg="{span: 5, offset: 0 }" :xl="{span: 5, offset: 0 }">
                                                     <div style="padding-top: 1rem;">
 
                                                         <a-tag color="#F0F6FD" style='color: #007BFF'>
@@ -232,7 +366,11 @@
                                                 </a-col>
 
 
+
+
                                             </a-row>
+                                            </hide-at>
+
                                         </div>
 
                                     </div>
@@ -257,31 +395,32 @@
                             </a-col>
                         </a-row>
                     </div>
+                    <!-----why us---->
 
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '50vh' }">
-                        <a-row>
-                            <a-col :span="24">
-                                <h3 class="smallheader" style="text-align: center">Why Us</h3>
-                                <h2 class="headers" style="text-align: center">Why Should You Hire us</h2>
 
 
-                            </a-col>
-                        </a-row>
-                        <a-row :gutter="48" :style="{marginTop: '4rem',padding:'0 6rem'}">
-                            <a-col :span="8">
+                                <h2 class="headers" style="text-align: center">Why Should You Hire with us</h2>
+
+
+
+                        <a-row :gutter="16" :style="{padding:'3%'}">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/hire_icon.png"/>
                                 <h3 class="" style="text-align: center">Verified Developers</h3>
-                                <p style="text-align: center">
+                                <p style="text-align: center;font-size: 1rem">
                                     As Codeln we facilitate skill verification of candidate before
                                     they are presented to the talent pool thus ensuring quality of skill.
                                 </p>
 
 
                             </a-col>
-                            <a-col :span="8">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/time-management.png"/>
                                 <h3 style="text-align: center">Cost Efficient</h3>
-                                <p style="text-align: center">
+                                <p style="text-align: center;font-size: 1rem">
                                     Our process aims to facilitate a rapid hire thus enabling
                                     you to cut back on costs caused by downtime
 
@@ -289,10 +428,11 @@
 
 
                             </a-col>
-                            <a-col :span="8">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/analytics.png"/>
                                 <h3 style="text-align: center">Robust Applicant System</h3>
-                                <p style="text-align: center">We ensure that you enjoy a fluid candidate management
+                                <p style="text-align: center;font-size: 1rem">We ensure that you enjoy a fluid candidate management
                                     from when you identify them up to your choice to hire them.</p>
 
 
@@ -301,32 +441,15 @@
 
                     </div>
 
-                    <div :style="{  padding: '31px', minHeight: '400px' }">
-
-
-                        <a-row :gutter="48" :style="{marginTop: '7rem',padding:'0 3rem'}">
-                            <a-col :span="6">
-
-                                <h3 class="smallheader">Testimonials</h3>
-                                <h2 class="headers" style="font-weight: 600">Client Success Stories</h2>
-
-
-                            </a-col>
-                            <a-col :span="18" style="padding-left: 0;padding-right: 0">
-
-
-                            </a-col>
-
-                        </a-row>
-
-
-                    </div>
+                    <!-----partners---->
                     <div :style="{  padding: '31px', minHeight: '55vh' }">
-                        <h2 class="headers" style="text-align: center;font-weight: 600">We Are Proudly <br>
+                        <h2 class="headers" style="text-align: center">Proudly
                             Supported By
                         </h2>
-                        <a-row :gutter="48" :style="{marginTop: '5rem',padding:'0 6rem'}">
-                            <a-col :span="6">
+                        <a-row :gutter="16" :style="{padding:'3%'}">
+                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
                                 <img class="imagecenter" style="width: 70%;margin-top: 1rem"
                                      src="../../../assets/images/props/b_mest.png"
@@ -334,11 +457,15 @@
 
 
                             </a-col>
-                            <a-col :span="6" style="padding-left: 0;padding-right: 0">
+                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="padding-left: 0;padding-right: 0">
                                 <img style="width: 30%" class="imagecenter" src="../../../assets/images/props/b_7a.png"
                                 />
                             </a-col>
-                            <a-col :span="6">
+                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
                                 <img class="imagecenter" style="width: 50%;margin-top: 0.5rem"
                                      src="../../../assets/images/props/b_DIV.png"
@@ -346,7 +473,9 @@
 
 
                             </a-col>
-                            <a-col :span="6" style="padding-left: 0;padding-right: 0">
+                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="padding-left: 0;padding-right: 0">
                                 <img class="imagecenter" style="width: 40%;margin-top: 1rem"
                                      src="../../../assets/images/props/b_enpact.png"
                                 />
@@ -388,6 +517,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
@@ -400,7 +530,8 @@
                 devs: null,
                 alldevs: null,
                 listData: [],
-                loading: true
+                loading: true,
+                tempdata:[]
 
             }
         },
@@ -408,7 +539,7 @@
         components: {
             ACol,
             ARow,
-
+            showAt, hideAt,
             Pageheader,
             Footer,
 
@@ -433,9 +564,10 @@
                 )
 
 
-                this.listData.push(onedev)
+                this.tempdata.push(onedev)
 
             }
+            this.listData = this.tempdata.slice(3)
 
 
         },
@@ -465,7 +597,7 @@
     .press {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         height: 80px;
-        margin-top: -10%;
+        margin-top: 0%;
         background-color: #F0F9FE;
         border-radius: 3px;
     }
@@ -480,7 +612,7 @@
 
     .pressitemseed {
         width: 50%;
-        margin-top: 1.4rem;
+        margin-top: 1rem;
         margin-left: 23%;
 
 
@@ -496,7 +628,7 @@
 
     .pressitemforbes {
         width: 28%;
-        margin-top: 2rem;
+        margin-top: 1rem;
         margin-left: 23%;
 
 
@@ -510,23 +642,20 @@
 
     .headers {
         color: #007BFF;
-        font-size: 22px;
+        font-size: 1.5rem;
     }
 
     .workscard {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        width: 18rem;
-        height: 20rem;
+
+
         background-color: white;
         border: 0
     }
 
     .poolavatar {
-        width: 80px;
-        height: 80px;
-        line-height: 80px;
-        font-size: 30px;
-        background-color: #0679FB;
+        color:white;
+
+        font-size: 2rem;
         margin: 29% 14%;
     }
 
@@ -546,6 +675,22 @@
         margin-left: auto;
         margin-right: auto;
 
+    }
+    .actioncards {
+
+        border-radius: 0;
+
+
+
+
+    }
+    .poolavatar1 {
+        width: 20%;
+        margin-top: 0.5rem;
+    }
+    .poolavatar2 {
+        width: 14%;
+        margin-top: 0.5rem;
     }
 
 

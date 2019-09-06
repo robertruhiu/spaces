@@ -5,10 +5,11 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff', }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row style="margin-top: 2%;margin-bottom: 2%">
-                        <a-col span="24">
-                            <h3 style="margin-left: 1.5rem;color: #1976D2;font-weight: bold">
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
+                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
+                            <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">
                                 Get your skills verified and your rank improved?
                             </h3>
                         </a-col>
@@ -16,7 +17,8 @@
                     </a-row>
                     <a-row :gutter="16" style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
                         <router-link to="/quizlist">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
                                         <div style="text-align: center">
@@ -32,7 +34,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/developerprojects">
-                            <a-col class="boxes" :span="6" >
+                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" >
                                 <a-row class="ant-card actioncards" >
                                     <a-col span="24">
                                         <div style="text-align: center">
@@ -140,7 +143,7 @@
     }
 
     .boxes {
-
+        margin-bottom: 1rem;
         padding-left: 0;
         padding-right: 0;
 

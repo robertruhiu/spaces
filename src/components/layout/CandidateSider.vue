@@ -8,14 +8,16 @@
             style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white"
 
     >
+        <hide-at :breakpoints="{small: 425, medium: 768}" breakpoint="mediumAndBelow" >
         <router-link to="/">
 
             <img v-bind:style="logo"
-                 style="width: 120px;height: 31px;margin-top: 7%;margin-bottom: 6%;margin-left: 9%"
+                 style="width: 9rem;height: 2rem;margin-top: 1rem;margin-bottom: 1rem;margin-left: 1rem"
                  v-bind:src="defaultlogo"
             >
 
         </router-link>
+        </hide-at>
         <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
             <a-menu-item key="1">
                 <router-link to="/developer">
@@ -88,6 +90,7 @@
 <script>
 
     import Largelogo from '@/assets/logobg.svg'
+    import { hideAt} from 'vue-breakpoints'
 
 
 
@@ -104,6 +107,7 @@
             }
         },
         components: {
+            hideAt,
 
 
         },

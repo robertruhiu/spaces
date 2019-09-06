@@ -3,26 +3,32 @@
 
         <RecruiterSider/>
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#ffffff' }">
+        <a-layout :style="{ backgroundColor:'#ffffff' }">
 
 
             <a-layout-content>
                 <Pageheader/>
 
 
-                <div :style="{ padding: '5px', background: '#fff',marginTop:'7rem' }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row>
-                        <a-col span="24">
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
 
-                            <h3 style="margin-left: 1.5rem;color: #1976D2;font-weight: bold">What would you like to
+                            <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">What would you like to
                                 do today?</h3>
                         </a-col>
 
                     </a-row>
-                    <a-row :gutter="16"
-                           style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
-                        <a v-on:click="showDrawer">
-                            <a-col class="boxes" :span="6">
+                    <a-row
+                            style="padding-left: 1rem"
+
+
+                           >
+
+                            <a v-on:click="showDrawer">
+                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }" >
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -43,8 +49,11 @@
                         </a>
 
 
+
+
                         <router-link to="managejobs" v-if="myjobs.length>0">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -64,9 +73,11 @@
 
                             </a-col>
                         </router-link>
+
                         <router-link to="mycandidates" v-if="mycandidates.length >0">
 
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
                                         <div style="text-align: center">
@@ -75,7 +86,7 @@
                                     </a-col>
                                     <a-col span="24" style="text-align: center">
                                         <p>Manage Candidates</p>
-                                        <p style="margin: 0;">Manage devs picked from talent</p>
+                                        <p style="margin: 0;">Manage picked from talent</p>
 
 
                                     </a-col>
@@ -84,8 +95,10 @@
                                 </a-row>
                             </a-col>
                         </router-link>
+
                         <router-link to="talent">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
                                         <div style="text-align: center">
@@ -94,7 +107,7 @@
                                     </a-col>
                                     <a-col span="24" style="text-align: center">
                                         <p>Browse the Talent Pool</p>
-                                        <p style="margin: 0;">View more devs from our pool</p>
+                                        <p style="margin: 0;">View more devs from  pool</p>
 
 
                                     </a-col>
@@ -196,7 +209,9 @@
                             </div>
 
 
-                            <a-col v-else :span="12" v-for="job in myjobs" v-bind:key="job.id">
+                            <a-col v-else :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }" v-for="job in myjobs"  v-bind:key="job.id"
+                            style="margin-bottom: 1rem">
                                 <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                     <h3 style="font-weight: bold">{{job.title}}</h3>
                                     <p>
@@ -263,7 +278,7 @@
                 <!----Post Job drawer------->
                 <a-drawer
                         title="Create a new job"
-                        :width="720"
+                        :width="drawerwidth"
                         @close="onClose"
                         :visible="visible"
                         :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
@@ -275,7 +290,8 @@
                         <div class="steps-content">
                             <div v-if="current === 0">
                                 <a-row :gutter="32">
-                                    <a-col :span="8" style="padding-right: 1%">
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
                                         <a-form-item label="Job Title">
 
 
@@ -291,7 +307,8 @@
 
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
                                         <a-form-item label="Job role">
                                             <a-select
                                                     placeholder="Select a option"
@@ -326,7 +343,8 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :span="8" style="padding-right: 1%">
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
                                         <a-form-item label="Developer Experience">
                                             <a-select
                                                     placeholder="Select a option"
@@ -573,6 +591,7 @@
     import RecruiterSider from "../../layout/RecruiterSider";
     import moment from 'moment';
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+    import {showAt, hideAt} from 'vue-breakpoints'
 
 
     export default {
@@ -621,14 +640,17 @@
                     title: 'Job Review',
 
                 }],
+                drawerwidth:'600px'
 
             }
+
         },
         components: {
             ARow,
             ACol,
             Pageheader,
             RecruiterSider,
+            hideAt, showAt
 
 
         },
@@ -854,8 +876,8 @@
 
     .boxes {
 
-        padding-left: 0;
-        padding-right: 0;
+
+        margin-bottom: 1rem;
 
 
     }
@@ -877,7 +899,7 @@
     }
 
     .actioncards {
-        width: 16rem;
+        width: 15rem;
         border-radius: 0;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         padding: 0.89rem;

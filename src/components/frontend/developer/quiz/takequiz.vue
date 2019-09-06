@@ -5,14 +5,15 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff', }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
 
                     <div>
                         <a-progress :percent="percent" style="padding-right: 2%;padding-left: 2%;padding-top: 2%"/>
                         <a-form :form="form">
                             <div class="steps-content">
                                 <a-row>
-                                    <a-col :span="12">
+                                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
                                         <p>{{steps[current].text}}</p>
                                         <a-form-item>
                                             <p v-if="error" style="color: red">{{error}}</p>
@@ -28,7 +29,8 @@
 
 
                                     </a-col>
-                                    <a-col :span="12">
+                                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
                                         <img :src="steps[current].codesample">
                                     </a-col>
 

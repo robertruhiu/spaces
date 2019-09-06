@@ -1,10 +1,10 @@
 <template>
 
     <a-layout-header id="components-layout-demo-fixed" :style="{ position: 'fixed', zIndex: 1, width: '100%',
-    backgroundColor:'white',borderBottom: '1px solid #e8e8e8' }">
+    backgroundColor:'white',borderBottom: '1px solid #e8e8e8',}">
         <div class="logo">
             <router-link to="/">
-                <img src="../../assets/logobg.svg" style="width: 100%;margin-left: 40%">
+                <img src="../../assets/logobg.svg" style="width: 100%;margin-left: 1.5rem">
             </router-link>
 
 

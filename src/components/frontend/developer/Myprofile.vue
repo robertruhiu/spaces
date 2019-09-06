@@ -5,11 +5,13 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',marginTop:'1%',
+                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',marginTop:'1rem',
                 marginLeft: '1%',marginRight:'1%' }">
                     <a-form :form="form">
                         <a-row :gutter="16">
-                            <a-col :span="12">
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
 
                                 <a-row :gutter="16">
                                     <a-col :span="24">
@@ -90,7 +92,9 @@
 
 
                             </a-col>
-                            <a-col :span="12" style="padding: 2% 4%">
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }" style="padding: 2% 4%">
                                 <a-col :span="24">
                                     <a-form-item
                                             label="What are your tech skills "
@@ -145,12 +149,31 @@
 
                             </a-col>
                         </a-row>
+                        <div v-if="cv">
+                            <a :href="cv" target="_blank">cv link</a>
+                        </div>
+
+                        <div v-else>
+                            <div v-if="uploading">
+                                <span>Uploading file <a-spin /></span>
+
+                            </div>
+                            <div v-else>
+                                <input  type="file" @change="handleUpload">
+                            </div>
+
+
+
+                        </div>
+
+
                         <div style="text-align: center" v-if="loading === false">
                             <a-button @click="Save" type="primary" style="width: 15rem">Save</a-button>
 
+
                         </div>
                         <div style="text-align: center" v-else>
-                             <div style="text-align: center;">
+                            <div style="text-align: center;">
                                 <a-spin/>
                             </div>
 
@@ -166,9 +189,17 @@
 </template>
 
 <script>
+
+
     import CandidateSider from "../../layout/CandidateSider";
     import UsersService from '@/services/UsersService'
     import DevHeader from "../../layout/DevHeader";
+    import axios from 'axios'
+    import cloudinary from 'cloudinary-core'
+    import Vue from 'vue'
+
+    Vue.use(cloudinary)
+
 
     export default {
         name: "Myprofile",
@@ -184,11 +215,17 @@
                 tags: [],
                 inputVisible: false,
                 inputValue: '',
+                fileList: [],
+                uploading: false,
+                cv: '',
 
 
             }
         },
+
         async mounted() {
+
+
 
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -204,6 +241,16 @@
                     }
 
                 }
+            }
+            if (this.currentUserProfile.file) {
+                if (this.currentUserProfile.file.includes("http")) {
+                    this.cv = this.currentUserProfile.file
+                } else {
+                    this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
+
+
+                }
+
             }
 
 
@@ -222,6 +269,7 @@
 
                     }
                 }
+                this.currentUserProfile.file = this.cv.slice(48)
                 this.currentUserProfile.skills = this.tags.join(',')
                 this.currentUserProfile.user = this.$store.state.user.pk
                 this.loading = true
@@ -286,10 +334,80 @@
                     inputValue: '',
                 })
             },
+
+            handleChange(info) {
+                let self = this;
+                self.uploadFile(info.file)
+
+
+            },
+            beforeUpload(file) {
+                this.fileList = [...this.fileList, file]
+                return false;
+            },
+            async handleUpload(e) {
+                this.uploading =true
+                const cloudName = 'dwtvwjhn3';
+                const unsignedUploadPreset = 'ml_default';
+
+                // console.log(e);
+                const file = e.target.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', unsignedUploadPreset);
+                let CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${cloudName}/raw/upload`
+
+                // Send to cloudianry
+                const res = await axios.post(
+                    CLOUDINARY_URL,
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+
+                    }
+                );
+
+                this.cv = res.data.secure_url
+
+
+
+            }
         }
     }
+
+
 </script>
 
 <style scoped>
+    #dropbox {
+        border: 4px dashed #ccc;
+        padding-left: 8px;
+    }
 
+    .my-form {
+        margin-top: 10px;
+    }
+
+    .gallery {
+        margin: 10px;
+    }
+
+    .gallery img {
+        margin-left: 16px;
+    }
+
+    .progress-bar {
+        width: 200px;
+        position: relative;
+        height: 8px;
+        margin-top: 4px;
+    }
+
+    .progress-bar .progress {
+        height: 8px;
+        background-color: #ff0000;
+        width: 0;
+    }
 </style>

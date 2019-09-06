@@ -5,10 +5,11 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff', }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row style="margin-top: 1%">
-                        <a-col span="24">
-                            <h3 style="margin-left: 1.5rem;color: #1976D2;font-weight: bold">
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
+                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
+                            <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">
                                 Track your applications through the stages
                             </h3>
                         </a-col>
@@ -19,7 +20,8 @@
                     <a-row :gutter="8" style="padding: 2%">
 
 
-                        <a-col span="6">
+                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
                             <a-card class='managecard' style="border-top-color: #3A61CC;padding: 0">
 
 
@@ -57,7 +59,8 @@
 
                         </a-col>
 
-                        <a-col span="6">
+                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
                             <a-card class='managecard' style="border-top-color: #fa5580;">
 
                                 <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
@@ -100,7 +103,8 @@
 
                         </a-col>
 
-                        <a-col span="6">
+                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
                             <a-card class='managecard' style="border-top-color: #1C9DDF;">
 
                                 <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
@@ -137,7 +141,8 @@
 
                         </a-col>
 
-                        <a-col span="6">
+                        <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
                             <a-card class='managecard' style="border-top-color: #3FCE9D;">
 
                                 <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
@@ -567,6 +572,9 @@
 
     .text-muted {
         color: rgba(0, 0, 0, 0.45);
+    }
+    .tracker{
+        margin-bottom: 1rem;
     }
 
 </style>

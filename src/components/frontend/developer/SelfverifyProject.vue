@@ -5,11 +5,12 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
+                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',
                 marginTop:'0%',marginLeft: '1%',marginRight:'1%' }">
 
                     <a-row gutter="8">
-                        <a-col :span="14">
+                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 14, offset: 0 }"
+                                   :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }">
 
 
                             <a-carousel v-if="application.project.hasvideo === false" autoplay
@@ -50,10 +51,11 @@
 
 
                         </a-col>
-                        <a-col :span="10" style="padding: 0 1%;">
+                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 10, offset: 0 }"
+                                   :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
                             <div style="border:1px solid #e8e8e8;;padding: 2%;">
 
-                                <div style="margin-left: 5%;margin-bottom: 2%"
+                                <div style="margin-bottom: 2%"
                                      v-if="application.stage==='invite_accepted'">
                                     <p>Pick Date and time of choice to take the project</p>
                                     <a-date-picker
@@ -72,7 +74,7 @@
                                 </span>
 
                                 </div>
-                                <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='time_set'">
+                                <div style="margin-bottom: 2%" v-if="application.stage ==='time_set'">
                                     <p>IDE link</p>
                                     <a target="_blank" :href="server_url">{{server_url}}</a>
                                     <br>
@@ -81,7 +83,7 @@
 
 
                                 </div>
-                                <div style="margin-left: 5%;margin-bottom: 2%" v-if="application.stage ==='project_completed'">
+                                <div style="margin-bottom: 2%" v-if="application.stage ==='project_completed'">
                                     <p>Project analysis</p>
 
                                     <span>We are currently analysing the project and a report will be generated</span>
@@ -92,7 +94,7 @@
                                 </div>
 
                                 <div>
-                                    <p style="margin-left: 5%"><strong>Requirements</strong></p>
+                                    <p ><strong>Requirements</strong></p>
                                     <ol>
                                         <li v-if="application.project.requirement1">
                                             {{application.project.requirement1}}
@@ -227,27 +229,11 @@
 
     .ant-carousel >>> .slick-slide {
         text-align: center;
-        height: 338px;
+        height: 25rem;
         line-height: 160px;
-        background: #364d7;
+        background: #364d79;
         overflow: hidden;
-    }
 
-    .ant-carousel >>> .custom-slick-arrow {
-        width: 25px;
-        height: 25px;
-        font-size: 25px;
-        color: black;
-        background-color: rgba(31, 45, 61, .11);
-        opacity: 0.3;
-    }
-
-    .ant-carousel >>> .custom-slick-arrow:before {
-        display: none;
-    }
-
-    .ant-carousel >>> .custom-slick-arrow:hover {
-        opacity: 1.0;
     }
 
     .ant-carousel >>> .slick-slide h3 {

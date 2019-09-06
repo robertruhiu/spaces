@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
                 <MycandidatesHeader/>
@@ -1600,7 +1600,7 @@
                     for (let i = 0; i < this.paidapplicants.length; i++) {
                         if (this.paidapplicants[i].profile === profile) {
 
-                            MarketPlaceService.candidatemanager(action, {stage: 'rejected', paid: false}, auth)
+                            MarketPlaceService.candidatemanager(action, {stage: 'rejected'}, auth)
                                 .then(resp => {
                                     this.pickeddevs = []
                                     this.paiddevs = []
@@ -1691,7 +1691,7 @@
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
 
-                            MarketPlaceService.candidatemanager(action, {stage: 'rejected', paid: false}, auth)
+                            MarketPlaceService.candidatemanager(action, {stage: 'rejected'}, auth)
                                 .then(resp => {
                                     this.pickeddevs = []
                                     this.paiddevs = []
@@ -1785,7 +1785,7 @@
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
                             this.interviewstage[i].stage = 'rejected'
-                            MarketPlaceService.candidatemanager(action, {stage: 'rejected', paid: false}, auth)
+                            MarketPlaceService.candidatemanager(action, {stage: 'rejected'}, auth)
                                 .then(resp => {
                                     this.pickeddevs = []
                                     this.paiddevs = []

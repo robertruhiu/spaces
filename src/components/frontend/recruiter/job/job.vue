@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{ backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
                 <Jobheader/>
