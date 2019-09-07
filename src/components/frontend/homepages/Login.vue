@@ -2,12 +2,13 @@
     <a-layout>
 
         <Pageheader/>
-        <a-layout-content :style="{ padding: '0 0px', marginTop: '4%' }">
+        <a-layout-content :style="{ padding: '0 0px', marginTop: '4rem' }">
 
-            <div :style="{ background: '#fff', padding: '24px', minHeight: '81vh' }">
-
-
-                <a-card class="center" v-if="!$store.state.isUserLoggedIn" title="Login" :style="{width:'22rem'}">
+            <div :style="{ background: '#fff', minHeight: '81vh' }">
+                <a-row style="padding: 3%">
+                     <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 12, offset: 6 }" :md="{span: 12, offset: 6 }"
+                               :lg="{span: 12, offset: 8 }" :xl="{span: 12, offset: 9 }">
+                         <a-card  v-if="!$store.state.isUserLoggedIn" title="Login" :style="{width:'21rem'}">
 
                     <p class="alert" v-if="error">{{error}}</p>
 
@@ -99,6 +100,11 @@
                     </a-form>
 
                 </a-card>
+                     </a-col>
+                </a-row>
+
+
+
 
 
             </div>
@@ -115,19 +121,21 @@
     import Footer from '@/components/layout/Footer.vue'
     import AuthService from '@/services/AuthService'
     import User from '@/services/UsersService'
+    import ARow from "ant-design-vue/es/grid/Row";
 
 
     export default {
         name: 'login',
         components: {
+            ARow,
             Pageheader,
             Footer,
 
         },
         data() {
             return {
-                email: 'robertruhiu@gmail.com',
-                password: 'Pokerface1994',
+                email: '',
+                password: '',
                 emailnull: null,
                 passwordnull: null,
                 error: null,
@@ -207,12 +215,7 @@
     }
 </script>
 <style scoped>
-    .center {
-        margin: auto;
-        width: 60%;
 
-        padding: 10px;
-    }
 
     #components-form-demo-normal-login .login-form {
         max-width: 300px;

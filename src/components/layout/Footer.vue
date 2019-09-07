@@ -7,10 +7,11 @@
                 <div class="footer-wrap">
                     <div class="ant-row gutter">
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6 ">
-                            <img class="imagecenter" src="../../assets/logo.svg" style="width: 12rem">
+                            <img class="imagecenter" src="../../assets/logo.svg" style="width: 50%">
                         </div>
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6">
-                            <div class="footer-center"><h2 style="color: white">Services</h2>
+                            <div class="footer-center">
+                                <h2 style="color: white;font-size: 1rem">Services</h2>
                                 <div>
                                     <router-link to="talent">
                                         Talent
@@ -29,7 +30,7 @@
                             </div>
                         </div>
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6">
-                            <div class="footer-center"><h2 style="color: white">Company</h2>
+                            <div class="footer-center"><h2 style="color: white;font-size: 1rem">Company</h2>
                                 <div>
                                     <router-link to="privacy">Privacy</router-link>
                                 </div>
@@ -40,7 +41,7 @@
                             </div>
                         </div>
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6">
-                            <div class="footer-center"><h2 style="color: white">Contact</h2>
+                            <div class="footer-center"><h2 style="color: white;font-size: 1rem">Contact</h2>
 
                                 <div class="icons-list">
                                     <a href="mailto:info@codeln.com" target="_top">

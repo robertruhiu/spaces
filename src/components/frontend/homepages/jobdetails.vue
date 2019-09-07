@@ -6,10 +6,11 @@
         <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
 
 
-            <a-layout-content style="margin-top: 5%">
+            <a-layout-content style="margin-top: 5rem">
 
                 <a-row>
-                    <a-col :span="16" :offset="4" class="jobdetails">
+                    <a-col :xs="{span: 20, offset: 2 }" :sm="{span: 20, offset: 2 }" :md="{span: 20, offset: 2 }"
+                           :lg="{span: 14, offset: 6 }" :xl="{span: 14, offset: 6 }" class="jobdetails">
                         <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
                                 <span style="font-weight: 700;font-size: large">{{job.title}}</span>
@@ -17,7 +18,7 @@
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
                                     <a-button type="primary"
-                                              @click="ApplyJob(job.id,currentUserProfile.user.id,job.posted_by,job.company)">Apply</a-button>
+                                              @click="ApplyJob(job.id,currentUserProfile.id,job.posted_by.id)">Apply</a-button>
 
 
                                 </span>
@@ -55,6 +56,7 @@
                         </div>
                     </a-col>
                 </a-row>
+
 
 
             </a-layout-content>
@@ -98,14 +100,15 @@
                 this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
                 this.skills = this.job.tech_stack.split(',');
                 this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
+                console.log(this.myjobs)
 
                 if (this.myjobs.length > 0) {
-                    for(let i =0;i<this.myjobs.length;i++){
-                        if(this.myjobs[i].job.id === this.$route.params.jobId){
-                            this.applied =true
+                    for (let i = 0; i < this.myjobs.length; i++) {
+                        if (this.myjobs[i].job.id === this.$route.params.jobId) {
+                            this.applied = true
                         }
                     }
-                }else{
+                } else {
                     this.applied = false
                 }
             }
@@ -116,8 +119,17 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
+            openNotification() {
+                this.$notification.open({
+                    message: 'Notification Title',
+                    description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
+            },
 
-            ApplyJob(job, dev, recruiter, company) {
+            ApplyJob(job, dev, recruiter) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -129,12 +141,14 @@
                         recruiter: recruiter,
                         stage: 'new',
                         selected: false,
-                        company: company
+
                     },
                     auth
                 )
-                    .then(
+                    .then(resp=>{
                         this.applied = true
+                    }
+
                     )
                     .catch(error => {
                         return error

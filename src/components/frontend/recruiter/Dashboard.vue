@@ -10,6 +10,7 @@
                 <Pageheader/>
 
 
+
                 <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row>
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
@@ -24,11 +25,12 @@
                             style="padding-left: 1rem"
 
 
-                           >
+                    >
 
-                            <a v-on:click="showDrawer">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }" >
+                        <a v-on:click="showDrawer">
+                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -49,10 +51,9 @@
                         </a>
 
 
-
-
                         <router-link to="managejobs" v-if="myjobs.length>0">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
 
                                 <a-row class="ant-card actioncards">
@@ -76,7 +77,8 @@
 
                         <router-link to="mycandidates" v-if="mycandidates.length >0">
 
-                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -97,7 +99,8 @@
                         </router-link>
 
                         <router-link to="talent">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -107,7 +110,7 @@
                                     </a-col>
                                     <a-col span="24" style="text-align: center">
                                         <p>Browse the Talent Pool</p>
-                                        <p style="margin: 0;">View more devs from  pool</p>
+                                        <p style="margin: 0;">View more devs from pool</p>
 
 
                                     </a-col>
@@ -209,9 +212,11 @@
                             </div>
 
 
-                            <a-col v-else :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
-                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }" v-for="job in myjobs"  v-bind:key="job.id"
-                            style="margin-bottom: 1rem">
+                            <a-col v-else :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }" v-for="job in myjobs"
+                                   v-bind:key="job.id"
+                                   style="margin-bottom: 1rem">
                                 <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                     <h3 style="font-weight: bold">{{job.title}}</h3>
                                     <p>
@@ -290,8 +295,10 @@
                         <div class="steps-content">
                             <div v-if="current === 0">
                                 <a-row :gutter="32">
-                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 8, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }"
+                                           :md="{span: 8, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Job Title">
 
 
@@ -307,8 +314,10 @@
 
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 8, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }"
+                                           :md="{span: 8, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Job role">
                                             <a-select
                                                     placeholder="Select a option"
@@ -343,8 +352,10 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 8, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }"
+                                           :md="{span: 8, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Developer Experience">
                                             <a-select
                                                     placeholder="Select a option"
@@ -594,6 +605,7 @@
     import {showAt, hideAt} from 'vue-breakpoints'
 
 
+
     export default {
         name: 'index',
         data() {
@@ -640,7 +652,7 @@
                     title: 'Job Review',
 
                 }],
-                drawerwidth:'600px'
+                drawerwidth: '600px'
 
             }
 
@@ -650,7 +662,8 @@
             ACol,
             Pageheader,
             RecruiterSider,
-            hideAt, showAt
+            hideAt, showAt,
+
 
 
         },
@@ -914,6 +927,7 @@
     .steps-action {
         margin-top: 24px;
     }
+
     .jobdetails {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background-color: white;

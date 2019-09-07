@@ -909,6 +909,7 @@
 
 
             </div>
+            {{currentUserProfile}}
 
 
         </a-layout-content>
@@ -1167,7 +1168,7 @@
                 }
 
 
-
+                this.currentUserProfile = this.currentUserProfile.user.id
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
                         this.current++
@@ -1194,7 +1195,7 @@
                 }
                 this.currentUserProfile.stage = 'complete'
 
-                this.currentUserProfile.user = this.$store.state.user.pk
+
                 this.$store.dispatch('setUsertype', this.currentUserProfile.user_type)
                 this.$store.dispatch('setUser_id', this.currentUserProfile.user)
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -1307,11 +1308,8 @@
 
                 if (current === 0) {
 
-                    this.$validator.validateAll().then((values) => {
-                        if (values) {
-                            self.stepsaves()
-                        }
-                    })
+                    self.stepsaves()
+
 
 
                 } else if (current === 1) {

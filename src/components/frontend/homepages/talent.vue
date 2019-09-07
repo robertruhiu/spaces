@@ -1,13 +1,17 @@
 <template>
     <a-layout :style="{background:'#fff'}">
         <pageheader></pageheader>
-        <a-layout-content :style="{ padding: '0 0px', marginTop: '1rem' }">
-            <div style="margin-top: 3rem">
-                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1 ">
-                    <a-col span="4">
+        <a-layout-content :style="{ padding: '0 0px' }">
+            <div>
+                <a-row  style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
+                    <hide-at breakpoint="mediumAndBelow">
+                        <a-col span="4">
                         <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
                     </a-col>
-                    <a-col :span="16">
+                    </hide-at>
+
+                    <a-col :xs="{span: 20, offset: 4 }" :sm="{span: 20, offset: 4 }" :md="{span: 20, offset: 4 }"
+                               :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
 
                         <div style="padding-top: 2rem;" class='center'>
 
@@ -31,63 +35,22 @@
                             <span>
 
 
-                            <country-select v-model="country" style="width: 20%;color: #007BFF"
-                                            placeholder="location" class="ant-input"
-                            />
+
                             </span>
 
 
                         </div>
                     </a-col>
-                    <a-col span="4">
 
-                    </a-col>
                 </a-row>
+            </div>
 
-                <a-row :gutter="16">
-
-                    <a-col :span="6" style="margin-top: 6%">
-                        <div style="padding-left: 3rem">
+            <div style="margin-top: 9rem">
+                <a-row>
 
 
-                            <div style="padding: 2rem;width: 12rem" class="">
-                                <h3 style="color: #0679fb">
-                                    <a-icon type="filter" theme="twoTone"/>
-                                    Filters
-
-                                </h3>
-                                <div :style="{ borderBottom: '1px solid #E9E9E9' }">
-                                    <a-checkbox
-                                            :indeterminate="indeterminate"
-                                            @change="onCheckAllChange"
-                                            :checked="checkAll"
-                                    >
-                                        Availability
-                                    </a-checkbox>
-                                </div>
-                                <br/>
-                                <a-checkbox-group :options="plainOptions" v-model="checkedList" @change="onChange"/>
-
-                                <div :style="{ borderBottom: '1px solid #E9E9E9',marginTop: '1rem' }">
-                                    <a-checkbox
-                                            :indeterminate="indeterminate1"
-                                            @change="onCheckAllChange1"
-                                            :checked="checkAll1"
-                                    >
-                                        Experience
-                                    </a-checkbox>
-                                </div>
-                                <br/>
-                                <a-checkbox-group :options="plainOptions1" v-model="checkedList1" @change="onChange1">
-
-                                </a-checkbox-group>
-
-                            </div>
-                        </div>
-
-                    </a-col>
-
-                    <a-col :span="14" style="margin-top: 6%;">
+                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
+                           :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
                         <div v-if="loading" class="loading" style="text-align: center;margin-top: 20%;">
                             <a-spin size="large"/>
                         </div>
@@ -103,54 +66,116 @@
                                         slot="renderItem" slot-scope="item" key="item.title">
 
 
-                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                        <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                            <a-avatar class="poolavatar"
-                                                      style="">
-                                                {{item.name}}
-                                            </a-avatar>
-                                        </a-col>
-                                        <a-col span="15" style="padding: 2%">
-                                            <p>Bio</p>
-                                            <p>{{item.about | truncate(100)}}<a
-                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                more</a>
-                                            </p>
+                                    <show-at breakpoint="mediumAndBelow">
+                                            <div style="padding: 2%">
+                                                <div v-for="item in listData" v-bind:key="item.id"
+                                                     style="margin-bottom: 1rem">
 
-                                            <p>
-                                                Skills :
-                                                <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+                                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+
+                                                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                               :md="{span: 24, offset: 0 }"
+                                                               :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
+                                                               style="padding: 2%">
+                                                            <p>Bio</p>
+                                                            <p>{{item.about | truncate(100)}}<a
+                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                                more</a>
+                                                            </p>
+
+                                                            <p>
+                                                                Skills :
+                                                                <span style="" v-for="skill in  item.skills.slice(0,3)"
+                                                                      v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                            </p>
+                                                            </p>
+
+                                                            <div style="margin-bottom: 1%;text-align: center">
+                                                                <a-button type="primary" ghost
+                                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                                    View Profile
+                                                                </a-button>
+                                                            </div>
 
 
-                                        </a-col>
-                                        <a-col span="5">
-                                            <div style="padding-top: 1rem;">
-
-                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                    <a-icon type="environment"/>
-                                                    {{item.location}}
-                                                </a-tag>
-                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
-                                                </a-tag>
+                                                        </a-col>
 
 
-                                            </div>
-                                            <div style="margin-top: 2rem">
-                                                <a-button type="primary" ghost
-                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                    View Profile
-                                                </a-button>
+                                                    </a-row>
+                                                </div>
                                             </div>
 
+                                        </show-at>
 
-                                        </a-col>
+
+                                        <hide-at breakpoint="mediumAndBelow">
+                                            <div style="padding: 2%">
+                                                <div v-for="item in listData" v-bind:key="item.id" style="
+
+                            ">
+                                                    <div style="margin-bottom: 1rem">
+                                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                                            <a-col span="4"
+                                                                   style="background-color:#0679FB;height: 100% ">
+                                                                <a-avatar class="poolavatar"
+                                                                >
+                                                                    {{item.name}}
+                                                                </a-avatar>
+                                                            </a-col>
+                                                            <a-col span="15" style="padding: 2%">
+                                                                <p>Bio</p>
+                                                                <p>{{item.about | truncate(100)}}<a
+                                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                                    more</a>
+                                                                </p>
+
+                                                                <p>
+                                                                    Skills :
+                                                                    <span style="" v-for="skill in item.skills"
+                                                                          v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                                                </p>
 
 
-                                    </a-row>
+                                                            </a-col>
+                                                            <a-col span="5">
+                                                                <div style="padding-top: 1rem;">
+
+                                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                                        <a-icon type="environment"/>
+                                                                        {{item.location}}
+                                                                    </a-tag>
+                                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                                        {{item.availabilty}}
+
+                                                                    </a-tag>
+
+
+                                                                </div>
+                                                                <div style="margin-top: 2rem">
+                                                                    <a-button type="primary" ghost
+                                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                                        View Profile
+                                                                    </a-button>
+                                                                </div>
+
+
+                                                            </a-col>
+
+
+                                                        </a-row>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </hide-at>
+
 
 
                                 </a-list-item>
@@ -196,6 +221,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService';
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     import Vue from 'vue'
 
@@ -264,6 +290,7 @@
             ACol,
             ARow,
             Pageheader,
+            showAt, hideAt,
 
         },
 
@@ -331,6 +358,7 @@
             filteredList() {
                 return this.listData.filter(dev => {
 
+
                     return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
                 })
             }
@@ -351,12 +379,7 @@
     }
 
 
-    .center {
-        margin: auto;
-        width: 60%;
 
-
-    }
 
 
 </style>

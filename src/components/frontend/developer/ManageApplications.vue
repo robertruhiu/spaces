@@ -264,6 +264,8 @@
             }
 
             this.alldevjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
+
+
             this.alldevjobpicked = (await Marketplace.pickedapplications(this.$store.state.user.pk, auth)).data
             // application creation for jobs applied or picked from recommended list
             for (let i = 0; i < this.alldevjobs.length; i++) {
@@ -271,7 +273,7 @@
 
                 let id = this.alldevjobs[i].id
                 let title = this.alldevjobs[i].job.title
-                let company = this.alldevjobs[i].recruiter.company
+                let company = this.alldevjobs[i].job.company
                 let stage = this.alldevjobs[i].stage
                 let type = 'job'
                 let project = this.alldevjobs[i].project
@@ -284,6 +286,7 @@
                 this.applications.push(one_job_applied)
 
             }
+
             // applications creation for pick instance by recruiter
             for (let i = 0; i < this.alldevjobpicked.length; i++) {
 

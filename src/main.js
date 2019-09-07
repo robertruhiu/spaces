@@ -54,7 +54,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row,Upload
+    Row,Upload,
 
 
 
@@ -96,6 +96,7 @@ Vue.use(Icon)
 Vue.use(Spin)
 Vue.use(Row)
 Vue.use(Upload)
+
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

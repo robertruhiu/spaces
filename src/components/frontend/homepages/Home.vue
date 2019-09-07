@@ -4,6 +4,7 @@
         <div>
             <a-layout :style="{background:'#fff'}">
                 <pageheader></pageheader>
+
                 <a-layout-content :style="{ padding: '0 0px', marginTop: '2rem' }">
                     <!-----header---->
 
@@ -196,7 +197,7 @@
                     <!--                    </div>-->
                     <!-----talent---->
 
-                    <div :style="{ background: '#fff', padding: '31px', minHeight: '400px' }">
+                    <div :style="{ background: '#fff', minHeight: '400px' }">
                         <a-row style="margin-top: 0">
                             <hide-at breakpoint="mediumAndBelow">
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
@@ -210,12 +211,15 @@
                                    :md="{span: 24, offset: 0 }"
                                    :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
                                 <div>
+                                    <div style="padding: 2%">
+                                        <h2 class="headers">Our Talent Pool</h2>
+                                        <p>We believe that your ideal developer should be only a click away,take
+                                            advantage
+                                            of some of our
+                                            filters to easily access candidates </p>
 
-                                    <h2 class="headers">Our Talent Pool</h2>
-                                    <p>We believe that your ideal developer should be only a click away,take
-                                        advantage
-                                        of some of our
-                                        filters to easily access candidates </p>
+                                    </div>
+
 
                                     <div v-if="loading" class="loading" style="text-align: center;margin-top: 25%;">
                                         <a-spin size="large"/>
@@ -224,7 +228,7 @@
                                     <div v-else>
 
                                         <show-at breakpoint="mediumAndBelow">
-                                            <div>
+                                            <div style="padding: 2%">
                                                 <div v-for="item in listData" v-bind:key="item.id"
                                                      style="margin-bottom: 1rem">
 
@@ -249,7 +253,7 @@
                                             </span>
                                                             </p>
 
-                                                            <div style="margin-bottom: 1%">
+                                                            <div style="margin-bottom: 1%;text-align: center">
                                                                 <a-button type="primary" ghost
                                                                           @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
                                                                     View Profile
@@ -269,9 +273,7 @@
 
                                         <hide-at breakpoint="mediumAndBelow">
                                             <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id" style="
-
-                            ">
+                                                <div v-for="item in listData" v-bind:key="item.id" style=" ">
                                                     <div style="margin-bottom: 1rem">
                                                         <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
                                                             <a-col span="4"

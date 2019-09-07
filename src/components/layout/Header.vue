@@ -10,32 +10,39 @@
 
         </div>
         <hide-at breakpoint="mediumAndBelow">
-        <div class="ant-menu-horizontal " :style="{ lineHeight: '64px',float: 'right',borderBottom: 0}">
+            <div class="ant-menu-horizontal " :style="{ lineHeight: '64px',float: 'right',borderBottom: 0}">
 
-            <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent</router-link>
+                <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent</router-link>
 
-            <router-link to="/recruiter" class="ant-menu-item" style="margin-bottom: 0"
-                         v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' ">My account
-            </router-link>
-            <router-link to="/developer" class="ant-menu-item" style="margin-bottom: 0"
-                         v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'">My account
-            </router-link>
-            <router-link to="/login" class="ant-menu-item" style="margin-bottom: 0" v-if="!$store.state.isUserLoggedIn">
-                Login
-            </router-link>
-            <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
-                         v-if="!$store.state.isUserLoggedIn">Sign up
-            </router-link>
-            <a>
-                <a-button
-                        style="margin-bottom: 0;border: 0;-webkit-box-shadow: 0 0 0 rgba(255,255,255,0.01);color: #1890ff"
-                        v-if="$store.state.isUserLoggedIn" @click="logout">Logout
-                </a-button>
-            </a>
+                <router-link to="/recruiter" class="ant-menu-item" style="margin-bottom: 0"
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' ">My account
+                </router-link>
+                <router-link to="/developer" class="ant-menu-item" style="margin-bottom: 0"
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'">My account
+                </router-link>
+                <router-link to="/login" class="ant-menu-item" style="margin-bottom: 0"
+                             v-if="!$store.state.isUserLoggedIn">
+                    Login
+                </router-link>
+                <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
+                             v-if="!$store.state.isUserLoggedIn">Sign up
+                </router-link>
+                <a>
+                    <a-button
+                            style="margin-bottom: 0;border: 0;-webkit-box-shadow: 0 0 0 rgba(255,255,255,0.01);color: #1890ff"
+                            v-if="$store.state.isUserLoggedIn" @click="logout">Logout
+                    </a-button>
+                </a>
 
 
-        </div>
+            </div>
         </hide-at>
+        <show-at breakpoint="mediumAndBelow">
+            <div style="float: right">
+                <Menusider/>
+            </div>
+
+        </show-at>
 
 
 
@@ -47,12 +54,14 @@
 
 <script>
     import {showAt, hideAt} from 'vue-breakpoints'
+    import Menusider from '@/components/layout/Menusider'
 
     export default {
         name: "Header",
         components: {
 
-            hideAt, showAt
+            hideAt, showAt,
+            Menusider
 
         },
         methods: {
