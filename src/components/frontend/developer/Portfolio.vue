@@ -1023,7 +1023,10 @@
             this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.skills = this.currentUserProfile.skills.split(',');
-            this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            if(this.currentUserProfile.verified_skills){
+                this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            }
+
             this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
             this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
             this.takenquizzes = (await QuizService.taken(this.$store.state.user.pk, auth)).data;

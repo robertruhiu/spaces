@@ -3,10 +3,12 @@
         <show-at breakpoint="mediumAndBelow">
             <a-layout-header :style="{width: '100%',backgroundColor:'#ffffff',height:'5rem',padding: '1px 30px 0',
             borderBottom: '1px solid #e8e8e8'}">
+                <router-link to="/">
                 <img v-bind:style="logo"
                  style="width: 120px;height: 31px;margin-top: 1rem;margin-bottom: 6%;margin-left: 9%"
                  v-bind:src="defaultlogo"
             >
+                </router-link>
 
 
 
@@ -127,7 +129,10 @@
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.allusers = (await UsersService.devs()).data;
             this.skills = this.currentUserProfile.skills.split(',');
-            this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            if(this.currentUserProfile.verified_skills){
+                this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            }
+
             let todayDate = moment().format("YYYY-MM-DD")
             this.allevents = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
             this.alldevrequests = (await Marketplace.pickedapplications(this.$store.state.user.pk, auth)).data

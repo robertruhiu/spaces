@@ -2,151 +2,162 @@
     <a-layout>
 
         <Pageheader/>
-        <a-layout-content :style="{ padding: '0 0px', marginTop: '4%' }">
+        <a-layout-content :style="{ padding: '0 0px', }">
 
             <div :style="{ background: '#fff', padding: '24px', minHeight: '81vh' }">
+                <a-row v-if="!$store.state.isUserLoggedIn" style="padding: 3%;margin-top: 4rem">
+                    <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 12, offset: 6 }" :md="{span: 12, offset: 6 }"
+                           :lg="{span: 12, offset: 8 }" :xl="{span: 12, offset: 9 }">
+                        <a-card title="Register" :style="{width:'21rem'}">
 
+                            <p class="alert" v-if="error">{{error}}</p>
+                            <a-form
+                                    id="components-form-demo-normal-login"
+                                    :form="form"
+                                    class="login-form"
 
-                <a-card class="center" v-if="!$store.state.isUserLoggedIn" title="Register" :style="{width:'22rem'}">
-
-                    <p class="alert" v-if="error">{{error}}</p>
-                    <a-form
-                            id="components-form-demo-normal-login"
-                            :form="form"
-                            class="login-form"
-
-                    >
-                        <a-form-item>
-                            <a-input v-model="firstname"
-                                     v-validate="'required'"
-                                     name="firstname"
-                                     placeholder="firstname"
                             >
+                                <a-form-item>
+                                    <a-input v-model="firstname"
+                                             v-validate="'required'"
+                                             name="firstname"
+                                             placeholder="firstname"
+                                    >
 
-                            </a-input>
-                            <div v-if="errors.has('firstname')" style="color: #f5222d;" class="ant-form-explain">{{
-                                errors.first('firstname') }}
-                            </div>
-                        </a-form-item>
-                        <a-form-item>
-                            <a-input v-model="lastname"
-                                     v-validate="'required'"
-                                     name="lastname"
+                                    </a-input>
+                                    <div v-if="errors.has('firstname')" style="color: #f5222d;"
+                                         class="ant-form-explain">{{
+                                        errors.first('firstname') }}
+                                    </div>
+                                </a-form-item>
+                                <a-form-item>
+                                    <a-input v-model="lastname"
+                                             v-validate="'required'"
+                                             name="lastname"
 
-                                     placeholder="lastname"
-                            >
+                                             placeholder="lastname"
+                                    >
 
-                            </a-input>
-                            <div v-if="errors.has('lastname')" style="color: #f5222d;" class="ant-form-explain">{{
-                                errors.first('lastname') }}
-                            </div>
-                        </a-form-item>
-                        <a-form-item>
-                            <a-input v-model="email"
-                                     v-validate="'required|email'"
-                                     name="email"
+                                    </a-input>
+                                    <div v-if="errors.has('lastname')" style="color: #f5222d;" class="ant-form-explain">
+                                        {{
+                                        errors.first('lastname') }}
+                                    </div>
+                                </a-form-item>
+                                <a-form-item>
+                                    <a-input v-model="email"
+                                             v-validate="'required|email'"
+                                             name="email"
 
-                                     placeholder="Email"
-                            >
-                                <a-icon
-                                        slot="prefix"
-                                        type="user"
-                                        style="color: rgba(0,0,0,.25)"
-                                />
-                            </a-input>
+                                             placeholder="Email"
+                                    >
+                                        <a-icon
+                                                slot="prefix"
+                                                type="user"
+                                                style="color: rgba(0,0,0,.25)"
+                                        />
+                                    </a-input>
 
-                            <div v-if="errors.has('email')" style="color: #f5222d;" class="ant-form-explain">{{
-                                errors.first('email') }}
-                            </div>
-                        </a-form-item>
-                        <a-form-item>
-
-
-                            <a-input v-validate="'required|verify_password'" name="password"
-                                     type="password"
-                                     v-model="password1"
-                                     :class="{'is-danger': errors.has('password')}" placeholder="Password"
-                                     ref="password">
-                                <a-icon
-                                        slot="prefix"
-                                        type="lock"
-                                        style="color: rgba(0,0,0,.25)"
-                                />
-                            </a-input>
-                            <span style="color: #f5222d;" v-show="errors.has('password')"
-                                  class="help is-danger">{{ errors.first('password') }}</span>
+                                    <div v-if="errors.has('email')" style="color: #f5222d;" class="ant-form-explain">{{
+                                        errors.first('email') }}
+                                    </div>
+                                </a-form-item>
+                                <a-form-item>
 
 
-                        </a-form-item>
-                        <a-form-item>
+                                    <a-input v-validate="'required|verify_password'" name="password"
+                                             type="password"
+                                             v-model="password1"
+                                             :class="{'is-danger': errors.has('password')}" placeholder="Password"
+                                             ref="password">
+                                        <a-icon
+                                                slot="prefix"
+                                                type="lock"
+                                                style="color: rgba(0,0,0,.25)"
+                                        />
+                                    </a-input>
+                                    <span style="color: #f5222d;" v-show="errors.has('password')"
+                                          class="help is-danger">{{ errors.first('password') }}</span>
 
 
-                            <a-input v-model="password2" v-validate="'required|confirmed:password'"
-                                     name="password_confirmation"
-                                     type="password" :class="{'is-danger': errors.has('password_confirmation')}"
-                                     placeholder="Password, Again" data-vv-as="password">
-                                <a-icon
-                                        slot="prefix"
-                                        type="lock"
-                                        style="color: rgba(0,0,0,.25)"
-                                />
-                            </a-input>
-                            <span style="color: #f5222d;" v-show="errors.has('password_confirmation')"
-                                  class="help is-danger">{{ errors.first('password_confirmation') }}</span>
-                        </a-form-item>
-                        <a-form-item v-if="loading === false">
+                                </a-form-item>
+                                <a-form-item>
 
 
-                            <a-button @click="register"
-                                      type="primary"
-                                      class="login-form-button"
-                            >
-                                Register
-                            </a-button>
-
-                        </a-form-item>
-                        <a-form-item v-else>
-
-
-                            <div style="text-align: center;">
-                                <a-spin/>
-                            </div>
-
-
-                        </a-form-item>
-                    </a-form>
-                </a-card>
+                                    <a-input v-model="password2" v-validate="'required|confirmed:password'"
+                                             name="password_confirmation"
+                                             type="password" :class="{'is-danger': errors.has('password_confirmation')}"
+                                             placeholder="Password, Again" data-vv-as="password">
+                                        <a-icon
+                                                slot="prefix"
+                                                type="lock"
+                                                style="color: rgba(0,0,0,.25)"
+                                        />
+                                    </a-input>
+                                    <span style="color: #f5222d;" v-show="errors.has('password_confirmation')"
+                                          class="help is-danger">{{ errors.first('password_confirmation') }}</span>
+                                </a-form-item>
+                                <a-form-item v-if="loading === false">
 
 
-                <div v-if="$store.state.isUserLoggedIn && currentUserProfile.user_type == null" class="center"
-                     :style="{width: '60rem'}">
-                    <h2 style="text-align: center">Choose profile</h2>
+                                    <a-button @click="register"
+                                              type="primary"
+                                              class="login-form-button"
+                                    >
+                                        Register
+                                    </a-button>
 
-                    <div class="center1">
-                        <a-radio-group v-model="currentUserProfile.user_type">
-                            <a-radio-button class="radiochoice"
-                                            style="border-radius: 0;box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;"
-                                            value="recruiter">
-                                <img style="margin-left: 25%;width: 50%;margin-right: 25%"
-                                     src="../../../assets/images/interview.svg">
-                                <p style="text-align: center">Recruiter</p>
-                            </a-radio-button>
-                            <a-radio-button class="radiochoice"
-                                            style="border-radius: 0;box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;"
-                                            value="developer">
-                                <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
-                                     src="../../../assets/images/programmer.svg">
-                                <p style="text-align: center">Developer</p>
-                            </a-radio-button>
-                        </a-radio-group>
+                                </a-form-item>
+                                <a-form-item v-else>
 
 
-                    </div>
+                                    <div style="text-align: center;">
+                                        <a-spin/>
+                                    </div>
 
-                </div>
+
+                                </a-form-item>
+                            </a-form>
+                        </a-card>
+                    </a-col>
+                </a-row>
+
+
+                <a-row v-if="$store.state.isUserLoggedIn && currentUserProfile.user_type == null"
+                       style="margin-top: 4rem;padding: 3%">
+
+                    <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 12, offset: 6 }" :md="{span: 18, offset: 6 }"
+                           :lg="{span: 18, offset: 6 }" :xl="{span: 12, offset: 6 }">
+                        <h2 style="margin-left: 25%">Choose profile</h2>
+
+
+                        <div>
+                            <a-radio-group v-model="currentUserProfile.user_type">
+                                <a-radio-button class="radiochoice"
+                                                style="border-radius: 0;box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;"
+                                                value="recruiter">
+                                    <img style="margin-left: 25%;width: 50%;margin-right: 25%"
+                                         src="../../../assets/images/interview.svg">
+                                    <p style="text-align: center">Recruiter</p>
+                                </a-radio-button>
+                                <a-radio-button class="radiochoice"
+                                                style="border-radius: 0;box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;"
+                                                value="developer">
+                                    <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
+                                         src="../../../assets/images/programmer.svg">
+                                    <p style="text-align: center">Developer</p>
+                                </a-radio-button>
+                            </a-radio-group>
+
+
+                        </div>
+
+                    </a-col>
+                </a-row>
 
 
                 <a-row v-if="currentUserProfile.user_type && currentUserProfile.user_type ==='developer'"
+                       style="margin-top: 4rem"
                 >
                     <a-col :xs="{span: 22, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 18, offset: 3 }"
                            :lg="{span: 18, offset: 3 }" :xl="{span: 18, offset: 3 }"
@@ -389,7 +400,25 @@
                                             </a-form-item>
 
                                         </a-col>
-                                        <a-col :span="24">
+                                        <a-col :span="24" style="margin-bottom: 1rem">
+                                            <span>
+                                                Monthly Salary expectations
+                                            </span>
+                                            <a-input-number
+                                                    :defaultValue="1000"
+                                                    :formatter="value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                                    :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                                                    v-model="currentUserProfile.salary"
+                                            />
+                                            <div v-for="error in errorlist" v-bind:key="error">
+                                                <div v-if="error === 'salary'" style="color: red">
+                                                    Your salary value required
+                                                </div>
+
+                                            </div>
+
+                                        </a-col>
+                                        <a-col :span="24" style="margin-bottom: 1rem">
                                             <a-checkbox v-model="currentUserProfile.csa">Are you part of the CodeLn
                                                 Student
                                                 Ambassador Program?
@@ -537,126 +566,189 @@
                 </a-row>
 
 
-                <div v-if="currentUserProfile.user_type && currentUserProfile.user_type ==='recruiter'" class="center"
-                     :style="{width: '60rem',boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important',border:'1px solid rgba(0,0,0,.125)'}">
+                <a-row v-if="currentUserProfile.user_type && currentUserProfile.user_type ==='recruiter'"
+                       style="margin-top: 4rem">
+                    <a-col :xs="{span: 22, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 18, offset: 3 }"
+                           :lg="{span: 18, offset: 3 }" :xl="{span: 18, offset: 3 }"
+                           :style="{boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important'}">
+                        <div style="padding: 3%">
+                            <a-steps :current="current1">
+                                <a-step v-for="item in steps1" :key="item.title" :title="item.title"/>
+                            </a-steps>
+                            <div class="steps-content">
+                                <div if v-if="current1 === 0">
+                                    <a-form :form="form">
+                                        <a-row :gutter="16">
+                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                                                <a-form-item
+                                                        label="Company name"
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+                                                    <a-input
+                                                            v-validate="{required: true}"
+                                                            name="company"
+                                                            v-model="currentUserProfile.company"
 
-                    <div>
-                        <form-wizard @on-complete="onCompleteRecruiter"
-                                     shape="tab"
-                                     color="#007BFF"
-                                     title=""
-                                     subtitle="">
-                            <tab-content title="Company details"
-                                         icon="ti-user">
-                                <a-form :form="form">
+                                                    />
+                                                </a-form-item>
+
+                                                <span style="color: #f5222d;" v-show="errors.has('company')"
+                                                      class="help is-danger">{{ errors.first('company') }}</span>
+
+                                            </a-col>
+
+                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                                                <a-form-item
+                                                        label="Company website link"
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+                                                    <a-input
+                                                            v-validate="{required: true,url: {require_protocol: true }}"
+                                                            name="website"
+                                                            v-model="currentUserProfile.company_url"
+
+                                                    />
+                                                    <span style="color: #f5222d;" v-show="errors.has('website')"
+                                                          class="help is-danger">{{ errors.first('website') }}</span>
+                                                </a-form-item>
+
+                                            </a-col>
+
+                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                                                <a-form-item
+                                                        label="Company location"
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+                                                    <country-select v-validate="'required'"
+                                                                    name="location"
+                                                                    v-model="currentUserProfile.country"
+                                                                    class="ant-input"
+                                                    />
+                                                    <span style="color: #f5222d;" v-show="errors.has('location')"
+                                                          class="help is-danger">{{ errors.first('location') }}</span>
+                                                </a-form-item>
+
+                                            </a-col>
+
+
+                                        </a-row>
+                                        <a-row :gutter="16">
+
+                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+
+
+                                            >
+                                                <a-form-item
+                                                        label="Job role"
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+                                                    <a-input
+
+
+                                                            v-model="currentUserProfile.job_role"
+                                                            placeholder="Recruiter,CTO,HR,CEO etc"
+
+                                                    />
+                                                </a-form-item>
+
+                                            </a-col>
+                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+
+
+                                            >
+                                                <a-form-item
+                                                        label="Industry"
+                                                        :label-col="{ span: 24 }"
+                                                        :wrapper-col="{ span:  24}"
+                                                >
+                                                    <a-input
+                                                            v-model="currentUserProfile.industry"
+
+                                                    />
+                                                </a-form-item>
+
+                                            </a-col>
+
+
+                                        </a-row>
+
+
+                                    </a-form>
+                                </div>
+                                <div if v-if="current1 === 1">
                                     <a-row :gutter="16">
-                                        <a-col :span="8">
-                                            <a-form-item
-                                                    label="Company name"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span:  24}"
-                                            >
-                                                <a-input
-                                                        v-model="currentUserProfile.company"
+                                        <a-col :span="24">
 
-                                                />
+                                            <a-form-item>
+                                                <p>Pick skills to enable candidate
+                                                    recommendations</p>
+                                                <div>
 
-                                            </a-form-item>
-
-                                        </a-col>
-
-                                        <a-col :span="8">
-                                            <a-form-item
-                                                    label="Company website link"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span:  24}"
-                                            >
-                                                <a-input
-                                                        v-model="currentUserProfile.company_url"
-
-                                                />
+                                                    <template v-for=" tag in recommendationtags">
+                                                        <a-checkable-tag style="border-color: blue;font-size: 14px"
+                                                                         :key="tag"
+                                                                         :checked="selectedTags.indexOf(tag) > -1"
+                                                                         @change="(checked) => handleChange(tag, checked)"
+                                                        >
+                                                            {{tag}}
+                                                        </a-checkable-tag>
+                                                    </template>
+                                                </div>
 
 
                                             </a-form-item>
-
-                                        </a-col>
-
-                                        <a-col :span="8">
-                                            <a-form-item
-                                                    label="Country"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span:  24}"
-                                            >
-                                                <country-select v-model="currentUserProfile.country"
-                                                                class="ant-input"
-                                                />
-                                            </a-form-item>
-
-                                        </a-col>
-
-                                        <a-col :span="8">
-                                            <a-form-item
-                                                    label="Company industry sector"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span:  24}"
-                                            >
-                                                <a-input v-model="currentUserProfile.industry"
-
-                                                />
-                                            </a-form-item>
-
-                                        </a-col>
-                                        <a-col :span="8">
-                                            <a-form-item
-                                                    label="Your role at the Company"
-                                                    :label-col="{ span: 24 }"
-                                                    :wrapper-col="{ span:  24}"
-                                            >
-                                                <a-input v-model="currentUserProfile.job_role"
-                                                         placeholder="Recruiter,CTO,HR,CEO etc"
-
-                                                />
-                                            </a-form-item>
-
                                         </a-col>
                                     </a-row>
+                                </div>
+                            </div>
+                            <div class="steps-action">
+                                <span>
+                                        <span v-if="loading">
+                                            <a-spin/>
+                                        </span>
+                                        <span v-else>
+                                            <a-button
+                                                    v-if="current1 < steps1.length - 1"
+                                                    type="primary" @click="next1(current)"
+                                            >
+                                    Next
+                                </a-button>
+                                        </span>
+                                    </span>
+                                <a-button
+                                        v-if="current1 == steps1.length - 1"
+                                        type="primary"
+                                        @click="onCompleteRecruiter"
+                                >
+                                    Done
+                                </a-button>
+                                <a-button
+                                        v-if="current1>0"
+                                        style="margin-left: 8px"
+                                        @click="prev1"
+                                >
+                                    Previous
+                                </a-button>
+                            </div>
+                        </div>
+                    </a-col>
 
 
-                                </a-form>
-                            </tab-content>
-                            <tab-content title="Skills of interest"
-                                         icon="ti-settings">
-                                <a-row :gutter="16">
-                                    <a-col :span="24">
-
-                                        <a-form-item>
-                                            <p>Pick skills to enable candidate
-                                                recommendations</p>
-                                            <div>
-
-                                                <template v-for=" tag in recommendationtags">
-                                                    <a-checkable-tag style="border-color: blue;font-size: 14px"
-                                                                     :key="tag"
-                                                                     :checked="selectedTags.indexOf(tag) > -1"
-                                                                     @change="(checked) => handleChange(tag, checked)"
-                                                    >
-                                                        {{tag}}
-                                                    </a-checkable-tag>
-                                                </template>
-                                            </div>
-
-
-                                        </a-form-item>
-                                    </a-col>
-                                </a-row>
-                            </tab-content>
-
-                        </form-wizard>
-
-
-                    </div>
-
-                </div>
+                </a-row>
 
 
                 <!--Create project--->
@@ -909,7 +1001,6 @@
 
 
             </div>
-            {{currentUserProfile}}
 
 
         </a-layout-content>
@@ -929,7 +1020,6 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import ARadioButton from "ant-design-vue/es/radio/RadioButton";
-    import {FormWizard, TabContent} from 'vue-form-wizard'
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
     import VeeValidate from 'vee-validate';
     import axios from 'axios'
@@ -986,8 +1076,6 @@
 
             Pageheader,
             Footer,
-            FormWizard,
-            TabContent,
 
 
         },
@@ -1028,6 +1116,14 @@
                         title: 'Past projects',
 
                     }],
+                current1: 0,
+                steps1: [{
+                    title: 'Company details',
+
+                }, {
+                    title: 'Skills of interest',
+
+                }],
                 experienceslist: [],
                 experiences: [],
                 portoliolist: [],
@@ -1061,7 +1157,7 @@
                 errorlist: [],
                 cv: null,
                 uploading: false,
-
+                profile: {}
 
 
             }
@@ -1074,12 +1170,15 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                this.cv =this.currentUserProfile.file
-                let temptaglist = this.currentUserProfile.skills;
+                this.cv = this.currentUserProfile.file
+                if (this.currentUserProfile.skills) {
+                    let temptaglist = this.currentUserProfile.skills;
 
-                let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
+                    let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
 
-                this.tags = array
+                    this.tags = array
+                }
+
                 this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
                 this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
                 for (let i = 0; i < this.portfoliolist.length; i++) {
@@ -1163,12 +1262,19 @@
 
                 }
                 this.loading = true
-                if(this.cv !== null){
-                    this.currentUserProfile.file = this.cv.slice(48)
+
+                this.currentUserProfile.user = this.$store.state.user.pk
+                this.profile = {
+                    gender: this.currentUserProfile.gender,
+                    linkedin_url: this.currentUserProfile.linkedin_url,
+                    github_repo: this.currentUserProfile.github_repo,
+                    years: this.currentUserProfile.years,
+                    availabilty: this.currentUserProfile.availabilty,
+                    country: this.currentUserProfile.country
+
                 }
 
 
-                this.currentUserProfile = this.currentUserProfile.user.id
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
                         this.current++
@@ -1178,6 +1284,44 @@
                     })
                     .catch(error => {
                         console.log(error)
+                        this.loading = false
+
+
+                    });
+
+
+            },
+            stepsaves1() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.loading = true
+                if (this.cv !== null) {
+                    this.currentUserProfile.file = this.cv.slice(48)
+                }
+                this.currentUserProfile.user = this.$store.state.user.pk
+                this.profile = {
+                    gender: this.currentUserProfile.gender,
+                    linkedin_url: this.currentUserProfile.linkedin_url,
+                    github_repo: this.currentUserProfile.github_repo,
+                    years: this.currentUserProfile.years,
+                    availabilty: this.currentUserProfile.availabilty,
+                    country: this.currentUserProfile.country
+
+                }
+
+
+                UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
+                    .then(resp => {
+                        this.current1++
+                        this.loading = false
+
+
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.loading = false
 
 
                     });
@@ -1308,26 +1452,39 @@
 
                 if (current === 0) {
 
-                    self.stepsaves()
-
+                    this.$validator.validateAll().then((values) => {
+                        if (values) {
+                            self.stepsaves()
+                        }
+                    })
 
 
                 } else if (current === 1) {
-                    this.errorlist =[]
-                    if ( this.currentUserProfile.about === null ) {
-                        this.errorlist.push('about')
+                    if (this.currentUserProfile.user_type === 'developer') {
+                        this.errorlist = []
+                        if (this.currentUserProfile.about === null) {
+                            this.errorlist.push('about')
 
-                    }
-                    if ( this.cv === null) {
-                        this.errorlist.push('cv')
+                        }
+                        if (this.cv === null) {
+                            this.errorlist.push('cv')
 
-                    }
-                    console.log(this.errorlist)
+                        }
+                        if (this.currentUserProfile.salary === null) {
+                            this.errorlist.push('salary')
 
-                    if (this.errorlist.length === 0) {
+                        }
+
+
+                        if (this.errorlist.length === 0) {
+                            self.stepsaves()
+
+                        }
+                    } else {
                         self.stepsaves()
 
                     }
+
 
                 } else if (current === 2) {
                     this.current++
@@ -1337,6 +1494,29 @@
             },
             prev() {
                 this.current--
+            },
+            next1(current) {
+                let self = this
+
+                if (current === 0) {
+
+                    this.$validator.validateAll().then((values) => {
+                        if (values) {
+                            self.stepsaves1()
+                        }
+                    })
+
+
+                } else if (current === 1) {
+                    self.stepsaves1()
+
+
+                }
+
+
+            },
+            prev1() {
+                this.current1--
             },
             CreateProject() {
                 this.createproject = true
@@ -1379,6 +1559,7 @@
                                     this.projectrepo = ''
                                     this.projectdescription = ''
                                     this.projecttech = ''
+                                    this.projecttags = []
 
 
                                     return resp
@@ -1439,6 +1620,7 @@
                                     this.experiencelocation = ''
                                     this.experiencetech = ''
                                     this.experiencedescription = ''
+                                    this.experiencetags = []
 
 
                                     return resp
@@ -1523,7 +1705,7 @@
                 })
             },
             async handleUpload(e) {
-                this.uploading =true
+                this.uploading = true
                 const cloudName = 'dwtvwjhn3';
                 const unsignedUploadPreset = 'ml_default';
 
@@ -1547,7 +1729,7 @@
                 );
 
                 this.cv = res.data.secure_url
-
+                this.currentUserProfile.file = this.cv.slice(48)
 
 
             }

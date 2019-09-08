@@ -143,7 +143,7 @@
 
                 const projectId = this.$store.state.route.params.projectId;
                 this.type = this.$store.state.route.params.type
-                console.log(this.type)
+
                 this.project = (await Projects.projectdetails(projectId, auth)).data;
                 if (this.$store.state.route.params.type === 'job') {
                     this.application = (await Marketplace.jobmanagerview(this.$store.state.route.params.applicationId, auth)).data

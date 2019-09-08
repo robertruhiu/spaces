@@ -146,6 +146,19 @@
                                     </a-form-item>
 
                                 </a-col>
+                                <a-col :span="24" style="margin-bottom: 1rem">
+                                            <span>
+                                                Monthly Salary expectations
+                                            </span>
+                                            <a-input-number
+                                                    :defaultValue="1000"
+                                                    :formatter="value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                                    :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                                                    v-model="currentUserProfile.salary"
+                                            />
+
+
+                                        </a-col>
 
                             </a-col>
                         </a-row>
@@ -181,6 +194,8 @@
 
                     </a-form>
                 </div>
+
+
 
 
             </a-layout-content>

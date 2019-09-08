@@ -37,12 +37,13 @@
                     <span>Register</span>
                 </router-link>
       </a-menu-item>
-        <div v-if="$store.state.isUserLoggedIn">
-            <a-menu-divider />
-        <a-menu-item key="5" >
+
+
+        <a-menu-item key="5" v-if="$store.state.isUserLoggedIn">
+
             <a @click="logout">Logout</a>
         </a-menu-item>
-        </div>
+
 
 
     </a-menu>
