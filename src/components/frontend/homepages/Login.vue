@@ -135,7 +135,7 @@
         data() {
             return {
                 email: '',
-                password: 'Pokerface1994',
+                password: '',
                 emailnull: null,
                 passwordnull: null,
                 error: null,
