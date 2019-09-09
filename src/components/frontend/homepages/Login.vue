@@ -168,6 +168,7 @@
                                     .then(response => {
                                         this.$store.dispatch('setUsertype', response.data.user_type)
                                         this.$store.dispatch('setUser_id', response.data.user)
+
                                         if (response.data.stage === 'complete') {
                                             if (this.$store.state.usertype === 'developer') {
                                                 this.$router.push({
