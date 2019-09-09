@@ -43,7 +43,9 @@
 
                             </div>
                             <div>
+                                <div v-if="this.$store.state.usertype === 'recruiter'">
                                 <show-at breakpoint="mediumAndBelow">
+
 
                                     <div style="text-align: center">
                                         <div v-for="dev in pickeddevs" :key="dev">
@@ -60,7 +62,9 @@
                                             Add to my Candidates
                                         </a-button>
                                     </div>
+
                                 </show-at>
+                                    </div>
                             </div>
 
 
@@ -252,7 +256,7 @@
                                          style="width: 50%;padding-bottom: 2rem">
                                 </div>
 
-                                <div v-if="currentUserProfile.user_type === 'recruiter'">
+                                <div v-if="this.$store.state.usertype === 'recruiter'">
                                     <p style="text-align: center;">I like this profile</p>
                                 <div style="text-align: center">
                                     <div v-for="dev in pickeddevs" :key="dev">
@@ -276,6 +280,7 @@
                             </div>
                         </a-col>
                     </hide-at>
+
 
 
                 </a-row>
