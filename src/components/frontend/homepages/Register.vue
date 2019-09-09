@@ -13,7 +13,7 @@
                             <p class="alert" v-if="error">{{error}}</p>
                             <a-form
                                     id="components-form-demo-normal-login"
-                                    :form="form"
+                                    :form="registerform"
                                     class="login-form"
 
                             >
@@ -169,7 +169,7 @@
 
                             <div class="steps-content">
                                 <div if v-if="current === 0">
-                                    <a-form :form="form">
+                                    <a-form :form="developerstep1">
                                         <a-row :gutter="16">
                                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                    :md="{span: 12, offset: 0 }"
@@ -224,6 +224,7 @@
                                                                     name="location"
                                                                     v-model="currentUserProfile.country"
                                                                     class="ant-input"
+
                                                     />
                                                     <span style="color: #f5222d;" v-show="errors.has('location')"
                                                           class="help is-danger">{{ errors.first('location') }}</span>
@@ -544,14 +545,22 @@
                                         </span>
                                     </span>
 
-
-                                <a-button
-                                        v-if="current == steps.length - 1"
-                                        type="primary"
-                                        @click="onComplete"
-                                >
+                                <span>
+                                    <div v-if="loading" style="text-align: center;">
+                                <a-spin/>
+                            </div>
+                                    <span v-else>
+                                         <a-button
+                                                 v-if="current == steps.length - 1"
+                                                 type="primary"
+                                                 @click="onComplete"
+                                         >
                                     Done
                                 </a-button>
+                                    </span>
+
+                                </span>
+
                                 <a-button
                                         v-if="current>0"
                                         style="margin-left: 8px"
@@ -577,7 +586,7 @@
                             </a-steps>
                             <div class="steps-content">
                                 <div if v-if="current1 === 0">
-                                    <a-form :form="form">
+                                    <a-form :form="recruiterstep1">
                                         <a-row :gutter="16">
                                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                    :md="{span: 12, offset: 0 }"
@@ -759,13 +768,19 @@
 
                 >
                     <template slot="footer">
+                        <div>
+                            <div v-if="loading" style="text-align: center;">
+                                <a-spin/>
+                            </div>
+                            <a-button v-else key="submit" type="primary" @click="SavenewProject">
+                                Save
+                            </a-button>
+                        </div>
 
-                        <a-button key="submit" type="primary" :loading="loading" @click="SavenewProject">
-                            Save
-                        </a-button>
+
                     </template>
                     <a-form
-                            :form="form"
+                            :form="projectform"
 
                     >
                         <a-form-item
@@ -868,13 +883,19 @@
 
                 >
                     <template slot="footer">
+                        <div>
+                            <div v-if="loading" style="text-align: center;">
+                                <a-spin/>
+                            </div>
+                            <a-button v-else key="submit" type="primary" @click="SavenewExperience">
+                                Save
+                            </a-button>
+                        </div>
 
-                        <a-button key="submit" type="primary" @click="SavenewExperience">
-                            Save
-                        </a-button>
+
                     </template>
                     <a-form
-                            :form="form"
+                            :form="experienceform"
 
                     >
                         <a-form-item
@@ -1157,7 +1178,12 @@
                 errorlist: [],
                 cv: null,
                 uploading: false,
-                profile: {}
+                profile: {},
+                experienceform: this.$form.createForm(this),
+                projectform: this.$form.createForm(this),
+                registerform: this.$form.createForm(this),
+                developerstep1: this.$form.createForm(this),
+                recruiterstep1: this.$form.createForm(this),
 
 
             }
@@ -1169,7 +1195,9 @@
 
             }
             if (this.$store.state.user.pk) {
+                this.loading = true
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.loading = false
                 this.cv = this.currentUserProfile.file
                 if (this.currentUserProfile.skills) {
                     let temptaglist = this.currentUserProfile.skills;
@@ -1231,6 +1259,7 @@
             register() {
                 this.$validator.validateAll().then((values) => {
                     if (values) {
+                        this.loading = true
 
 
                         AuthService.register({
@@ -1241,9 +1270,75 @@
                             password2: this.password2
                         })
                             .then(resp => {
-                                this.loading = false
+
                                 this.$store.dispatch('setToken', resp.data.token)
                                 this.$store.dispatch('setUser', resp.data.user)
+                                const auth = {
+                                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                                }
+
+                                UsersService.currentuser(this.$store.state.user.pk, auth)
+                                    .then(resp => {
+                                        this.currentUserProfile = resp.data
+
+                                    })
+                                    .catch()
+                                this.cv = this.currentUserProfile.file
+                                if (this.currentUserProfile.skills) {
+                                    let temptaglist = this.currentUserProfile.skills;
+
+                                    let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
+
+                                    this.tags = array
+                                }
+
+                                UsersService.portfolio(this.$store.state.user.pk, auth)
+                                    .then(resp => {
+                                        this.portfoliolist = resp.data
+
+                                    })
+                                    .catch()
+                                UsersService.experience(this.$store.state.user.pk, auth)
+                                    .then(resp => {
+                                        this.experienceslist = resp.data
+
+                                    })
+                                    .catch()
+                                for (let i = 0; i < this.portfoliolist.length; i++) {
+                                    let id = this.portfoliolist[i].id
+                                    let title = this.portfoliolist[i].title
+                                    let description = this.portfoliolist[i].description
+                                    let demo = this.portfoliolist[i].demo_link
+                                    let tech_used = this.portfoliolist[i].tech_tags.split(',');
+                                    let repo = this.portfoliolist[i].repository_link
+
+                                    let one_portfolio = new Portfolio(
+                                        id, title, description, demo, tech_used, repo
+                                    );
+                                    this.portfolio.push(one_portfolio)
+
+
+                                }
+                                for (let i = 0; i < this.experienceslist.length; i++) {
+                                    let id = this.experienceslist[i].id
+                                    let title = this.experienceslist[i].title
+                                    let description = this.experienceslist[i].description
+                                    let company = this.experienceslist[i].company
+                                    let location = this.experienceslist[i].location
+                                    let duration = this.experienceslist[i].duration
+                                    let tech_used = this.experienceslist[i].tech_tags.split(',');
+
+                                    let one_experience = new Experience(
+                                        id, title, description, company, location, duration, tech_used
+                                    );
+                                    this.experiences.push(one_experience)
+
+
+                                }
+
+
+                                this.loading = false
 
 
                             })
@@ -1529,6 +1624,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.loading = true
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         UsersService.newportfolio(
@@ -1554,6 +1650,7 @@
                                         id, title, description, demo, tech_used, repo
                                     );
                                     this.portfolio.push(one_portfolio)
+                                    this.loading = false
 
                                     this.createproject = false
                                     this.projecttitle = ''
@@ -1569,6 +1666,9 @@
                                 }
                             )
                             .catch()
+
+                    } else {
+                        this.loading = false
 
                     }
                 })
@@ -1586,6 +1686,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.loading = true
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         UsersService.newexperience(
@@ -1613,6 +1714,7 @@
                                         id, title, description, company, location, duration, tech_used
                                     );
                                     this.experiences.push(one_experience)
+                                    this.loading = false
 
                                     this.createexperience = false
 
@@ -1629,7 +1731,12 @@
 
                                 }
                             )
-                            .catch()
+                            .catch(error => {
+                                console.log(error)
+                            })
+                    } else {
+                        this.loading = false
+
                     }
                 })
 

@@ -141,7 +141,8 @@
                 error: null,
                 usertype: null,
                 currentUserProfile: {},
-                loading: false
+                loading: false,
+                form: this.$form.createForm(this),
             }
         },
 
