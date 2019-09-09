@@ -1231,7 +1231,7 @@
             register() {
                 this.$validator.validateAll().then((values) => {
                     if (values) {
-                        this.loading = true
+
 
                         AuthService.register({
                             first_name: this.firstname,
@@ -1241,13 +1241,15 @@
                             password2: this.password2
                         })
                             .then(resp => {
+                                this.loading = false
                                 this.$store.dispatch('setToken', resp.data.token)
                                 this.$store.dispatch('setUser', resp.data.user)
 
 
                             })
                             .catch(error => {
-                                console.log(error)
+                                this.loading = false
+
                                 this.error = 'check details incorrect'
 
                             });

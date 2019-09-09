@@ -3,15 +3,15 @@
         <pageheader></pageheader>
         <a-layout-content :style="{ padding: '0 0px' }">
             <div>
-                <a-row  style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
+                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
                     <hide-at breakpoint="mediumAndBelow">
                         <a-col span="4">
-                        <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
-                    </a-col>
+                            <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
+                        </a-col>
                     </hide-at>
 
                     <a-col :xs="{span: 20, offset: 4 }" :sm="{span: 20, offset: 4 }" :md="{span: 20, offset: 4 }"
-                               :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
+                           :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
 
                         <div style="padding-top: 2rem;" class='center'>
 
@@ -21,7 +21,6 @@
                                     placeholder="Search skills like react,javascript,vue python"
                                     :filterOption="filterOption"
                                     v-model="search"
-
 
 
                             >
@@ -45,7 +44,7 @@
                 </a-row>
             </div>
 
-            <div style="margin-top: 9rem">
+            <div style="margin-top: 10rem">
                 <a-row>
 
 
@@ -67,115 +66,106 @@
 
 
                                     <show-at breakpoint="mediumAndBelow">
-                                            <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id"
-                                                     style="margin-bottom: 1rem">
+                                        <div style="padding: 2%">
 
-                                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
 
-                                                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                                               :md="{span: 24, offset: 0 }"
-                                                               :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
-                                                               style="padding: 2%">
-                                                            <p>Bio</p>
-                                                            <p>{{item.about | truncate(100)}}<a
-                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                                more</a>
-                                                            </p>
+                                            <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
 
-                                                            <p>
-                                                                Skills :
-                                                                <span style="" v-for="skill in  item.skills.slice(0,3)"
-                                                                      v-bind:key="skill.id">
+                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                       :md="{span: 24, offset: 0 }"
+                                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
+                                                       style="padding: 2%">
+                                                    <p>Bio</p>
+                                                    <p>{{item.about | truncate(100)}}<a
+                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                        more</a>
+                                                    </p>
+
+                                                    <p>
+                                                        Skills :
+                                                        <span style="" v-for="skill in  item.skills.slice(0,3)"
+                                                              v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                                            </p>
+                                                    </p>
 
-                                                            <div style="margin-bottom: 1%;text-align: center">
-                                                                <a-button type="primary" ghost
-                                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                                    View Profile
-                                                                </a-button>
-                                                            </div>
-
-
-                                                        </a-col>
-
-
-                                                    </a-row>
-                                                </div>
-                                            </div>
-
-                                        </show-at>
-
-
-                                        <hide-at breakpoint="mediumAndBelow">
-                                            <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id" style="
-
-                            ">
-                                                    <div style="margin-bottom: 1rem">
-                                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                                            <a-col span="4"
-                                                                   style="background-color:#0679FB;height: 100% ">
-                                                                <a-avatar class="poolavatar"
-                                                                >
-                                                                    {{item.name}}
-                                                                </a-avatar>
-                                                            </a-col>
-                                                            <a-col span="15" style="padding: 2%">
-                                                                <p>Bio</p>
-                                                                <p>{{item.about | truncate(100)}}<a
-                                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                                    more</a>
-                                                                </p>
-
-                                                                <p>
-                                                                    Skills :
-                                                                    <span style="" v-for="skill in item.skills"
-                                                                          v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                                                </p>
-
-
-                                                            </a-col>
-                                                            <a-col span="5">
-                                                                <div style="padding-top: 1rem;">
-
-                                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                                        <a-icon type="environment"/>
-                                                                        {{item.location}}
-                                                                    </a-tag>
-                                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
-                                                                        {{item.availabilty}}
-
-                                                                    </a-tag>
-
-
-                                                                </div>
-                                                                <div style="margin-top: 2rem">
-                                                                    <a-button type="primary" ghost
-                                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                                        View Profile
-                                                                    </a-button>
-                                                                </div>
-
-
-                                                            </a-col>
-
-
-                                                        </a-row>
+                                                    <div style="margin-bottom: 1%;text-align: center">
+                                                        <a-button type="primary" ghost
+                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                            View Profile
+                                                        </a-button>
                                                     </div>
 
 
+                                                </a-col>
+
+
+                                            </a-row>
+                                        </div>
+
+
+                                    </show-at>
+
+
+                                    <hide-at breakpoint="mediumAndBelow">
+
+
+                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                            <a-col span="4"
+                                                   style="background-color:#0679FB;height: 100% ">
+                                                <a-avatar class="poolavatar"
+                                                >
+                                                    {{item.name}}
+                                                </a-avatar>
+                                            </a-col>
+                                            <a-col span="15" style="padding: 2%">
+                                                <p>Bio</p>
+                                                <p>{{item.about | truncate(100)}}<a
+                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                    more</a>
+                                                </p>
+
+                                                <p>
+                                                    Skills :
+                                                    <span style="" v-for="skill in item.skills"
+                                                          v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                                </p>
+
+
+                                            </a-col>
+                                            <a-col span="5">
+                                                <div style="padding-top: 1rem;">
+
+                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                        <a-icon type="environment"/>
+                                                        {{item.location}}
+                                                    </a-tag>
+                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                        {{item.availabilty}}
+
+                                                    </a-tag>
+
+
                                                 </div>
-                                            </div>
+                                                <div style="margin-top: 2rem">
+                                                    <a-button type="primary" ghost
+                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                        View Profile
+                                                    </a-button>
+                                                </div>
 
-                                        </hide-at>
 
+                                            </a-col>
+
+
+                                        </a-row>
+
+
+                                    </hide-at>
 
 
                                 </a-list-item>
@@ -377,9 +367,6 @@
         background-color: #0679FB;
         margin: 25% 25%;
     }
-
-
-
 
 
 </style>
