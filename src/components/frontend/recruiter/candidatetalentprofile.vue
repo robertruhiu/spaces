@@ -252,8 +252,8 @@
                                          style="width: 50%;padding-bottom: 2rem">
                                 </div>
 
-
-                                <p style="text-align: center;">I like this profile</p>
+                                <div v-if="currentUserProfile.user_type === 'recruiter'">
+                                    <p style="text-align: center;">I like this profile</p>
                                 <div style="text-align: center">
                                     <div v-for="dev in pickeddevs" :key="dev">
 
@@ -269,6 +269,8 @@
                                         Add to my Candidates
                                     </a-button>
                                 </div>
+                                </div>
+
 
 
                             </div>
