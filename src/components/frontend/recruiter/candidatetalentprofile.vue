@@ -15,7 +15,7 @@
                         <div class="profile" style="padding-bottom: 2%;margin: 3%">
                             <a-avatar class="poolavatar" shape="square"
                                       style="">
-                                {{currentUser.first_name[0].toUpperCase() }} {{currentUser.last_name[0].toUpperCase()}}
+                                {{currentUserProfile.user.first_name[0].toUpperCase() }} {{currentUserProfile.user.last_name[0].toUpperCase()}}
                             </a-avatar>
                             <div style="padding: 4%">
                                 <p>About</p>
@@ -50,7 +50,7 @@
                                     <div style="text-align: center">
                                         <div v-for="dev in pickeddevs" :key="dev">
 
-                                            <a-button v-if="dev === currentUser.id" style="margin-left: 1rem;"
+                                            <a-button v-if="dev === currentUserProfile.id" style="margin-left: 1rem;"
                                                       type="primary"
                                                       @click="navigateTo({name:'mycandidates'})">
                                                 manage candidate
@@ -58,7 +58,7 @@
 
                                         </div>
                                         <a-button v-if="picked === false" style="margin-left: 1rem;" type="primary"
-                                                  @click="pickcandidate(currentUser.id)">
+                                                  @click="pickcandidate(currentUserProfile.id)">
                                             Add to my Candidates
                                         </a-button>
                                     </div>
@@ -261,7 +261,7 @@
                                 <div style="text-align: center">
                                     <div v-for="dev in pickeddevs" :key="dev">
 
-                                        <a-button v-if="dev === currentUser.id" style="margin-left: 1rem;"
+                                        <a-button v-if="dev === currentUserProfile.id" style="margin-left: 1rem;"
                                                   type="primary"
                                                   @click="navigateTo({name:'mycandidates'})">
                                             manage candidate
@@ -269,7 +269,7 @@
 
                                     </div>
                                     <a-button v-if="picked === false" type="primary"
-                                              @click="pickcandidate(currentUser.id)">
+                                              @click="pickcandidate(currentUserProfile.id)">
                                         Add to my Candidates
                                     </a-button>
                                 </div>
@@ -336,7 +336,6 @@
 
             return {
                 currentUserProfile: {},
-                currentUser: {},
                 skilltags: [],
                 visible: false,
                 inputVisible: false,
@@ -365,7 +364,7 @@
 
             }
             if (this.$store.state.user.pk) {
-                this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateProfileID, auth)).data
+
                 this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
                 this.skilltags = this.currentUserProfile.skills.split(',');
                 this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateProfileID, auth)).data
