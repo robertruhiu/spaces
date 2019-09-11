@@ -7,6 +7,7 @@
             <a-layout-content>
                 <a-card title="Cart">
                     <!--                    convert to table and strip some data-->
+                    {{ currentUserProfile}}
                     <div>
                         <a-card v-for="item in my_cartitems">
                             <!--                        {{item.developer}}-->
@@ -49,7 +50,7 @@
         data() {
             return {
                 currentUserProfile: {},
-                my_cart: 8,
+                my_cart: [],
                 projectlist: [],
                 my_cartitems: [],
             }
@@ -64,8 +65,8 @@
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
-                // this.my_cart = (await Payments.cartcreate(this.$store.state.user.pk, auth)).data
-                this.my_cartitems = (await Payments.cartitems(this.my_cart, auth)).data
+                this.my_cart = (await Payments.cartcreate(this.currentUserProfile.id, auth)).data
+                this.my_cartitems = (await Payments.cartitems(this.my_cart.id, auth)).data
             }
 
         },

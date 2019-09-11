@@ -283,16 +283,9 @@
                 let onedev = new Developer(
                     id, name, skills, about, location, availabilty
                 )
-
-
                 this.listData.push(onedev)
-
             }
-
-
         },
-
-
         methods: {
             navigateTo(route) {
                 this.$router.push(route)
@@ -325,12 +318,10 @@
                     checkAll1: e.target.checked,
                 })
             },
-
         },
         computed: {
             filteredList() {
                 return this.listData.filter(dev => {
-
                     return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
                 })
             }

@@ -1,14 +1,10 @@
 <template>
     <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
         <pageheader></pageheader>
-
-
         <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
-
-
             <a-layout-content style="margin-top: 3%">
-
-
+                {{cart}}
+                {{cart_items}}
                 <a-row style="padding: 1% 1%">
                     <a-col :span="6" style=" ">
                         <div class="profile" style="padding-bottom: 2%">
@@ -155,10 +151,7 @@
 
 
                 </a-row>
-
-
             </a-layout-content>
-
         </a-layout>
     </a-layout>
 </template>
@@ -198,6 +191,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
     import QuizService from '@/services/QuizService';
+    import Payments from '@/services/Payments';
 
 
     export default {
@@ -218,6 +212,8 @@
                 picked: false,
                 pickeddevs: [],
                 takenquizzes: [],
+                cart: [],
+                cart_items: [],
             }
         },
         components: {
@@ -240,10 +236,11 @@
                 this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateProfileID, auth)).data
                 this.experienceslist = (await UsersService.experience(this.$route.params.candidateProfileID, auth)).data
                 this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
+                this.cart = (await Payments.cartcreate(this.currentUser.id, auth)).data;
 
 
                 for (let i = 0; i < this.portfoliolist.length; i++) {
-                    let id = this.portfoliolist[i]
+                    let id = this.portfoliolist[i];
                     let title = this.portfoliolist[i].title
                     let description = this.portfoliolist[i].description
                     let demo = this.portfoliolist[i].demo_link
@@ -264,13 +261,10 @@
                     let location = this.experienceslist[i].location
                     let duration = this.experienceslist[i].duration
                     let tech_used = this.experienceslist[i].tech_tags.split(',');
-
                     let one_experience = new Experience(
                         id, title, description, company, location, duration, tech_used
                     );
                     this.experiences.push(one_experience)
-
-
                 }
 
                 MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
@@ -301,37 +295,31 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
-
             pickcandidate(dev) {
-
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-
-                this.pickeddevs.push(dev)
-
+                };
+                this.pickeddevs.push(dev);
                 let picked_developers = {
                     owner: this.$store.state.user.pk,
                     developer: dev,
                     paid: false,
                     stage: 'new'
-                }
-
+                };
+                Payments.cartitemadd(this.$route.params.candidateProfileID, this.cart.id, auth)
+                    .then(resp => {
+                        this.cart_items.push(resp.data)
+                    }).catch(error => {
+                        return error
+                    });
                 MarketPlaceService.pickdeveloper(picked_developers, auth)
                     .then(
                         this.picked = true
                     )
                     .catch(error => {
                         return error
-
-
                     });
-
-
             },
-
-
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)

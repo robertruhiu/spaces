@@ -1,7 +1,3 @@
-
 module.exports = {
     mode: 'development',
-
-
-
 };

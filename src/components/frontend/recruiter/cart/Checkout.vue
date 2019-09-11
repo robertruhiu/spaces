@@ -11,9 +11,11 @@
                             bordered
                             :dataSource="my_cartitems"
                     >
-                        <a-list-item slot="renderItem" slot-scope="item, index">{{item}}</a-list-item>
-                        <div slot="header">Header</div>
-                        <div slot="footer">Footer</div>
+                        <a-list-item slot="renderItem" slot-scope="item, index">
+                            <a-list-item>{{item.developer.user.first_name}}</a-list-item>
+                            <a-list-item>{{item.developer.user.last_name}}</a-list-item>
+                        </a-list-item>
+                        <div slot="footer"><a-button type="primary" @click="RemoveDeveloper(item.id)">Remove</a-button></div>
                     </a-list>
                     <!--                    <div>-->
                     <!--                        Review your Order-->
@@ -33,11 +35,11 @@
                     <!--&lt;!&ndash;                            {{item.developer.language}}&ndash;&gt;-->
                     <!--&lt;!&ndash;                            <br>&ndash;&gt;-->
                     <!--&lt;!&ndash;                            <a-button type="primary" @click="RemoveDeveloper(item.id)">Remove</a-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                            <template class="ant-card-actions" slot="actions">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                <p> Total Amount: {{ item.cart.total_amount}}</p>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                <p>Pay Now</p>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                            </template>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                        </a-card>&ndash;&gt;-->
+                                                <template class="ant-card-actions" slot="actions">
+                                                    <p> Total Amount: {{ item.cart.total_amount}}</p>
+                                                    <p>Pay Now</p>
+                                                </template>
+                    <!--                        </a-card>-->
                     <!--                    </div>-->
                 </a-card>
             </a-layout-content>
