@@ -5,7 +5,7 @@
             <a-layout-content style="margin-top: 3%">
                 {{cart}}
                 {{cart_items}}
-                <router-link to="/checkout"><a-button type="primary">View cart</a-button></router-link>
+                <router-link to="/cart"><a-button type="primary">View cart</a-button></router-link>
                 <a-row style="padding: 1% 1%">
                     <a-col :span="6" style=" ">
                         <div class="profile" style="padding-bottom: 2%">

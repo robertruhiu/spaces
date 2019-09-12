@@ -7,7 +7,6 @@
             <a-layout-content>
                 <a-card title="Cart">
                     <!--                    convert to table and strip some data-->
-                    {{ currentUserProfile}}
                     <div>
                         <a-card v-for="item in my_cartitems">
                             <!--                        {{item.developer}}-->
