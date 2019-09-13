@@ -23,7 +23,7 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard'>
+                            <a-row class='managecard' style="background-color: #1876d21c">
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Applications</p>
@@ -37,7 +37,7 @@
                                         <a-timeline-item v-for="application in active" v-bind:key="application">
                                             <a><strong>{{application.title}}</strong></a>
                                             <br>
-                                            <div class="text-muted">
+                                            <div style="color: black">
                                                 Company : {{application.company}}
 
                                                 <br>
@@ -74,7 +74,7 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard'>
+                            <a-row class='managecard' style="background-color: #fa558030">
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Testing</p>
@@ -88,7 +88,7 @@
                                     <a-timeline-item v-for="application in testing" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
                                         <br>
-                                        <div class="text-muted">
+                                        <div style="color: black">
                                             Company : {{application.company}}
 
                                             <br>
@@ -128,7 +128,7 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard'>
+                            <a-row class='managecard' style="background-color: #1d9ddf1a">
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Interview</p>
@@ -142,7 +142,7 @@
                                     <a-timeline-item v-for="application in interview" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
                                         <br>
-                                        <div class="text-muted">
+                                        <div style="color: black">
                                             Company : {{application.company}}
 
                                             <br>
@@ -175,7 +175,7 @@
 
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
-                            <a-row class='managecard'>
+                            <a-row class='managecard' style="background-color: #3fce9d2e">
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Offers</p>
@@ -189,7 +189,7 @@
                                     <a-timeline-item v-for="application in offers" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
                                         <br>
-                                        <div class="text-muted">
+                                        <div style="color: black">
                                             Company : {{application.company}}
 
                                             <br>
