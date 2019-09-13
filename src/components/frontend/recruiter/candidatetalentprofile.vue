@@ -4,9 +4,7 @@
 
 
         <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
-
-
-            <a-layout-content style="margin-top: 3rem">
+            <a-layout-content style="margin-top: 3%">
 
 
                 <a-row style="padding: 1% 1%">
@@ -15,25 +13,56 @@
                         <div class="profile" style="padding-bottom: 2%;margin: 3%">
                             <a-avatar class="poolavatar" shape="square"
                                       style="">
-                                {{currentUserProfile.user.first_name[0].toUpperCase() }} {{currentUserProfile.user.last_name[0].toUpperCase()}}
+                                {{currentUserProfile.user.first_name[0].toUpperCase() }}
+                                {{currentUserProfile.user.last_name[0].toUpperCase()}}
+                                <span style="font-size: 1rem" v-if="currentUserProfile.verified_skills"><a-icon
+                                        type="check-circle"/></span>
+
                             </a-avatar>
                             <div style="padding: 4%">
                                 <p>About</p>
                                 <p>{{currentUserProfile.about}}</p>
 
                                 <br>
+
+                                <p v-if="verified_skills.length>0">
+                                    Verified skills:
+                                    <span style="" v-for="skill in verified_skills"
+                                          v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                </p>
+                                <p v-if="skilltags.length>0">
+                                    Skill tags:
+                                    <span style="" v-for="skill in skilltags"
+                                          v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+
+                                </p>
                                 <p>Experience :
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.years}} years
                                     </a-tag>
                                 </p>
                                 <p>
+
                                     Availability :
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.availabilty}}
                                     </a-tag>
 
+
                                 </p>
+                                <p>
+                                    Salary expectation :
+                                    <a-tag color="#F0F6FD" style="color:#007BFF;">
+                                        ${{currentUserProfile.salary}} /month
+                                    </a-tag>
+                                </p>
+
                                 <p>Location :
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.country}}
@@ -41,30 +70,6 @@
 
                                 </p>
 
-                            </div>
-                            <div>
-                                <div v-if="this.$store.state.usertype === 'recruiter'">
-                                <show-at breakpoint="mediumAndBelow">
-
-
-                                    <div style="text-align: center">
-                                        <div v-for="dev in pickeddevs" :key="dev">
-
-                                            <a-button v-if="dev === currentUserProfile.id" style="margin-left: 1rem;"
-                                                      type="primary"
-                                                      @click="navigateTo({name:'mycandidates'})">
-                                                manage candidate
-                                            </a-button>
-
-                                        </div>
-                                        <a-button v-if="picked === false" style="margin-left: 1rem;" type="primary"
-                                                  @click="pickcandidate(currentUserProfile.id)">
-                                            Add to my Candidates
-                                        </a-button>
-                                    </div>
-
-                                </show-at>
-                                    </div>
                             </div>
 
 
@@ -247,40 +252,108 @@
 
                     </a-col>
                     <hide-at breakpoint="mediumAndBelow">
+                        <div v-if="this.$store.state.usertype === 'recruiter'">
 
-                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
-                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
-                            <div class="profile" style="padding: 4%;margin: 3%;padding-bottom: 7%">
-                                <div style="text-align: center">
-                                    <img src="../../../assets/images/profile.png"
-                                         style="width: 50%;padding-bottom: 2rem">
-                                </div>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 24, offset: 0 }"
+                                   :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
 
-                                <div v-if="this.$store.state.usertype === 'recruiter'">
-                                    <p style="text-align: center;">I like this profile</p>
-                                <div style="text-align: center">
-                                    <div v-for="dev in pickeddevs" :key="dev">
 
-                                        <a-button v-if="dev === currentUserProfile.id" style="margin-left: 1rem;"
-                                                  type="primary"
-                                                  @click="navigateTo({name:'mycandidates'})">
-                                            manage candidate
-                                        </a-button>
+                                <div v-if="pickedprofiles.length>0" class="profile">
+                                    <div style="padding: 7%">
+                                        <p>Added Candidates</p>
+                                        <p>
+                                            <a-icon type="check-circle" theme="twoTone"/>
+                                            indicates verified candidate
+                                        </p>
+                                        <div v-for="profile in pickedprofiles" v-bind:key="profile"
+                                             style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">
+                                            <p>{{profile.name}} <span v-if="profile.verified"><a-icon
+                                                    type="check-circle" theme="twoTone"/></span>
+                                                <span style="float: right"><a @click="remove(profile.id)"><a-icon
+                                                        type="close-circle" theme="twoTone"/></a></span>
+                                            </p>
+
+                                        </div>
+                                        <span v-if="paidbundleexists === false">
+                                            <p style="padding-top: 1rem">Total:{{amount}}</p>
+                                        </span>
+
+
+                                        <div v-if="paidbundleexists">
+                                            <p style="font-size: 12px">
+                                                existing bundle. bundle limit
+                                                {{paiddevs.length}}/{{bundlelimit}}
+                                            </p>
+                                            <div style="text-align: center">
+                                                <a-button type="primary" @click="addtopaid">Checkout</a-button>
+                                            </div>
+
+
+                                        </div>
+                                        <div v-else>
+                                            <div style="text-align: center">
+                                                <Rave
+                                                        style-class="paymentbtn"
+                                                        :email="email"
+                                                        :amount="amount"
+                                                        :reference="reference"
+                                                        :rave-key="raveKey"
+                                                        :callback="callback"
+                                                        :close="close"
+                                                        :currency="currency"
+                                                        :country="country"
+                                                        :customer_firstname="customer_firstname"
+                                                        :customer_lastname="customer_lastname"
+                                                        :custom_title="custom.title"
+                                                        :custom_description="custom.description"
+                                                        :custom_logo="custom.logo"
+                                                        :redirect_url="redirectUrl"
+                                                        :payment_plan="paymentPlan"
+                                                        :subaccounts="subaccounts"
+                                                        :payment_method="paymentMethod">
+                                                </Rave>
+                                            </div>
+                                        </div>
+
 
                                     </div>
-                                    <a-button v-if="picked === false" type="primary"
-                                              @click="pickcandidate(currentUserProfile.id)">
-                                        Add to my Candidates
-                                    </a-button>
                                 </div>
+                                <div class="profile">
+                                    <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
+                                        <div style="text-align: center">
+                                            <img src="../../../assets/images/profile.png"
+                                                 style="width: 50%;padding-bottom: 2rem">
+                                        </div>
+
+
+                                        <p style="text-align: center;">I like this profile</p>
+                                        <div style="text-align: center">
+                                            <div v-for="dev in pickeddevpaid" :key="dev">
+
+                                                <a-button v-if="dev.id === currentUserProfile.id"
+                                                          style="margin-left: 1rem;"
+                                                          type="primary"
+                                                          @click="navigateTo({name:'mycandidates'})">
+                                                    manage candidate
+                                                </a-button>
+
+                                            </div>
+                                            <div v-if="paidprofile === false">
+                                                <a-button v-if="picked === false" type="primary"
+                                                          @click="pickcandidate(currentUserProfile.id)">
+                                                    Add to my Candidates
+                                                </a-button>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
 
 
-
-                            </div>
-                        </a-col>
+                            </a-col>
+                        </div>
                     </hide-at>
-
 
 
                 </a-row>
@@ -295,6 +368,8 @@
 
 <script>
     //experience structure on table
+
+
     class Experience {
         constructor(id, title, description, company, location, duration, tech_used) {
             this.key = id;
@@ -320,6 +395,16 @@
         }
     }
 
+    class Cart {
+        constructor(id, name, verified) {
+            this.id = id;
+            this.name = name;
+            this.verified = verified;
+
+
+        }
+    }
+
 
     import UsersService from '@/services/UsersService'
     import Pageheader from '@/components/layout/Header.vue'
@@ -327,7 +412,9 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
     import QuizService from '@/services/QuizService';
+    import Payments from '@/services/Payments';
     import {showAt, hideAt} from 'vue-breakpoints'
+    import Rave from "@/components/frontend/recruiter/cart/Rave";
 
 
     export default {
@@ -337,6 +424,7 @@
             return {
                 currentUserProfile: {},
                 skilltags: [],
+                verified_skills: [],
                 visible: false,
                 inputVisible: false,
                 inputValue: '',
@@ -347,13 +435,48 @@
                 picked: false,
                 pickeddevs: [],
                 takenquizzes: [],
+                cart: [],
+                cart_items: [],
+                mycart: null,
+                carts: [],
+                devs: [],
+                pickedprofiles: [],
+                amount: 0,
+                raveKey: "FLWPUBK-37320275f784b16ec1e30b1342c0a223-X",
+                email: "",
+                currency: "USD",
+                country: "GH",
+                customer_firstname: '',
+                customer_lastname: '',
+
+                custom: {
+                    title: "Codeln",
+                    description: "Yada yada",
+                    logo: "bla"
+                },
+
+                paymentPlan: "", // add payments plan ID here
+                paymentMethod: "", // add 'card' or 'account' if you want a specific feature. Leave empty if you want all features
+                subaccounts: {
+                    id: "RS_73954F005E68DADF3483197D5CF13E1E", // id of the subaccount; get from your dashboard
+                    transaction_split_ratio: "", //
+                    transaction_charge_type: "", //include this if the you want a flat fee eg: flat
+                    transaction_charge: "" // include the flat fee amount you want eg: 100
+                },
+                pickeddevpaid: [],
+                paidprofile: false,
+                paiddevs: [],
+                paidbundleexists: false,
+                bundlelimit: 0
+
             }
         },
         components: {
             ACol,
             ARow,
             Pageheader,
-            showAt, hideAt
+            showAt, hideAt,
+            Rave
 
 
         },
@@ -364,12 +487,115 @@
 
             }
             if (this.$store.state.user.pk) {
+                this.customer_firstname = this.$store.state.user.first_name
+                this.customer_lastname = this.$store.state.user.last_name
+                this.email = this.$store.state.user.email
+                let dev_id = this.$route.params.candidateProfileID
+
 
                 this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
-                this.skilltags = this.currentUserProfile.skills.split(',');
-                this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateProfileID, auth)).data
-                this.experienceslist = (await UsersService.experience(this.$route.params.candidateProfileID, auth)).data
+
+                if (this.currentUserProfile.skills) {
+                    this.skilltags = this.currentUserProfile.skills.split(',');
+                }
+                if (this.currentUserProfile.verified_skills) {
+                    this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+                }
+
+                this.portfoliolist = (await UsersService.portfolio(this.currentUserProfile.id, auth)).data
+                this.experienceslist = (await UsersService.experience(this.currentUserProfile.id, auth)).data
                 this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
+                this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
+
+                if (this.carts.length > 0) {
+                    this.mycart = this.carts[0]
+                    if (this.mycart.devspending) {
+                        this.pickeddevs = this.mycart.devspending.split(',');
+                        this.paiddevs = this.mycart.devspaid.split(',');
+                    }
+                    if (this.mycart.amount) {
+                        this.paidbundleexists = true
+                        if (this.mycart.amount === 200) {
+                            this.bundlelimit = 10
+                        } else if (400 <= this.mycart.amount > 200) {
+                            this.bundlelimit = 20
+                        }
+                    }
+
+
+                } else {
+
+                    this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
+                }
+
+
+                this.devs = (await UsersService.devs()).data;
+
+                for (let i = 0; i < this.devs.length; i++) {
+                    if (this.pickeddevs.length > 0) {
+                        for (let j = 0; j < this.pickeddevs.length; j++) {
+
+                            if (this.devs[i].id === Number(this.pickeddevs[j])) {
+                                let id = this.devs[i].id
+                                let name = this.devs[i].user.first_name
+                                let verified = false
+                                if (this.devs[i].verified_skills) {
+                                    verified = true
+                                }
+
+                                let one_profile = new Cart(
+                                    id, name, verified
+                                );
+                                this.pickedprofiles.push(one_profile)
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+                let p = false
+                this.pickeddevs.forEach(function (dev) {
+
+                    if (Number(dev) === dev_id) {
+                        p = true
+
+                    }
+
+
+                })
+                this.picked = p
+                if (this.pickeddevs.length <= 10) {
+                    this.amount = 200
+                } else {
+                    this.amount = 400
+                }
+                MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
+                    .then(resp => {
+
+                            if (resp.data.length !== 0) {
+
+
+                                for (let i = 0; i < resp.data.length; i++) {
+                                    this.pickeddevpaid.push(resp.data[i].developer)
+                                }
+
+                                for (let i = 0; i < this.pickeddevpaid.length; i++) {
+                                    if (this.$route.params.candidateProfileID === this.pickeddevpaid[i].id) {
+                                        this.paidprofile = true
+
+                                    }
+                                }
+
+                            }
+
+
+                        }
+                    )
+                    .catch();
 
 
                 for (let i = 0; i < this.portfoliolist.length; i++) {
@@ -403,60 +629,52 @@
 
                 }
 
-                MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
-                    .then(resp => {
-
-                            if (resp.data.length !== 0) {
-
-
-                                for (let i = 0; i < resp.data.length; i++) {
-                                    this.pickeddevs.push(Number(resp.data[i].developer.id))
-                                }
-                                for (let j = 0; j < this.pickeddevs.length; j++) {
-                                    if (this.currentUser.id === this.pickeddevs[j]) {
-                                        this.picked = true
-                                    }
-                                }
-                            }
-
-
-                        }
-                    )
-                    .catch();
-
             }
 
 
+        },
+        computed: {
+            reference() {
+                let text = "";
+                let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                for (let i = 0; i < 10; i++)
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+                return text;
+            }
         },
         methods: {
             navigateTo(route) {
                 this.$router.push(route)
             },
+            pickcandidate() {
 
-            pickcandidate(dev) {
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
+                };
+                this.pickeddevs.push(this.currentUserProfile.id.toString())
 
-                }
+                let developers = this.pickeddevs.join(',')
 
-                this.pickeddevs.push(dev)
-
-                let picked_developers = {
-                    owner: this.$store.state.user.pk,
-                    developer: dev,
-                    paid: false,
-                    stage: 'new'
-                }
-
-                MarketPlaceService.pickdeveloper(picked_developers, auth)
-                    .then(
+                Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
+                    .then(resp => {
                         this.picked = true
-                    )
+
+                        let id = this.currentUserProfile.id
+                        let name = this.currentUserProfile.user.first_name
+                        let verified = false
+                        if (this.currentUserProfile.verified_skills) {
+                            verified = true
+                        }
+                        let one_profile = new Cart(
+                            id, name, verified
+                        );
+                        this.pickedprofiles.push(one_profile)
+
+
+                    })
                     .catch(error => {
                         return error
-
-
                     });
 
 
@@ -473,9 +691,197 @@
                     name: 'home'
                 })
             },
+            async refresh() {
 
 
-        },
+                for (let i = 0; i < this.devs.length; i++) {
+                    if (this.pickeddevs.length > 0) {
+                        for (let j = 0; j < this.pickeddevs.length; j++) {
+
+                            if (this.devs[i].id === Number(this.pickeddevs[j])) {
+                                let id = this.devs[i].id
+                                let name = this.devs[i].user.first_name
+                                let verified = false
+                                if (this.devs[i].verified_skills) {
+                                    verified = true
+                                }
+
+                                let one_profile = new Cart(
+                                    id, name, verified
+                                );
+                                this.pickedprofiles.push(one_profile)
+
+                            }
+
+                        }
+
+                    }
+
+                }
+                if (this.pickeddevs.length <= 10) {
+                    this.amount = 200
+                } else {
+                    this.amount = 400
+                }
+
+            },
+
+            remove(dev_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+                };
+                let self = this
+                if (dev_id === this.currentUserProfile.id) {
+                    this.picked = false
+                }
+                var index = this.pickeddevs.indexOf(dev_id.toString());
+                if (index > -1) {
+                    this.pickeddevs.splice(index, 1);
+                    let developers = this.pickeddevs.join(',')
+
+                    Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
+                        .then(resp => {
+                            this.pickedprofiles = []
+                            self.refresh()
+
+
+                        })
+                        .catch(error => {
+                            return error
+                        });
+                }
+
+            },
+            addtopaid() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+                }
+                this.paiddevs = this.paiddevs.concat(this.pickeddevs);
+                this.pickeddevs = []
+                let developerspaid = this.paiddevs.join(',')
+                let developerspending = this.pickeddevs.join(',')
+
+                Payments.cartitemadd(this.mycart.id, {
+                    devspending: developerspending,
+                    devspaid: developerspaid,
+
+                }, auth)
+                    .then(resp => {
+                        return resp
+                    })
+
+
+                this.pickeddevs = []
+                for (let j = 0; j < this.pickedprofiles.length; j++) {
+                    let picked_developer = {
+                        owner: this.$store.state.user.pk,
+                        developer: this.pickedprofiles[j].id,
+                        paid: true,
+                        stage: 'active'
+                    }
+
+                    MarketPlaceService.pickdeveloper(picked_developer, auth)
+                        .then(resp => {
+
+
+                                return resp
+                            }
+                        )
+                        .catch(error => {
+                            return error
+
+
+                        });
+
+                }
+                if (this.paiddevs.length === 10) {
+                    Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                        .then(resp => {
+                            self.close()
+                            return resp
+                        })
+                        .catch(error => {
+                            return error
+                        });
+
+                }
+                this.$router.push({
+                    name: 'mycandidates'
+                })
+            },
+
+            callback: function (response) {
+                let self = this
+                if (response.success) {
+                    const auth = {
+                        headers: {Authorization: 'JWT ' + this.$store.state.token}
+                    }
+                    this.paiddevs = this.paiddevs.concat(this.pickeddevs);
+                    this.pickeddevs = []
+                    let developerspaid = this.paiddevs.join(',')
+                    let developerspending = this.pickeddevs.join(',')
+
+                    Payments.cartitemadd(this.mycart.id, {
+                        devspending: developerspending,
+                        devspaid: developerspaid,
+                        amount: response.tx.amount,
+                        transaction_id: response.tx.txRef
+                    }, auth)
+                        .then(resp => {
+                            return resp
+                        })
+
+
+                    this.pickeddevs = []
+                    for (let j = 0; j < this.pickedprofiles.length; j++) {
+                        let picked_developer = {
+                            owner: this.$store.state.user.pk,
+                            developer: this.pickedprofiles[j].id,
+                            paid: true,
+                            stage: 'active'
+                        }
+
+                        MarketPlaceService.pickdeveloper(picked_developer, auth)
+                            .then(resp => {
+
+
+                                    return resp
+                                }
+                            )
+                            .catch(error => {
+                                return error
+
+
+                            });
+
+                    }
+                    if (this.paiddevs.length === 10) {
+                        Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                            .then(resp => {
+                                self.close()
+                                return resp
+                            })
+                            .catch(error => {
+                                return error
+                            });
+
+                    }
+
+
+                    this.$router.push({
+                        name: 'mycandidates'
+                    })
+                }
+
+
+            },
+            close: function () {
+                console.log("Payment closed")
+            },
+
+
+        }
+        ,
 
     }
 

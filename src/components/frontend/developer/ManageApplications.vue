@@ -5,7 +5,7 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'0rem' }">
                     <a-row style="margin-top: 1%">
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
                                :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
@@ -17,56 +17,74 @@
 
                     </a-row>
 
-                    <a-row :gutter="8" style="padding: 2%">
+                    <a-row :gutter="16" style="padding: 2%">
 
 
-                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-card class='managecard' style="border-top-color: #3A61CC;padding: 0">
+                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
+                               :md="{span: 12, offset: 0 }"
+                               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                            <a-row class='managecard'>
+                                <a-col span="24">
+                                    <div style="text-align:center;padding: 5%;">
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Applications</p>
+                                    </div>
+                                    <a-progress  :percent="100" strokeColor="#1976D2" :showInfo="false" />
 
-
-                                <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
-                                    Applications</p>
-                                <a-timeline v-if="active.length>0">
-                                    <a-timeline-item v-for="application in active" v-bind:key="application">
-                                        <a><strong>{{application.title}}</strong></a>
-                                        <br>
-                                        <div class="text-muted">
-                                            Company : {{application.company}}
-
+                                </a-col>
+                                <a-col span="24">
+                                    <div style="padding: 5%">
+                                        <a-timeline v-if="active.length>0">
+                                        <a-timeline-item v-for="application in active" v-bind:key="application">
+                                            <a><strong>{{application.title}}</strong></a>
                                             <br>
-                                            <span>
+                                            <div class="text-muted">
+                                                Company : {{application.company}}
+
+                                                <br>
+                                                <span>
                                                 Stage:
                                             <a-tag color="#9C27B0"
                                                    style="text-align: center;width: 4rem;">
                                                 {{application.stage}}
                                             </a-tag>
-                                                <a-button type="primary" size="small"
-                                                          @click="Withdrawapplication(application.key,application.type)">
-                                            withdraw
-                                        </a-button>
+                                                <p>
+                                                    <a
+                                                            @click="Withdrawapplication(application.key,application.type)">
+                                                withdraw
+                                            </a>
+                                                </p>
+
+
                                             </span>
 
-                                        </div>
+                                            </div>
 
 
-                                    </a-timeline-item>
+                                        </a-timeline-item>
 
-                                </a-timeline>
+                                    </a-timeline>
+                                    </div>
 
+                                </a-col>
+                            </a-row>
 
-                            </a-card>
 
                         </a-col>
 
-                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-card class='managecard' style="border-top-color: #fa5580;">
+                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
+                               :md="{span: 12, offset: 0 }"
+                               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                            <a-row class='managecard'>
+                                <a-col span="24">
+                                    <div style="text-align:center;padding: 5%;">
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Testing</p>
+                                    </div>
+                                    <a-progress :percent="100" strokeColor="#fa5580" :showInfo="false" />
 
-                                <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
-                                    Testing</p>
-
-                                <a-timeline v-if="testing.length>0">
+                                </a-col>
+                                <a-col span="24">
+                                    <div style="padding: 5%">
+                                        <a-timeline v-if="testing.length>0">
                                     <a-timeline-item v-for="application in testing" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
                                         <br>
@@ -99,18 +117,28 @@
                                     </a-timeline-item>
 
                                 </a-timeline>
-                            </a-card>
+                                    </div>
+
+                                </a-col>
+                            </a-row>
+
 
                         </a-col>
 
-                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-card class='managecard' style="border-top-color: #1C9DDF;">
+                        <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
+                               :md="{span: 12, offset: 0 }"
+                               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                            <a-row class='managecard'>
+                                <a-col span="24">
+                                    <div style="text-align:center;padding: 5%;">
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Interview</p>
+                                    </div>
+                                    <a-progress :percent="100" strokeColor="#1C9DDF" :showInfo="false" />
 
-                                <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
-                                    Interview</p>
-
-                                <a-timeline v-if="interview.length >0">
+                                </a-col>
+                                <a-col span="24">
+                                    <div style="padding: 5%">
+                                        <a-timeline v-if="interview.length >0">
                                     <a-timeline-item v-for="application in interview" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
                                         <br>
@@ -119,10 +147,10 @@
 
                                             <br>
                                             <div v-if="application.start !=='Invalid date'">
-                                                Interview: <span><a-button style="margin-left: 2%" type="primary"
+                                                Interview: <span><a style="margin-left: 2%" type="primary"
                                                                            size="small"
                                                                            @click="showEvent(application.key,application)"><a-icon
-                                                    type="calendar"/>View</a-button></span>
+                                                    type="calendar"/>View</a></span>
 
 
                                             </div>
@@ -137,18 +165,27 @@
                                     </a-timeline-item>
 
                                 </a-timeline>
-                            </a-card>
+                                    </div>
+
+                                </a-col>
+                            </a-row>
+
 
                         </a-col>
 
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
-                            <a-card class='managecard' style="border-top-color: #3FCE9D;">
+                               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
+                            <a-row class='managecard'>
+                                <a-col span="24">
+                                    <div style="text-align:center;padding: 5%;">
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Offers</p>
+                                    </div>
+                                    <a-progress :percent="100" strokeColor="#3FCE9D" :showInfo="false" />
 
-                                <p slot="title" style="color: #1976D2;font-weight: bold;text-align: center">
-                                    Offers</p>
-
-                                <a-timeline v-if="offers.length >0">
+                                </a-col>
+                                <a-col span="24">
+                                    <div style="padding: 5%">
+                                        <a-timeline v-if="offers.length >0">
                                     <a-timeline-item v-for="application in offers" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
                                         <br>
@@ -171,9 +208,11 @@
                                     </a-timeline-item>
 
                                 </a-timeline>
+                                    </div>
 
+                                </a-col>
+                            </a-row>
 
-                            </a-card>
 
                         </a-col>
 
@@ -568,16 +607,22 @@
 
 <style scoped>
     .managecard {
-        height: 100%;
-        border-top-width: thick;
+
+        min-height: 65vh;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 
     }
 
     .text-muted {
         color: rgba(0, 0, 0, 0.45);
     }
-    .tracker{
+
+    .tracker {
         margin-bottom: 1rem;
+    }
+
+    .headers {
+        border-bottom: 1px solid #e8e8e8;
     }
 
 </style>

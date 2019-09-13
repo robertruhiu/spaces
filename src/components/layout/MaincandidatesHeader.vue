@@ -65,7 +65,7 @@
 
             }
             let interests = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.skillinterest = interests.skills.split(',');
+            this.skillinterest = interests.skills.split(',').slice(0, 10);
 
         }
     }

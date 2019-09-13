@@ -18,7 +18,7 @@
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
                                     <a-button type="primary"
-                                              @click="ApplyJob(job.id,currentUserProfile.id,job.posted_by.id)">Apply</a-button>
+                                              @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
 
 
                                 </span>
@@ -56,6 +56,8 @@
                         </div>
                     </a-col>
                 </a-row>
+
+
 
 
 
@@ -100,7 +102,7 @@
                 this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
                 this.skills = this.job.tech_stack.split(',');
                 this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
-                console.log(this.myjobs)
+
 
                 if (this.myjobs.length > 0) {
                     for (let i = 0; i < this.myjobs.length; i++) {
@@ -129,7 +131,7 @@
                 });
             },
 
-            ApplyJob(job, dev, recruiter) {
+            ApplyJob(job, dev) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -138,7 +140,7 @@
                     {
                         job: job,
                         candidate: dev,
-                        recruiter: recruiter,
+                        recruiter: this.job.posted_by,
                         stage: 'new',
                         selected: false,
 

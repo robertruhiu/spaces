@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{backgroundColor:'#f8fafb',marginLeft: '200px' }">
+        <a-layout :style="{backgroundColor:'#f8fafb' }">
 
 
             <a-layout-content>
@@ -80,6 +80,7 @@
 
 
                 </div>
+
 
             </a-layout-content>
         </a-layout>

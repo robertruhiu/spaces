@@ -484,7 +484,8 @@
                                                             <template slot-scope="text,record">
                                                                 <span style="">
                                                                     <a style="margin-left: 15%;" v-if="record.project"
-                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,applicationId: record.action}})">
+                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,
+                                                                       applicationId: record.action}})">
                                                                         {{record.projectname}}
                                                                     </a>
 
@@ -1250,7 +1251,7 @@
                             project?</p>
                         <a-row :gutter="16">
                             <a-col :span="12">
-                                <a @click="navigateTo({name:'projectlist'})">
+                                <a @click="navigateTo({name:'projectlist',params:{jobId:job.id,applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%"
                                              src="../../../../assets/images/pick.png">

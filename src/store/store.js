@@ -14,7 +14,8 @@ export default new Vuex.Store({
         token: null,
         user: null,
         isUserLoggedIn: false,
-        usertype: null
+        usertype: null,
+        next:null
     },
     mutations: {
         setToken(state, token) {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         },
         setUser_id(state, user_id) {
             state.user_id = user_id
+        },
+        setNext(state, next) {
+            state.next = next
         }
 
     },
@@ -51,6 +55,9 @@ export default new Vuex.Store({
         },
         setUser_id({commit}, user_id) {
             commit('setUser_id', user_id)
+        },
+        setNext({commit}, next) {
+            commit('setNext', next)
         }
     },
     getters: {

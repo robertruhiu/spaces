@@ -775,104 +775,7 @@
                             </a-tab-pane>
 
 
-                            <!------bundle details tab  ------>
-                            <a-tab-pane key="3" forceRender>
-                                <span slot="tab">
-                                    <a-icon type="credit-card"/>
-                                    Payment bundles
-                                </span>
-                                <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
-                                    <a-row>
-                                        <a-col :span="16">
-                                            <a-row :gutter="8">
-                                                <a-col :span="8">
-                                                    <a-card
-                                                            hoverable
-                                                            style="width: 10rem"
-                                                    >
 
-                                                        <a-card-meta
-                                                                title="$200">
-                                                            <template slot="description">
-                                                                <p>10 candidates</p>
-                                                                <a-button v-model="amount" @click="bundleamount(1)">
-                                                                    Pick
-                                                                </a-button>
-
-                                                            </template>
-
-                                                        </a-card-meta>
-                                                    </a-card>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                                    <a-card
-                                                            hoverable
-                                                            style="width: 10rem"
-                                                    >
-
-                                                        <a-card-meta
-                                                                title="$300">
-                                                            <template slot="description">
-                                                                <p>15 candidates</p>
-                                                                <a-button v-model="amount" @click="bundleamount(2)">
-                                                                    Pick
-                                                                </a-button>
-
-                                                            </template>
-
-                                                        </a-card-meta>
-                                                    </a-card>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                                    <a-card
-                                                            hoverable
-                                                            style="width: 10rem"
-                                                    >
-
-                                                        <a-card-meta
-                                                                title="$500">
-                                                            <template slot="description">
-                                                                <p>25 candidates</p>
-                                                                <a-button v-model="amount" @click="bundleamount(3)">
-                                                                    Pick
-                                                                </a-button>
-
-                                                            </template>
-
-                                                        </a-card-meta>
-                                                    </a-card>
-
-                                                </a-col>
-                                            </a-row>
-                                        </a-col>
-                                        <a-col :span="8">
-                                            <h3>Pay</h3>
-                                            <a-card
-
-                                                    style="width: 300px"
-                                            >
-                                                <img
-                                                        alt="example"
-                                                        src="../../../../assets/images/card.svg"
-                                                        slot="cover"
-                                                />
-                                                <a-card-meta
-                                                        style="text-align: center;"
-                                                        title="Payment Methods">
-
-                                                    <template slot="description">
-                                                        <p>Amount :${{amount}}</p>
-                                                        <a onClick=""><img class="ant-btn " style="width: 10rem"
-                                                                           src="../../../../assets/images/flutter.svg"></a>
-                                                    </template>
-                                                </a-card-meta>
-                                            </a-card>
-                                        </a-col>
-                                    </a-row>
-                                </div>
-                            </a-tab-pane>
 
 
                         </a-tabs>
@@ -1343,13 +1246,21 @@
                             if (resp.data.length !== 0) {
 
 
+
                                 for (let i = 0; i < resp.data.length; i++) {
                                     this.pickeddevs.push(resp.data[i])
                                 }
+
                                 // create a profile for each candidate comparision and matching between user,profile and devrequest model
                                 for (let j = 0; j < this.pickeddevs.length; j++) { // all user profiles
 
-                                    let verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
+                                    let verified_skills =[]
+                                    if(this.pickeddevs[j].developer.verified_skills){
+                                        verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
+                                    }else {
+                                        verified_skills.push('none')
+                                    }
+
                                     let paid = this.pickeddevs[j].paid
                                     let id = this.pickeddevs[j].id
                                     let user_id = this.pickeddevs[j].developer.user.id
@@ -1385,6 +1296,7 @@
                                     this.candidateprofiles.push(onepickeddev)
 
                                 }
+                                console.log(this.candidateprofiles)
 
 
                                 // candidates sorting

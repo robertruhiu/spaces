@@ -22,7 +22,7 @@
                 <a-row>
 
 
-                    <a-col :xs="24" :sm="12" :md="6" :lg="6" :xl="8">
+                    <a-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
                 <span style="color: white;font-size: 1rem;font-weight:bold">
                     {{greeting}} {{this.$store.state.user.first_name | capitalize}}  </span>
                 <p style="color: white;font-size: 0.9rem;font-weight: bold;line-height: 3px"> {{events.length}}
@@ -32,7 +32,7 @@
 
             </a-col>
 
-                    <a-col   :xs="12" :sm="12" :md="12" :lg="18" :xl="18"  style="color: white">
+                    <a-col   :xs="12" :sm="12" :md="12" :lg="16" :xl="16"  style="color: white">
                     <a-row :gutter="16">
                         <a-col :span="6" v-for="interview in events" v-bind:key="interview">
                             <a-card class="events">
@@ -95,7 +95,6 @@
             return {
                 currentUserProfile: null,
                 greeting: null,
-                currentUser: null,
                 skills: [],
                 verified_skills: [],
                 events: [],
@@ -125,9 +124,9 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
+
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.allusers = (await UsersService.devs()).data;
+
             this.skills = this.currentUserProfile.skills.split(',');
             if(this.currentUserProfile.verified_skills){
                 this.verified_skills = this.currentUserProfile.verified_skills.split(',');
@@ -135,6 +134,7 @@
 
             let todayDate = moment().format("YYYY-MM-DD")
             this.allevents = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
+
             this.alldevrequests = (await Marketplace.pickedapplications(this.$store.state.user.pk, auth)).data
             for (let i = 0; i < this.allevents.length; i++) {
 
@@ -142,7 +142,7 @@
                 ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].recruiter.company
+                    let title = this.allevents[i].job.company
                     let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
                     let color = this.allevents[i].eventcolor
@@ -193,6 +193,7 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
+                this.$store.dispatch('setNext',null)
                 this.$router.push({
                     name: 'home'
                 })

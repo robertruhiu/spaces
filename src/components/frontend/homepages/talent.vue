@@ -117,10 +117,13 @@
                                                 <a-avatar class="poolavatar"
                                                 >
                                                     {{item.name}}
+                                                    <span style="font-size: 1rem" v-if="item.verified"><a-icon type="check-circle" /></span>
+
                                                 </a-avatar>
                                             </a-col>
                                             <a-col span="15" style="padding: 2%">
                                                 <p>Bio</p>
+
                                                 <p>{{item.about | truncate(100)}}<a
                                                         @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
                                                     more</a>
@@ -182,6 +185,7 @@
             </div>
 
 
+
         </a-layout-content>
 
     </a-layout>
@@ -191,15 +195,14 @@
 <script>
 
     class Developer {
-        constructor(id, name, skills, about, location, availabilty, experience, portfolio) {
+        constructor(id, name, skills, about, location, availabilty, verified) {
             this.id = id;
             this.name = name;
             this.skills = skills;
             this.about = about;
             this.location = location;
             this.availabilty = availabilty
-            this.experience = experience
-            this.portfolio = portfolio
+            this.verified = verified
         }
     }
 
@@ -289,7 +292,7 @@
             this.loading = false
             for (let i = 0; i < this.devs.length; i++) {
 
-                let skill_list = this.devs[i].skills.split(',');
+                let skill_list = this.devs[i].skills.split(',').slice(0, 10)
 
                 let id = this.devs[i].user.id
                 let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
@@ -297,8 +300,12 @@
                 let about = this.devs[i].about
                 let location = this.devs[i].country
                 let availabilty = this.devs[i].availabilty
+                let verified = false
+                if (this.devs[i].verified_skills) {
+                    verified = true
+                }
                 let onedev = new Developer(
-                    id, name, skills, about, location, availabilty
+                    id, name, skills, about, location, availabilty,verified
                 )
 
 

@@ -27,6 +27,8 @@
                 <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
                              v-if="!$store.state.isUserLoggedIn">Sign up
                 </router-link>
+
+
                 <a>
                     <a-button
                             style="margin-bottom: 0;border: 0;-webkit-box-shadow: 0 0 0 rgba(255,255,255,0.01);color: #1890ff"
@@ -72,6 +74,7 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
+                this.$store.dispatch('setNext',null)
                 this.$router.push({
                     name: 'home'
                 })

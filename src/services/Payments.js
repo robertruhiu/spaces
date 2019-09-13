@@ -1,11 +1,14 @@
 import Api from '@/services/Api'
 
 export default {
-    cartcreate(user_id, auth){
-      return Api().post(`cart/cart_create/${user_id}/`, auth)
+    cartlist(user_id, auth){
+      return Api().get(`cart/cartlist/${user_id}`, auth)
     },
-     cartitemadd(developer_id, cart_id, auth){
-      return Api().post(`cart/developer_order_create/${developer_id}/${cart_id}/`, auth)
+    cartcreate(cartinstance, auth){
+      return Api().post('cart/cartcreate',cartinstance, auth)
+    },
+    cartitemadd(cart_id,developers, auth){
+      return Api().patch(`cart/cartupdate/${cart_id}`,developers, auth)
     },
     cartitems(cart_id, auth){
       return Api().get(`cart/developer_order_list/${cart_id}`, auth)

@@ -21,7 +21,7 @@
 
                 <a-row>
 
-                    <a-col :xs="24" :sm="12" :md="12" :lg="6" :xl="8">
+                    <a-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
                 <span style="color: white;font-size: 1rem;font-weight:bold">{{greeting}}
                     {{this.$store.state.user.first_name | capitalize}}</span>
                         <p style="color: white;font-size: 0.9rem;font-weight: bold;line-height: 3px">{{events.length}}
