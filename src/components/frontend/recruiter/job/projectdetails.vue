@@ -13,7 +13,7 @@
 
                     <a-row gutter="8">
                         <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 14, offset: 0 }"
-                                   :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }">
+                               :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }">
 
 
                             <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
@@ -43,7 +43,7 @@
 
                         </a-col>
                         <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 10, offset: 0 }"
-                                   :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
+                               :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
                             <div style="border:1px solid #e8e8e8;;padding: 3%;">
                                 <p style="margin-left: 5%"><strong>Requirements</strong></p>
                                 <ol>
@@ -65,9 +65,6 @@
                                         Assign
                                         project to {{candidate.username}}
                                     </a-button>
-
-
-
 
 
                                 </div>
@@ -147,7 +144,10 @@
 
 
                     })
-                    .catch()
+                    .catch(error => {
+                        this.$router.push({name: 'projectlist', params: {jobId:this.job.id,applicationId:this.ApplicationId}});
+                        return error
+                    })
 
 
             }
@@ -161,7 +161,7 @@
 
                 };
 
-                Marketplace.pickreject(application, {test_stage:'invite_sent',project:project}, auth)
+                Marketplace.pickreject(application, {test_stage: 'invite_sent', project: project}, auth)
                     .then(
                         this.$router.push({
                             name: 'job',

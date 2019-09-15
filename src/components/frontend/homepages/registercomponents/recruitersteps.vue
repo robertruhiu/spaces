@@ -195,7 +195,7 @@
 
 
         </a-row>
-        {{currentUserProfile}}
+
     </div>
 </template>
 
@@ -377,11 +377,11 @@
 
                 if (current === 0) {
                     this.errorlist = []
-                    if (this.currentUserProfile.company === null) {
+                    if (this.currentUserProfile.company === null || this.currentUserProfile.company === '') {
                         this.errorlist.push('company')
 
                     }
-                    if (this.currentUserProfile.company_url === null) {
+                    if (this.currentUserProfile.company_url === null || this.currentUserProfile.company_url === '') {
                         this.errorlist.push('company_url')
 
                     }

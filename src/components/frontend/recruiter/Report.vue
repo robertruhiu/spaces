@@ -2,7 +2,7 @@
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
         <RecruiterSider/>
 
-        <a-layout-content :style="{ marginLeft: '200px',backgroundColor:'#ffffff' }">
+        <a-layout-content :style="{backgroundColor:'#ffffff' }">
             <CandidateHeader/>
             <div style="padding: 1%">
                 <a-tabs defaultActiveKey="1"

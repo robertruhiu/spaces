@@ -83,6 +83,7 @@
                         <div>
                             <hide-at breakpoint="mediumAndBelow">
                                 <div class="bio">
+
                                     <a-tabs defaultActiveKey="1">
                                         <a-tab-pane key="1" v-if="takenquizzes.length >0">
                                     <span slot="tab">
@@ -90,10 +91,18 @@
                                         Skills
                                     </span>
                                             <p>Quizzes taken by Candidate</p>
-                                            <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
-                                                {{takenquiz.quiz.subject.name}}:
-                                                <a-progress :percent="takenquiz.score"/>
+                                            <div v-if="quizload">
+                                                <div style="text-align: center;">
+                                                    <a-spin/>
+                                                </div>
                                             </div>
+                                            <div v-else>
+                                                <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                                                    {{takenquiz.quiz.subject.name}}:
+                                                    <a-progress :percent="takenquiz.score"/>
+                                                </div>
+                                            </div>
+
 
                                         </a-tab-pane>
 
@@ -103,22 +112,28 @@
                                         Projects portfolio
                                     </span>
                                             <div style="padding:0 2%">
+                                                <div v-if="portfolioload">
+                                                    <div style="text-align: center;">
+                                                        <a-spin/>
+                                                    </div>
+                                                </div>
+                                                <div v-else>
+                                                    <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                                         v-for="item in portfolio" v-bind:key="item.id">
+                                                        <p style="font-weight: 700">{{item.title}}</p>
+                                                        <p>
+                                                            Tools used:
+                                                            <a-tag v-for="tag in item.tags" color="blue"
+                                                                   :key="tag">
+                                                                {{tag}}
+                                                            </a-tag>
 
-                                                <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
-                                                     v-for="item in portfolio" v-bind:key="item.id">
-                                                    <p style="font-weight: 700">{{item.title}}</p>
-                                                    <p>
-                                                        Tools used:
-                                                        <a-tag v-for="tag in item.tags" color="blue"
-                                                               :key="tag">
-                                                            {{tag}}
-                                                        </a-tag>
+                                                        </p>
+                                                        <p>{{item.description}}
+                                                        </p>
+                                                        <a :href=" item.demo" target="_blank">view project</a>
 
-                                                    </p>
-                                                    <p>{{item.description}}
-                                                    </p>
-                                                    <a :href=" item.demo" target="_blank">view project</a>
-
+                                                    </div>
                                                 </div>
 
 
@@ -133,28 +148,36 @@
                                         Work experience
                                     </span>
                                             <div style="padding:2%">
-                                                <a-timeline>
-                                                    <a-timeline-item v-for="item in experiences" v-bind:key="item.id">
-                                                        <p style="font-weight: 700">{{item.title}}</p>
-                                                        <p><span><a-icon type="bank"/>  {{item.company}} <a-icon
-                                                                type="environment"/>  {{item.location}} <a-icon
-                                                                type="hourglass"/>  {{item.duration}}months</span>
-                                                        </p>
-                                                        <p>
-                                                            Technologies used:
-                                                            <a-tag v-for="tag in item.tags" color="blue"
-                                                                   :key="tag">
-                                                                {{tag}}
-                                                            </a-tag>
+                                                <div v-if="experienceload">
+                                                    <div style="text-align: center;">
+                                                        <a-spin/>
+                                                    </div>
+                                                </div>
+                                                <div v-else>
+                                                    <a-timeline>
+                                                        <a-timeline-item v-for="item in experiences"
+                                                                         v-bind:key="item.id">
+                                                            <p style="font-weight: 700">{{item.title}}</p>
+                                                            <p><span><a-icon type="bank"/>  {{item.company}} <a-icon
+                                                                    type="environment"/>  {{item.location}} <a-icon
+                                                                    type="hourglass"/>  {{item.duration}}months</span>
+                                                            </p>
+                                                            <p>
+                                                                Technologies used:
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">
+                                                                    {{tag}}
+                                                                </a-tag>
 
-                                                        </p>
+                                                            </p>
 
 
-                                                        <p>{{item.description}}</p>
+                                                            <p>{{item.description}}</p>
 
-                                                    </a-timeline-item>
+                                                        </a-timeline-item>
 
-                                                </a-timeline>
+                                                    </a-timeline>
+                                                </div>
 
 
                                             </div>
@@ -319,35 +342,68 @@
 
                                     </div>
                                 </div>
-                                <div class="profile">
-                                    <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
-                                        <div style="text-align: center">
-                                            <img src="../../../assets/images/profile.png"
-                                                 style="width: 50%;padding-bottom: 2rem">
-                                        </div>
-
-
-                                        <p style="text-align: center;">I like this profile</p>
-                                        <div style="text-align: center">
-                                            <div v-for="dev in pickeddevpaid" :key="dev">
-
-                                                <a-button v-if="dev.id === currentUserProfile.id"
-                                                          style="margin-left: 1rem;"
-                                                          type="primary"
-                                                          @click="navigateTo({name:'mycandidates'})">
-                                                    manage candidate
-                                                </a-button>
-
-                                            </div>
-                                            <div v-if="paidprofile === false">
-                                                <a-button v-if="picked === false" type="primary"
-                                                          @click="pickcandidate(currentUserProfile.id)">
-                                                    Add to my Candidates
-                                                </a-button>
+                                <div v-if="managecandidate === false">
+                                    <div class="profile">
+                                        <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
+                                            <div style="text-align: center">
+                                                <img src="../../../assets/images/profile.png"
+                                                     style="width: 50%;padding-bottom: 2rem">
                                             </div>
 
+
+                                            <p style="text-align: center;">I like this profile</p>
+                                            <div style="text-align: center">
+
+                                                <div v-if="paidprofile === false">
+                                                    <div v-if="addcart">
+                                                        <div style="text-align: center;">
+                                                            <a-spin/>
+                                                        </div>
+                                                    </div>
+                                                    <div v-else>
+                                                        <a-button v-if="picked === false" type="primary"
+                                                                  @click="pickcandidate(currentUserProfile.id)">
+                                                            Add to my Candidates
+                                                        </a-button>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div v-for="dev in pickeddevpaid" :key="dev">
+                                    <div v-if="dev.id === currentUserProfile.id">
+                                        <div class="profile">
+                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
+                                                <div style="text-align: center">
+                                                    <img src="../../../assets/images/profile.png"
+                                                         style="width: 50%;padding-bottom: 2rem">
+                                                </div>
+
+
+                                                <p style="text-align: center;">I like this profile</p>
+                                                <div style="text-align: center">
+                                                    <div>
+
+                                                        <a-button
+                                                                style="margin-left: 1rem;"
+                                                                type="primary"
+                                                                @click="navigateTo({name:'mycandidates'})">
+                                                            manage candidate
+                                                        </a-button>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
 
@@ -467,7 +523,12 @@
                 paidprofile: false,
                 paiddevs: [],
                 paidbundleexists: false,
-                bundlelimit: 0
+                bundlelimit: 0,
+                addcart: false,
+                portfolioload: true,
+                experienceload: true,
+                quizload: true,
+                managecandidate: false
 
             }
         },
@@ -502,15 +563,43 @@
                     this.verified_skills = this.currentUserProfile.verified_skills.split(',');
                 }
 
-                this.portfoliolist = (await UsersService.portfolio(this.currentUserProfile.id, auth)).data
-                this.experienceslist = (await UsersService.experience(this.currentUserProfile.id, auth)).data
-                this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
+
+                UsersService.portfolio(this.currentUserProfile.id, auth)
+                    .then(resp => {
+                        this.portfolioload = false
+                        this.portfoliolist = resp.data
+                    })
+                    .catch(error => {
+                        return error
+                    })
+
+                UsersService.experience(this.currentUserProfile.id, auth)
+                    .then(resp => {
+                        this.experienceload = false
+                        this.experienceslist = resp.data
+                    })
+                    .catch(error => {
+                        return error
+                    })
+
+                QuizService.taken(this.currentUserProfile.id, auth)
+                    .then(resp => {
+                        this.quizload = false
+                        this.takenquizzes = resp.data
+                    })
+                    .catch(error => {
+                        return error
+                    })
                 this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
+
 
                 if (this.carts.length > 0) {
                     this.mycart = this.carts[0]
                     if (this.mycart.devspending) {
                         this.pickeddevs = this.mycart.devspending.split(',');
+
+                    }
+                    if (this.mycart.devspaid) {
                         this.paiddevs = this.mycart.devspaid.split(',');
                     }
                     if (this.mycart.amount) {
@@ -549,10 +638,14 @@
                                 this.pickedprofiles.push(one_profile)
 
                             }
+                            if (this.$route.params.candidateProfileID === Number(this.pickeddevs[j])) {
+                                this.managecandidate = true
+                            }
 
                         }
 
                     }
+
 
                 }
 
@@ -586,6 +679,7 @@
                                 for (let i = 0; i < this.pickeddevpaid.length; i++) {
                                     if (this.$route.params.candidateProfileID === this.pickeddevpaid[i].id) {
                                         this.paidprofile = true
+                                        this.managecandidate = true
 
                                     }
                                 }
@@ -647,6 +741,7 @@
                 this.$router.push(route)
             },
             pickcandidate() {
+                this.addcart = true
 
 
                 const auth = {
@@ -670,11 +765,16 @@
                             id, name, verified
                         );
                         this.pickedprofiles.push(one_profile)
+                        this.addcart = false
+                        this.managecandidate = true
 
 
                     })
                     .catch(error => {
+                        this.addcart = false
+                        this.picked = false
                         return error
+
                     });
 
 
@@ -742,6 +842,7 @@
                     Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
                         .then(resp => {
                             this.pickedprofiles = []
+                            this.managecandidate = false
                             self.refresh()
 
 

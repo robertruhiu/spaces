@@ -304,9 +304,7 @@
                                                         <a-tag color="blue">{{testingstage.length}}</a-tag>
                                                     </span>
 
-                                                    <a-alert style="margin-bottom: 1%"
-                                                             message="Please purchase a testing bundle to enable project asignment to candidates"
-                                                             type="info" closeText="Close Now"/>
+
                                                     <a-table :dataSource="testingstage" :scroll="{ y: 340 }"
                                                              size="middle">
 
@@ -775,9 +773,6 @@
                             </a-tab-pane>
 
 
-
-
-
                         </a-tabs>
 
 
@@ -795,7 +790,7 @@
                             project?</p>
                         <a-row :gutter="16">
                             <a-col :span="12">
-                                <a @click="navigateTo({name:'projectlist'})">
+                                <a @click="navigateTo({name:'myprojectlist',params:{applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%"
                                              src="../../../../assets/images/pick.png">
@@ -806,7 +801,7 @@
                                 </a>
                             </a-col>
                             <a-col :span="12">
-                                <a @click="navigateTo({name:'myprojectdetails',params:{userId: recruiter,candidateId:candidateid,applicationId:applicationid}})">
+                                <a @click="navigateTo({name:'myprojectdetails',params:{userId: $store.state.user.pk,candidateId:candidateid,applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
                                              src="../../../../assets/images/recommend.png">
@@ -1243,8 +1238,8 @@
             if (this.$store.state.user.pk) {
                 MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                     .then(resp => {
+                        console.log(resp.data)
                             if (resp.data.length !== 0) {
-
 
 
                                 for (let i = 0; i < resp.data.length; i++) {
@@ -1254,10 +1249,10 @@
                                 // create a profile for each candidate comparision and matching between user,profile and devrequest model
                                 for (let j = 0; j < this.pickeddevs.length; j++) { // all user profiles
 
-                                    let verified_skills =[]
-                                    if(this.pickeddevs[j].developer.verified_skills){
+                                    let verified_skills = []
+                                    if (this.pickeddevs[j].developer.verified_skills) {
                                         verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
-                                    }else {
+                                    } else {
                                         verified_skills.push('none')
                                     }
 
@@ -1296,7 +1291,7 @@
                                     this.candidateprofiles.push(onepickeddev)
 
                                 }
-                                console.log(this.candidateprofiles)
+
 
 
                                 // candidates sorting
@@ -1419,7 +1414,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                let self =this;
+                let self = this;
                 MarketPlaceService.candidatemanager(application_id, {
                     interviewstarttime: this.starttime,
                     interviewendtime: this.endtime,
@@ -1808,8 +1803,13 @@
                                     }
                                     // create a profile for each candidate comparision and matching between user,profile and devrequest model
                                     for (let j = 0; j < this.pickeddevs.length; j++) { // all user profiles
+                                        let verified_skills = []
+                                        if (this.pickeddevs[j].developer.verified_skills) {
+                                            verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
+                                        } else {
+                                            verified_skills.push('none')
+                                        }
 
-                                        let verified_skills = this.pickeddevs[j].developer.verified_skills.split(',').slice(0, 2);
                                         let paid = this.pickeddevs[j].paid
                                         let id = this.pickeddevs[j].id
                                         let user_id = this.pickeddevs[j].developer.user.id

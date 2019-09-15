@@ -168,28 +168,17 @@
 
                                         if (response.data.stage === 'complete') {
                                             if (this.$store.state.usertype === 'developer') {
-                                                if (this.$store.state.next) {
-                                                    this.$router.push({
-                                                        name: this.$store.state.next
-                                                    })
-
-                                                } else {
-                                                    this.$router.push({
+                                                this.$router.push({
                                                         name: 'developer'
                                                     })
-                                                }
+
 
 
                                             } else {
-                                                if (this.$store.state.next) {
-                                                    this.$router.push({
-                                                        name: this.$store.state.next
-                                                    })
-                                                } else {
-                                                    this.$router.push({
+                                                 this.$router.push({
                                                         name: 'recruiter'
                                                     })
-                                                }
+
 
 
                                             }

@@ -12,7 +12,7 @@
 
 
                 <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
-                    <a-row>
+                    <a-row style="margin-bottom: 1rem">
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
                                :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
 

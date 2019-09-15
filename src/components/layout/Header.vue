@@ -15,10 +15,16 @@
                 <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent</router-link>
 
                 <router-link to="/recruiter" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' ">My account
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">My account
+                </router-link>
+                <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage !=='complete' ">My account
+                </router-link>
+                <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage !=='complete'">My account
                 </router-link>
                 <router-link to="/developer" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'">My account
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage ==='complete'">My account
                 </router-link>
                 <router-link to="/login" class="ant-menu-item" style="margin-bottom: 0"
                              v-if="!$store.state.isUserLoggedIn">
@@ -57,6 +63,7 @@
 <script>
     import {showAt, hideAt} from 'vue-breakpoints'
     import Menusider from '@/components/layout/Menusider'
+    import UsersService from '@/services/UsersService'
 
     export default {
         name: "Header",
@@ -64,6 +71,27 @@
 
             hideAt, showAt,
             Menusider
+
+        },
+        data() {
+            return {
+                currentUserProfile: {},
+
+            }
+        },
+        async mounted() {
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
+
+            if (this.$store.state.user) {
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
+
+
+            }
+
 
         },
         methods: {

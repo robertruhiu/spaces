@@ -20,6 +20,7 @@ const Job = () => import('@/components/frontend/recruiter/job/job')
 const Projectdetails = () => import('@/components/frontend/recruiter/job/projectdetails')
 const MyProjectdetails = () => import('@/components/frontend/recruiter/candidates/myprojectdetails')
 const Projectlist = () => import('@/components/frontend/recruiter/projectlist')
+const MyProjectlist = () => import('@/components/frontend/recruiter/candidates/myprojectlist')
 const Calendar = () => import('@/components/frontend/recruiter/calendar')
 const DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
 const Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
@@ -222,6 +223,14 @@ let router = new Router({
             }
         },
         {
+            path: '/myprojectlist/:applicationId',
+            name: 'myprojectlist',
+            component: MyProjectlist,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/candidateprofile/:candidateId/:jobId/:applicationId',
             name: 'candidateprofile',
             component: CandidateProfile,
@@ -332,7 +341,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        store.dispatch('setNext',to.name)
+
 
         if (store.getters.isLoggedIn) {
 

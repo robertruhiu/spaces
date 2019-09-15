@@ -135,7 +135,11 @@
 
 
                 })
-                .catch()
+                .catch(error=>{
+                    this.$router.push({name: 'myprojectlist', params: { applicationId:this.ApplicationId}});
+                    return error
+
+                })
 
 
             }

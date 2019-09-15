@@ -244,7 +244,7 @@
                                         <a-tag v-else @click="showInput"
                                                style="background: #fff; borderStyle: dashed;">
                                             <a-icon type="plus"/>
-                                            New Tag
+                                            New skill
                                         </a-tag>
                                     </a-form-item>
 
@@ -381,6 +381,7 @@
 
             </a-col>
         </a-row>
+
 
 
 
@@ -636,27 +637,27 @@
 
                 if (current === 0) {
                     this.step1errors = []
-                    if (this.currentUserProfile.github_repo === null) {
+                    if (this.currentUserProfile.github_repo === null || this.currentUserProfile.github_repo === '') {
                         this.step1errors.push('github')
 
                     }
-                    if (this.currentUserProfile.linkedin_url === null) {
+                    if (this.currentUserProfile.linkedin_url === null || this.currentUserProfile.linkedin_url === '') {
                         this.step1errors.push('linkedin')
 
                     }
-                    if (this.currentUserProfile.country === null) {
+                    if (this.currentUserProfile.country === null || this.currentUserProfile.country === '' ) {
                         this.step1errors.push('location')
 
                     }
-                    if (this.currentUserProfile.gender === null) {
+                    if (this.currentUserProfile.gender === null || this.currentUserProfile.gender === '') {
                         this.step1errors.push('gender')
 
                     }
-                    if (this.currentUserProfile.years === null) {
+                    if (this.currentUserProfile.years === null || this.currentUserProfile.years === '') {
                         this.step1errors.push('years')
 
                     }
-                    if (this.currentUserProfile.availabilty === null) {
+                    if (this.currentUserProfile.availabilty === null || this.currentUserProfile.availabilty === '') {
                         this.step1errors.push('work_type')
 
                     }
@@ -670,15 +671,15 @@
                 } else if (current === 1) {
                     if (this.currentUserProfile.user_type === 'developer') {
                         this.errorlist = []
-                        if (this.currentUserProfile.about === null) {
+                        if (this.currentUserProfile.about === null || this.currentUserProfile.about === '') {
                             this.errorlist.push('about')
 
                         }
-                        if (this.cv === null) {
+                        if (this.cv === null || this.cv === '') {
                             this.errorlist.push('cv')
 
                         }
-                        if (this.currentUserProfile.salary === null) {
+                        if (this.currentUserProfile.salary === null || this.currentUserProfile.salary === '') {
                             this.errorlist.push('salary')
 
                         }
