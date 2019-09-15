@@ -291,8 +291,9 @@
                                                         <!-------system recommmended candidates-------->
                                                         <a-tab-pane v-if="recommended" tab="Recommended Candidates"
                                                                     key="3">
-
-                                                            <a-table :dataSource="recommmedcandidates"
+                                                            <a-tabs defaultActiveKey="9" >
+                                                                <a-tab-pane v-if="recommmedcandidatesverified.length>0" tab="Verified" key="9">
+                                                                    <a-table :dataSource="recommmedcandidatesverified"
                                                                      :scroll="{ y: 340 }"
                                                                      size="middle">
 
@@ -384,7 +385,7 @@
                                                                     <template slot-scope="text,record">
                                                                         <div style="margin-left: 5%">
                                                                             <a-button :size="small"
-                                                                                      @click="pickrecommedationClick(job.id,record.profile,true,record.name)"
+                                                                                      @click="pickrecommedationClick(job.id,record.profile,1)"
                                                                                       type="primary">pick
                                                                             </a-button>
 
@@ -395,6 +396,118 @@
 
 
                                                             </a-table>
+
+                                                                </a-tab-pane>
+                                                                <a-tab-pane v-if="recommmedcandidates.length>0" tab="Unverified" key="10" forceRender>
+                                                                    <a-table :dataSource="recommmedcandidates"
+                                                                     :scroll="{ y: 340 }"
+                                                                     size="middle">
+
+                                                                <!-----name--------->
+                                                                <a-table-column
+                                                                        dataIndex="name"
+                                                                        key="name"
+                                                                        width="10%"
+
+
+                                                                >
+                                                                    <span slot="title">Name</span>
+                                                                    <template slot-scope="text,record">
+                                                        <span>
+                                                            {{record.name}}
+                                                        </span>
+                                                                    </template>
+                                                                </a-table-column>
+
+                                                                <!-----profile--------->
+                                                                <a-table-column
+                                                                        dataIndex="profile"
+                                                                        key="profile"
+                                                                        width="10%"
+
+
+                                                                >
+                                                                    <div slot="title">User profile</div>
+                                                                    <template slot-scope="text,record">
+                                                        <span style="margin-left: 15%">
+                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})">profile</a>
+                                                        </span>
+                                                                    </template>
+                                                                </a-table-column>
+
+                                                                <!-----skills--------->
+                                                                <a-table-column
+
+                                                                        dataIndex="tags"
+                                                                        key="tags"
+                                                                        width="20%"
+
+                                                                >
+                                                                    <div style="text-align: center;" slot="title">Skills
+                                                                    </div>
+                                                                    <template slot-scope="tags">
+                                                                        <div style="text-align: center;">
+                                                                            <span>
+                                                            <a-tag v-for="tag in tags" color="blue"
+                                                                   :key="tag">{{tag}}</a-tag>
+                                                        </span>
+                                                                        </div>
+
+                                                                    </template>
+                                                                </a-table-column>
+
+                                                                <!-----stage--------->
+                                                                <a-table-column
+
+                                                                        dataIndex="stage"
+                                                                        key="stage"
+                                                                        width="20%"
+
+                                                                >
+                                                                    <div style="margin-left: 15%" slot="title">Stage
+                                                                    </div>
+                                                                    <template slot-scope="text, record">
+                                                        <span style="margin-left: 5%">
+
+                                                            <a-tag color="#1C4E80"
+                                                                   style="">{{record.stage}}</a-tag>
+
+                                                        </span>
+                                                                    </template>
+
+                                                                </a-table-column>
+
+                                                                <!-----action--------->
+                                                                <a-table-column
+                                                                        dataIndex="action"
+                                                                        key="action"
+                                                                        width="20%"
+
+
+                                                                >
+                                                                    <div style="margin-left: 10%" slot="title">
+                                                                        Pick
+                                                                    </div>
+                                                                    <template slot-scope="text,record">
+                                                                        <div style="margin-left: 5%">
+                                                                            <a-button :size="small"
+                                                                                      @click="pickrecommedationClick(job.id,record.profile,2)"
+                                                                                      type="primary">pick
+                                                                            </a-button>
+
+
+                                                                        </div>
+                                                                    </template>
+                                                                </a-table-column>
+
+
+                                                            </a-table>
+
+                                                                </a-tab-pane>
+
+                                                            </a-tabs>
+
+
 
 
                                                         </a-tab-pane>
@@ -1381,6 +1494,7 @@
 
 
                     </a-modal>
+                    <!---pay model--->
 
 
                 </div>
@@ -1579,6 +1693,7 @@
                 columns,
                 applicants: [],
                 recommmedcandidates: [],
+                recommmedcandidatesverified: [],
                 applicantprofile: [],
                 newapplicant: [],
                 pickedapplicants: [],
@@ -1728,11 +1843,22 @@
                 for (let x = 0; x < this.alldevsprofile.length; x++) {
                     for (let z = 0; z < this.tags.length; z++) {
                         if (this.alldevsprofile[x].skills) {
-                            if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                            if(this.alldevsprofile[x].skills){
+                                if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
                                 let user_id = this.alldevsprofile[x].id
                                 allrecommedednouniquefilter.push(user_id)
 
                             }
+
+                            }else if(this.alldevsprofile[x].verified_skills){
+                                if (this.alldevsprofile[x].verified_skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                                let user_id = this.alldevsprofile[x].id
+                                allrecommedednouniquefilter.push(user_id)
+
+                            }
+
+                            }
+
                         }
 
                     }
@@ -1765,19 +1891,37 @@
                     for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
                         for (let k = 0; k < recommededlist.length; k++) {
                             if (this.alldevsprofile[l].id === recommededlist[k]) {
+                                if (this.alldevsprofile[l].verified_skills) {
+                                    let tags = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
+                                    let stage = 'recommended'
+                                    let id = this.alldevsprofile[l].id
+                                    let pk = this.alldevsprofile[l].id
+                                    let user_id = this.alldevsprofile[l].id
+                                    let name = this.alldevsprofile[l].user.first_name
+                                    let selected = false
+                                    let onerecommed = new Recommended(
+                                        id, name, stage, tags, user_id, selected, pk
+                                    );
 
-                                let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                                let stage = 'recommended'
-                                let id = this.alldevsprofile[l].id
-                                let pk = this.alldevsprofile[l].id
-                                let user_id = this.alldevsprofile[l].id
-                                let name = this.alldevsprofile[l].user.first_name
-                                let selected = false
-                                let onerecommed = new Recommended(
-                                    id, name, stage, tags, user_id, selected, pk
-                                );
+                                    this.recommmedcandidatesverified.push(onerecommed)
 
-                                this.recommmedcandidates.push(onerecommed)
+
+                                } else if (this.alldevsprofile[l].skills) {
+                                    let tags = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
+                                    let stage = 'recommended'
+                                    let id = this.alldevsprofile[l].id
+                                    let pk = this.alldevsprofile[l].id
+                                    let user_id = this.alldevsprofile[l].id
+                                    let name = this.alldevsprofile[l].user.first_name
+                                    let selected = false
+                                    let onerecommed = new Recommended(
+                                        id, name, stage, tags, user_id, selected, pk
+                                    );
+
+                                    this.recommmedcandidates.push(onerecommed)
+
+                                }
+
 
                             }
 
@@ -2237,16 +2381,17 @@
             },
 
             // pick from recommedation list
-            pickrecommedationClick(job_id, candidate_id, key) {
+            pickrecommedationClick(job_id, candidate_id,key) {
+
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                if (key) {
-                    for (let i = 0; i < this.recommmedcandidates.length; i++) {
-                        if (this.recommmedcandidates[i].profile === candidate_id) {
+                if(key === 1){
+                    for (let i = 0; i < this.recommmedcandidatesverified.length; i++) {
+                        if (this.recommmedcandidatesverified[i].profile === candidate_id) {
 
-                            if (this.recommmedcandidates.length === 0) {
+                            if (this.recommmedcandidates.length === 0 && this.recommmedcandidatesverified.length === 0) {
                                 this.recommended = false
                             }
                             let self = this;
@@ -2270,6 +2415,50 @@
                                         this.offerstage = []
                                         this.hirestage = []
                                         this.recommmedcandidates = []
+                                        this.recommmedcandidatesverified = []
+                                        this.applicantprofile = []
+                                        self.Datarefresh()
+                                        this.active = true
+                                        return resp
+
+
+                                    }
+                                )
+                                .catch()
+
+
+                        }
+                    }
+
+                }else if(key === 2){
+                    for (let i = 0; i < this.recommmedcandidates.length; i++) {
+                        if (this.recommmedcandidates[i].profile === candidate_id) {
+
+                            if (this.recommmedcandidates.length === 0 && this.recommmedcandidatesverified.length === 0) {
+                                this.recommended = false
+                            }
+                            let self = this;
+                            Marketplace.pickrecommended(
+                                {
+                                    job: job_id,
+                                    candidate: candidate_id,
+                                    stage: 'active',
+                                    selected: true,
+                                    recruiter: this.$store.state.user.pk,
+
+                                },
+                                auth
+                            )
+                                .then(resp => {
+                                        this.applicants = []
+                                        this.newapplicant = []
+                                        this.pickedapplicants = []
+                                        this.interviewstage = []
+                                        this.testingstage = []
+                                        this.offerstage = []
+                                        this.hirestage = []
+                                        this.recommmedcandidates = []
+                                        this.recommmedcandidatesverified = []
                                         this.applicantprofile = []
                                         self.Datarefresh()
                                         this.active = true
@@ -2284,6 +2473,7 @@
                         }
                     }
                 }
+
 
             },
 

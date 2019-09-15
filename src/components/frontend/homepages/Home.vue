@@ -516,8 +516,12 @@
             this.loading = false
 
             for (let i = 0; i < this.devs.length; i++) {
+                let skill_list = []
+                if(this.devs[i].skills){
+                    skill_list = this.devs[i].skills.split(',');
+                }
 
-                let skill_list = this.devs[i].skills.split(',');
+
 
                 let id = this.devs[i].user.id
                 let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()

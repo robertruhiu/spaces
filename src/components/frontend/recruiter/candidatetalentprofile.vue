@@ -926,7 +926,8 @@
                         devspending: developerspending,
                         devspaid: developerspaid,
                         amount: response.tx.amount,
-                        transaction_id: response.tx.txRef
+                        transaction_id: response.tx.txRef,
+                        type:'talent'
                     }, auth)
                         .then(resp => {
                             return resp

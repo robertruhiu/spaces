@@ -142,7 +142,7 @@
             for (let i = 0; i < randlist.length; i++) {
                 this.listint.push(Number(randlist[i]))
             }
-            this.percent = 100 - (this.listint.length / 4 * 100)
+            this.percent = 100 - (this.listint.length / 30 * 100)
 
 
             for (let i = 0; i < this.questions.length; i++) {
@@ -197,7 +197,7 @@
                                     this.current++,
                                     this.currentanswer = null,
                                     this.error = null,
-                                    this.percent = 100 - (this.listint.length / 4 * 100)
+                                    this.percent = 100 - (this.listint.length / 30 * 100)
                                 ).catch(
 
                             )
@@ -234,7 +234,7 @@
                                             this.current++,
                                             this.currentanswer = null,
                                             this.error = null,
-                                            this.percent = 100 - (this.listint.length / 4 * 100),
+                                            this.percent = 100 - (this.listint.length / 30 * 100),
                                             this.$router.push({
                                                 name: 'quizlist'
                                             })

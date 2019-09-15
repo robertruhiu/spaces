@@ -275,7 +275,7 @@
 
             for (let i = 0; i < this.jobs.length; i++) {
 
-                let skill_list = this.jobs[i].tech_stack.split(',');
+                let skill_list = this.jobs[i].tech_stack.split(',').slice(0, 2);
 
                 let id = this.jobs[i].id
                 let skills = skill_list
