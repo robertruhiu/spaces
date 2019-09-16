@@ -1022,7 +1022,10 @@
             }
             this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.skills = this.currentUserProfile.skills.split(',');
+            if(this.currentUserProfile.skills){
+                this.skills = this.currentUserProfile.skills.split(',');
+            }
+
             if(this.currentUserProfile.verified_skills){
                 this.verified_skills = this.currentUserProfile.verified_skills.split(',');
             }
@@ -1039,7 +1042,11 @@
                 let title = this.portfoliolist[i].title
                 let description = this.portfoliolist[i].description
                 let demo = this.portfoliolist[i].demo_link
-                let tech_used = this.portfoliolist[i].tech_tags.split(',');
+                let tech_used =[]
+                if(this.portfoliolist[i].tech_tags){
+                    tech_used = this.portfoliolist[i].tech_tags.split(',');
+                }
+
                 let repo = this.portfoliolist[i].repository_link
 
                 let one_portfolio = new Portfolio(
@@ -1056,7 +1063,10 @@
                 let company = this.experienceslist[i].company
                 let location = this.experienceslist[i].location
                 let duration = this.experienceslist[i].duration
-                let tech_used = this.experienceslist[i].tech_tags.split(',');
+                let tech_used =[]
+                if(this.portfoliolist[i].tech_tags){
+                    tech_used = this.portfoliolist[i].tech_tags.split(',');
+                }
 
                 let one_experience = new Experience(
                     id, title, description, company, location, duration, tech_used

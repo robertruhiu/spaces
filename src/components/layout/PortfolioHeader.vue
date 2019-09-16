@@ -79,8 +79,12 @@
             }
             this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.skills = this.currentUserProfile.skills.split(',');
-            this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            if(this.currentUserProfile.skills){
+                this.skills = this.currentUserProfile.skills.split(',');
+            }
+            if(this.currentUserProfile.verified_skills){
+                this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            }
 
 
 

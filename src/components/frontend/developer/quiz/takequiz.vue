@@ -11,10 +11,13 @@
                         <a-progress :percent="percent" style="padding-right: 2%;padding-left: 2%;padding-top: 2%"/>
                         <a-form :form="form">
                             <div class="steps-content">
+
                                 <a-row>
-                                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                           :md="{span: 12, offset: 0 }"
+                                           :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
                                         <p>{{steps[current].text}}</p>
+
                                         <a-form-item>
                                             <p v-if="error" style="color: red">{{error}}</p>
                                             <a-radio-group v-model="currentanswer"
@@ -29,8 +32,9 @@
 
 
                                     </a-col>
-                                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                    <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                           :md="{span: 12, offset: 0 }"
+                                           :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
                                         <img :src="steps[current].codesample">
                                     </a-col>
 
@@ -42,7 +46,8 @@
                                 <a-button
                                         v-if="current < steps.length - 1"
                                         type="primary"
-                                        @click="next(currentanswer,steps[current].key,randomquiz_id,steps[current].quiz)"
+                                        @click="next(currentanswer,steps[current].question_id,randomquiz_id,steps[current].quiz)"
+
                                 >
                                     Next
                                 </a-button>
@@ -136,17 +141,20 @@
                 randlist = this.quiz[j].questions.split(',')
 
             }
+
             this.randomquiz_id = randquizids[0]
 
 
             for (let i = 0; i < randlist.length; i++) {
                 this.listint.push(Number(randlist[i]))
             }
+
             this.percent = 100 - (this.listint.length / 30 * 100)
 
 
-            for (let i = 0; i < this.questions.length; i++) {
-                for (let j = 0; j < this.listint.length; j++) {
+            for (let j = 0; j < this.listint.length; j++) {
+                for (let i = 0; i < this.questions.length; i++) {
+
                     if (this.questions[i].id === this.listint[j]) {
                         this.quizquestions.push(this.questions[i])
                     }
@@ -166,6 +174,8 @@
                 this.steps.push(one_question)
 
             }
+
+
 
 
         },
@@ -229,7 +239,7 @@
                         .then(
                             QuizService.updaterandomquiz(randomquizid, {questions: newquestionlist}, auth)
                                 .then(
-                                    QuizService.score(this.$store.state.user.pk,quiz_id, auth)
+                                    QuizService.score(this.$store.state.user.pk, quiz_id, auth)
                                         .then(
                                             this.current++,
                                             this.currentanswer = null,
@@ -250,6 +260,9 @@
                 }
 
             },
+            refresh(){
+
+            }
 
         }
     }

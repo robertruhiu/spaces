@@ -6,7 +6,7 @@
             <a-layout-content style="background-color: white">
                 <DevHeader/>
                 <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
-                    <a-row style="margin-top: 2%;margin-bottom: 2%">
+                    <a-row style="">
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
                                :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
                             <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
@@ -14,9 +14,10 @@
                             </h3>
                         </a-col>
                     </a-row>
-                    <a-row style="padding: 2%">
+                    <div v-if="takenquizzes.length >0">
+                        <a-row style="padding: 2%" gutter="16">
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" v-for="quiz in takenquizzes" v-bind:key="quiz">
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in takenquizzes" v-bind:key="quiz">
 
 
                             <a-row class="ant-card actioncards">
@@ -37,8 +38,13 @@
 
 
                         </a-col>
+                    </a-row>
+                    </div>
 
-                        <a-col :span="8" v-for="quiz in untaken" v-bind:key="quiz">
+                    <a-row style="padding: 2%" gutter="16">
+
+                        <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in untaken" v-bind:key="quiz">
 
                             <a @click="navigateTo({name:'takequiz',params:{candidateId:currentUserProfile.user.id,quizId: quiz.id,}})">
 
@@ -131,14 +137,16 @@
 
 <style scoped>
     .actioncards {
-        width: 16rem;
+
         border-radius: 0;
         box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
         padding: 0.89rem;
+        height: 8rem;
+        margin-bottom: 1rem;
     }
 
     .poolavatar {
         width: 30%;
-        margin-top: 0.5rem;
+
     }
 </style>
