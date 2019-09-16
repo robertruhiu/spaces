@@ -179,7 +179,6 @@
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
-                this.myapplicants = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
                 this.loading = false
 
 

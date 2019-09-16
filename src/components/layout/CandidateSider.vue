@@ -72,6 +72,13 @@
                 </router-link>
 
             </a-menu-item>
+            <a-menu-item key="13">
+                <router-link to="/community">
+                    <a-icon type="message" />
+                    <span>Community chat</span>
+                </router-link>
+
+            </a-menu-item>
             <a-menu-item key="7">
                 <a @click="logout">
                     <a-icon type="export"/>

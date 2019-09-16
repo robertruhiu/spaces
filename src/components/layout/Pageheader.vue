@@ -153,7 +153,7 @@
                 }
 
             }
-            console.log(this.events)
+
 
 
         },

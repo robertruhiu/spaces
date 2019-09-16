@@ -697,7 +697,11 @@
                     let title = this.portfoliolist[i].title
                     let description = this.portfoliolist[i].description
                     let demo = this.portfoliolist[i].demo_link
-                    let tech_used = this.portfoliolist[i].tech_tags.split(',');
+                    let tech_used =[]
+                    if(this.portfoliolist[i].tech_tags){
+                        tech_used = this.portfoliolist[i].tech_tags.split(',');
+
+                    }
 
                     let one_portfolio = new Portfolio(
                         id, title, description, demo, tech_used
@@ -713,7 +717,12 @@
                     let company = this.experienceslist[i].company
                     let location = this.experienceslist[i].location
                     let duration = this.experienceslist[i].duration
-                    let tech_used = this.experienceslist[i].tech_tags.split(',');
+
+                    let tech_used =[]
+                    if(this.portfoliolist[i].tech_tags){
+                        tech_used = this.experienceslist[i].tech_tags.split(',');
+
+                    }
 
                     let one_experience = new Experience(
                         id, title, description, company, location, duration, tech_used

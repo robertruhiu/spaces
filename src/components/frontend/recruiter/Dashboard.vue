@@ -612,8 +612,7 @@
 
             return {
                 currentUserProfile: null,
-                jobs: null,
-                myjobs: [],
+                myjobs:[],
                 mycandidates: [],
                 visible: false,
                 job: {
@@ -675,9 +674,9 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
+
                 this.mycandidates = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
-                this.loading = false
+
                 for (let i = 0; i < 2; i++) {
                     this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
                     let test = 0;
@@ -692,10 +691,10 @@
                         }
 
                     }
-                    let skill_list = this.jobs[i].tech_stack.split(',');
+                    let skill_list = this.applicants.job[i].tech_stack.split(',');
 
-                    let id = this.jobs[i].id
-                    let title = this.jobs[i].title
+                    let id = this.applicants.job[i].id
+                    let title = this.applicants.job[i].title
                     let skills = skill_list
                     let applicants = this.applicants.length
                     let onejob = new Job(
@@ -707,6 +706,7 @@
 
 
                 }
+                this.loading = false
 
             }
 
