@@ -117,7 +117,8 @@
                                                 <a-avatar class="poolavatar"
                                                 >
                                                     {{item.name}}
-                                                    <span style="font-size: 1rem" v-if="item.verified"><a-icon type="check-circle" /></span>
+                                                    <span style="font-size: 1rem" v-if="item.verified"><a-icon
+                                                            type="check-circle"/></span>
 
                                                 </a-avatar>
                                             </a-col>
@@ -183,7 +184,6 @@
 
 
             </div>
-
 
 
         </a-layout-content>
@@ -291,8 +291,11 @@
             this.devs = (await UsersService.devs()).data;
             this.loading = false
             for (let i = 0; i < this.devs.length; i++) {
+                let skill_list = []
+                if (this.devs[i].skills) {
+                    skill_list = this.devs[i].skills.split(',').slice(0, 10)
+                }
 
-                let skill_list = this.devs[i].skills.split(',').slice(0, 10)
 
                 let id = this.devs[i].user.id
                 let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
@@ -305,7 +308,7 @@
                     verified = true
                 }
                 let onedev = new Developer(
-                    id, name, skills, about, location, availabilty,verified
+                    id, name, skills, about, location, availabilty, verified
                 )
 
 
