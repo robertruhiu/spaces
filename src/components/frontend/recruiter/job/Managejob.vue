@@ -189,13 +189,13 @@
                     let interview = 0;
                     this.allapplicants = this.allapplicants + this.applicants.length
                     for (let j = 0; j < this.applicants.length; j++) {
-                        if (this.applicants[j].stage == 'test') {
+                        if (this.applicants[j].stage === 'test') {
                             test++
-                            this.testingstage = this.testingstage++
+                            this.testingstage = this.testingstage + 1
 
-                        } else if (this.applicants[j].stage == 'interview') {
+                        } else if (this.applicants[j].stage === 'interview') {
                             interview++
-                            this.interviewstage =this.interviewstage++
+                            this.interviewstage =this.interviewstage + 1
 
                         }
 

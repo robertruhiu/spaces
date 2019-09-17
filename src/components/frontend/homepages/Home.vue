@@ -518,7 +518,7 @@
             for (let i = 0; i < this.devs.length; i++) {
                 let skill_list = []
                 if(this.devs[i].skills){
-                    skill_list = this.devs[i].skills.split(',').slice(0, 6);
+                    skill_list = this.devs[i].skills.split(',').slice(0, 4);
                 }
 
 
