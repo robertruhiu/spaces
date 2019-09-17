@@ -590,106 +590,109 @@
                     .catch(error => {
                         return error
                     })
-                this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
+                if (this.$store.state.usertype === 'recruiter') {
+                    this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
 
 
-                if (this.carts.length > 0) {
-                    this.mycart = this.carts[0]
-                    if (this.mycart.devspending) {
-                        this.pickeddevs = this.mycart.devspending.split(',');
-
-                    }
-                    if (this.mycart.devspaid) {
-                        this.paiddevs = this.mycart.devspaid.split(',');
-                    }
-                    if (this.mycart.amount) {
-                        this.paidbundleexists = true
-                        if (this.mycart.amount === 200) {
-                            this.bundlelimit = 10
-                        } else if (400 <= this.mycart.amount > 200) {
-                            this.bundlelimit = 20
-                        }
-                    }
-
-
-                } else {
-
-                    this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
-                }
-
-
-                this.devs = (await UsersService.devs()).data;
-
-                for (let i = 0; i < this.devs.length; i++) {
-                    if (this.pickeddevs.length > 0) {
-                        for (let j = 0; j < this.pickeddevs.length; j++) {
-
-                            if (this.devs[i].id === Number(this.pickeddevs[j])) {
-                                let id = this.devs[i].id
-                                let name = this.devs[i].user.first_name
-                                let verified = false
-                                if (this.devs[i].verified_skills) {
-                                    verified = true
-                                }
-
-                                let one_profile = new Cart(
-                                    id, name, verified
-                                );
-                                this.pickedprofiles.push(one_profile)
-
-                            }
-                            if (this.$route.params.candidateProfileID === Number(this.pickeddevs[j])) {
-                                this.managecandidate = true
-                            }
+                    if (this.carts.length > 0) {
+                        this.mycart = this.carts[0]
+                        if (this.mycart.devspending) {
+                            this.pickeddevs = this.mycart.devspending.split(',');
 
                         }
+                        if (this.mycart.devspaid) {
+                            this.paiddevs = this.mycart.devspaid.split(',');
+                        }
+                        if (this.mycart.amount) {
+                            this.paidbundleexists = true
+                            if (this.mycart.amount === 200) {
+                                this.bundlelimit = 10
+                            } else if (400 <= this.mycart.amount > 200) {
+                                this.bundlelimit = 20
+                            }
+                        }
 
+
+                    } else {
+
+                        this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
                     }
 
 
-                }
+                    this.devs = (await UsersService.devs()).data;
 
+                    for (let i = 0; i < this.devs.length; i++) {
+                        if (this.pickeddevs.length > 0) {
+                            for (let j = 0; j < this.pickeddevs.length; j++) {
 
-                let p = false
-                this.pickeddevs.forEach(function (dev) {
-
-                    if (Number(dev) === dev_id) {
-                        p = true
-
-                    }
-
-
-                })
-                this.picked = p
-                if (this.pickeddevs.length <= 10) {
-                    this.amount = 200
-                } else {
-                    this.amount = 400
-                }
-                MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
-                    .then(resp => {
-
-                            if (resp.data.length !== 0) {
-
-
-                                for (let i = 0; i < resp.data.length; i++) {
-                                    this.pickeddevpaid.push(resp.data[i].developer)
-                                }
-
-                                for (let i = 0; i < this.pickeddevpaid.length; i++) {
-                                    if (this.$route.params.candidateProfileID === this.pickeddevpaid[i].id) {
-                                        this.paidprofile = true
-                                        this.managecandidate = true
-
+                                if (this.devs[i].id === Number(this.pickeddevs[j])) {
+                                    let id = this.devs[i].id
+                                    let name = this.devs[i].user.first_name
+                                    let verified = false
+                                    if (this.devs[i].verified_skills) {
+                                        verified = true
                                     }
+
+                                    let one_profile = new Cart(
+                                        id, name, verified
+                                    );
+                                    this.pickedprofiles.push(one_profile)
+
+                                }
+                                if (this.$route.params.candidateProfileID === Number(this.pickeddevs[j])) {
+                                    this.managecandidate = true
                                 }
 
                             }
 
+                        }
+
+
+                    }
+
+
+                    let p = false
+                    this.pickeddevs.forEach(function (dev) {
+
+                        if (Number(dev) === dev_id) {
+                            p = true
 
                         }
-                    )
-                    .catch();
+
+
+                    })
+                    this.picked = p
+                    if (this.pickeddevs.length <= 10) {
+                        this.amount = 200
+                    } else {
+                        this.amount = 400
+                    }
+                    MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
+                        .then(resp => {
+
+                                if (resp.data.length !== 0) {
+
+
+                                    for (let i = 0; i < resp.data.length; i++) {
+                                        this.pickeddevpaid.push(resp.data[i].developer)
+                                    }
+
+                                    for (let i = 0; i < this.pickeddevpaid.length; i++) {
+                                        if (this.$route.params.candidateProfileID === this.pickeddevpaid[i].id) {
+                                            this.paidprofile = true
+                                            this.managecandidate = true
+
+                                        }
+                                    }
+
+                                }
+
+
+                            }
+                        )
+                        .catch();
+
+                }
 
 
                 for (let i = 0; i < this.portfoliolist.length; i++) {
@@ -697,8 +700,8 @@
                     let title = this.portfoliolist[i].title
                     let description = this.portfoliolist[i].description
                     let demo = this.portfoliolist[i].demo_link
-                    let tech_used =[]
-                    if(this.portfoliolist[i].tech_tags){
+                    let tech_used = []
+                    if (this.portfoliolist[i].tech_tags) {
                         tech_used = this.portfoliolist[i].tech_tags.split(',');
 
                     }
@@ -718,8 +721,8 @@
                     let location = this.experienceslist[i].location
                     let duration = this.experienceslist[i].duration
 
-                    let tech_used =[]
-                    if(this.portfoliolist[i].tech_tags){
+                    let tech_used = []
+                    if (this.portfoliolist[i].tech_tags) {
                         tech_used = this.experienceslist[i].tech_tags.split(',');
 
                     }
@@ -936,7 +939,7 @@
                         devspaid: developerspaid,
                         amount: response.tx.amount,
                         transaction_id: response.tx.txRef,
-                        type:'talent'
+                        type: 'talent'
                     }, auth)
                         .then(resp => {
                             return resp
