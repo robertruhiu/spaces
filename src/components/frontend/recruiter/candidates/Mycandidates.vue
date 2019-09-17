@@ -29,8 +29,12 @@
                                                         Active Applicants
                                                         <a-tag color="blue">{{paidapplicants.length}}</a-tag>
                                                     </span>
+                                                    <div style="text-align: center" v-if="waiting">
+                                                         <a-spin />
 
-                                                    <a-tabs defaultActiveKey="1" style="z-index: 0;">
+                                                    </div>
+
+                                                    <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
 
 
                                                         <!-------paid  candidates-------->
@@ -1189,6 +1193,7 @@
         data() {
 
             return {
+                waiting:true,
                 pickeddevs: [],
                 paiddevs: [],
                 columns,
@@ -1238,7 +1243,7 @@
             if (this.$store.state.user.pk) {
                 MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                     .then(resp => {
-                        console.log(resp.data)
+
                             if (resp.data.length !== 0) {
 
 
@@ -1333,6 +1338,7 @@
                                 } else {
                                     this.paying = true
                                 }
+                                this.waiting = false
 
                             }
 
@@ -1414,6 +1420,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+
                 let self = this;
                 MarketPlaceService.candidatemanager(application_id, {
                     interviewstarttime: this.starttime,
@@ -1434,6 +1441,7 @@
                         this.offerstage = []
                         this.hirestage = []
                         this.recentprojects = []
+
                         self.Datarefresh()
                         return resp
 
@@ -1450,6 +1458,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
                 if (id === 1) { // testing
                     for (let i = 0; i < this.paidapplicants.length; i++) {
@@ -1539,6 +1548,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
                 if (id === 2) { // interview
                     for (let i = 0; i < this.testingstage.length; i++) {
@@ -1632,6 +1642,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
                 if (id === 1) { // coding
                     for (let i = 0; i < this.interviewstage.length; i++) {
@@ -1727,6 +1738,7 @@
 
                 }
                 let self = this;
+                this.waiting = true
 
                 for (let i = 0; i < this.unpaidapplicant.length; i++) {
                     if (this.unpaidapplicant[i].profile === candidate_id) {
@@ -1792,6 +1804,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
+                this.waiting = true
                 if (this.$store.state.user.pk) {
                     MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                         .then(resp => {
@@ -1886,6 +1899,7 @@
                                     } else {
                                         this.paying = true
                                     }
+                                    this.waiting = false
 
                                 }
 

@@ -31,11 +31,14 @@
                                                         Active Applicants
                                                         <a-tag color="blue">{{pickedapplicants.length}}</a-tag>
                                                     </span>
+                                                    <div style="text-align: center" v-if="waiting">
+                                                            <a-spin/>
 
-                                                    <a-tabs defaultActiveKey="1" style="z-index: 0;">
+                                                            </div>
 
+                                                    <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
 
-                                                        <!-------active  candidates-------->
+                                                            <!-------active  candidates-------->
                                                         <a-tab-pane v-if="active" tab="Active"
                                                                     key="1">
 
@@ -396,10 +399,11 @@
                                                             </a-table>
 
 
-
-
-
                                                         </a-tab-pane>
+
+
+
+
 
                                                     </a-tabs>
                                                 </a-tab-pane>
@@ -1389,8 +1393,6 @@
             </a-layout-content>
 
 
-
-
         </a-layout>
     </a-layout>
 
@@ -1614,6 +1616,7 @@
                 interviewer: null,
                 interviewerapplicationid: null,
                 eventcolor: 'blue',
+                waiting: true
 
 
             }
@@ -1635,6 +1638,7 @@
 
             };
             if (this.$store.state.user.pk) {
+                this.waiting = true
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 // all developer profile list api fetch
                 this.alldevsprofile = (await UsersService.devs()).data;
@@ -1651,7 +1655,6 @@
                 this.tags = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',')
 
 
-
                 // getting applicants for job
                 this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
 
@@ -1659,8 +1662,8 @@
                 // create a profile for each applicant comparision and matching between user,profile and applicant model
 
                 for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
-                    let tags =[]
-                    if(this.applicants[j].candidate.skills){
+                    let tags = []
+                    if (this.applicants[j].candidate.skills) {
                         tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
                     }
 
@@ -1727,6 +1730,7 @@
 
 
                 }
+                this.waiting = false
 
 
                 // system recommend candidates (all candidates with matching skill tags - current applicants)
@@ -1734,19 +1738,19 @@
                 for (let x = 0; x < this.alldevsprofile.length; x++) {
                     for (let z = 0; z < this.tags.length; z++) {
                         if (this.alldevsprofile[x].skills) {
-                            if(this.alldevsprofile[x].skills){
+                            if (this.alldevsprofile[x].skills) {
                                 if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
-                                let user_id = this.alldevsprofile[x].id
-                                allrecommedednouniquefilter.push(user_id)
+                                    let user_id = this.alldevsprofile[x].id
+                                    allrecommedednouniquefilter.push(user_id)
 
-                            }
+                                }
 
-                            }else if(this.alldevsprofile[x].verified_skills){
+                            } else if (this.alldevsprofile[x].verified_skills) {
                                 if (this.alldevsprofile[x].verified_skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
-                                let user_id = this.alldevsprofile[x].id
-                                allrecommedednouniquefilter.push(user_id)
+                                    let user_id = this.alldevsprofile[x].id
+                                    allrecommedednouniquefilter.push(user_id)
 
-                            }
+                                }
 
                             }
 
@@ -1776,30 +1780,29 @@
                 let recommededlist = allrecommended.diff(allapplicants);
 
 
-
                 // create a profile for each recommended comparision and matching between user,profile
                 if (recommededlist.length > 0) {
 
                     for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
                         for (let k = 0; k < recommededlist.length; k++) {
                             if (this.alldevsprofile[l].id === recommededlist[k]) {
-                                let tags =[]
-                                    if(this.alldevsprofile[l].skills){
-                                        tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+                                let tags = []
+                                if (this.alldevsprofile[l].skills) {
+                                    tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
 
-                                    }
+                                }
 
-                                    let stage = 'recommended'
-                                    let id = this.alldevsprofile[l].id
+                                let stage = 'recommended'
+                                let id = this.alldevsprofile[l].id
 
-                                    let user_id = this.alldevsprofile[l].id
-                                    let name = this.alldevsprofile[l].user.first_name
-                                    let selected = false
-                                    let onerecommed = new Recommended(
-                                        id, name, stage, tags, user_id, selected,
-                                    );
+                                let user_id = this.alldevsprofile[l].id
+                                let name = this.alldevsprofile[l].user.first_name
+                                let selected = false
+                                let onerecommed = new Recommended(
+                                    id, name, stage, tags, user_id, selected,
+                                );
 
-                                    this.recommmedcandidates.push(onerecommed)
+                                this.recommmedcandidates.push(onerecommed)
 
 
                             }
@@ -1958,6 +1961,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
 
                 if (id === 1) { // testing
@@ -2036,6 +2040,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
                 if (id === 2) { // interview
                     for (let i = 0; i < this.testingstage.length; i++) {
@@ -2116,6 +2121,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
                 if (id === 1) {
                     for (let i = 0; i < this.interviewstage.length; i++) {
@@ -2196,6 +2202,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.waiting = true
                 let self = this;
                 if (key) {
                     for (let i = 0; i < this.newapplicant.length; i++) {
@@ -2260,13 +2267,14 @@
             },
 
             // pick from recommedation list
-            pickrecommedationClick(job_id, candidate_id,key) {
+            pickrecommedationClick(job_id, candidate_id, key) {
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                if(key === 1){
+                this.waiting = true
+                if (key === 1) {
                     for (let i = 0; i < this.recommmedcandidatesverified.length; i++) {
                         if (this.recommmedcandidatesverified[i].profile === candidate_id) {
 
@@ -2309,7 +2317,7 @@
                         }
                     }
 
-                }else if(key === 2){
+                } else if (key === 2) {
                     for (let i = 0; i < this.recommmedcandidates.length; i++) {
                         if (this.recommmedcandidates[i].profile === candidate_id) {
 
@@ -2447,11 +2455,11 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
+                this.waiting = true
                 if (this.$store.state.user.pk) {
 
 
                     const jobId = this.$store.state.route.params.jobId
-
 
 
                     // getting applicants for job
@@ -2462,8 +2470,8 @@
 
                     for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
 
-                        let tags =[]
-                        if(this.applicants[j].candidate.skills){
+                        let tags = []
+                        if (this.applicants[j].candidate.skills) {
                             tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
                         }
 
@@ -2532,9 +2540,6 @@
                     }
 
 
-
-
-
                     // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
                     if (this.pickedapplicants.length > 0) {
                         this.active = true
@@ -2543,7 +2548,7 @@
                     } else if (this.recommmedcandidates.length > 0) {
                         this.recommended = true
                     }
-
+                    this.waiting = false
 
 
                 }

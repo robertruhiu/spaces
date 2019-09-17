@@ -270,7 +270,7 @@
                     onChange: (page) => {
                         return page
                     },
-                    pageSize: 3,
+                    pageSize: 20,
                 },
                 actions: [
                     {type: 'star-o', text: '156'},
@@ -293,7 +293,7 @@
             for (let i = 0; i < this.devs.length; i++) {
                 let skill_list = []
                 if (this.devs[i].skills) {
-                    skill_list = this.devs[i].skills.split(',').slice(0, 10)
+                    skill_list = this.devs[i].skills.split(',').slice(0, 4)
                 }
 
 

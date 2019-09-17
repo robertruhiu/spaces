@@ -9,6 +9,9 @@ export default {
     mydevelopers(user_id, auth) {
         return Api().get(`marketplace/mydevs/${user_id} `, auth)
     },
+    mydeveloperssimple(user_id, auth) {
+        return Api().get(`marketplace/mydevssimple/${user_id} `, auth)
+    },
     allmyjobapplicants(user_id,auth){
         return Api().get(`marketplace/myapplicants/${user_id} `, auth)
     },

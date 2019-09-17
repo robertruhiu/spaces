@@ -449,8 +449,8 @@
 
             }
             if (this.$store.state.user.pk) {
-                this.myjobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
-                this.mycandidates = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
+                this.myjobs = (await Marketplace.myjobssliced(this.$store.state.user.pk, auth)).data
+                this.mycandidates = (await Marketplace.mydeveloperssimple(this.$store.state.user.pk, auth)).data
 
 
 

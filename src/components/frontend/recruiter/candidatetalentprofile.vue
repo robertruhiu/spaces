@@ -293,6 +293,7 @@
                                              style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">
                                             <p>{{profile.name}} <span v-if="profile.verified"><a-icon
                                                     type="check-circle" theme="twoTone"/></span>
+
                                                 <span style="float: right"><a @click="remove(profile.id)"><a-icon
                                                         type="close-circle" theme="twoTone"/></a></span>
                                             </p>
@@ -301,6 +302,10 @@
                                         <span v-if="paidbundleexists === false">
                                             <p style="padding-top: 1rem">Total:{{amount}}</p>
                                         </span>
+                                        <div style="text-align: center" v-if="waiting">
+                                            <a-spin/>
+
+                                        </div>
 
 
                                         <div v-if="paidbundleexists">
@@ -528,7 +533,8 @@
                 portfolioload: true,
                 experienceload: true,
                 quizload: true,
-                managecandidate: false
+                managecandidate: false,
+                waiting:false
 
             }
         },
@@ -835,6 +841,7 @@
                 } else {
                     this.amount = 400
                 }
+                this.waiting = false
 
             },
 
@@ -842,6 +849,7 @@
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 };
+                this.waiting = true
                 let self = this
                 if (dev_id === this.currentUserProfile.id) {
                     this.picked = false

@@ -509,7 +509,7 @@
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.jobs = (await Marketplace.myjobssliced(this.$store.state.user.pk, auth)).data
 
-                this.mycandidates = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
+                this.mycandidates = (await Marketplace.mydeveloperssimple(this.$store.state.user.pk, auth)).data
 
 
                 this.loading = false

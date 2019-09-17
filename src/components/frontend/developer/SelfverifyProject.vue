@@ -160,7 +160,7 @@
                 application: {},
                 projectstarttime: null,
                 timeseterror: false,
-                server_url: "http://codelnide.codeln.com:8080/dashboard/#/ide/che/Elohor-Thomas",
+                server_url: "will be sent to you",
             }
         },
         components: {
