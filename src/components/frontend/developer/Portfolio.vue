@@ -329,6 +329,7 @@
                                             </a>
                                         </span>
                                         <br>
+
                                         <div v-if="experiences.length>0">
                                             <a-timeline>
                                                 <a-timeline-item v-for="item in experiences" v-bind:key="item.id">
@@ -1032,6 +1033,7 @@
 
             this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
             this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
+
             this.takenquizzes = (await QuizService.taken(this.$store.state.user.pk, auth)).data;
 
             let tempcodelnprojects = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
@@ -1064,8 +1066,8 @@
                 let location = this.experienceslist[i].location
                 let duration = this.experienceslist[i].duration
                 let tech_used =[]
-                if(this.portfoliolist[i].tech_tags){
-                    tech_used = this.portfoliolist[i].tech_tags.split(',');
+                if(this.experienceslist[i].tech_tags){
+                    tech_used = this.experienceslist[i].tech_tags.split(',');
                 }
 
                 let one_experience = new Experience(
@@ -1075,6 +1077,7 @@
 
 
             }
+
             tempcodelnprojects.forEach((project) => {
                 if (project.stage === 'analysis_complete' && project.report !== null) {
                     this.codelnprojects.push(project)

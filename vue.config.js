@@ -1,6 +1,5 @@
 const BrotliPlugin = require('brotli-webpack-plugin');
 module.exports = {
-
     configureWebpack: {
         performance: {
             hints: false
