@@ -24,7 +24,7 @@
 
                                         <span style="float: right">
                                             <a-tag color="#9FC6F2"
-                                                   style="color:white;border-radius: 50%">{{allapplicants}}</a-tag>
+                                                   style="color:white;border-radius: 50%">{{allapplicants}} </a-tag>
 
                                         </span>
 
@@ -157,7 +157,8 @@
                 myapplicants: [],
                 allapplicants: 0,
                 testingstage: 0,
-                interviewstage: 0
+                interviewstage: 0,
+                total:0
 
 
             }
@@ -186,12 +187,15 @@
                     this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
                     let test = 0;
                     let interview = 0;
+                    this.allapplicants = this.allapplicants + this.applicants.length
                     for (let j = 0; j < this.applicants.length; j++) {
                         if (this.applicants[j].stage == 'test') {
                             test++
+                            this.testingstage = this.testingstage++
 
                         } else if (this.applicants[j].stage == 'interview') {
                             interview++
+                            this.interviewstage =this.interviewstage++
 
                         }
 
@@ -211,29 +215,7 @@
 
 
                 }
-                let all = []
-                let testnumber =[]
-                let interviewnumber =[]
-                for (let i = 0; i < this.myjobs.length; i++) {
-                    all.push(this.myjobs[i].applicants)
-                    testnumber.push(this.myjobs[i].test)
-                    interviewnumber.push(this.myjobs[i].interview)
-                }
-                this.allapplicants = all.reduce(
-                    function (total, num) {
-                        return total + num
-                    }
-                    , 0)
-                this.testingstage = testnumber.reduce(
-                    function (total, num) {
-                        return total + num
-                    }
-                    , 0)
-                this.interviewstage = interviewnumber.reduce(
-                    function (total, num) {
-                        return total + num
-                    }
-                    , 0)
+
             }
 
 

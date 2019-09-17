@@ -9,8 +9,6 @@
             <a-layout-content>
                 <Pageheader/>
 
-
-
                 <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row style="margin-bottom: 1rem">
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
@@ -51,7 +49,8 @@
                         </a>
 
 
-                        <router-link to="managejobs" v-if="myjobs.length>0">
+
+                        <router-link to="managejobs" v-if="jobs.length>0">
                             <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
                                    :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
@@ -124,162 +123,7 @@
 
                 </div>
 
-                <div style="padding: 2% 1%;background-color: white;margin: 1% 1%" v-if="myjobs.length >0 ">
-                    <div v-if="loading" class="loading" style="text-align: center;">
-                        <a-spin/>
-                    </div>
-                    <div v-else>
-                        <a-row style="margin-left: 1.5rem;margin-right: 1.5rem;margin-bottom: 1rem">
-                            <a-col :span="12">
 
-                                <h3 style="color: #1976D2;font-weight: bold">Your Recent Jobs</h3>
-
-
-                            </a-col>
-                            <a-col :span="12">
-                                <router-link to="managejobs">
-                                    <a-button type="primary" style="float: right">
-                                        See more
-                                        <a-icon type="right"/>
-                                    </a-button>
-                                </router-link>
-
-
-                            </a-col>
-
-                        </a-row>
-                        <a-row :gutter="16" style="margin-left: 1rem;margin-right: 1rem;margin-bottom: 1rem">
-                            <div v-if="myjobs.length===1">
-                                <a-col :span="12" :offset="6" v-for="job in myjobs" v-bind:key="job.id">
-                                    <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                        <h3 style="font-weight: bold">{{job.title}}</h3>
-                                        <p>
-                                              <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                        </p>
-
-                                        <p>
-                                            <a-alert style="color:#1976D2;border: 0 "
-                                                     message="Applicant Tracker"
-                                                     type="info"/>
-                                        </p>
-
-                                        <p>
-                                            <a-row>
-                                                <a-col :span="8">
-                                                            <span>
-                                                                Applicants
-                                                                <a-tag color="#9fc6f2"
-                                                                       style="color:white;border-radius: 50%">{{job.applicants}}</a-tag>
-                                                            </span>
-
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                            <span>
-                                                Testing Stage
-
-                                            <a-tag color="#92DDDD"
-                                                   style="color:white;border-radius: 50%">{{job.test}}</a-tag>
-                                            </span>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                            <span>
-                                                  Interview Stage
-                                            <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
-                                            </span>
-
-                                                </a-col>
-                                            </a-row>
-
-                                        </p>
-                                        <div style="text-align: center">
-
-                                            <a-button style="width: 60%"
-                                                      @click="navigateTo({name:'job',params:{jobId: job.id}})"
-                                                      type="primary" block>Manage Job
-                                            </a-button>
-
-                                        </div>
-
-
-                                    </a-card>
-                                </a-col>
-
-                            </div>
-
-
-                            <a-col v-else :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                   :md="{span: 24, offset: 0 }"
-                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }" v-for="job in myjobs"
-                                   v-bind:key="job.id"
-                                   style="margin-bottom: 1rem">
-                                <a-card style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                    <h3 style="font-weight: bold">{{job.title}}</h3>
-                                    <p>
-                                              <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                    </p>
-
-                                    <p>
-                                        <a-alert style="color:#1976D2;border: 0 "
-                                                 message="Applicant Tracker"
-                                                 type="info"/>
-                                    </p>
-
-                                    <p>
-                                        <a-row>
-                                            <a-col :span="8">
-                                                            <span>
-                                                                Applicants
-                                                                <a-tag color="#9fc6f2"
-                                                                       style="color:white;border-radius: 50%">{{job.applicants}}</a-tag>
-                                                            </span>
-
-
-                                            </a-col>
-                                            <a-col :span="8">
-                                            <span>
-                                                Testing Stage
-
-                                            <a-tag color="#92DDDD"
-                                                   style="color:white;border-radius: 50%">{{job.test}}</a-tag>
-                                            </span>
-
-                                            </a-col>
-                                            <a-col :span="8">
-                                            <span>
-                                                  Interview Stage
-                                            <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
-                                            </span>
-
-                                            </a-col>
-                                        </a-row>
-
-                                    </p>
-                                    <div style="text-align: center">
-
-                                        <a-button style="width: 60%"
-                                                  @click="navigateTo({name:'job',params:{jobId: job.id}})"
-                                                  type="primary" block>Manage Job
-                                        </a-button>
-
-                                    </div>
-
-
-                                </a-card>
-                            </a-col>
-
-                        </a-row>
-                    </div>
-
-
-                </div>
                 <!----Post Job drawer------->
                 <a-drawer
                         title="Create a new job"
@@ -581,17 +425,7 @@
 
 
 <script>
-    class Job {
-        constructor(id, title, skills, applicants, test, interview) {
-            this.id = id;
-            this.title = title;
-            this.skills = skills;
-            this.applicants = applicants;
-            this.test = test;
-            this.interview = interview
 
-        }
-    }
 
 
     import UsersService from '@/services/UsersService'
@@ -602,7 +436,6 @@
     import RecruiterSider from "../../layout/RecruiterSider";
     import moment from 'moment';
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-    import {showAt, hideAt} from 'vue-breakpoints'
 
 
 
@@ -612,7 +445,7 @@
 
             return {
                 currentUserProfile: null,
-                myjobs:[],
+                jobs: null,
                 mycandidates: [],
                 visible: false,
                 job: {
@@ -661,7 +494,7 @@
             ACol,
             Pageheader,
             RecruiterSider,
-            hideAt, showAt,
+
 
 
 
@@ -674,38 +507,11 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.jobs = (await Marketplace.myjobssliced(this.$store.state.user.pk, auth)).data
 
                 this.mycandidates = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
 
-                for (let i = 0; i < 2; i++) {
-                    this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
-                    let test = 0;
-                    let interview = 0;
-                    for (let j = 0; j < this.applicants.length; j++) {
-                        if (this.applicants[j].stage === 'test') {
-                            test++
 
-                        } else if (this.applicants[j].stage === 'interview') {
-                            interview++
-
-                        }
-
-                    }
-                    let skill_list = this.applicants.job[i].tech_stack.split(',');
-
-                    let id = this.applicants.job[i].id
-                    let title = this.applicants.job[i].title
-                    let skills = skill_list
-                    let applicants = this.applicants.length
-                    let onejob = new Job(
-                        id, title, skills, applicants, test, interview
-                    )
-
-
-                    this.myjobs.push(onejob)
-
-
-                }
                 this.loading = false
 
             }

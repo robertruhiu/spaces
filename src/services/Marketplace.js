@@ -19,8 +19,14 @@ export default {
     myjobs(user_id, auth) {
         return Api().get(`marketplace/myjobs/${user_id}`, auth)
     },
+    myjobssliced(user_id, auth) {
+        return Api().get(`marketplace/myjobssliced/${user_id}`, auth)
+    },
     applicants(job_id, auth) {
         return Api().get(`marketplace/jobapplicants/${job_id}`, auth)
+    },
+    applicantssliced(job_id, auth) {
+        return Api().get(`marketplace/jobapplicantssliced/${job_id}`, auth)
     },
     specificjob(job_id, auth) {
         return Api().get(`marketplace/specificjob/${job_id}`, auth)

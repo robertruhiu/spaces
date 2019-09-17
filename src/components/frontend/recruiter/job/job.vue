@@ -291,9 +291,7 @@
                                                         <!-------system recommmended candidates-------->
                                                         <a-tab-pane v-if="recommended" tab="Recommended Candidates"
                                                                     key="3">
-                                                            <a-tabs defaultActiveKey="9" >
-                                                                <a-tab-pane v-if="recommmedcandidatesverified.length>0" tab="Verified" key="9">
-                                                                    <a-table :dataSource="recommmedcandidatesverified"
+                                                            <a-table :dataSource="recommmedcandidates"
                                                                      :scroll="{ y: 340 }"
                                                                      size="middle">
 
@@ -397,115 +395,6 @@
 
                                                             </a-table>
 
-                                                                </a-tab-pane>
-                                                                <a-tab-pane v-if="recommmedcandidates.length>0" tab="Unverified" key="10" forceRender>
-                                                                    <a-table :dataSource="recommmedcandidates"
-                                                                     :scroll="{ y: 340 }"
-                                                                     size="middle">
-
-                                                                <!-----name--------->
-                                                                <a-table-column
-                                                                        dataIndex="name"
-                                                                        key="name"
-                                                                        width="10%"
-
-
-                                                                >
-                                                                    <span slot="title">Name</span>
-                                                                    <template slot-scope="text,record">
-                                                        <span>
-                                                            {{record.name}}
-                                                        </span>
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----profile--------->
-                                                                <a-table-column
-                                                                        dataIndex="profile"
-                                                                        key="profile"
-                                                                        width="10%"
-
-
-                                                                >
-                                                                    <div slot="title">User profile</div>
-                                                                    <template slot-scope="text,record">
-                                                        <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})">profile</a>
-                                                        </span>
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----skills--------->
-                                                                <a-table-column
-
-                                                                        dataIndex="tags"
-                                                                        key="tags"
-                                                                        width="20%"
-
-                                                                >
-                                                                    <div style="text-align: center;" slot="title">Skills
-                                                                    </div>
-                                                                    <template slot-scope="tags">
-                                                                        <div style="text-align: center;">
-                                                                            <span>
-                                                            <a-tag v-for="tag in tags" color="blue"
-                                                                   :key="tag">{{tag}}</a-tag>
-                                                        </span>
-                                                                        </div>
-
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----stage--------->
-                                                                <a-table-column
-
-                                                                        dataIndex="stage"
-                                                                        key="stage"
-                                                                        width="20%"
-
-                                                                >
-                                                                    <div style="margin-left: 15%" slot="title">Stage
-                                                                    </div>
-                                                                    <template slot-scope="text, record">
-                                                        <span style="margin-left: 5%">
-
-                                                            <a-tag color="#1C4E80"
-                                                                   style="">{{record.stage}}</a-tag>
-
-                                                        </span>
-                                                                    </template>
-
-                                                                </a-table-column>
-
-                                                                <!-----action--------->
-                                                                <a-table-column
-                                                                        dataIndex="action"
-                                                                        key="action"
-                                                                        width="20%"
-
-
-                                                                >
-                                                                    <div style="margin-left: 10%" slot="title">
-                                                                        Pick
-                                                                    </div>
-                                                                    <template slot-scope="text,record">
-                                                                        <div style="margin-left: 5%">
-                                                                            <a-button :size="small"
-                                                                                      @click="pickrecommedationClick(job.id,record.profile,2)"
-                                                                                      type="primary">pick
-                                                                            </a-button>
-
-
-                                                                        </div>
-                                                                    </template>
-                                                                </a-table-column>
-
-
-                                                            </a-table>
-
-                                                                </a-tab-pane>
-
-                                                            </a-tabs>
 
 
 
@@ -522,9 +411,6 @@
                                                         <a-tag color="blue">{{testingstage.length}}</a-tag>
                                                     </span>
 
-                                                    <a-alert style="margin-bottom: 1%"
-                                                             message="Please purchase a testing bundle to enable project asignment to candidates"
-                                                             type="info" closeText="Close Now"/>
                                                     <a-table :dataSource="testingstage" :scroll="{ y: 340 }"
                                                              size="middle">
 
@@ -1502,6 +1388,9 @@
 
             </a-layout-content>
 
+
+
+
         </a-layout>
     </a-layout>
 
@@ -1656,12 +1545,12 @@
 
     //recommended candidate structure on table
     class Recommended {
-        constructor(id, name, stage, tags, user_id, selected, pk) {
+        constructor(id, name, stage, tags, user_id, selected) {
             this.key = id;
             this.name = name;
             this.stage = stage;
             this.profile = user_id;
-            this.action = pk
+            this.action = id
             this.tags = tags;
             this.selected = selected;
 
@@ -1761,7 +1650,7 @@
                 let temptaglist = this.job.tech_stack;
                 this.tags = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',')
 
-                this.projects = Projectsservice.allprojects(auth)
+
 
                 // getting applicants for job
                 this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
@@ -1770,9 +1659,11 @@
                 // create a profile for each applicant comparision and matching between user,profile and applicant model
 
                 for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
+                    let tags =[]
+                    if(this.applicants[j].candidate.skills){
+                        tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
+                    }
 
-
-                    let tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
                     let stage = this.applicants[j].stage
                     let id = this.applicants[j].id
                     let pk = this.applicants[j].id
@@ -1885,42 +1776,30 @@
                 let recommededlist = allrecommended.diff(allapplicants);
 
 
+
                 // create a profile for each recommended comparision and matching between user,profile
                 if (recommededlist.length > 0) {
 
                     for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
                         for (let k = 0; k < recommededlist.length; k++) {
                             if (this.alldevsprofile[l].id === recommededlist[k]) {
-                                if (this.alldevsprofile[l].verified_skills) {
-                                    let tags = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
+                                let tags =[]
+                                    if(this.alldevsprofile[l].skills){
+                                        tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+
+                                    }
+
                                     let stage = 'recommended'
                                     let id = this.alldevsprofile[l].id
-                                    let pk = this.alldevsprofile[l].id
+
                                     let user_id = this.alldevsprofile[l].id
                                     let name = this.alldevsprofile[l].user.first_name
                                     let selected = false
                                     let onerecommed = new Recommended(
-                                        id, name, stage, tags, user_id, selected, pk
-                                    );
-
-                                    this.recommmedcandidatesverified.push(onerecommed)
-
-
-                                } else if (this.alldevsprofile[l].skills) {
-                                    let tags = this.alldevsprofile[l].verified_skills.split(',').slice(0, 3);
-                                    let stage = 'recommended'
-                                    let id = this.alldevsprofile[l].id
-                                    let pk = this.alldevsprofile[l].id
-                                    let user_id = this.alldevsprofile[l].id
-                                    let name = this.alldevsprofile[l].user.first_name
-                                    let selected = false
-                                    let onerecommed = new Recommended(
-                                        id, name, stage, tags, user_id, selected, pk
+                                        id, name, stage, tags, user_id, selected,
                                     );
 
                                     this.recommmedcandidates.push(onerecommed)
-
-                                }
 
 
                             }
@@ -2572,11 +2451,8 @@
 
 
                     const jobId = this.$store.state.route.params.jobId
-                    // current job
-                    this.job = (await Marketplace.specificjob(jobId, auth)).data
 
 
-                    this.projects = Projectsservice.allprojects(auth)
 
                     // getting applicants for job
                     this.applicants = (await Marketplace.specificjobapplicants(jobId, auth)).data
@@ -2586,8 +2462,11 @@
 
                     for (let j = 0; j < this.applicants.length; j++) { //all applicants for this job
 
+                        let tags =[]
+                        if(this.applicants[j].candidate.skills){
+                            tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
+                        }
 
-                        let tags = this.applicants[j].candidate.skills.split(',').slice(0, 2);
                         let stage = this.applicants[j].stage
                         let id = this.applicants[j].id
                         let pk = this.applicants[j].id
@@ -2653,70 +2532,7 @@
                     }
 
 
-                    // system recommend candidates (all candidates with matching skill tags - current applicants)
-                    let allrecommedednouniquefilter = []
-                    for (let x = 0; x < this.alldevsprofile.length; x++) {
-                        for (let z = 0; z < this.tags.length; z++) {
-                            if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
-                                let user_id = this.alldevsprofile[x].id
-                                allrecommedednouniquefilter.push(user_id)
 
-                            }
-                        }
-                    }
-
-                    // allows unique filter under codeln recommended candidates id
-                    function onlyUnique(value, index, self) {
-                        return self.indexOf(value) === index;
-                    }
-
-                    // finds the difference to eliminate candidates already picked/selected or applied from recommended
-                    Array.prototype.diff = function (a) {
-                        return this.filter(function (i) {
-                            return a.indexOf(i) < 0;
-                        });
-                    };
-
-
-                    let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
-                    let allapplicants = []
-                    for (let x = 0; x < this.applicants.length; x++) {
-                        allapplicants.push(this.applicants[x].candidate.id)
-                    }
-                    let recommededlist = allrecommended.diff(allapplicants);
-
-
-                    // create a profile for each recommended comparision and matching between user,profile
-                    if (recommededlist.length > 0) {
-
-                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
-                            for (let k = 0; k < recommededlist.length; k++) {
-                                if (this.alldevsprofile[l].id === recommededlist[k]) {
-
-                                    let tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
-                                    let stage = 'recommended'
-                                    let id = this.alldevsprofile[l].id
-                                    let pk = this.alldevsprofile[l].id
-                                    let user_id = this.alldevsprofile[l].id
-                                    let name = this.alldevsprofile[l].user.first_name
-                                    let selected = false
-                                    let onerecommed = new Recommended(
-                                        id, name, stage, tags, user_id, selected, pk
-                                    );
-
-                                    this.recommmedcandidates.push(onerecommed)
-
-                                }
-
-                            }
-                            this.recommended = true
-
-                        }
-
-
-                    } else {
-                        this.recommended = false
-                    }
 
 
                     // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
@@ -2728,8 +2544,7 @@
                         this.recommended = true
                     }
 
-                    // recent projects
-                    this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
+
 
                 }
 
