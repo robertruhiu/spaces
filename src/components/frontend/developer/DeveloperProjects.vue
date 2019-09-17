@@ -36,7 +36,12 @@
 
 
                     </a-col>
-                    <div v-if="projectlist.length >0">
+                    <div  v-if="loading">
+                        <a-spin/>
+
+                    </div>
+                    <div v-else>
+                        <div v-if="projectlist.length >0">
                         <a-col class="tracker" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 10, offset: 0 }"
                                :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" v-for="project in projectlist"
@@ -62,6 +67,8 @@
                             </a-row>
                         </a-col>
                     </div>
+                    </div>
+
 
 
                 </a-row>
@@ -143,7 +150,8 @@
                                 <div v-if="project.projectimage10 "><img :src="project.projectimage10"/></div>
                             </a-carousel>
                             <div v-if="project.hasvideo">
-                                <youtube :video-id="project.projectimage2" width="550" :player-vars="playerVars"></youtube>
+                                <youtube :video-id="project.projectimage2" width="550"
+                                         :player-vars="playerVars"></youtube>
                             </div>
                             <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
                                 <h4><strong>Project name:</strong> {{project.name}}</h4>
@@ -227,7 +235,8 @@
                 projectchoice: false,
                 project: null,
                 pickedframework: '',
-                waiting: true
+                waiting: true,
+                loading: false
             }
         },
         components: {
@@ -240,10 +249,12 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             };
+            this.loading = true
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.frameworkchoices = (await Projects.getverified(auth)).data
                 this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
+                this.loading = false
 
 
             }

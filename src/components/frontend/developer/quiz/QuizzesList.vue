@@ -14,37 +14,45 @@
                             </h3>
                         </a-col>
                     </a-row>
-                    <div v-if="takenquizzes.length >0">
+                    <div style="text-align: center" v-if="waiting">
+                        <a-spin/>
+
+                    </div>
+                    <div v-else>
+                        <div v-if="takenquizzes.length >0">
                         <a-row style="padding: 2%" gutter="16">
-                        <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in takenquizzes" v-bind:key="quiz">
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in takenquizzes"
+                                   v-bind:key="quiz">
 
 
-                            <a-row class="ant-card actioncards">
-                                <a-col span="24">
-                                    <div style="text-align: center">
-                                        <img class="poolavatar" :src="quiz.quiz.subject.image">
-                                    </div>
-                                </a-col>
-                                <a-col span="24" style="text-align: center">
-                                    {{quiz.quiz.name}}
-                                    score:{{quiz.score}}
+                                <a-row class="ant-card actioncards">
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar" :src="quiz.quiz.subject.image">
+                                        </div>
+                                    </a-col>
+                                    <a-col span="24" style="text-align: center">
+                                        {{quiz.quiz.name}}
+                                        score:{{quiz.score}}
 
 
-                                </a-col>
+                                    </a-col>
 
 
-                            </a-row>
+                                </a-row>
 
 
-                        </a-col>
-                    </a-row>
+                            </a-col>
+                        </a-row>
                     </div>
 
                     <a-row style="padding: 2%" gutter="16">
 
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in untaken" v-bind:key="quiz">
+                               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in untaken"
+                               v-bind:key="quiz">
 
                             <a @click="navigateTo({name:'takequiz',params:{candidateId:currentUserProfile.user.id,quizId: quiz.id,}})">
 
@@ -71,6 +79,9 @@
 
                     </a-row>
 
+                    </div>
+
+
 
                 </div>
             </a-layout-content>
@@ -94,7 +105,8 @@
                 quizzes: [],
                 currentUserProfile: null,
                 takenquizzes: [],
-                untaken: []
+                untaken: [],
+                waiting:true
 
 
             }
@@ -121,9 +133,10 @@
                         }
                     }
                 }
-            }else {
+            } else {
                 this.untaken = this.quizzes
             }
+            this.waiting = false
 
 
         },
