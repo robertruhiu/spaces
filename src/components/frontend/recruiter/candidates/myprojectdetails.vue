@@ -12,21 +12,12 @@
                 marginTop:'1%',marginLeft: '1%',marginRight:'1%' }">
 
                     <a-row gutter="8">
-                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 14, offset: 0 }"
-                                   :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }">
+                        <a-col span="14">
 
-                            <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
+                            <div v-if="project.hasvideo === false" >
                                 <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/></div>
-                                <div v-if="project.projectimage2 "><img style="width: 100%" :src="project.projectimage2"/></div>
-                                <div v-if="project.projectimage3 "><img style="width: 100%" :src="project.projectimage3"/></div>
-                                <div v-if="project.projectimage4 "><img :src="project.projectimage4"/></div>
-                                <div v-if="project.projectimage5 "><img :src="project.projectimage5"/></div>
-                                <div v-if="project.projectimage6 "><img :src="project.projectimage6"/></div>
-                                <div v-if="project.projectimage7 "><img :src="project.projectimage7"/></div>
-                                <div v-if="project.projectimage8 "><img :src="project.projectimage8"/></div>
-                                <div v-if="project.projectimage9 "><img :src="project.projectimage9"/></div>
-                                <div v-if="project.projectimage10 "><img :src="project.projectimage10"/></div>
-                            </a-carousel>
+
+                            </div>
                             <div v-if="project.hasvideo">
                                 <youtube :video-id="project.projectimage2" :player-vars="playerVars"></youtube>
                             </div>
@@ -38,8 +29,7 @@
 
 
                         </a-col>
-                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 10, offset: 0 }"
-                                   :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" >
+                        <a-col span="10" >
                             <div style="border:1px solid #e8e8e8;;padding: 3%;">
                                 <p style="margin-left: 5%"><strong>Requirements</strong></p>
                                 <ol>

@@ -12,10 +12,12 @@
                         <a-col span="14">
 
 
-
-                                <div v-if="application.project.projectimage1 "><img style="width: 100%"
+                                <div v-if="application.project.hasvideo === false">
+                                    <div v-if="application.project.projectimage1 "><img style="width: 100%"
                                                                                     :src="application.project.projectimage1"/>
                                 </div>
+                                </div>
+
 
                             <div v-if="application.project.hasvideo">
                                 <youtube :video-id="application.project.projectimage2"
