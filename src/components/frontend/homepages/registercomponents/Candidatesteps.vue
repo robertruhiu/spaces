@@ -175,7 +175,6 @@
                                         >
                                             <a-select
                                                     name="work_type"
-
                                                     placeholder="Select a option and change input text above"
                                                     v-model="currentUserProfile.availabilty"
                                             >
@@ -310,7 +309,7 @@
                                         </div>
                                         <div v-else>
                                             Upload cv
-                                            <input style="margin-top: 1rem" type="file" @change="handleUpload">
+                                            <input style="margin-top: 1rem" accept="application/pdf" type="file" @change="handleUpload">
                                         </div>
                                         <div v-for="error in errorlist" v-bind:key="error">
                                             <div v-if="error === 'cv'" style="color: red">
@@ -498,12 +497,6 @@
                     }
 
                 }
-
-
-
-
-
-
             }
 
 

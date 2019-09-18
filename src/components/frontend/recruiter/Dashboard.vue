@@ -356,6 +356,7 @@
                             </div>
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
+                                <a-alert message="Your job will be under reviewed before it appears on the job board.Contact will be made if any issue" type="info" closeText="Close Now" />
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>

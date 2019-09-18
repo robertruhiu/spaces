@@ -32,13 +32,13 @@
                                                         <a-tag color="blue">{{pickedapplicants.length}}</a-tag>
                                                     </span>
                                                     <div style="text-align: center" v-if="waiting">
-                                                            <a-spin/>
+                                                        <a-spin/>
 
-                                                            </div>
+                                                    </div>
 
                                                     <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
 
-                                                            <!-------active  candidates-------->
+                                                        <!-------active  candidates-------->
                                                         <a-tab-pane v-if="active" tab="Active"
                                                                     key="1">
 
@@ -386,7 +386,7 @@
                                                                     <template slot-scope="text,record">
                                                                         <div style="margin-left: 5%">
                                                                             <a-button :size="small"
-                                                                                      @click="pickrecommedationClick(job.id,record.profile,1)"
+                                                                                      @click="pickrecommedationClick(job.id,record.profile,2)"
                                                                                       type="primary">pick
                                                                             </a-button>
 
@@ -400,9 +400,6 @@
 
 
                                                         </a-tab-pane>
-
-
-
 
 
                                                     </a-tabs>
@@ -2274,8 +2271,10 @@
 
                 }
                 this.waiting = true
+
                 if (key === 1) {
                     for (let i = 0; i < this.recommmedcandidatesverified.length; i++) {
+
                         if (this.recommmedcandidatesverified[i].profile === candidate_id) {
 
                             if (this.recommmedcandidates.length === 0 && this.recommmedcandidatesverified.length === 0) {
@@ -2304,6 +2303,7 @@
                                         this.recommmedcandidates = []
                                         this.recommmedcandidatesverified = []
                                         this.applicantprofile = []
+                                        this.waiting = false
                                         self.Datarefresh()
                                         this.active = true
                                         return resp
@@ -2347,6 +2347,7 @@
                                         this.recommmedcandidates = []
                                         this.recommmedcandidatesverified = []
                                         this.applicantprofile = []
+                                        this.waiting = false
                                         self.Datarefresh()
                                         this.active = true
                                         return resp
@@ -2455,7 +2456,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
-                this.waiting = true
+
                 if (this.$store.state.user.pk) {
 
 
@@ -2538,6 +2539,89 @@
 
 
                     }
+                    // system recommend candidates (all candidates with matching skill tags - current applicants)
+                    let allrecommedednouniquefilter = []
+                    for (let x = 0; x < this.alldevsprofile.length; x++) {
+                        for (let z = 0; z < this.tags.length; z++) {
+                            if (this.alldevsprofile[x].skills) {
+                                if (this.alldevsprofile[x].skills) {
+                                    if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                                        let user_id = this.alldevsprofile[x].id
+                                        allrecommedednouniquefilter.push(user_id)
+
+                                    }
+
+                                } else if (this.alldevsprofile[x].verified_skills) {
+                                    if (this.alldevsprofile[x].verified_skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                                        let user_id = this.alldevsprofile[x].id
+                                        allrecommedednouniquefilter.push(user_id)
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    }
+
+                    // allows unique filter under codeln recommended candidates id
+                    function onlyUnique(value, index, self) {
+                        return self.indexOf(value) === index;
+                    }
+
+                    // finds the difference to eliminate candidates already picked/selected or applied from recommended
+                    Array.prototype.diff = function (a) {
+                        return this.filter(function (i) {
+                            return a.indexOf(i) < 0;
+                        });
+                    };
+
+
+                    let allrecommended = allrecommedednouniquefilter.filter(onlyUnique);
+                    let allapplicants = []
+                    for (let x = 0; x < this.applicants.length; x++) {
+                        allapplicants.push(this.applicants[x].candidate.id)
+                    }
+                    let recommededlist = allrecommended.diff(allapplicants);
+
+
+                    // create a profile for each recommended comparision and matching between user,profile
+                    if (recommededlist.length > 0) {
+
+                        for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
+                            for (let k = 0; k < recommededlist.length; k++) {
+                                if (this.alldevsprofile[l].id === recommededlist[k]) {
+                                    let tags = []
+                                    if (this.alldevsprofile[l].skills) {
+                                        tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+
+                                    }
+
+                                    let stage = 'recommended'
+                                    let id = this.alldevsprofile[l].id
+
+                                    let user_id = this.alldevsprofile[l].id
+                                    let name = this.alldevsprofile[l].user.first_name
+                                    let selected = false
+                                    let onerecommed = new Recommended(
+                                        id, name, stage, tags, user_id, selected,
+                                    );
+
+                                    this.recommmedcandidates.push(onerecommed)
+
+
+                                }
+
+                            }
+                            this.recommended = true
+
+                        }
+
+
+                    } else {
+                        this.recommended = false
+                    }
 
 
                     // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
@@ -2548,10 +2632,14 @@
                     } else if (this.recommmedcandidates.length > 0) {
                         this.recommended = true
                     }
+
+
+
                     this.waiting = false
 
 
                 }
+                this.waiting = false
 
             },
 

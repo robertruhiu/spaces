@@ -172,7 +172,7 @@
 
                             </div>
                             <div v-else>
-                                <input type="file" @change="handleUpload">
+                                <input type="file" @change="handleUpload" accept="application/pdf">
                             </div>
 
 

@@ -97,7 +97,8 @@
                                                 </a>
                                             </a-col>
                                             <a-col :span="6">
-                                                <a target="_blank" href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
+                                                <a target="_blank"
+                                                   href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
                                                     <img class="pressitemseed"
                                                          src="https://smwlagos.com/wp-content/uploads/2019/09/SMW-LAGOS-03.png">
                                                 </a>
@@ -227,7 +228,7 @@
                                    :md="{span: 24, offset: 0 }"
                                    :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
                                 <div>
-                                    <div style="padding: 2%">
+                                    <div style="padding:  0 2%">
                                         <h2 class="headers">Our Talent Pool</h2>
                                         <p>We believe that your ideal developer should be only a click away,take
                                             advantage
@@ -288,9 +289,18 @@
 
 
                                         <hide-at breakpoint="mediumAndBelow">
-                                            <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id" style=" ">
-                                                    <div style="margin-bottom: 1rem">
+                                            <div style="padding:  0 2%">
+
+                                                <a-list
+                                                        itemLayout="vertical"
+                                                        size="large"
+                                                        :dataSource="listData"
+
+                                                >
+
+                                                    <a-list-item
+                                                            slot="renderItem" slot-scope="item"
+                                                            key="item.title">
                                                         <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
                                                             <a-col span="4"
                                                                    style="background-color:#0679FB;height: 100% ">
@@ -320,11 +330,13 @@
                                                             <a-col span="5">
                                                                 <div style="padding-top: 1rem;">
 
-                                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                                    <a-tag color="#F0F6FD"
+                                                                           style='color: #007BFF'>
                                                                         <a-icon type="environment"/>
                                                                         {{item.location}}
                                                                     </a-tag>
-                                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                                    <a-tag color="#F7E7F5"
+                                                                           style="color: #B82EA4">
                                                                         {{item.availabilty}}
 
                                                                     </a-tag>
@@ -343,11 +355,10 @@
 
 
                                                         </a-row>
-                                                    </div>
-
-
-                                                </div>
+                                                    </a-list-item>
+                                                </a-list>
                                             </div>
+
 
                                         </hide-at>
 
@@ -595,7 +606,7 @@
     }
 
     .pressitemseed {
-        width: 24%;
+        width: 20%;
         margin-top: 0.7rem;
         margin-left: 23%;
         -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
@@ -603,7 +614,8 @@
 
 
     }
-    .wsi{
+
+    .wsi {
         -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
         filter: grayscale(100%);
     }

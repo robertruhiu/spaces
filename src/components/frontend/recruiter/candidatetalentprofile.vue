@@ -503,7 +503,7 @@
                 devs: [],
                 pickedprofiles: [],
                 amount: 0,
-                raveKey: "FLWPUBK-37320275f784b16ec1e30b1342c0a223-X",
+                raveKey: "FLWPUBK-1007dc4eb48e0d1e0b6bf86d083ba020-X",
                 email: "",
                 currency: "USD",
                 country: "GH",
@@ -512,8 +512,8 @@
 
                 custom: {
                     title: "Codeln",
-                    description: "Yada yada",
-                    logo: "bla"
+                    description: "Payment for Codeln Developers",
+                    logo: "https://www.codeln.com/img/logobg.f302741d.svg"
                 },
 
                 paymentPlan: "", // add payments plan ID here
