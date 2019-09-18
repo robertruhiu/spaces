@@ -10,7 +10,7 @@
                     channel="465900751487500308"
                     width="100%"
                     height="100%"
-                    shard="https://cl1.widgetbot.io"
+                    shard="https://disweb.deploys.io"
 
             ></widgetbot>
             </a-layout-content>
