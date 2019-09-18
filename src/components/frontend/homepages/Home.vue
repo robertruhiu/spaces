@@ -447,8 +447,8 @@
                                    :md="{span: 6, offset: 0 }"
                                    :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
-                                <img class="imagecenter" style="width: 50%;margin-top: 0.5rem"
-                                     src="../../../assets/images/props/b_DIV.png"
+                                <img class="imagecenter wsi" style="width: 25%;"
+                                     src="../../../assets/images/wsi.png"
                                 />
 
 
@@ -602,6 +602,10 @@
         filter: grayscale(100%);
 
 
+    }
+    .wsi{
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
     }
 
     .pressitemdisrupt {
