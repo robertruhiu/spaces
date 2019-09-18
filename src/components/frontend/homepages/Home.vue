@@ -21,9 +21,8 @@
                                             Developers
                                             Faster</h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a
-                                            click
-                                            away</h4>
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                            click away</h4>
                                         <router-link to="/talent">
                                             <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
                                                 Hire a
@@ -48,9 +47,8 @@
                                             Developers
                                             Faster</h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a
-                                            click
-                                            away</h4>
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                            click away</h4>
                                         <router-link to="/talent">
                                             <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
                                                 Hire a
@@ -91,17 +89,35 @@
                                 <div class="press">
                                     <div>
                                         <a-row>
-                                            <a-col :span="6"><img class="pressitemtech"
-                                                                  src="../../../assets/images/props/b_tc.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="https://techcrunch.com/2018/12/11/introducing-the-startups-and-agenda-for-startup-battlefield-africa/">
+                                                    <img class="pressitemtech"
+                                                         src="../../../assets/images/props/b_tc.png">
+                                                </a>
                                             </a-col>
-                                            <a-col :span="6"><img class="pressitemseed"
-                                                                  src="../../../assets/images/props/b_ss.png">
+                                            <a-col :span="6">
+                                                <a target="_blank" href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
+                                                    <img class="pressitemseed"
+                                                         src="https://smwlagos.com/wp-content/uploads/2019/09/SMW-LAGOS-03.png">
+                                                </a>
+
                                             </a-col>
-                                            <a-col :span="6"><img class="pressitemdisrupt"
-                                                                  src="../../../assets/images/props/b_da.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="http://disrupt-africa.com/2018/09/mest-invests-700k-in-7-african-tech-startups/">
+                                                    <img class="pressitemdisrupt"
+                                                         src="../../../assets/images/props/b_da.png">
+                                                </a>
+
                                             </a-col>
-                                            <a-col :span="6"><img class="pressitemforbes"
-                                                                  src="../../../assets/images/props/b_f.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="https://www.forbes.com/sites/tobyshapshak/2018/09/10/renowned-african-incubator-mest-celebrates-10-years-with-700000-investment/#6821e7772af5">
+                                                    <img class="pressitemforbes"
+                                                         src="../../../assets/images/props/b_f.png">
+                                                </a>
+
                                             </a-col>
                                         </a-row>
                                     </div>
@@ -406,8 +422,8 @@
 
                     <!-----partners---->
                     <div :style="{  padding: '31px', minHeight: '55vh' }">
-                        <h2 class="headers" style="text-align: center">Proudly
-                            Supported By
+                        <h2 class="headers" style="text-align: center">
+                            Trusted By
                         </h2>
                         <a-row :gutter="16" :style="{padding:'3%'}">
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
@@ -517,10 +533,9 @@
 
             for (let i = 0; i < this.devs.length; i++) {
                 let skill_list = []
-                if(this.devs[i].skills){
+                if (this.devs[i].skills) {
                     skill_list = this.devs[i].skills.split(',').slice(0, 4);
                 }
-
 
 
                 let id = this.devs[i].user.id
@@ -580,9 +595,11 @@
     }
 
     .pressitemseed {
-        width: 50%;
-        margin-top: 1rem;
+        width: 24%;
+        margin-top: 0.7rem;
         margin-left: 23%;
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
 
 
     }
@@ -597,7 +614,7 @@
 
     .pressitemforbes {
         width: 28%;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         margin-left: 23%;
 
 

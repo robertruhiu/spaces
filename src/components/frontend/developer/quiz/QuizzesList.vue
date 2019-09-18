@@ -14,6 +14,7 @@
                             </h3>
                         </a-col>
                     </a-row>
+
                     <div style="text-align: center" v-if="waiting">
                         <a-spin/>
 
@@ -106,7 +107,9 @@
                 currentUserProfile: null,
                 takenquizzes: [],
                 untaken: [],
-                waiting:true
+                waiting:true,
+                taken:[],
+                sasa:[]
 
 
             }
@@ -125,11 +128,14 @@
             this.quizzes = (await QuizService.allquizzes(auth)).data;
             this.takenquizzes = (await QuizService.taken(this.$store.state.user.pk, auth)).data;
 
+            let ds =[]
             if (this.takenquizzes.length > 0) {
                 for (let i = 0; i < this.quizzes.length; i++) {
                     for (let j = 0; j < this.takenquizzes.length; j++) {
-                        if (this.quizzes[i].id !== this.takenquizzes[j].quiz.id) {
-                            this.untaken.push(this.quizzes[i])
+                        if (this.quizzes[i].id === this.takenquizzes[j].quiz.id) {
+                            this.taken.push(this.quizzes[i].id)
+                        }else {
+                            ds.push(this.quizzes[i].id)
                         }
                     }
                 }
@@ -137,6 +143,18 @@
                 this.untaken = this.quizzes
             }
             this.waiting = false
+            this.sasa = Array.from(new Set(ds))
+            for (let i = 0; i < this.quizzes.length; i++) {
+                for(let j=0;j<this.sasa.length;j++){
+                    if(this.quizzes[i].id === this.sasa[j]){
+                        this.untaken.push(this.quizzes[i])
+
+                    }
+
+            }
+            }
+
+
 
 
         },

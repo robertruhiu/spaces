@@ -7,7 +7,7 @@
                 <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
                     <hide-at breakpoint="mediumAndBelow">
                         <a-col span="4">
-                            <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Job
+                            <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Job
                                 board</h3>
                         </a-col>
                     </hide-at>
@@ -359,11 +359,11 @@
 
 
     .jobtitle {
-        margin-top: 33%;
+        margin-top: 2rem;
         color: white;
         margin-left: 10%;
         font-weight: 700;
-        font-size: large;
+        font-size: 1rem;
     }
 
 

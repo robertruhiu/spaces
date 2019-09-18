@@ -534,7 +534,7 @@
                 experienceload: true,
                 quizload: true,
                 managecandidate: false,
-                waiting:false
+                waiting: false
 
             }
         },
@@ -785,6 +785,12 @@
                         this.pickedprofiles.push(one_profile)
                         this.addcart = false
                         this.managecandidate = true
+                        this.pickeddevs = resp.data.devspending.split(',');
+                        if (this.pickeddevs.length <= 10) {
+                            this.amount = 200
+                        } else {
+                            this.amount = 400
+                        }
 
 
                     })

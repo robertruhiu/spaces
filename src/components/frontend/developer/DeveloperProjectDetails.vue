@@ -12,23 +12,12 @@
                     <a-col :span="14">
 
 
-                        <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
+
                             <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/>
                             </div>
-                            <div v-if="project.projectimage2 "><img style="width: 100%" :src="project.projectimage2"/>
-                            </div>
-                            <div v-if="project.projectimage3 "><img style="width: 100%" :src="project.projectimage3"/>
-                            </div>
-                            <div v-if="project.projectimage4 "><img :src="project.projectimage4"/></div>
-                            <div v-if="project.projectimage5 "><img :src="project.projectimage5"/></div>
-                            <div v-if="project.projectimage6 "><img :src="project.projectimage6"/></div>
-                            <div v-if="project.projectimage7 "><img :src="project.projectimage7"/></div>
-                            <div v-if="project.projectimage8 "><img :src="project.projectimage8"/></div>
-                            <div v-if="project.projectimage9 "><img :src="project.projectimage9"/></div>
-                            <div v-if="project.projectimage10 "><img :src="project.projectimage10"/></div>
-                        </a-carousel>
+
                         <div v-if="project.hasvideo">
-                            <youtube :video-id="project.projectimage2" :player-vars="playerVars"></youtube>
+                            <youtube :video-id="project.projectimage2" :player-vars="playerVars" width="550"></youtube>
                         </div>
                         <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
                             <h4><strong>Project name:</strong> {{project.name}}</h4>
@@ -123,7 +112,7 @@
                 application: {},
                 project: null,
                 report: [],
-                server_url: "http://codelnide.codeln.com:8080/dashboard/#/ide/che/Elohor-Thomas",
+                server_url: "A Codeln respresentative will contact you with details on your test",
                 projectstarttime: null,
                 timeseterror: false,
                 type: ''
