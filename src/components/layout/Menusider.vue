@@ -65,8 +65,32 @@
 </template>
 
 <script>
+    import UsersService from '@/services/UsersService'
     export default {
         name: "Menusider",
+        data() {
+
+            return {
+                currentUserProfile: null,
+
+
+            }
+
+        },
+        async mounted() {
+
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
+            if (this.$store.state.user.pk) {
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
+
+            }
+
+
+        },
         methods: {
 
             logout() {
