@@ -148,10 +148,11 @@
                 </div>
 
 
+
                 <!----Post Job drawer desktops------->
                 <a-drawer
                         title="Create a new job"
-                        :width="drawerwidth"
+                        :width="720"
                         @close="onClose"
                         :visible="visible"
                         :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
@@ -815,7 +816,7 @@
                     title: 'Job Review',
 
                 }],
-                drawerwidth: '600px',
+
                 jobmobile:false
 
             }

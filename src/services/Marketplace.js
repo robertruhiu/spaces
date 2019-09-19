@@ -10,23 +10,23 @@ export default {
         return Api().get(`marketplace/mydevs/${user_id} `, auth)
     },
     mydeveloperssimple(user_id, auth) {
-        return Api().get(`marketplace/mydevssimple/${user_id} `, auth)
+        return Api().get(`marketplace/mydevssimplecache/${user_id} `, auth)
     },
     allmyjobapplicants(user_id,auth){
         return Api().get(`marketplace/myapplicants/${user_id} `, auth)
     },
 
     alljobs() {
-        return Api().get('marketplace/alljobs')
+        return Api().get('marketplace/alljobscache')
     },
     myjobs(user_id, auth) {
         return Api().get(`marketplace/myjobs/${user_id}`, auth)
     },
     myjobssliced(user_id, auth) {
-        return Api().get(`marketplace/myjobssliced/${user_id}`, auth)
+        return Api().get(`marketplace/myjobsslicedcache/${user_id}`, auth)
     },
     applicants(job_id, auth) {
-        return Api().get(`marketplace/jobapplicants/${job_id}`, auth)
+        return Api().get(`marketplace/jobapplicantscache/${job_id}`, auth)
     },
     applicantssliced(job_id, auth) {
         return Api().get(`marketplace/jobapplicantssliced/${job_id}`, auth)
@@ -35,7 +35,7 @@ export default {
         return Api().get(`marketplace/specificjob/${job_id}`, auth)
     },
     specificjobapplicants(job_id, auth) {
-        return Api().get(`marketplace/specificjobapplicants/${job_id}`, auth)
+        return Api().get(`marketplace/specificjobapplicantscache/${job_id}`, auth)
     },
     joboneapplicant(candidate_id, job_id, auth) {
         return Api().get(`marketplace/myjobapplication/${candidate_id}/${job_id}`, auth)
