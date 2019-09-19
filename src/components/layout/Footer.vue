@@ -6,9 +6,11 @@
             <footer id="footer" :style="{padding:'3%'}">
                 <div class="footer-wrap">
                     <div class="ant-row gutter">
+                        <hide-at breakpoint="mediumAndBelow">
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6 ">
                             <img class="imagecenter" src="../../assets/logo.svg" style="width: 50%">
                         </div>
+                        </hide-at>
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6">
                             <div class="footer-center">
                                 <h2 style="color: white;font-size: 1rem">Services</h2>
@@ -74,10 +76,11 @@
 <script>
 
     import ACol from "ant-design-vue/es/grid/Col";
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     export default {
         name: "Footer",
-        components: {ACol},
+        components: {ACol,hideAt},
     }
 </script>
 

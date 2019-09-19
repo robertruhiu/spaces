@@ -11,7 +11,11 @@
                 <a-row>
                     <a-col :xs="{span: 20, offset: 2 }" :sm="{span: 20, offset: 2 }" :md="{span: 20, offset: 2 }"
                            :lg="{span: 14, offset: 6 }" :xl="{span: 14, offset: 6 }" class="jobdetails">
-                        <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
+                        <div v-if="dataload" style="text-align: center">
+                            <a-spin/>
+                        </div>
+                        <div v-else>
+                            <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
                                 <span style="font-weight: 700;font-size: large">{{job.title}}</span>
 
@@ -30,35 +34,34 @@
                                 </span>
                             </span>
 
-                        </div>
-                        <div>
-                            <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
-                                     message="Job application successful" type="success" closeText="Close Now"/>
-                            <p><strong>Company name:</strong> {{job.company}}
-                                <span style="margin-left: 5%">
+                            </div>
+                            <div>
+                                <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
+                                         message="Job application successful" type="success" closeText="Close Now"/>
+                                <p><strong>Company name:</strong> {{job.company}}
+                                    <span style="margin-left: 5%">
                                     Location : {{job.location}}
                                 </span>
 
-                            </p>
-                            <p>Monthly renumeration * : {{job.remuneration}}</p>
+                                </p>
+                                <p>Monthly renumeration * : {{job.remuneration}}</p>
 
-                            <p>
-                                Skills looking for :
-                                <span style="" v-for="skill in skills" v-bind:key="skill">
+                                <p>
+                                    Skills looking for :
+                                    <span style="" v-for="skill in skills" v-bind:key="skill">
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
                                 </span>
-                            </p>
-                            <p>Application Deadline : {{job.deadline}}</p>
+                                </p>
+                                <p>Application Deadline : {{deadline}}</p>
+                            </div>
+                            <div>
+                                <p style="font-weight: 700">Job Details</p>
+                                <p>{{job.description}}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p style="font-weight: 700">Job Details</p>
-                            <p>{{job.description}}</p>
-                        </div>
+
                     </a-col>
                 </a-row>
-
-
-
 
 
             </a-layout-content>
@@ -74,6 +77,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
+    import moment from 'moment';
 
     export default {
         name: "jobdetails",
@@ -83,7 +87,9 @@
                 skills: null,
                 currentUserProfile: {},
                 applied: false,
-                myjobs: []
+                myjobs: [],
+                dataload:false,
+                deadline:''
 
             }
         },
@@ -93,15 +99,18 @@
             Pageheader
         },
         async mounted() {
+            moment
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+            this.dataload = true
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
                 this.skills = this.job.tech_stack.split(',');
                 this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
+                this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
 
 
                 if (this.myjobs.length > 0) {
@@ -114,6 +123,7 @@
                     this.applied = false
                 }
             }
+            this.dataload = false
 
 
         },
@@ -147,10 +157,9 @@
                     },
                     auth
                 )
-                    .then(resp=>{
-                        this.applied = true
-                    }
-
+                    .then(resp => {
+                            this.applied = true
+                        }
                     )
                     .catch(error => {
                         return error

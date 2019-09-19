@@ -6,7 +6,7 @@
                 <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
                     <hide-at breakpoint="mediumAndBelow">
                         <a-col span="4">
-                            <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
+                            <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
                         </a-col>
                     </hide-at>
 
@@ -50,7 +50,7 @@
 
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
-                        <div v-if="loading" class="loading" style="text-align: center;margin-top: 20%;">
+                        <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
                             <a-spin size="large"/>
                         </div>
                         <div v-else>
@@ -69,13 +69,19 @@
                                         <div style="padding: 2%">
 
 
-                                            <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+                                            <a-row class="lightshadow" style="height: 13rem;padding: 3%">
 
                                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                        :md="{span: 24, offset: 0 }"
                                                        :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
                                                        style="padding: 2%">
-                                                    <p>Bio</p>
+                                                    <span >
+                                                                <a-avatar class="poolavatar1"
+                                                                >
+                                                                    {{item.name}}
+                                                                </a-avatar>
+                                                                <span style="margin-left: 1rem">Bio</span>
+                                                            </span>
                                                     <p>{{item.about | truncate(100)}}<a
                                                             @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
                                                         more</a>
@@ -376,6 +382,14 @@
         font-size: 30px;
         background-color: #0679FB;
         margin: 25% 25%;
+    }
+    .lightshadow{
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        border: 1px solid rgba(0,0,0,.125);
+    }
+    .poolavatar1 {
+        background-color: #0679FB;
+
     }
 
 

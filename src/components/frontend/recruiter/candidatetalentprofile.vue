@@ -83,8 +83,11 @@
                         <div>
                             <hide-at breakpoint="mediumAndBelow">
                                 <div class="bio">
-
-                                    <a-tabs defaultActiveKey="1">
+                                    <div v-if="candidatedata" style="text-align: center">
+                                        <a-spin/>
+                                    </div>
+                                    <div v-else>
+                                        <a-tabs defaultActiveKey="1">
                                         <a-tab-pane key="1" v-if="takenquizzes.length >0">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
@@ -185,6 +188,9 @@
                                         </a-tab-pane>
 
                                     </a-tabs>
+                                    </div>
+
+
                                 </div>
                             </hide-at>
                         </div>
@@ -277,12 +283,15 @@
                     <hide-at breakpoint="mediumAndBelow">
                         <div v-if="this.$store.state.usertype === 'recruiter'">
 
+
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                    :md="{span: 24, offset: 0 }"
                                    :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
-
-
-                                <div v-if="pickedprofiles.length>0" class="profile">
+                                <div v-if="dataload" style="text-align: center">
+                                    <a-spin/>
+                                </div>
+                                <div v-else>
+                                    <div v-if="pickedprofiles.length>0" class="profile" style="overflow-y:scroll; height:17rem;">
                                     <div style="padding: 7%">
                                         <p>Added Candidates</p>
                                         <p>
@@ -410,6 +419,10 @@
                                     </div>
 
                                 </div>
+                                </div>
+
+
+
 
 
                             </a-col>
@@ -534,7 +547,9 @@
                 experienceload: true,
                 quizload: true,
                 managecandidate: false,
-                waiting: false
+                waiting: false,
+                dataload:false,
+                candidatedata:false
 
             }
         },
@@ -553,6 +568,8 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+            this.candidatedata = true
+            this.dataload = true
             if (this.$store.state.user.pk) {
                 this.customer_firstname = this.$store.state.user.first_name
                 this.customer_lastname = this.$store.state.user.last_name
@@ -740,8 +757,12 @@
 
 
                 }
+                this.dataload = false
+                this.candidatedata = false
 
             }
+            this.dataload = false
+            this.candidatedata = false
 
 
         },

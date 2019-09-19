@@ -7,8 +7,8 @@
 
                 <a-layout-content :style="{ padding: '0 0px', marginTop: '2rem' }">
                     <!-----header---->
-
-                    <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
+                    <hide-at breakpoint="mediumAndBelow">
+                         <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
                         <a-row>
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                    :md="{span: 18, offset: 4 }"
@@ -128,6 +128,55 @@
 
 
                     </div>
+
+                    </hide-at>
+                    <show-at breakpoint="mediumAndBelow">
+                         <div :style="{ background: '#fff', padding: '24px', minHeight: '50vh' }">
+                        <a-row>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 18, offset: 4 }"
+                                   :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
+                                <show-at breakpoint="mediumAndBelow">
+                                    <div style="margin-top: 3rem">
+                                        <h1 style="font-size:2rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                            Hire
+                                            Skilled
+                                            Developers
+                                            Faster</h1>
+
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                            click away</h4>
+                                        <router-link to="/talent">
+                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
+                                                Hire a
+                                                Dev
+                                            </a-button>
+                                        </router-link>
+                                        <router-link to="/jobs">
+                                            <a-button type="primary"
+                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                      ghost>Get hired
+                                            </a-button>
+                                        </router-link>
+
+
+                                    </div>
+                                </show-at>
+
+
+
+                            </a-col>
+
+
+
+                        </a-row>
+
+
+
+                    </div>
+
+                    </show-at>
+
                     <!-----how it works---->
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">
                         <div style="background-color: #ffffff;">
@@ -229,11 +278,26 @@
                                    :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
                                 <div>
                                     <div style="padding:  0 2%">
-                                        <h2 class="headers">Our Talent Pool</h2>
-                                        <p>We believe that your ideal developer should be only a click away,take
+                                        <hide-at breakpoint="mediumAndBelow">
+                                            <h2 class="headers">Our Talent Pool</h2>
+                                        </hide-at>
+                                        <show-at breakpoint="mediumAndBelow">
+                                            <h2 class="headers" style="text-align: center">Our Talent Pool</h2>
+                                        </show-at>
+
+
+                                        <hide-at breakpoint="mediumAndBelow">
+                                            <p >Take
                                             advantage
-                                            of some of our
+                                            of some of our skill
                                             filters to easily access candidates </p>
+                                        </hide-at>
+                                        <show-at breakpoint="mediumAndBelow">
+                                            <p style="text-align: center" >Take
+                                            advantage
+                                            of some of our skill
+                                            filters to easily access candidates </p>
+                                        </show-at>
 
                                     </div>
 
@@ -246,31 +310,47 @@
 
                                         <show-at breakpoint="mediumAndBelow">
                                             <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id"
-                                                     style="margin-bottom: 1rem">
 
-                                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+                                                    <a-list
+                                                        itemLayout="vertical"
+                                                        size="large"
+                                                        :dataSource="listData"
+
+                                                >
+
+                                                    <a-list-item
+                                                            slot="renderItem" slot-scope="item"
+                                                            key="item.title">
+
+                                                    <a-row class="lightshadow" style="height: 13rem;padding: 3%">
 
                                                         <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                                :md="{span: 24, offset: 0 }"
                                                                :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
-                                                               style="padding: 2%">
-                                                            <p>Bio</p>
+                                                               >
+                                                            <span >
+                                                                <a-avatar class="poolavatar1"
+                                                                >
+                                                                    {{item.name}}
+                                                                </a-avatar>
+                                                                <span style="margin-left: 1rem">Bio</span>
+                                                            </span>
+
                                                             <p>{{item.about | truncate(100)}}<a
-                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
                                                                 more</a>
                                                             </p>
 
                                                             <p>
-                                                                Skills :
-                                                                <span style="" v-for="skill in  item.skills.slice(0,3)"
+
+                                                                <span style="" v-for="skill in  item.skills.slice(0,2)"
                                                                       v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
                                                             </p>
 
-                                                            <div style="margin-bottom: 1%;text-align: center">
+                                                            <div style="text-align: center">
                                                                 <a-button type="primary" ghost
                                                                           @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
                                                                     View Profile
@@ -282,13 +362,15 @@
 
 
                                                     </a-row>
-                                                </div>
+                                                    </a-list-item>
+                                                    </a-list>
+
                                             </div>
 
                                         </show-at>
 
 
-                                        <hide-at breakpoint="mediumAndBelow">
+                                        <hide-at breakpoint="mediumAndBelow" >
                                             <div style="padding:  0 2%">
 
                                                 <a-list
@@ -318,9 +400,9 @@
 
                                                                 <p>
                                                                     Skills :
-                                                                    <span style="" v-for="skill in item.skills"
+                                                                    <span style="" v-for="skill in item.skills.slice(0,3)"
                                                                           v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill }}</a-tag>
 
                                             </span>
                                                                 </p>
@@ -436,7 +518,8 @@
                         <h2 class="headers" style="text-align: center">
                             Trusted By
                         </h2>
-                        <a-row :gutter="16" :style="{padding:'3%'}">
+                        <hide-at breakpoint="mediumAndBelow">
+                            <a-row :gutter="16" :style="{padding:'3%'}">
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
                                    :md="{span: 6, offset: 0 }"
                                    :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
@@ -474,6 +557,48 @@
                             </a-col>
 
                         </a-row>
+                        </hide-at>
+
+                        <show-at breakpoint="mediumAndBelow">
+                            <a-row :gutter="16" :style="{padding:'1%'}">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="margin-bottom: 1rem">
+
+                                <img class="imagecenter" style="width: 70%;margin-top: 1rem"
+                                     src="../../../assets/images/props/b_mest.png"
+                                />
+
+
+                            </a-col>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                   style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
+                                <img style="width: 30%" class="imagecenter" src="../../../assets/images/props/b_7a.png"
+                                />
+                            </a-col>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="margin-bottom: 1rem">
+
+                                <img class="imagecenter wsi" style="width: 25%;"
+                                     src="../../../assets/images/wsi.png"
+                                />
+
+
+                            </a-col>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                   style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
+                                <img class="imagecenter" style="width: 40%;margin-top: 1rem"
+                                     src="../../../assets/images/props/b_enpact.png"
+                                />
+                            </a-col>
+
+                        </a-row>
+                        </show-at>
 
                     </div>
 
@@ -687,13 +812,17 @@
     }
 
     .poolavatar1 {
-        width: 20%;
-        margin-top: 0.5rem;
+        background-color: #0679FB;
+
     }
 
     .poolavatar2 {
         width: 14%;
         margin-top: 0.5rem;
+    }
+    .lightshadow{
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        border: 1px solid rgba(0,0,0,.125);
     }
 
 

@@ -163,7 +163,7 @@
                             </a-col>
                         </a-row>
                         <div v-if="cv">
-                            <a :href="cv" target="_blank">cv link</a>
+                            <p>Current cv :<a :href="cv" target="_blank">cv link</a></p>
                         </div>
 
                         <div v-else>

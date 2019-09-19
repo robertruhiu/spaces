@@ -8,7 +8,7 @@
                 <a-row style="padding: 3%">
                     <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 12, offset: 6 }" :md="{span: 12, offset: 6 }"
                            :lg="{span: 12, offset: 8 }" :xl="{span: 12, offset: 9 }">
-                        <a-card v-if="!$store.state.isUserLoggedIn" title="Login" :style="{width:'21rem'}">
+                        <a-card v-if="!$store.state.isUserLoggedIn" title="Login" :style="{width:'19rem'}">
 
                             <p class="alert" v-if="error">{{error}}</p>
 

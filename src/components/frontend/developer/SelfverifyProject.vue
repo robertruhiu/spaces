@@ -9,20 +9,64 @@
                 marginTop:'0%',marginLeft: '1%',marginRight:'1%' }">
 
                     <a-row gutter="8">
-                        <a-col span="14">
-
-
-                                <div v-if="application.project.hasvideo === false">
-                                    <div v-if="application.project.projectimage1 "><img style="width: 100%"
-                                                                                    :src="application.project.projectimage1"/>
+                        <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                               :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }" style="margin-bottom: 1rem">
+                            <show-at breakpoint="mediumAndBelow">
+                                <div>
+                                    <a-carousel v-if="application.project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
+                                <div v-if="application.project.projectimage1 "><img style="width: 100%"
+                                                                        :src="application.project.projectimage1"/>
                                 </div>
+                                <div v-if="application.project.projectimage2 "><img style="width: 100%"
+                                                                        :src="application.project.projectimage2"/>
                                 </div>
-
-
+                                <div v-if="application.project.projectimage3 "><img style="width: 100%"
+                                                                        :src="application.project.projectimage3"/>
+                                </div>
+                                <div v-if="application.project.projectimage4 "><img :src="application.project.projectimage4"/></div>
+                                <div v-if="application.project.projectimage5 "><img :src="application.project.projectimage5"/></div>
+                                <div v-if="application.project.projectimage6 "><img :src="application.project.projectimage6"/></div>
+                                <div v-if="application.project.projectimage7 "><img :src="application.project.projectimage7"/></div>
+                                <div v-if="application.project.projectimage8 "><img :src="application.project.projectimage8"/></div>
+                                <div v-if="application.project.projectimage9 "><img :src="application.project.projectimage9"/></div>
+                                <div v-if="application.project.projectimage10 "><img :src="application.project.projectimage10"/></div>
+                            </a-carousel>
                             <div v-if="application.project.hasvideo">
-                                <youtube :video-id="application.project.projectimage2"
-                                         :player-vars="playerVars" width="550"></youtube>
+                                <youtube :video-id="videoid" :width="270"
+                                         :player-vars="playerVars" @playing="playing"></youtube>
                             </div>
+                                </div>
+
+                            </show-at>
+
+
+                            <hide-at breakpoint="mediumAndBelow">
+                                <div>
+                                    <a-carousel v-if="application.project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
+                                <div v-if="application.project.projectimage1 "><img style="width: 100%"
+                                                                        :src="application.project.projectimage1"/>
+                                </div>
+                                <div v-if="application.project.projectimage2 "><img style="width: 100%"
+                                                                        :src="application.project.projectimage2"/>
+                                </div>
+                                <div v-if="application.project.projectimage3 "><img style="width: 100%"
+                                                                        :src="application.project.projectimage3"/>
+                                </div>
+                                <div v-if="application.project.projectimage4 "><img :src="application.project.projectimage4"/></div>
+                                <div v-if="application.project.projectimage5 "><img :src="application.project.projectimage5"/></div>
+                                <div v-if="application.project.projectimage6 "><img :src="application.project.projectimage6"/></div>
+                                <div v-if="application.project.projectimage7 "><img :src="application.project.projectimage7"/></div>
+                                <div v-if="application.project.projectimage8 "><img :src="application.project.projectimage8"/></div>
+                                <div v-if="application.project.projectimage9 "><img :src="application.project.projectimage9"/></div>
+                                <div v-if="application.project.projectimage10 "><img :src="application.project.projectimage10"/></div>
+                            </a-carousel>
+                            <div v-if="application.project.hasvideo">
+                                <youtube :video-id="videoid" width="600"
+                                         :player-vars="playerVars"  @playing="playing"></youtube>
+                            </div>
+                                </div>
+
+                            </hide-at>
                             <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
                                 <h4><strong>Project name:</strong> {{application.project.name}}</h4>
                                 <p>{{application.project.description}}</p>
@@ -31,7 +75,8 @@
 
 
                         </a-col>
-                        <a-col span="10" style="padding: 0 1%;">
+                        <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                               :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
                             <div style="border:1px solid #e8e8e8;;padding: 2%;">
 
                                 <div style="margin-bottom: 2%"
@@ -43,6 +88,7 @@
                                             v-model="projectstarttime"
 
                                             :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
+                                            style="margin-bottom: 1rem"
                                     />
                                     <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id)">
                                         Submit
@@ -118,6 +164,7 @@
                     </a-row>
 
 
+
                 </div>
             </a-layout-content>
         </a-layout>
@@ -131,6 +178,7 @@
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
     import moment from 'moment';
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     export default {
         name: "SelfverifyProject",
@@ -140,11 +188,13 @@
                 projectstarttime: null,
                 timeseterror: false,
                 server_url: "will be sent to you",
+                videoid:''
             }
         },
         components: {
             DevHeader,
             CandidateSider,
+            showAt, hideAt
 
         },
         async mounted() {
@@ -153,7 +203,12 @@
 
             };
             Projects.myprojectdetails(this.$store.state.route.params.applicationId, auth)
-                .then(resp => this.application = resp.data)
+                .then(resp =>
+                    {
+                        this.application = resp.data,
+                            this.videoid = this.application.project.projectimage2
+                     }
+                )
                 .catch()
 
         },
