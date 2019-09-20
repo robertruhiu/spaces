@@ -18,10 +18,11 @@
                                         <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
                                             Hire
                                             Skilled
+                                            African
                                             Developers
                                             Faster</h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your Ideal dev is only a
                                             click
                                             away</h4>
                                         <router-link to="/talent">
@@ -116,7 +117,6 @@
                         <div style="background-color: #ffffff;">
                             <div style="text-align: center">
                                 <h2 class="headers">How Codeln Works</h2>
-                                <p>Our process is optimised to enable you to identify and onboard talent</p>
                             </div>
 
 
@@ -125,17 +125,9 @@
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
-                                    <img class="imagecenter" src="../../../assets/images/props/search.png"/>
-
+                                    <img class="imagecenter" src="../../../assets/images/props/pick.png"/>
                                     <p style="text-align: center;font-size: 1rem">
-                                        We provide
-                                        you a unique
-                                        pool of verified developers
-                                        with varied technologies.You can easily filter them to identify
-                                        potential
-                                        candidates
-                                        for your job
-
+                                        Access a rich pool of verified African Programmers and Designers, that are available and ready to be hired.
                                     </p>
 
                                 </a-col>
@@ -144,14 +136,12 @@
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
-                                    <img class="imagecenter" src="../../../assets/images/props/pick.png"/>
+                                    <img class="imagecenter" src="../../../assets/images/props/search.png"/>
+
 
                                     <p style="text-align: center;font-size: 1rem">
-                                        We believe in
-                                        transparency
-                                        thus we ensure developer profiles encompass their verified skills,work
-                                        experience and past projects.
-
+                                       Enjoy an optimized search experience as you filter through talent's profiles,
+                                        resume, skills, work experience, and past projects
                                     </p>
 
                                 </a-col>
@@ -163,9 +153,8 @@
                                     <img class="imagecenter" src="../../../assets/images/props/coding.png"/>
 
                                     <p style="text-align: center;font-size: 1rem">
-                                        Once you have picked talent you can take advantage of
-                                        our robust applicant tracking system to manage your candidates
-
+                                        Seamlessly manage your automated recruitment process from finding a candidate
+                                        to making them an offer on Codeln.
                                     </p>
 
 
@@ -213,11 +202,6 @@
                                 <div>
                                     <div style="padding: 2%">
                                         <h2 class="headers">Our Talent Pool</h2>
-                                        <p>We believe that your ideal developer should be only a click away,take
-                                            advantage
-                                            of some of our
-                                            filters to easily access candidates </p>
-
                                     </div>
 
 
@@ -363,29 +347,26 @@
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '50vh' }">
 
 
-                        <h2 class="headers" style="text-align: center">Why Should You Hire with us</h2>
+                        <h2 class="headers" style="text-align: center">Why Hire with Codeln?</h2>
 
 
                         <a-row :gutter="16" :style="{padding:'3%'}">
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/hire_icon.png"/>
-                                <h3 class="" style="text-align: center">Verified Developers</h3>
+                                <h3 class="" style="text-align: center">Verified Talent</h3>
                                 <p style="text-align: center;font-size: 1rem">
-                                    As Codeln we facilitate skill verification of candidate before
-                                    they are presented to the talent pool thus ensuring quality of skill.
+                                    We validate the coding skills of our talent by verifying that they can build real-world
+                                    projects as that is the topmost concern of every employer
                                 </p>
-
-
                             </a-col>
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/time-management.png"/>
-                                <h3 style="text-align: center">Cost Efficient</h3>
+                                <h3 style="text-align: center">Speed and Efficiency</h3>
                                 <p style="text-align: center;font-size: 1rem">
-                                    Our process aims to facilitate a rapid hire thus enabling
-                                    you to cut back on costs caused by downtime
-
+                                    Your entire recruitment process is automated end-to-end enabling speed and efficiency
+                                    throughout the hiring process.
                                 </p>
 
 
@@ -393,12 +374,10 @@
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/analytics.png"/>
-                                <h3 style="text-align: center">Robust Applicant System</h3>
-                                <p style="text-align: center;font-size: 1rem">We ensure that you enjoy a fluid candidate
-                                    management
-                                    from when you identify them up to your choice to hire them.</p>
-
-
+                                <h3 style="text-align: center">In-built ATS </h3>
+                                <p style="text-align: center;font-size: 1rem">An applicant tracking system is built in the platform to ensure a seamless
+                                    process of managing and tracking your applicants.
+                                </p>
                             </a-col>
                         </a-row>
 
