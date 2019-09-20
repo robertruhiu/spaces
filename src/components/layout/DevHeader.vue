@@ -1,52 +1,62 @@
 <template>
-    <a-layout-header
-            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
-        <a-row>
+    <div>
+        <show-at breakpoint="mediumAndBelow">
+            <a-layout-header :style="{width: '100%',backgroundColor:'#ffffff',height:'5rem',padding: '1px 30px 0',
+            borderBottom: '1px solid #e8e8e8'}">
+                <router-link to="/">
+                <img v-bind:style="logo"
+                 style="width: 120px;height: 31px;margin-top: 1rem;margin-bottom: 6%;margin-left: 9%"
+                 v-bind:src="defaultlogo"
+            >
+                </router-link>
 
-            <a-col :span="6">
-                <span style="color: white;font-size: 17px;font-weight:bold">
+
+
+        </a-layout-header>
+        </show-at>
+        <hide-at breakpoint="mediumAndBelow">
+            <a-layout-header :style="{width: '100%',backgroundColor:'#004ec7',height:'6rem',padding: '1px 30px 0',
+            borderBottom: '1px solid #e8e8e8'}">
+
+
+                <a-row>
+
+
+                    <a-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <span style="color: white;font-size: 1rem;font-weight:bold">
                     {{greeting}} {{this.$store.state.user.first_name | capitalize}}  </span>
-                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 3px"> {{events.length}} interview(s)
+                <p style="color: white;font-size: 0.9rem;font-weight: bold;line-height: 3px"> {{events.length}}
+                    interview(s)
                     Today</p>
 
 
             </a-col>
-            <a-col :span="14" style="color: white">
-                <a-row :gutter="16">
-                    <a-col :span="8" v-for="interview in events" v-bind:key="interview">
-                        <a-card class="events">
-                            <p style="line-height: 0">{{interview.start}} - {{interview.end}}</p>
-                            <p>{{interview.title | capitalize}}</p>
 
-                        </a-card>
-                    </a-col>
+                    <a-col   :xs="12" :sm="12" :md="12" :lg="16" :xl="16"  style="color: white">
+                    <a-row :gutter="16">
+                        <a-col :span="6" v-for="interview in events" v-bind:key="interview">
+                            <a-card class="events">
+                                <p style="line-height: 0">{{interview.start}} - {{interview.end}}</p>
+                                <p>{{interview.title | capitalize}}</p>
 
+                            </a-card>
+                        </a-col>
+
+
+                    </a-row>
+
+
+                </a-col>
 
 
                 </a-row>
 
 
-            </a-col>
-            <a-col :span="4" style="color: white">
-                <p style="color: white;font-size: 12px;font-weight: bold;line-height: 36px">
-                    My Verified skills
-                    <br>
-                    <span style="" v-for="skill in verified_skills" v-bind:key="skill">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-                     </span>
-                </p>
-                <p style="color: white;font-size: 12px;line-height: 3px">
-                    <strong>My Rank:</strong> 300/2500
 
-                </p>
+        </a-layout-header>
+        </hide-at>
+    </div>
 
-
-            </a-col>
-
-
-        </a-row>
-
-    </a-layout-header>
 
 </template>
 
@@ -62,18 +72,22 @@
 
         }
     }
+
     import ACol from "ant-design-vue/es/grid/Col";
 
     import UsersService from '@/services/UsersService'
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
     import ARow from "ant-design-vue/es/grid/Row";
+    import {showAt, hideAt} from 'vue-breakpoints'
+    import Largelogo from '@/assets/logobg.svg'
 
     export default {
         name: "DevHeader",
         components: {
             ARow,
             ACol,
+            hideAt, showAt
 
         },
         data() {
@@ -81,11 +95,11 @@
             return {
                 currentUserProfile: null,
                 greeting: null,
-                currentUser: null,
                 skills: [],
                 verified_skills: [],
                 events: [],
-                allusers:null
+                allusers: null,
+                defaultlogo: Largelogo,
 
 
             }
@@ -110,21 +124,25 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
+
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            this.allusers = (await UsersService.devs()).data;
+
             this.skills = this.currentUserProfile.skills.split(',');
-            this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            if(this.currentUserProfile.verified_skills){
+                this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            }
+
             let todayDate = moment().format("YYYY-MM-DD")
             this.allevents = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
+
             this.alldevrequests = (await Marketplace.pickedapplications(this.$store.state.user.pk, auth)).data
             for (let i = 0; i < this.allevents.length; i++) {
 
-                    if (this.allevents[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate
-                        ) {
+                if (this.allevents[i].interviewstatus !== null && moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD") === todayDate
+                ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].recruiter.company
+                    let title = this.allevents[i].job.company
                     let start = moment(this.allevents[i].interviewstarttime).format("HH:mm")
                     let end = moment(this.allevents[i].interviewendtime).format("HH:mm")
                     let color = this.allevents[i].eventcolor
@@ -134,16 +152,14 @@
                     this.events.push(one_event)
 
 
-
                 }
-
 
 
             }
             for (let i = 0; i < this.alldevrequests.length; i++) {
 
-                     if (this.alldevrequests[i].interviewstatus !== null && moment(this.alldevrequests[i].interviewstarttime).format("YYYY-MM-DD") === todayDate
-                     ) {
+                if (this.alldevrequests[i].interviewstatus !== null && moment(this.alldevrequests[i].interviewstarttime).format("YYYY-MM-DD") === todayDate
+                ) {
 
                     let id = this.alldevrequests[i].id
                     let title = this.alldevrequests[i].recruiter.company
@@ -156,10 +172,7 @@
                     this.events.push(one_event)
 
 
-
-
                 }
-
 
 
             }
@@ -180,6 +193,7 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
+                this.$store.dispatch('setNext',null)
                 this.$router.push({
                     name: 'home'
                 })

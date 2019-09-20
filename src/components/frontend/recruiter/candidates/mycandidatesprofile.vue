@@ -3,7 +3,7 @@
 
         <RecruiterSider/>
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{ backgroundColor:'#F8FAFB' }">
 
 
             <a-layout-content>
@@ -11,7 +11,8 @@
 
 
                 <a-row style="padding: 1% 1%">
-                    <a-col :span="16" style=" padding-left: 15px;padding-right: 15px;">
+                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 16, offset: 0 }"
+                                   :lg="{span: 16, offset: 0 }" :xl="{span: 16,offset: 0 }" style=" padding-left: 15px;padding-right: 15px;">
                         <div class="profile" style="padding-bottom: 2%">
                             <a-row>
 
@@ -132,7 +133,8 @@
                     </a-col>
 
 
-                    <a-col :span="8" style="margin-top: 0.4%">
+                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" style="margin-top: 0.4%;padding-left: 15px;padding-right: 15px">
                         <div class="actions">
                             <p>Skill tags</p>
                             <p>Candidate skill tags(what candidate says they can do.You can asign a

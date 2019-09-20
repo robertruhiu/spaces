@@ -5,10 +5,11 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff', }">
-                    <a-row style="margin-top: 2%;margin-bottom: 2%">
-                        <a-col span="24">
-                            <h3 style="margin-left: 1.5rem;color: #1976D2;font-weight: bold">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
+                    <a-row style="margin-bottom: 2%">
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
+                            <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
                                 What would you like to do today?
                             </h3>
                         </a-col>
@@ -18,7 +19,8 @@
 
 
                         <router-link to="/assessment">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }" >
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -40,7 +42,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/manageapplications">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -61,7 +64,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/jobs">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -83,7 +87,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/portfolio">
-                            <a-col class="boxes" :span="6">
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -179,7 +184,7 @@
     }
 
     .boxes {
-
+        margin-bottom: 1rem;
         padding-left: 0;
         padding-right: 0;
 

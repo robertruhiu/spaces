@@ -5,18 +5,19 @@
             collapsedWidth="0"
             @collapse="onCollapse"
             @breakpoint="onBreakpoint"
-            :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }"
-            style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white;position: fixed"
+            style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white"
 
     >
+        <hide-at :breakpoints="{small: 425, medium: 768}" breakpoint="mediumAndBelow" >
         <router-link to="/">
 
             <img v-bind:style="logo"
-                 style="width: 120px;height: 31px;margin-top: 7%;margin-bottom: 6%;margin-left: 9%"
+                 style="width: 9rem;height: 2rem;margin-top: 1rem;margin-bottom: 1rem;margin-left: 1rem"
                  v-bind:src="defaultlogo"
             >
 
         </router-link>
+        </hide-at>
         <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
             <a-menu-item key="1">
                 <router-link to="/recruiter">
@@ -385,6 +386,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService'
+    import { hideAt} from 'vue-breakpoints'
 
 
     export default {
@@ -436,6 +438,7 @@
         components: {
             ACol,
             AFormItem,
+            hideAt
 
 
         },
@@ -479,6 +482,7 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
+                this.$store.dispatch('setNext',null)
                 this.$router.push({
                     name: 'home'
                 })

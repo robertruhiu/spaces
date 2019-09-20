@@ -25,7 +25,7 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            if (this.$store.state.user.pk) {
+            if (this.$store.state.user) {
                 UsersService.authenticated(this.$store.state.user.pk, auth)
                     .then()
                     .catch(error => {

@@ -5,25 +5,26 @@
 
             <a-layout-content style="background-color: white">
                 <PortfolioHeader/>
-                <a-row style="padding: 1% 1%">
-                    <a-col :span="16" style=" padding-left: 15px;padding-right: 15px;">
+                <a-row style="padding: 1% 1%;">
+                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 16, offset: 0 }"
+                                   :lg="{span: 16, offset: 0 }" :xl="{span: 16,offset: 0 }" style=" padding-left: 15px;padding-right: 15px;">
                         <div class="profile" style="padding-bottom: 2%">
                             <a-row>
 
-                                <a-col :span="22">
+                                <a-col :span="24">
                                     <p>About</p>
                                     <p>{{currentUserProfile.about}}</p>
                                 </a-col>
                             </a-row>
                             <br>
                             <a-row>
-                                <a-col :span="6">
+                                <a-col :span="8">
                                     Experience:
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.years}} years
                                     </a-tag>
                                 </a-col>
-                                <a-col :span="6">
+                                <a-col :span="8">
                                 <span>
                                     Availability :
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
@@ -31,7 +32,7 @@
                             </a-tag>
                             </span>
                                 </a-col>
-                                <a-col :span="6">
+                                <a-col :span="8">
                                 <span>
                                     Location :
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
@@ -42,8 +43,172 @@
 
                             </a-row>
                         </div>
-                        <div class="bio">
-                            <a-tabs defaultActiveKey="1">
+                        <show-at breakpoint="mediumAndBelow">
+                            <div class="bio1">
+                                <!---quizzes--->
+                                <div>
+                                    <p>Quizzes taken by Candidate</p>
+                                    <div v-if="takenquizzes.length>0">
+                                        <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                                            {{takenquiz.quiz.subject.name}}:
+                                            <a-progress :percent="takenquiz.score"/>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+
+                                        <p>Take a quiz under <a @click="navigateTo({name:'assessment'})">get
+                                            verified</a> and it will appear here</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </show-at>
+                        <show-at breakpoint="mediumAndBelow">
+
+
+                            <div class="bio1">
+                                 <!---on codeln projects--->
+                                <div style="padding:0 2%">
+                                        <div v-if="codelnprojects.length>0">
+                                            <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                                 v-for="item in codelnprojects" v-bind:key="item.id">
+                                                <p style="font-weight: 700">{{item.title}}</p>
+                                                <p>
+                                                    Tools used:
+                                                    <a-tag v-for="tag in item.tags" color="blue"
+                                                           :key="tag">
+                                                        {{tag}}
+                                                    </a-tag>
+
+                                                </p>
+                                                <p>{{item.description}}
+                                                </p>
+                                                <a :href=" item.demo" target="_blank">view project</a>
+
+                                            </div>
+
+                                        </div>
+                                        <div v-else>
+                                            <p>You can self test yourself in get verified menu <a
+                                                    @click="navigateTo({name:'developerprojects'})">build a project</a>
+                                                or await a recruiter to asign you one.</p>
+                                            <p>More projects you have done will make your profile more appealing to
+                                                them</p>
+                                        </div>
+
+
+                                    </div>
+                            </div>
+
+
+                        </show-at>
+                        <show-at breakpoint="mediumAndBelow">
+
+
+                            <div class="bio1">
+                                <!---personal portfolio--->
+                                <div style="padding:0 2%">
+                                        <span style="float: right;color: blue">
+                                            <a @click="CreateProject">
+                                                <a-icon type="plus-circle" theme="twoTone"/>Add
+                                            </a>
+                                        </span>
+                                        <div v-if="portfolio.length>0">
+                                            <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                                 v-for="item in portfolio" v-bind:key="item.id">
+                                                <p style="font-weight: 700">
+                                                    {{item.title}}
+                                                    <a @click="EditProject(item)">
+                                                        <a-icon type="edit" theme="twoTone"/>
+                                                    </a>
+
+                                                </p>
+                                                <p>
+                                                    Tools used:
+                                                    <a-tag v-for="tag in item.tags" color="blue"
+                                                           :key="tag">
+                                                        {{tag}}
+                                                    </a-tag>
+
+                                                </p>
+                                                <p>{{item.description}}
+                                                </p>
+                                                <a :href=" item.demo" target="_blank">view project</a>
+
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <p>You can self test yourself under get verified and build a project
+                                                or await a recruiter to asign you one.</p>
+                                            <p>More projects and quizzes you have done will make your profile more
+                                                appealing to them</p>
+                                        </div>
+
+
+                                    </div>
+                            </div>
+
+
+                        </show-at>
+                        <show-at breakpoint="mediumAndBelow">
+
+
+                            <div class="bio1">
+                                 <!---work--->
+                                <div style="padding:2%">
+                                        <span style="float: right;color: blue">
+                                            <a @click="CreateExperience">
+                                                <a-icon type="plus-circle" theme="twoTone"/>Add
+                                            </a>
+                                        </span>
+                                        <br>
+                                        <div v-if="experiences.length>0">
+                                            <a-timeline>
+                                                <a-timeline-item v-for="item in experiences" v-bind:key="item.id">
+
+                                                    <p style="font-weight: 700">
+                                                        {{item.title}}
+                                                        <a @click="EditExperience(item)">
+                                                            <a-icon type="edit" theme="twoTone"/>
+                                                        </a>
+
+                                                    </p>
+                                                    <p><span><a-icon type="bank"/>  {{item.company}} <a-icon
+                                                            type="environment"/>  {{item.location}} <a-icon
+                                                            type="hourglass"/>  {{item.duration}}months</span>
+                                                    </p>
+                                                    <p>
+                                                        Technologies used:
+                                                        <a-tag v-for="tag in item.tags" color="blue"
+                                                               :key="tag">
+                                                            {{tag}}
+                                                        </a-tag>
+
+                                                    </p>
+
+
+                                                    <p>{{item.description}}</p>
+
+                                                </a-timeline-item>
+
+                                            </a-timeline>
+                                        </div>
+                                        <div v-else>
+                                            <p>Add your recent work stints.Experience builds trust</p>
+
+
+                                        </div>
+
+
+                                    </div>
+                            </div>
+                        </show-at>
+
+
+                        <hide-at breakpoint="mediumAndBelow">
+                            <div class="bio">
+                                <a-tabs defaultActiveKey="1">
                                 <a-tab-pane key="1">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
@@ -206,13 +371,20 @@
 
                                 </a-tab-pane>
                             </a-tabs>
-                        </div>
+                            </div>
+                        </hide-at>
+
+
+
 
 
                     </a-col>
-                    <a-col :span="8" style="margin-top: 0.4%">
+                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
+                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" style="margin-top: 0.4%">
                         <div class="actions">
-                            <p>Verified skills</p>
+                            <a-row>
+                                <a-col span="24">
+                                    <p>Verified skills</p>
 
                             <p>
                                 <span style="" v-for="skill in verified_skills" v-bind:key="skill">
@@ -231,6 +403,9 @@
                                 </a-tag>
                             </span>
                             </p>
+                                </a-col>
+                            </a-row>
+
 
 
                         </div>
@@ -245,7 +420,7 @@
                 <a-modal
                         title="New portfolio project"
                         v-model="createproject"
-                        style="top: 20px;"
+                        style="top: 1rem;"
                         @ok="handleOk"
                 >
                     <template slot="footer">
@@ -353,6 +528,7 @@
                 <a-modal
                         title="Edit project"
                         v-model="editproject"
+                        style="top: 1rem"
 
                 >
                     <template slot="footer">
@@ -466,7 +642,7 @@
                 <a-modal
                         title="New Work Experience"
                         v-model="createexperience"
-                        style="top: 5px"
+                        style="top: 1rem"
 
                 >
                     <template slot="footer">
@@ -605,7 +781,7 @@
                 <a-modal
                         title="Edit work experience"
                         v-model="editexperience"
-                        style="top: 5px"
+                        style="top: 1rem"
 
                 >
                     <template slot="footer">
@@ -751,6 +927,8 @@
 
 <script>
     //experience structure on table
+    import ACol from "ant-design-vue/es/grid/Col";
+
     class Experience {
         constructor(id, title, description, company, location, duration, tech_used) {
             this.key = id;
@@ -784,6 +962,7 @@
     import Projects from '@/services/Projects'
     import Vue from 'vue'
     import VeeValidate from 'vee-validate';
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     Vue.use(VeeValidate);
 
@@ -831,8 +1010,10 @@
             }
         },
         components: {
+            ACol,
             PortfolioHeader,
             CandidateSider,
+            hideAt, showAt
         },
         async mounted() {
             const auth = {
@@ -842,7 +1023,10 @@
             this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.skills = this.currentUserProfile.skills.split(',');
-            this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            if(this.currentUserProfile.verified_skills){
+                this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+            }
+
             this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
             this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
             this.takenquizzes = (await QuizService.taken(this.$store.state.user.pk, auth)).data;
@@ -1201,6 +1385,7 @@
                     inputValue1: '',
                 })
             },
+
             DeleteProject(portfolio_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -1253,6 +1438,16 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background-color: white;
         min-height: 50vh;
+        margin: 1%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 2%;
+        padding-bottom: 5%;
+    }
+    .bio1 {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+
         margin: 1%;
         padding-left: 15px;
         padding-right: 15px;

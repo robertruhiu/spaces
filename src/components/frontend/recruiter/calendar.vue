@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
 
@@ -70,6 +70,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
+
 
 
     export default {

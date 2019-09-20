@@ -102,7 +102,7 @@
                     if (this.allevents[i].interviewstatus !== null ) {
 
                     let id = this.allevents[i].id
-                    let title = this.allevents[i].recruiter.company
+                    let title = this.allevents[i].job.company
                     let start = moment(this.allevents[i].interviewstarttime).format("YYYY-MM-DD HH:mm:ss")
                     let end = moment(this.allevents[i].interviewendtime).format("YYYY-MM-DD HH:mm:ss")
                     let color = this.allevents[i].eventcolor

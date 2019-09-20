@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{backgroundColor:'#F8FAFB',marginLeft: '200px' }">
+        <a-layout :style="{backgroundColor:'#ffffff' }">
 
 
             <a-layout-content>
@@ -14,6 +14,7 @@
                     <a-col :span="16">
 
                         <div style="padding-top: 1rem;" class='center'>
+
                             <a-auto-complete
                                     :dataSource="dataSource"
                                     style="width: 80%;z-index: 0"
@@ -28,18 +29,19 @@
                                     <a-icon slot="suffix" type="search" class="certain-category-icon"/>
                                 </a-input>
                             </a-auto-complete>
+
+
                         </div>
                     </a-col>
 
                 </a-row>
-                <div :style="{ padding: '4%', background: '#fff',marginTop:'6%' }">
-                    <a-list
-                            :grid="{gutter: 16, column: 3}"
-                            :dataSource="filteredList"
+                <div>
+                    <a-row gutter="8" style="margin-top: 4rem;padding: 3%">
+                        <a-col span="8"  v-for="item in filteredList" v-bind:key="item" >
 
-                    >
-                        <a-list-item slot="renderItem" slot-scope="item, index">
-                            <a-card
+                            <a @click="navigateTo({name:'pickedprojectdetails',params:{projectId:item.id,candidateId: application.candidate.id,jobId:application.job.id,
+                                                                       applicationId: application.id}})">
+                                <a-card
                                     hoverable
 
                             >
@@ -62,12 +64,12 @@
                                     </template>
                                 </a-card-meta>
                             </a-card>
+                            </a>
 
-                        </a-list-item>
-                    </a-list>
-
-  {{ projects}}
+                        </a-col>
+                    </a-row>
                 </div>
+
 
             </a-layout-content>
         </a-layout>
@@ -76,6 +78,8 @@
 </template>
 
 <script>
+    import ARow from "ant-design-vue/es/grid/Row";
+
     class Project {
         constructor(id, name, skills, image) {
             this.id = id;
@@ -88,6 +92,8 @@
 
     import RecruiterSider from "../../layout/RecruiterSider";
     import Projectsservice from '@/services/Projects'
+    import ACol from "ant-design-vue/es/grid/Col";
+    import Marketplace from '@/services/Marketplace'
 
     export default {
         name: "projectlist",
@@ -95,6 +101,7 @@
             return {
                 projects: null,
                 job: {},
+                application:{},
                 search: '',
                 dataSource: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
@@ -106,14 +113,18 @@
             }
         },
         components: {
+            ACol,
+            ARow,
 
             RecruiterSider,
         },
         async mounted() {
             const auth = {
-                headers: {Authorization: 'JWTproject_id ' + this.$store.state.token}
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             };
+            this.ApplicationId = this.$store.state.route.params.applicationId
+            this.application = (await Marketplace.retrieveapplication(this.ApplicationId, auth)).data
 
 
             Projectsservice.allprojects(auth)
@@ -140,13 +151,19 @@
 
 
         },
+        methods :{
+             navigateTo(route) {
+                this.$router.push(route)
+            },
+        },
         computed: {
             filteredList() {
                 return this.allprojects.filter(project => {
 
                     return project.skills.toString().toLowerCase().includes(this.search.toLowerCase())
                 })
-            }
+            },
+
         }
     }
 </script>

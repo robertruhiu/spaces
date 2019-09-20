@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{backgroundColor:'#f8fafb',marginLeft: '200px' }">
+        <a-layout :style="{backgroundColor:'#f8fafb' }">
 
 
             <a-layout-content>
@@ -12,7 +12,8 @@
                 marginTop:'1%',marginLeft: '1%',marginRight:'1%' }">
 
                     <a-row gutter="8">
-                        <a-col :span="14">
+                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 14, offset: 0 }"
+                                   :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }">
 
                             <a-carousel v-if="project.hasvideo === false" autoplay style="border:1px solid #e8e8e8;">
                                 <div v-if="project.projectimage1 "><img style="width: 100%" :src="project.projectimage1"/></div>
@@ -37,7 +38,8 @@
 
 
                         </a-col>
-                        <a-col :span="10" style="padding: 0 1%;">
+                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 10, offset: 0 }"
+                                   :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" >
                             <div style="border:1px solid #e8e8e8;;padding: 3%;">
                                 <p style="margin-left: 5%"><strong>Requirements</strong></p>
                                 <ol>
@@ -133,7 +135,11 @@
 
 
                 })
-                .catch()
+                .catch(error=>{
+                    this.$router.push({name: 'myprojectlist', params: { applicationId:this.ApplicationId}});
+                    return error
+
+                })
 
 
             }

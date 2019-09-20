@@ -3,7 +3,7 @@
         <RecruiterSider/>
 
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{ backgroundColor:'#F8FAFB' }">
 
             <a-layout-content>
                 <Jobheader/>
@@ -484,7 +484,8 @@
                                                             <template slot-scope="text,record">
                                                                 <span style="">
                                                                     <a style="margin-left: 15%;" v-if="record.project"
-                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,applicationId: record.action}})">
+                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,
+                                                                       applicationId: record.action}})">
                                                                         {{record.projectname}}
                                                                     </a>
 
@@ -1132,107 +1133,6 @@
 
 
                             </a-tab-pane>
-                            <!------testing bundles tab  ------>
-                            <a-tab-pane key="3" forceRender>
-                                <span slot="tab">
-                                    <a-icon type="credit-card"/>
-                                    Testing bundles
-                                </span>
-                                <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
-                                    <a-row>
-                                        <a-col :span="16">
-                                            <h3>Pick a Bundle</h3>
-                                            <a-row :gutter="8">
-                                                <a-col :span="8">
-                                                    <a-card
-                                                            hoverable
-                                                            style="width: 10rem"
-                                                    >
-
-                                                        <a-card-meta
-                                                                title="$200">
-                                                            <template slot="description">
-                                                                <p>10 candidates</p>
-                                                                <a-button v-model="amount" @click="bundleamount(1)">
-                                                                    Pick
-                                                                </a-button>
-
-                                                            </template>
-
-                                                        </a-card-meta>
-                                                    </a-card>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                                    <a-card
-                                                            hoverable
-                                                            style="width: 10rem"
-                                                    >
-
-                                                        <a-card-meta
-                                                                title="$300">
-                                                            <template slot="description">
-                                                                <p>15 candidates</p>
-                                                                <a-button v-model="amount" @click="bundleamount(2)">
-                                                                    Pick
-                                                                </a-button>
-
-                                                            </template>
-
-                                                        </a-card-meta>
-                                                    </a-card>
-
-                                                </a-col>
-                                                <a-col :span="8">
-                                                    <a-card
-                                                            hoverable
-                                                            style="width: 10rem"
-                                                    >
-
-                                                        <a-card-meta
-                                                                title="$500">
-                                                            <template slot="description">
-                                                                <p>25 candidates</p>
-                                                                <a-button v-model="amount" @click="bundleamount(3)">
-                                                                    Pick
-                                                                </a-button>
-
-                                                            </template>
-
-                                                        </a-card-meta>
-                                                    </a-card>
-
-                                                </a-col>
-                                            </a-row>
-
-
-                                        </a-col>
-                                        <a-col :span="8">
-                                            <h3>Pay</h3>
-                                            <a-card
-
-                                                    style="width: 300px"
-                                            >
-                                                <img
-                                                        alt="example"
-                                                        src="../../../../assets/images/card.svg"
-                                                        slot="cover"
-                                                />
-                                                <a-card-meta
-                                                        style="text-align: center;"
-                                                        title="Payment Methods">
-
-                                                    <template slot="description">
-                                                        <p>Amount :${{amount}}</p>
-                                                        <a onClick=""><img class="ant-btn " style="width: 10rem"
-                                                                           src="../../../../assets/images/flutter.svg"></a>
-                                                    </template>
-                                                </a-card-meta>
-                                            </a-card>
-                                        </a-col>
-                                    </a-row>
-                                </div>
-                            </a-tab-pane>
 
 
                         </a-tabs>
@@ -1250,7 +1150,7 @@
                             project?</p>
                         <a-row :gutter="16">
                             <a-col :span="12">
-                                <a @click="navigateTo({name:'projectlist'})">
+                                <a @click="navigateTo({name:'projectlist',params:{jobId:job.id,applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%"
                                              src="../../../../assets/images/pick.png">
@@ -1827,11 +1727,14 @@
                 let allrecommedednouniquefilter = []
                 for (let x = 0; x < this.alldevsprofile.length; x++) {
                     for (let z = 0; z < this.tags.length; z++) {
-                        if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
-                            let user_id = this.alldevsprofile[x].id
-                            allrecommedednouniquefilter.push(user_id)
+                        if (this.alldevsprofile[x].skills) {
+                            if (this.alldevsprofile[x].skills.includes(this.tags[z].toLowerCase())) { // direct comparision direct match for now
+                                let user_id = this.alldevsprofile[x].id
+                                allrecommedednouniquefilter.push(user_id)
 
+                            }
                         }
+
                     }
                 }
 

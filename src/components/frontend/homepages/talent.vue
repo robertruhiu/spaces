@@ -1,13 +1,17 @@
 <template>
     <a-layout :style="{background:'#fff'}">
         <pageheader></pageheader>
-        <a-layout-content :style="{ padding: '0 0px', marginTop: '1rem' }">
-            <div style="margin-top: 3rem">
-                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1 ">
-                    <a-col span="4">
-                        <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
-                    </a-col>
-                    <a-col :span="16">
+        <a-layout-content :style="{ padding: '0 0px' }">
+            <div>
+                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
+                    <hide-at breakpoint="mediumAndBelow">
+                        <a-col span="4">
+                            <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
+                        </a-col>
+                    </hide-at>
+
+                    <a-col :xs="{span: 20, offset: 4 }" :sm="{span: 20, offset: 4 }" :md="{span: 20, offset: 4 }"
+                           :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
 
                         <div style="padding-top: 2rem;" class='center'>
 
@@ -17,7 +21,6 @@
                                     placeholder="Search skills like react,javascript,vue python"
                                     :filterOption="filterOption"
                                     v-model="search"
-
 
 
                             >
@@ -31,63 +34,22 @@
                             <span>
 
 
-                            <country-select v-model="country" style="width: 20%;color: #007BFF"
-                                            placeholder="location" class="ant-input"
-                            />
+
                             </span>
 
 
                         </div>
                     </a-col>
-                    <a-col span="4">
 
-                    </a-col>
                 </a-row>
+            </div>
 
-                <a-row :gutter="16">
-
-                    <a-col :span="6" style="margin-top: 6%">
-                        <div style="padding-left: 3rem">
+            <div style="margin-top: 10rem">
+                <a-row>
 
 
-                            <div style="padding: 2rem;width: 12rem" class="">
-                                <h3 style="color: #0679fb">
-                                    <a-icon type="filter" theme="twoTone"/>
-                                    Filters
-
-                                </h3>
-                                <div :style="{ borderBottom: '1px solid #E9E9E9' }">
-                                    <a-checkbox
-                                            :indeterminate="indeterminate"
-                                            @change="onCheckAllChange"
-                                            :checked="checkAll"
-                                    >
-                                        Availability
-                                    </a-checkbox>
-                                </div>
-                                <br/>
-                                <a-checkbox-group :options="plainOptions" v-model="checkedList" @change="onChange"/>
-
-                                <div :style="{ borderBottom: '1px solid #E9E9E9',marginTop: '1rem' }">
-                                    <a-checkbox
-                                            :indeterminate="indeterminate1"
-                                            @change="onCheckAllChange1"
-                                            :checked="checkAll1"
-                                    >
-                                        Experience
-                                    </a-checkbox>
-                                </div>
-                                <br/>
-                                <a-checkbox-group :options="plainOptions1" v-model="checkedList1" @change="onChange1">
-
-                                </a-checkbox-group>
-
-                            </div>
-                        </div>
-
-                    </a-col>
-
-                    <a-col :span="14" style="margin-top: 6%;">
+                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
+                           :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
                         <div v-if="loading" class="loading" style="text-align: center;margin-top: 20%;">
                             <a-spin size="large"/>
                         </div>
@@ -103,54 +65,110 @@
                                         slot="renderItem" slot-scope="item" key="item.title">
 
 
-                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                        <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                            <a-avatar class="poolavatar"
-                                                      style="">
-                                                {{item.name}}
-                                            </a-avatar>
-                                        </a-col>
-                                        <a-col span="15" style="padding: 2%">
-                                            <p>Bio</p>
-                                            <p>{{item.about | truncate(100)}}<a
-                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                more</a>
-                                            </p>
+                                    <show-at breakpoint="mediumAndBelow">
+                                        <div style="padding: 2%">
 
-                                            <p>
-                                                Skills :
-                                                <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+
+                                            <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+
+                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                       :md="{span: 24, offset: 0 }"
+                                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
+                                                       style="padding: 2%">
+                                                    <p>Bio</p>
+                                                    <p>{{item.about | truncate(100)}}<a
+                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                        more</a>
+                                                    </p>
+
+                                                    <p>
+                                                        Skills :
+                                                        <span style="" v-for="skill in  item.skills.slice(0,3)"
+                                                              v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                            </p>
+                                                    </p>
+
+                                                    <div style="margin-bottom: 1%;text-align: center">
+                                                        <a-button type="primary" ghost
+                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                            View Profile
+                                                        </a-button>
+                                                    </div>
 
 
-                                        </a-col>
-                                        <a-col span="5">
-                                            <div style="padding-top: 1rem;">
-
-                                                <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                    <a-icon type="environment"/>
-                                                    {{item.location}}
-                                                </a-tag>
-                                                <a-tag color="#F7E7F5" style="color: #B82EA4">{{item.availabilty}}
-                                                </a-tag>
+                                                </a-col>
 
 
-                                            </div>
-                                            <div style="margin-top: 2rem">
-                                                <a-button type="primary" ghost
-                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                    View Profile
-                                                </a-button>
-                                            </div>
+                                            </a-row>
+                                        </div>
 
 
-                                        </a-col>
+                                    </show-at>
 
 
-                                    </a-row>
+                                    <hide-at breakpoint="mediumAndBelow">
+
+
+                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                            <a-col span="4"
+                                                   style="background-color:#0679FB;height: 100% ">
+                                                <a-avatar class="poolavatar"
+                                                >
+                                                    {{item.name}}
+                                                    <span style="font-size: 1rem" v-if="item.verified"><a-icon type="check-circle" /></span>
+
+                                                </a-avatar>
+                                            </a-col>
+                                            <a-col span="15" style="padding: 2%">
+                                                <p>Bio</p>
+
+                                                <p>{{item.about | truncate(100)}}<a
+                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                    more</a>
+                                                </p>
+
+                                                <p>
+                                                    Skills :
+                                                    <span style="" v-for="skill in item.skills"
+                                                          v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                                </p>
+
+
+                                            </a-col>
+                                            <a-col span="5">
+                                                <div style="padding-top: 1rem;">
+
+                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                        <a-icon type="environment"/>
+                                                        {{item.location}}
+                                                    </a-tag>
+                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                        {{item.availabilty}}
+
+                                                    </a-tag>
+
+
+                                                </div>
+                                                <div style="margin-top: 2rem">
+                                                    <a-button type="primary" ghost
+                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                        View Profile
+                                                    </a-button>
+                                                </div>
+
+
+                                            </a-col>
+
+
+                                        </a-row>
+
+
+                                    </hide-at>
 
 
                                 </a-list-item>
@@ -167,6 +185,7 @@
             </div>
 
 
+
         </a-layout-content>
 
     </a-layout>
@@ -176,15 +195,14 @@
 <script>
 
     class Developer {
-        constructor(id, name, skills, about, location, availabilty, experience, portfolio) {
+        constructor(id, name, skills, about, location, availabilty, verified) {
             this.id = id;
             this.name = name;
             this.skills = skills;
             this.about = about;
             this.location = location;
             this.availabilty = availabilty
-            this.experience = experience
-            this.portfolio = portfolio
+            this.verified = verified
         }
     }
 
@@ -196,6 +214,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService';
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     import Vue from 'vue'
 
@@ -264,6 +283,7 @@
             ACol,
             ARow,
             Pageheader,
+            showAt, hideAt,
 
         },
 
@@ -272,7 +292,7 @@
             this.loading = false
             for (let i = 0; i < this.devs.length; i++) {
 
-                let skill_list = this.devs[i].skills.split(',');
+                let skill_list = this.devs[i].skills.split(',').slice(0, 10)
 
                 let id = this.devs[i].user.id
                 let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
@@ -280,12 +300,23 @@
                 let about = this.devs[i].about
                 let location = this.devs[i].country
                 let availabilty = this.devs[i].availabilty
+                let verified = false
+                if (this.devs[i].verified_skills) {
+                    verified = true
+                }
                 let onedev = new Developer(
-                    id, name, skills, about, location, availabilty
+                    id, name, skills, about, location, availabilty,verified
                 )
+
+
                 this.listData.push(onedev)
+
             }
+
+
         },
+
+
         methods: {
             navigateTo(route) {
                 this.$router.push(route)
@@ -318,10 +349,13 @@
                     checkAll1: e.target.checked,
                 })
             },
+
         },
         computed: {
             filteredList() {
                 return this.listData.filter(dev => {
+
+
                     return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
                 })
             }
@@ -339,14 +373,6 @@
         font-size: 30px;
         background-color: #0679FB;
         margin: 25% 25%;
-    }
-
-
-    .center {
-        margin: auto;
-        width: 60%;
-
-
     }
 
 

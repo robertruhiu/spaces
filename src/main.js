@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from './router'
 import {sync} from 'vuex-router-sync'
 import store from '@/store/store'
-
+import cloudinary from 'cloudinary-core';
 Vue.config.productionTip = false
-
+Vue.use(cloudinary)
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
@@ -54,7 +54,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row
+    Row,Upload,
 
 } from 'ant-design-vue';
 
@@ -92,6 +92,8 @@ Vue.use(Skeleton)
 Vue.use(Icon)
 Vue.use(Spin)
 Vue.use(Row)
+Vue.use(Upload)
+
 
 
 import vueCountryRegionSelect from 'vue-country-region-select'

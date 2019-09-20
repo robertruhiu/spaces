@@ -1,6 +1,6 @@
 <template>
     <div class="rave">
-        <button class="button" v-on:click="payWithRave">Pay Now</button>
+        <a-button type="primary"  v-on:click="payWithRave">Checkout</a-button>
     </div>
 </template>
 
@@ -119,7 +119,7 @@
                     txref: this.reference,
                     PBFPubKey: this.raveKey,
                     onclose: () => this.close(),
-                    callback: response => this.callback(response),
+                    callback: response => this.callback(response,this.redirect_url),
                     meta: this.metadata,
                     currency: this.currency,
                     country: this.country,
@@ -128,7 +128,6 @@
                     custom_title: this.custom_title,
                     custom_description: this.custom_description,
                     custom_logo: this.custom_logo,
-                    redirect_url: this.redirect_url,
                     payment_plan: this.payment_plan,
                     subaccounts: this.subaccounts,
                     payment_method: this.payment_method,

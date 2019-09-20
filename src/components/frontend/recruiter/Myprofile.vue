@@ -3,16 +3,17 @@
 
         <RecruiterSider/>
 
-        <a-layout :style="{ marginLeft: '200px',backgroundColor:'#F8FAFB' }">
+        <a-layout :style="{ backgroundColor:'#F8FAFB' }">
 
 
             <a-layout-content>
                 <Pageheader/>
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
-                marginTop:'7rem',marginLeft: '1%',marginRight:'1%' }">
+                marginLeft: '1%',marginRight:'1%',marginTop:'1rem' }">
                     <a-form :form="form">
                         <a-row :gutter="16">
-                            <a-col :span="12">
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }" >
 
                                 <a-row :gutter="16">
                                     <a-col :span="24">
@@ -90,7 +91,8 @@
 
 
                             </a-col>
-                            <a-col :span="12" style="padding: 2% 4%">
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }"  >
                                 <a-col :span="24">
                                     <a-form-item>
                                         <p>Pick skills to enable candidate

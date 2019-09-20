@@ -8,6 +8,9 @@ export default {
     devs() {
         return Api().get('users')
     },
+    sliceddevs() {
+        return Api().get('userssliced')
+    },
     allusers() {
         return Api().get('allusers')
     },
@@ -46,7 +49,7 @@ export default {
     },
 
     update(user_id, currentUserProfile, auth) {
-        return Api().patch(`updater/${user_id} `, currentUserProfile, auth)
+        return Api().put(`updater/${user_id} `, currentUserProfile, auth)
     },
 
 

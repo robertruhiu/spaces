@@ -1,0 +1,75 @@
+<template>
+
+    <a-dropdown :trigger="['click']" placement="bottomCenter">
+    <a class="ant-dropdown-link" href="#">
+
+      <a-icon type="menu-fold" />
+    </a>
+    <a-menu slot="overlay">
+      <a-menu-item key="0">
+        <router-link to="/talent">
+
+                    <span>Talent</span>
+                </router-link>
+      </a-menu-item>
+
+        <a-menu-item key="1" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' ">
+        <router-link to="/recruiter">
+
+                    <span>My account</span>
+                </router-link>
+      </a-menu-item>
+        <a-menu-item key="2" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'">
+        <router-link to="/developer">
+
+                    <span>My account</span>
+                </router-link>
+      </a-menu-item>
+        <a-menu-item key="3" v-if="!$store.state.isUserLoggedIn">
+        <router-link to="/login">
+
+                    <span>Login</span>
+                </router-link>
+      </a-menu-item>
+        <a-menu-item key="4" v-if="!$store.state.isUserLoggedIn">
+        <router-link to="/register">
+
+                    <span>Register</span>
+                </router-link>
+      </a-menu-item>
+
+
+        <a-menu-item key="5" v-if="$store.state.isUserLoggedIn">
+
+            <a @click="logout">Logout</a>
+        </a-menu-item>
+
+
+
+    </a-menu>
+  </a-dropdown>
+</template>
+
+<script>
+    export default {
+        name: "Menusider",
+        methods: {
+
+            logout() {
+                this.$store.dispatch('setToken', null);
+                this.$store.dispatch('setUser', null)
+                this.$store.dispatch('setisLoggedIn', false)
+                this.$store.dispatch('setUsertype', null)
+                this.$store.dispatch('setUser_id', null)
+                this.$store.dispatch('setNext',null)
+                this.$router.push({
+                    name: 'home'
+                })
+            },
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
