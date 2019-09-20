@@ -10,7 +10,7 @@
       <a-menu-item key="0">
         <router-link to="/talent">
 
-                    <span>Talent</span>
+                    <span>Talent pool</span>
                 </router-link>
       </a-menu-item>
 

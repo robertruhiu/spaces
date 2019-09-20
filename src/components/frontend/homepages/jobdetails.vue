@@ -21,7 +21,10 @@
 
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
-                                    <a-button type="primary"
+                                    <div v-if="save">
+                                        <a-spin/>
+                                    </div>
+                                    <a-button v-else type="primary"
                                               @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
 
 
@@ -88,8 +91,9 @@
                 currentUserProfile: {},
                 applied: false,
                 myjobs: [],
-                dataload:false,
-                deadline:''
+                dataload: false,
+                deadline: '',
+                save: false
 
             }
         },
@@ -146,6 +150,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.save = true
                 MarketPlaceService.applyjob(
                     {
                         job: job,
@@ -158,6 +163,7 @@
                     auth
                 )
                     .then(resp => {
+                            this.save = false
                             this.applied = true
                         }
                     )
@@ -166,6 +172,7 @@
 
 
                     });
+
 
             }
 
