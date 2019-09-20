@@ -16,7 +16,7 @@
                                 <h2 style="color: white;font-size: 1rem">Services</h2>
                                 <div>
                                     <router-link to="talent">
-                                        Talent
+                                        Talent pool
                                     </router-link>
 
 
@@ -59,6 +59,10 @@
                                     <a class="text-muted" href="https://twitter.com/Codeln_spaces" target="_blank">
                                         <a-icon type="twitter"/>
                                     </a>
+                                    <a class="text-muted" href="https://medium.com/codeln" target="_blank">
+                                        <a-icon type="medium" />
+                                    </a>
+
                                 </div>
 
 

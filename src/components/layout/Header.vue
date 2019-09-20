@@ -12,7 +12,7 @@
         <hide-at breakpoint="mediumAndBelow">
             <div class="ant-menu-horizontal " :style="{ lineHeight: '64px',float: 'right',borderBottom: 0}">
 
-                <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent</router-link>
+                <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent pool</router-link>
 
                 <router-link to="/recruiter" class="ant-menu-item" style="margin-bottom: 0"
                              v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">My account
