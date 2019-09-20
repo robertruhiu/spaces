@@ -109,7 +109,7 @@
 
                                             </a-tab-pane>
 
-                                            <a-tab-pane key="2" v-if="portfolio.length >0">
+                                            <a-tab-pane key="2" forceRender v-if="portfolio.length >0">
                                     <span slot="tab">
                                         <a-icon type="solution"/>
                                         Projects portfolio
@@ -145,7 +145,7 @@
 
                                             </a-tab-pane>
 
-                                            <a-tab-pane key="3" v-if="experiences.length>0">
+                                            <a-tab-pane key="3" forceRender v-if="experiences.length>0">
                                     <span slot="tab">
                                         <a-icon type="hourglass"/>
                                         Work experience
