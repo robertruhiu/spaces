@@ -4,12 +4,9 @@ export default {
     authenticated(user_id, auth) {
         return Api().get(`getprofile/${user_id} `, auth)
     },
-    dev() {
-        return Api().get('users')
-    },
 
     devs() {
-        return Api().get('cacheusers')
+        return Api().get('users')
     },
     sliceddevs() {
         return Api().get('userssliced')
@@ -38,8 +35,8 @@ export default {
     deleteexperience(experience_id, auth) {
         return Api().delete(`updateexperience/${experience_id} `, auth)
     },
-    portfolio(candidate_id, auth) {
-        return Api().get(`getportofolio/${candidate_id} `, auth)
+    portfolio(portfolio_id, auth) {
+        return Api().get(`getportofolio/${portfolio_id} `, auth)
     },
     newportfolio(Portfolio, auth) {
         return Api().post('newportfolio ', Portfolio, auth)
