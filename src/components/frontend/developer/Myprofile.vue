@@ -150,31 +150,30 @@
                                             <span>
                                                 Monthly Salary expectations
                                             </span>
-                                            <a-input-number
-                                                    :defaultValue="1000"
-                                                    :formatter="value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                                                    :parser="value => value.replace(/\$\s?|(,*)/g, '')"
-                                                    v-model="currentUserProfile.salary"
-                                            />
+                                    <a-input-number
+                                            :defaultValue="1000"
+                                            :formatter="value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                            :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                                            v-model="currentUserProfile.salary"
+                                    />
 
 
-                                        </a-col>
+                                </a-col>
 
                             </a-col>
                         </a-row>
                         <div v-if="cv">
-                            <a :href="cv" target="_blank">cv link</a>
+                            <p>Current cv :<a :href="cv" target="_blank">cv link</a></p>
                         </div>
 
                         <div v-else>
                             <div v-if="uploading">
-                                <span>Uploading file <a-spin /></span>
+                                <span>Uploading file <a-spin/></span>
 
                             </div>
                             <div v-else>
-                                <input  type="file" @change="handleUpload">
+                                <input type="file" @change="handleUpload" accept="application/pdf">
                             </div>
-
 
 
                         </div>
@@ -194,7 +193,6 @@
 
                     </a-form>
                 </div>
-
 
 
 
@@ -238,8 +236,8 @@
             }
         },
 
-        async mounted() {
 
+        async mounted() {
 
 
             const auth = {
@@ -248,14 +246,17 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                if (this.currentUserProfile.skills) {
+                    if (this.currentUserProfile.skills.length >= 0) {
+                        let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
+                        for (let i = 0; i < tags.length; i++) {
+                            this.tags.push(tags[i])
+                        }
 
-                if (this.currentUserProfile.skills.length >= 0) {
-                    let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
-                    for (let i = 0; i < tags.length; i++) {
-                        this.tags.push(tags[i])
                     }
-
                 }
+
+
             }
             if (this.currentUserProfile.file) {
                 if (this.currentUserProfile.file.includes("http")) {
@@ -277,15 +278,19 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                for (let i = 0; i < this.tags.length; i++) {
-                    if (this.tags[i] === '') {
-                        let index = this.tags.indexOf(this.tags[i]);
-                        this.tags.splice(index, 1);
+                if (this.tags) {
+                    for (let i = 0; i < this.tags.length; i++) {
+                        if (this.tags[i] === '') {
+                            let index = this.tags.indexOf(this.tags[i]);
+                            this.tags.splice(index, 1);
 
+                        }
                     }
+                    this.currentUserProfile.skills = this.tags.join(',')
                 }
+
                 this.currentUserProfile.file = this.cv.slice(48)
-                this.currentUserProfile.skills = this.tags.join(',')
+
                 this.currentUserProfile.user = this.$store.state.user.pk
                 this.loading = true
 
@@ -308,6 +313,7 @@
 
                     })
                     .catch(error => {
+                        this.loading = false
                         return error
 
 
@@ -361,7 +367,7 @@
                 return false;
             },
             async handleUpload(e) {
-                this.uploading =true
+                this.uploading = true
                 const cloudName = 'dwtvwjhn3';
                 const unsignedUploadPreset = 'ml_default';
 
@@ -385,7 +391,6 @@
                 );
 
                 this.cv = res.data.secure_url
-
 
 
             }

@@ -19,8 +19,9 @@
 
 
                         <router-link to="/assessment">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }" >
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
                                     <a-col span="24">
@@ -42,7 +43,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/manageapplications">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
@@ -64,7 +66,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/jobs">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
@@ -87,7 +90,8 @@
                             </a-col>
                         </router-link>
                         <router-link to="/portfolio">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }" :md="{span: 10, offset: 2 }"
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
                                 <a-row class="ant-card actioncards">
@@ -117,6 +121,7 @@
 
 
             </a-layout-content>
+
 
         </a-layout>
     </a-layout>
@@ -158,6 +163,8 @@
 
 
         },
+
+
         methods: {
             navigateTo(route) {
                 this.$router.push(route)

@@ -7,7 +7,7 @@
                 <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
                     <hide-at breakpoint="mediumAndBelow">
                         <a-col span="4">
-                            <h3 style="color: white;font-size: 2rem;padding-left: 4rem;padding-top: 1rem;">Job
+                            <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Job
                                 board</h3>
                         </a-col>
                     </hide-at>
@@ -51,7 +51,7 @@
 
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
-                        <div v-if="loading" class="loading" style="text-align: center;margin-top: 20%;">
+                        <div v-if="loading" class="loading" style="text-align: center;min-height: 40vh">
                             <a-spin size="large"/>
                         </div>
 
@@ -126,13 +126,13 @@
 
                                     <show-at breakpoint="mediumAndBelow">
                                         <div style="padding: 2%">
-                                            <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+                                            <a-row class="lightshadow" style="height: 13rem;padding: 3%">
 
                                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                        :md="{span: 24, offset: 0 }"
                                                        :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
                                                        style="padding: 2%">
-                                                    <p>{{item.title}} | {{item.company}} | {{item.location}}</p>
+                                                    <span><strong>{{item.title}} | {{item.company}} | {{item.location}}</strong></span>
                                                     <p>{{item.description | truncate(100)}}<a
                                                             @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
                                                         more</a>
@@ -252,7 +252,7 @@
                     onChange: (page) => {
                         return page;
                     },
-                    pageSize: 3,
+                    pageSize: 10,
                 },
                 actions: [
                     {type: 'star-o', text: '156'},
@@ -275,7 +275,7 @@
 
             for (let i = 0; i < this.jobs.length; i++) {
 
-                let skill_list = this.jobs[i].tech_stack.split(',');
+                let skill_list = this.jobs[i].tech_stack.split(',').slice(0, 2);
 
                 let id = this.jobs[i].id
                 let skills = skill_list
@@ -359,11 +359,19 @@
 
 
     .jobtitle {
-        margin-top: 33%;
+        margin-top: 2rem;
         color: white;
         margin-left: 10%;
         font-weight: 700;
-        font-size: large;
+        font-size: 1rem;
+    }
+    .lightshadow{
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        border: 1px solid rgba(0,0,0,.125);
+    }
+    .poolavatar1 {
+        background-color: #0679FB;
+
     }
 
 

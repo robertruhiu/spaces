@@ -2,7 +2,7 @@ import Api from '@/services/Api'
 
 export default {
     allquizzes(auth) {
-        return Api().get('allquizzes', auth)
+        return Api().get('allquizzescache', auth)
     },
     questions(quiz,auth) {
         return Api().get(`questions/${quiz}`, auth)

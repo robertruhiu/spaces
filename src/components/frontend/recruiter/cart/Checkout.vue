@@ -112,7 +112,7 @@
                 devs: [],
                 pickedprofiles: [],
                 amount: 0,
-                raveKey: "FLWPUBK-37320275f784b16ec1e30b1342c0a223-X",
+                raveKey: "FLWPUBK-37536a50fc02bed5bddf5ebe89a18e7c-X",
                 email: "",
                 currency: "USD",
                 country: "GH",
@@ -121,14 +121,14 @@
 
                 custom: {
                     title: "Codeln",
-                    description: "Yada yada",
-                    logo: "bla"
+                    description: "Payment for Codeln Developers",
+                    logo: "https://www.codeln.com/img/logobg.f302741d.svg"
                 },
 
                 paymentPlan: "", // add payments plan ID here
                 paymentMethod: "", // add 'card' or 'account' if you want a specific feature. Leave empty if you want all features
                 subaccounts: {
-                    id: "RS_73954F005E68DADF3483197D5CF13E1E", // id of the subaccount; get from your dashboard
+                    id: "", // id of the subaccount; get from your dashboard
                     transaction_split_ratio: "", //
                     transaction_charge_type: "", //include this if the you want a flat fee eg: flat
                     transaction_charge: "" // include the flat fee amount you want eg: 100

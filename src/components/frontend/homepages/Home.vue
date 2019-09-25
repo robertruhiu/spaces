@@ -7,8 +7,8 @@
 
                 <a-layout-content :style="{ padding: '0 0px', marginTop: '2rem' }">
                     <!-----header---->
-
-                    <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
+                    <hide-at breakpoint="mediumAndBelow">
+                         <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
                         <a-row>
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                    :md="{span: 18, offset: 4 }"
@@ -16,15 +16,11 @@
                                 <show-at breakpoint="mediumAndBelow">
                                     <div style="margin-top: 3rem">
                                         <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
-                                            Hire
-                                            Skilled
-                                            African
-                                            Developers
-                                            Faster</h1>
+                                            Hire Skilled African Programmers Faster
+                                        </h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your Ideal dev is only a
-                                            click
-                                            away</h4>
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                            click away</h4>
                                         <router-link to="/talent">
                                             <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
                                                 Hire a
@@ -44,14 +40,11 @@
                                 <hide-at breakpoint="mediumAndBelow">
                                     <div style="margin-top: 8rem">
                                         <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
-                                            Hire
-                                            Skilled
-                                            Developers
-                                            Faster</h1>
+                                            Hire Skilled African Programmers Faster
+                                        </h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is only a
-                                            click
-                                            away</h4>
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                            click away</h4>
                                         <router-link to="/talent">
                                             <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
                                                 Hire a
@@ -92,17 +85,36 @@
                                 <div class="press">
                                     <div>
                                         <a-row>
-                                            <a-col :span="6"><img class="pressitemtech"
-                                                                  src="../../../assets/images/props/b_tc.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="https://techcrunch.com/2018/12/11/introducing-the-startups-and-agenda-for-startup-battlefield-africa/">
+                                                    <img class="pressitemtech"
+                                                         src="../../../assets/images/props/b_tc.png">
+                                                </a>
                                             </a-col>
-                                            <a-col :span="6"><img class="pressitemseed"
-                                                                  src="../../../assets/images/props/b_ss.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
+                                                    <img class="pressitemseed"
+                                                         src="https://smwlagos.com/wp-content/uploads/2019/09/SMW-LAGOS-03.png">
+                                                </a>
+
                                             </a-col>
-                                            <a-col :span="6"><img class="pressitemdisrupt"
-                                                                  src="../../../assets/images/props/b_da.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="http://disrupt-africa.com/2018/09/mest-invests-700k-in-7-african-tech-startups/">
+                                                    <img class="pressitemdisrupt"
+                                                         src="../../../assets/images/props/b_da.png">
+                                                </a>
+
                                             </a-col>
-                                            <a-col :span="6"><img class="pressitemforbes"
-                                                                  src="../../../assets/images/props/b_f.png">
+                                            <a-col :span="6">
+                                                <a target="_blank"
+                                                   href="https://www.forbes.com/sites/tobyshapshak/2018/09/10/renowned-african-incubator-mest-celebrates-10-years-with-700000-investment/#6821e7772af5">
+                                                    <img class="pressitemforbes"
+                                                         src="../../../assets/images/props/b_f.png">
+                                                </a>
+
                                             </a-col>
                                         </a-row>
                                     </div>
@@ -112,22 +124,72 @@
 
 
                     </div>
+
+                    </hide-at>
+                    <show-at breakpoint="mediumAndBelow">
+                         <div :style="{ background: '#fff', padding: '24px', minHeight: '50vh' }">
+                        <a-row>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 18, offset: 4 }"
+                                   :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
+                                <show-at breakpoint="mediumAndBelow">
+                                    <div style="margin-top: 3rem">
+                                        <h1 style="font-size:2rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                            Hire Skilled African Programmers Faster
+                                        </h1>
+
+                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                            click away</h4>
+                                        <router-link to="/talent">
+                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
+                                                Hire a
+                                                Dev
+                                            </a-button>
+                                        </router-link>
+                                        <router-link to="/jobs">
+                                            <a-button type="primary"
+                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                      ghost>Get hired
+                                            </a-button>
+                                        </router-link>
+
+
+                                    </div>
+                                </show-at>
+
+
+
+                            </a-col>
+
+
+
+                        </a-row>
+
+
+
+                    </div>
+
+                    </show-at>
+
                     <!-----how it works---->
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">
                         <div style="background-color: #ffffff;">
                             <div style="text-align: center">
                                 <h2 class="headers">How Codeln Works</h2>
+
                             </div>
 
 
-                            <a-row gutter="16" style="padding: 3%">
+                            <a-row gutter="32" style="padding: 3%">
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
-                                    <img class="imagecenter" src="../../../assets/images/props/pick.png"/>
+                                    <img class="imagecenter" src="../../../assets/images/props/search.png"/>
+
                                     <p style="text-align: center;font-size: 1rem">
-                                        Access a rich pool of verified African Programmers and Designers, that are available and ready to be hired.
+                                        Access a rich pool of verified African Programmers and Designers, that are available and ready to be hired
+
                                     </p>
 
                                 </a-col>
@@ -136,12 +198,11 @@
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                        style="margin-bottom: 1rem">
-                                    <img class="imagecenter" src="../../../assets/images/props/search.png"/>
-
+                                    <img class="imagecenter" src="../../../assets/images/props/pick.png"/>
 
                                     <p style="text-align: center;font-size: 1rem">
-                                       Enjoy an optimized search experience as you filter through talent's profiles,
-                                        resume, skills, work experience, and past projects
+                                        Enjoy an optimized search experience as you filter through talent's profiles, resume, skills, work experience, and past projects.
+
                                     </p>
 
                                 </a-col>
@@ -153,8 +214,8 @@
                                     <img class="imagecenter" src="../../../assets/images/props/coding.png"/>
 
                                     <p style="text-align: center;font-size: 1rem">
-                                        Seamlessly manage your automated recruitment process from finding a candidate
-                                        to making them an offer on Codeln.
+                                        Seamlessly manage your automated recruitment process from finding a candidate to making them an offer on Codeln.
+
                                     </p>
 
 
@@ -200,8 +261,17 @@
                                    :md="{span: 24, offset: 0 }"
                                    :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }">
                                 <div>
-                                    <div style="padding: 2%">
-                                        <h2 class="headers">Our Talent Pool</h2>
+                                    <div style="padding:  0 2%">
+                                        <hide-at breakpoint="mediumAndBelow">
+                                            <h2 class="headers">Our Talent Pool</h2>
+                                        </hide-at>
+                                        <show-at breakpoint="mediumAndBelow">
+                                            <h2 class="headers" style="text-align: center">Our Talent Pool</h2>
+                                        </show-at>
+
+
+
+
                                     </div>
 
 
@@ -213,31 +283,47 @@
 
                                         <show-at breakpoint="mediumAndBelow">
                                             <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id"
-                                                     style="margin-bottom: 1rem">
 
-                                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 12rem">
+                                                    <a-list
+                                                        itemLayout="vertical"
+                                                        size="large"
+                                                        :dataSource="listData"
+
+                                                >
+
+                                                    <a-list-item
+                                                            slot="renderItem" slot-scope="item"
+                                                            key="item.title">
+
+                                                    <a-row class="lightshadow" style="height: 13rem;padding: 3%">
 
                                                         <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                                :md="{span: 24, offset: 0 }"
                                                                :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
-                                                               style="padding: 2%">
-                                                            <p>Bio</p>
+                                                               >
+                                                            <span >
+                                                                <a-avatar class="poolavatar1"
+                                                                >
+                                                                    {{item.name}}
+                                                                </a-avatar>
+                                                                <span style="margin-left: 1rem">Bio</span>
+                                                            </span>
+
                                                             <p>{{item.about | truncate(100)}}<a
-                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
+                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
                                                                 more</a>
                                                             </p>
 
                                                             <p>
-                                                                Skills :
-                                                                <span style="" v-for="skill in  item.skills.slice(0,3)"
+
+                                                                <span style="" v-for="skill in  item.skills.slice(0,2)"
                                                                       v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
                                                             </p>
 
-                                                            <div style="margin-bottom: 1%;text-align: center">
+                                                            <div style="text-align: center">
                                                                 <a-button type="primary" ghost
                                                                           @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
                                                                     View Profile
@@ -249,16 +335,27 @@
 
 
                                                     </a-row>
-                                                </div>
+                                                    </a-list-item>
+                                                    </a-list>
+
                                             </div>
 
                                         </show-at>
 
 
-                                        <hide-at breakpoint="mediumAndBelow">
-                                            <div style="padding: 2%">
-                                                <div v-for="item in listData" v-bind:key="item.id" style=" ">
-                                                    <div style="margin-bottom: 1rem">
+                                        <hide-at breakpoint="mediumAndBelow" >
+                                            <div style="padding:  0 2%">
+
+                                                <a-list
+                                                        itemLayout="vertical"
+                                                        size="large"
+                                                        :dataSource="listData"
+
+                                                >
+
+                                                    <a-list-item
+                                                            slot="renderItem" slot-scope="item"
+                                                            key="item.title">
                                                         <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
                                                             <a-col span="4"
                                                                    style="background-color:#0679FB;height: 100% ">
@@ -276,9 +373,9 @@
 
                                                                 <p>
                                                                     Skills :
-                                                                    <span style="" v-for="skill in item.skills"
+                                                                    <span style="" v-for="skill in item.skills.slice(0,3)"
                                                                           v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill }}</a-tag>
 
                                             </span>
                                                                 </p>
@@ -288,11 +385,13 @@
                                                             <a-col span="5">
                                                                 <div style="padding-top: 1rem;">
 
-                                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                                    <a-tag color="#F0F6FD"
+                                                                           style='color: #007BFF'>
                                                                         <a-icon type="environment"/>
                                                                         {{item.location}}
                                                                     </a-tag>
-                                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
+                                                                    <a-tag color="#F7E7F5"
+                                                                           style="color: #B82EA4">
                                                                         {{item.availabilty}}
 
                                                                     </a-tag>
@@ -311,11 +410,10 @@
 
 
                                                         </a-row>
-                                                    </div>
-
-
-                                                </div>
+                                                    </a-list-item>
+                                                </a-list>
                                             </div>
+
 
                                         </hide-at>
 
@@ -347,7 +445,7 @@
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '50vh' }">
 
 
-                        <h2 class="headers" style="text-align: center">Why Hire with Codeln?</h2>
+                        <h2 class="headers" style="text-align: center">Why Hire with Codeln? </h2>
 
 
                         <a-row :gutter="16" :style="{padding:'3%'}">
@@ -357,16 +455,19 @@
                                 <h3 class="" style="text-align: center">Verified Talent</h3>
                                 <p style="text-align: center;font-size: 1rem">
                                     We validate the coding skills of our talent by verifying that they can build real-world
-                                    projects as that is the topmost concern of every employer
+                                    projects as that is the topmost concern of every employer.
                                 </p>
+
+
                             </a-col>
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/time-management.png"/>
                                 <h3 style="text-align: center">Speed and Efficiency</h3>
                                 <p style="text-align: center;font-size: 1rem">
-                                    Your entire recruitment process is automated end-to-end enabling speed and efficiency
-                                    throughout the hiring process.
+                                    Your entire recruitment process is automated end-to-end enabling speed
+                                    and efficiency throughout the hiring process.
+
                                 </p>
 
 
@@ -374,10 +475,14 @@
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                                 <img class="imagecenter" src="../../../assets/images/props/analytics.png"/>
-                                <h3 style="text-align: center">In-built ATS </h3>
-                                <p style="text-align: center;font-size: 1rem">An applicant tracking system is built in the platform to ensure a seamless
-                                    process of managing and tracking your applicants.
+                                <h3 style="text-align: center">In-built ATS</h3>
+                                <p style="text-align: center;font-size: 1rem">
+                                    An applicant tracking system is built in the platform to ensure a
+                                    seamless process of managing and tracking your applicants.
+
                                 </p>
+
+
                             </a-col>
                         </a-row>
 
@@ -385,10 +490,11 @@
 
                     <!-----partners---->
                     <div :style="{  padding: '31px', minHeight: '55vh' }">
-                        <h2 class="headers" style="text-align: center">Proudly
-                            Supported By
+                        <h2 class="headers" style="text-align: center">
+                            Trusted By
                         </h2>
-                        <a-row :gutter="16" :style="{padding:'3%'}">
+                        <hide-at breakpoint="mediumAndBelow">
+                            <a-row :gutter="16" :style="{padding:'3%'}">
                             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
                                    :md="{span: 6, offset: 0 }"
                                    :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
@@ -410,8 +516,8 @@
                                    :md="{span: 6, offset: 0 }"
                                    :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
-                                <img class="imagecenter" style="width: 50%;margin-top: 0.5rem"
-                                     src="../../../assets/images/props/b_DIV.png"
+                                <img class="imagecenter wsi" style="width: 25%;"
+                                     src="../../../assets/images/wsi.png"
                                 />
 
 
@@ -426,6 +532,48 @@
                             </a-col>
 
                         </a-row>
+                        </hide-at>
+
+                        <show-at breakpoint="mediumAndBelow">
+                            <a-row :gutter="16" :style="{padding:'1%'}">
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="margin-bottom: 1rem">
+
+                                <img class="imagecenter" style="width: 70%;margin-top: 1rem"
+                                     src="../../../assets/images/props/b_mest.png"
+                                />
+
+
+                            </a-col>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                   style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
+                                <img style="width: 30%" class="imagecenter" src="../../../assets/images/props/b_7a.png"
+                                />
+                            </a-col>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="margin-bottom: 1rem">
+
+                                <img class="imagecenter wsi" style="width: 25%;"
+                                     src="../../../assets/images/wsi.png"
+                                />
+
+
+                            </a-col>
+                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                   :md="{span: 6, offset: 0 }"
+                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                   style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
+                                <img class="imagecenter" style="width: 40%;margin-top: 1rem"
+                                     src="../../../assets/images/props/b_enpact.png"
+                                />
+                            </a-col>
+
+                        </a-row>
+                        </show-at>
 
                     </div>
 
@@ -495,8 +643,11 @@
             this.loading = false
 
             for (let i = 0; i < this.devs.length; i++) {
+                let skill_list = []
+                if (this.devs[i].skills) {
+                    skill_list = this.devs[i].skills.split(',').slice(0, 4);
+                }
 
-                let skill_list = this.devs[i].skills.split(',');
 
                 let id = this.devs[i].user.id
                 let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
@@ -555,11 +706,18 @@
     }
 
     .pressitemseed {
-        width: 50%;
-        margin-top: 1rem;
+        width: 20%;
+        margin-top: 0.7rem;
         margin-left: 23%;
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
 
 
+    }
+
+    .wsi {
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
     }
 
     .pressitemdisrupt {
@@ -572,7 +730,7 @@
 
     .pressitemforbes {
         width: 28%;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         margin-left: 23%;
 
 
@@ -629,13 +787,17 @@
     }
 
     .poolavatar1 {
-        width: 20%;
-        margin-top: 0.5rem;
+        background-color: #0679FB;
+
     }
 
     .poolavatar2 {
         width: 14%;
         margin-top: 0.5rem;
+    }
+    .lightshadow{
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        border: 1px solid rgba(0,0,0,.125);
     }
 
 

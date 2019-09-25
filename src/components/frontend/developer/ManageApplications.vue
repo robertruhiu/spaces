@@ -33,7 +33,13 @@
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
-                                        <a-timeline v-if="active.length>0">
+                                        <div v-if="waiting">
+                                            <div style="text-align: center">
+                                                <a-spin />
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <a-timeline v-if="active.length>0">
                                         <a-timeline-item v-for="application in active" v-bind:key="application">
                                             <a><strong>{{application.title}}</strong></a>
                                             <br>
@@ -63,6 +69,8 @@
                                         </a-timeline-item>
 
                                     </a-timeline>
+                                        </div>
+
                                     </div>
 
                                 </a-col>
@@ -84,6 +92,12 @@
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
+                                        <div v-if="waiting">
+                                            <div style="text-align: center">
+                                                <a-spin />
+                                            </div>
+                                        </div>
+                                        <div v-else>
                                         <a-timeline v-if="testing.length>0">
                                     <a-timeline-item v-for="application in testing" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
@@ -117,6 +131,7 @@
                                     </a-timeline-item>
 
                                 </a-timeline>
+                                        </div>
                                     </div>
 
                                 </a-col>
@@ -138,6 +153,12 @@
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
+                                        <div v-if="waiting">
+                                            <div style="text-align: center">
+                                                <a-spin />
+                                            </div>
+                                        </div>
+                                        <div v-else>
                                         <a-timeline v-if="interview.length >0">
                                     <a-timeline-item v-for="application in interview" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
@@ -165,6 +186,7 @@
                                     </a-timeline-item>
 
                                 </a-timeline>
+                                        </div>
                                     </div>
 
                                 </a-col>
@@ -185,6 +207,12 @@
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
+                                        <div v-if="waiting">
+                                            <div style="text-align: center">
+                                                <a-spin />
+                                            </div>
+                                        </div>
+                                        <div v-else>
                                         <a-timeline v-if="offers.length >0">
                                     <a-timeline-item v-for="application in offers" v-bind:key="application">
                                         <a><strong>{{application.title}}</strong></a>
@@ -208,6 +236,7 @@
                                     </a-timeline-item>
 
                                 </a-timeline>
+                                        </div>
                                     </div>
 
                                 </a-col>
@@ -284,7 +313,8 @@
                 interview: [],
                 offers: [],
                 visible: false,
-                currentinterview: {}
+                currentinterview: {},
+                waiting:false
 
             }
         },
@@ -301,6 +331,7 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+            this.waiting = true
 
             this.alldevjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
 
@@ -358,6 +389,7 @@
                 }
 
             }
+            this.waiting =false
 
 
         },

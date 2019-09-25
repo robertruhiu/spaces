@@ -33,6 +33,7 @@ const DeveloperProjectDetails = () => import('@/components/frontend/developer/De
 const Report = () => import('@/components/frontend/recruiter/Report');
 const Portfolio = () => import('@/components/frontend/developer/Portfolio');
 const DevCalendar = () => import('@/components/frontend/developer/DevCalendar');
+const Commmunity = () => import('@/components/frontend/developer/community');
 const TakeQuiz = () => import('@/components/frontend/developer/quiz/takequiz');
 const SelfverifyProject = () => import('@/components/frontend/developer/SelfverifyProject');
 
@@ -331,6 +332,14 @@ let router = new Router({
             path: '/checkout',
             name: 'checkout',
             component: Checkout,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/community',
+            name: 'community',
+            component: Commmunity,
             meta: {
                 requiresAuth: true
             }

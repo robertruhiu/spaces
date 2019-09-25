@@ -1,5 +1,6 @@
 <template>
 
+
     <a-dropdown :trigger="['click']" placement="bottomCenter">
     <a class="ant-dropdown-link" href="#">
 
@@ -13,18 +14,31 @@
                 </router-link>
       </a-menu-item>
 
-        <a-menu-item key="1" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' ">
+        <a-menu-item key="1" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">
         <router-link to="/recruiter">
 
                     <span>My account</span>
                 </router-link>
       </a-menu-item>
+
+        <a-menu-item key="6" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage !=='complete' ">
+            <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
+                             >My account
+                </router-link>
+        </a-menu-item>
+
         <a-menu-item key="2" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'">
         <router-link to="/developer">
 
                     <span>My account</span>
                 </router-link>
       </a-menu-item>
+        <a-menu-item key="7" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage !=='complete'">
+            <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
+                             >My account
+                </router-link>
+
+        </a-menu-item>
         <a-menu-item key="3" v-if="!$store.state.isUserLoggedIn">
         <router-link to="/login">
 
@@ -51,8 +65,32 @@
 </template>
 
 <script>
+    import UsersService from '@/services/UsersService'
     export default {
         name: "Menusider",
+        data() {
+
+            return {
+                currentUserProfile: null,
+
+
+            }
+
+        },
+        async mounted() {
+
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
+            if (this.$store.state.user.pk) {
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
+
+            }
+
+
+        },
         methods: {
 
             logout() {

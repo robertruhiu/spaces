@@ -6,15 +6,17 @@
             <footer id="footer" :style="{padding:'3%'}">
                 <div class="footer-wrap">
                     <div class="ant-row gutter">
+                        <hide-at breakpoint="mediumAndBelow">
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6 ">
                             <img class="imagecenter" src="../../assets/logo.svg" style="width: 50%">
                         </div>
+                        </hide-at>
                         <div class="ant-col-xs-12 ant-col-sm-12 ant-col-md-6">
                             <div class="footer-center">
                                 <h2 style="color: white;font-size: 1rem">Services</h2>
                                 <div>
                                     <router-link to="talent">
-                                        Talent
+                                        Talent pool
                                     </router-link>
 
 
@@ -57,6 +59,10 @@
                                     <a class="text-muted" href="https://twitter.com/Codeln_spaces" target="_blank">
                                         <a-icon type="twitter"/>
                                     </a>
+                                    <a class="text-muted" href="https://medium.com/codeln" target="_blank">
+                                        <a-icon type="medium" />
+                                    </a>
+
                                 </div>
 
 
@@ -74,10 +80,11 @@
 <script>
 
     import ACol from "ant-design-vue/es/grid/Col";
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     export default {
         name: "Footer",
-        components: {ACol},
+        components: {ACol,hideAt},
     }
 </script>
 
