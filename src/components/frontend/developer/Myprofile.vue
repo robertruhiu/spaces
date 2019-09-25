@@ -163,10 +163,26 @@
                             </a-col>
                         </a-row>
                         <div v-if="cv">
-                            <p>Current cv :<a :href="cv" target="_blank">cv link</a></p>
+                            <p v-if="alert" style="color: blue">Upload successful /cv changed</p>
+                            <p>Current cv :<a :href="cv" target="_blank">cv link</a>
+                            </p>
+
+
+                                <div v-if="uploading">
+
+                                <span>Uploading file <a-spin/></span>
+
+                            </div>
+                            <div v-else>
+                                Change/update CV
+                                <input type="file" @change="ChangehandleUpload" accept="application/pdf">
+                            </div>
+
+
                         </div>
 
                         <div v-else>
+
                             <div v-if="uploading">
                                 <span>Uploading file <a-spin/></span>
 
@@ -231,6 +247,7 @@
                 fileList: [],
                 uploading: false,
                 cv: '',
+                alert:false
 
 
             }
@@ -391,6 +408,57 @@
                 );
 
                 this.cv = res.data.secure_url
+
+
+            },
+            async ChangehandleUpload(e) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.uploading = true
+                const cloudName = 'dwtvwjhn3';
+                const unsignedUploadPreset = 'ml_default';
+
+                // console.log(e);
+                const file = e.target.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', unsignedUploadPreset);
+                let CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${cloudName}/raw/upload`
+
+                // Send to cloudianry
+                const res = await axios.post(
+                    CLOUDINARY_URL,
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+
+                    }
+                );
+
+                this.cv = res.data.secure_url
+                this.currentUserProfile.file = this.cv.slice(48)
+                UsersService.updatepatch(this.$store.state.user.pk, {file:this.cv.slice(48)}, auth)
+                    .then(resp => {
+                        this.currentUserProfile.file = this.cv
+                        this.uploading = false
+                        this.alert = true
+
+                        return resp
+
+
+                    })
+                    .catch(error => {
+
+                        return error
+
+
+                    });
+
+
 
 
             }

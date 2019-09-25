@@ -5,6 +5,8 @@ import store from '../store/store'
 const Home = () => import('@/components/frontend/homepages/Home')
 const Register = () => import('@/components/frontend/homepages/Register')
 const Login = () => import('@/components/frontend/homepages/Login')
+const Forgot = () => import('@/components/frontend/homepages/forgot')
+const Reset = () => import('@/components/frontend/homepages/passwordreset')
 const Talent = () => import('@/components/frontend/homepages/talent')
 const Privacy = () => import('@/components/frontend/homepages/privacy')
 const Terms = () => import('@/components/frontend/homepages/terms')
@@ -42,7 +44,7 @@ const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
 
 let router = new Router({
-
+    mode: 'history',
     routes: [
         {
             path: '/',
@@ -74,6 +76,16 @@ let router = new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/forgot',
+            name: 'forgot',
+            component: Forgot
+        },
+        {
+            path: 'rest-auth/password_reset_confirm/:Uid/:Token',
+            name: 'reset',
+            component: Reset
         },
         {
             path: '/myprofile',

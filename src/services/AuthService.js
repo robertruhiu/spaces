@@ -6,5 +6,8 @@ export default {
   },
   login (credentials){
     return Api().post('rest-auth/login/',credentials)
+  },
+  forgot (credentials){
+    return Api().post('rest-auth/password/reset/',credentials)
   }
 }
