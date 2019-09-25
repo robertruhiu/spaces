@@ -51,6 +51,9 @@ export default {
     update(user_id, currentUserProfile, auth) {
         return Api().put(`updater/${user_id} `, currentUserProfile, auth)
     },
+     updatepatch(user_id, patchdata, auth) {
+        return Api().patch(`updater/${user_id} `, patchdata, auth)
+    },
 
 
 }
