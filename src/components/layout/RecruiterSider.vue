@@ -18,7 +18,8 @@
 
             </router-link>
         </hide-at>
-        <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
+        <hide-at breakpoint="mediumAndBelow">
+            <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
             <a-menu-item key="1">
                 <router-link to="/recruiter">
                     <a-icon type="dashboard"/>
@@ -28,12 +29,12 @@
 
 
             <a-menu-item key="10">
-                <hide-at breakpoint="mediumAndBelow">
+
                     <a v-on:click="showDrawer">
                         <a-icon type="edit"/>
                         <span>Post a job</span>
                     </a>
-                </hide-at>
+
             </a-menu-item>
 
 
@@ -96,6 +97,81 @@
 
 
         </a-menu>
+        </hide-at>
+        <show-at breakpoint="mediumAndBelow">
+            <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
+            <a-menu-item key="1">
+                <router-link to="/recruiter">
+                    <a-icon type="dashboard"/>
+                    <span>Dashboard</span>
+                </router-link>
+            </a-menu-item>
+
+
+
+
+
+            <a-menu-item key="2" v-if="myjobs.length >0">
+                <router-link to="/managejobs">
+                    <a-icon type="project"/>
+                    <span>My jobs
+                    </span>
+                </router-link>
+            </a-menu-item>
+            <a-menu-item v-else disabled>
+
+                <a-icon type="project"/>
+                <span>My jobs</span>
+
+            </a-menu-item>
+            <a-menu-item key="3" v-if="mycandidates.length >0">
+                <router-link to="/mycandidates">
+                    <a-icon type="team"/>
+                    <span>My Candidates</span>
+                </router-link>
+
+            </a-menu-item>
+            <a-menu-item v-else disabled>
+
+                <a-icon type="team"/>
+                <span>My Candidates</span>
+
+            </a-menu-item>
+
+            <a-menu-item key="4">
+                <router-link to="/talent">
+                    <a-icon type="star"/>
+                    <span>Talent Pool</span>
+                </router-link>
+
+            </a-menu-item>
+            <a-menu-item key="8">
+                <router-link to="/calendar">
+                    <a-icon type="calendar"/>
+                    <span>Calendar</span>
+                </router-link>
+
+            </a-menu-item>
+
+            <a-menu-item key="6">
+                <router-link to="/myprofile">
+                    <a-icon type="user"/>
+                    <span>My profile</span>
+                </router-link>
+
+            </a-menu-item>
+            <a-menu-item key="7">
+                <a @click="logout">
+                    <a-icon type="export"/>
+                    <span>  Logout</span>
+                </a>
+
+            </a-menu-item>
+
+
+        </a-menu>
+        </show-at>
+
         <!----Post Job modal------->
 
         <a-drawer

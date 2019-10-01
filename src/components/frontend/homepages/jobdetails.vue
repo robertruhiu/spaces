@@ -165,6 +165,12 @@
                     .then(resp => {
                             this.save = false
                             this.applied = true
+
+
+                        MarketPlaceService.newapplicationemail(resp.data.id,auth)
+                            .then()
+                            .catch()
+
                         }
                     )
                     .catch(error => {

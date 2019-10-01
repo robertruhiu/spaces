@@ -8,10 +8,23 @@
                 <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row style="margin-bottom: 2%">
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
+                               :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
+
                             <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
                                 What would you like to do today?
                             </h3>
+
+                        </a-col>
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                               :lg="{span: 4, offset: 0 }" :xl="{span:4, offset: 0 }">
+                            <a-switch defaultChecked @change='Available' v-model="currentUserProfile.available"/>
+                            <a-tooltip>
+                                <template slot='title'>
+                                    Your profile will be published on the talent pool
+                                </template>
+                                Am available?
+                            </a-tooltip>
+
                         </a-col>
 
                     </a-row>
@@ -168,6 +181,30 @@
         methods: {
             navigateTo(route) {
                 this.$router.push(route)
+            },
+            Available() {
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+
+
+                UsersService.updatepatch(this.$store.state.user.pk, {available:this.currentUserProfile.available}, auth)
+                    .then(resp => {
+
+                        return resp
+
+
+                    })
+                    .catch(error => {
+
+                        return error
+
+
+                    });
+
+
             },
         },
     }

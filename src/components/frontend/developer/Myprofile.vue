@@ -67,8 +67,11 @@
                                         >
                                             <a-select
 
+                                                    mode="tags"
+                                                    name="work_type"
+                                                    @change="Availabiltytags"
                                                     placeholder="Select a option and change input text above"
-                                                    v-model="currentUserProfile.availabilty"
+                                                    v-model="availabiltytags"
                                             >
                                                 <a-select-option value="contract">
                                                     contract
@@ -247,7 +250,8 @@
                 fileList: [],
                 uploading: false,
                 cv: '',
-                alert:false
+                alert:false,
+                availabiltytags:[]
 
 
             }
@@ -272,6 +276,7 @@
 
                     }
                 }
+                this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
 
 
             }
@@ -461,7 +466,11 @@
 
 
 
-            }
+            },
+            Availabiltytags(value) {
+                console.log(`selected ${value}`);
+                this.currentUserProfile.availabilty = this.availabiltytags.join(", ")
+            },
         }
     }
 

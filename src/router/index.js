@@ -5,6 +5,7 @@ import store from '../store/store'
 const Home = () => import('@/components/frontend/homepages/Home')
 const Register = () => import('@/components/frontend/homepages/Register')
 const Login = () => import('@/components/frontend/homepages/Login')
+const Prices = () => import('@/components/frontend/homepages/prices')
 const Forgot = () => import('@/components/frontend/homepages/forgot')
 const Reset = () => import('@/components/frontend/homepages/passwordreset')
 const Talent = () => import('@/components/frontend/homepages/talent')
@@ -59,6 +60,14 @@ let router = new Router({
         {
             path: '/recruiter',
             name: 'recruiter',
+            component: RecruiterDashboard,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/post/:post',
+            name: 'post',
             component: RecruiterDashboard,
             meta: {
                 requiresAuth: true
@@ -355,6 +364,12 @@ let router = new Router({
             meta: {
                 requiresAuth: true
             }
+        },
+        {
+            path: '/prices',
+            name: 'prices',
+            component: Prices,
+
         },
     ],
 

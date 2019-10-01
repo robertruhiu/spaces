@@ -127,7 +127,7 @@
 
                     </hide-at>
                     <show-at breakpoint="mediumAndBelow">
-                         <div :style="{ background: '#fff', padding: '24px', minHeight: '50vh' }">
+                         <div :style="{ background: '#fff', padding: '24px', minHeight: '40vh' }">
                         <a-row>
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                    :md="{span: 18, offset: 4 }"

@@ -154,10 +154,13 @@
                                                         <a-icon type="environment"/>
                                                         {{item.location}}
                                                     </a-tag>
-                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
-                                                        {{item.availabilty}}
 
-                                                    </a-tag>
+
+                                                    <span style="" v-for="available in item.availabilty"
+                                                          v-bind:key="available.id">
+                                                <a-tag color="#F7E7F5" style="color:#B82EA4;">{{available}}</a-tag>
+
+                                            </span>
 
 
                                                 </div>
@@ -308,7 +311,7 @@
                 let skills = skill_list
                 let about = this.devs[i].about
                 let location = this.devs[i].country
-                let availabilty = this.devs[i].availabilty
+                let availabilty = this.devs[i].availabilty.split(',').slice(0, 2)
                 let verified = false
                 if (this.devs[i].verified_skills) {
                     verified = true

@@ -50,9 +50,12 @@
                                 <p>
 
                                     Availability :
-                                    <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                        {{currentUserProfile.availabilty}}
-                                    </a-tag>
+
+                                    <span style="" v-for="tag in availabiltytags"
+                                          v-bind:key="tag.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;margin-bottom: 1rem;">{{tag}}</a-tag>
+
+                                            </span>
 
 
                                 </p>
@@ -548,7 +551,8 @@
                 managecandidate: false,
                 waiting: false,
                 dataload: false,
-                candidatedata: false
+                candidatedata: false,
+                availabiltytags:[]
 
             }
         },
@@ -580,6 +584,7 @@
                 if (this.currentUserProfile.skills) {
                     this.skilltags = this.currentUserProfile.skills.split(',');
                 }
+                this.availabiltytags = this.currentUserProfile.availabilty.split(',');
                 if (this.currentUserProfile.verified_skills) {
                     this.verified_skills = this.currentUserProfile.verified_skills.split(',');
                 }
@@ -696,6 +701,11 @@
 
                         this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
                     }
+                    for (let i = 0; i < this.pickeddevs.length; i++) {
+                        if (this.pickeddevs[i] === this.$route.params.candidateProfileID) {
+                            this.managecandidate = true
+                        }
+                    }
 
 
                     this.devs = (await UsersService.devs()).data;
@@ -742,10 +752,12 @@
 
                     })
                     this.picked = p
-                    if (this.pickeddevs.length <= 10) {
+                    if (this.pickeddevs.length <= 4) {
+                        this.amount = 100
+                    } else if (this.pickeddevs.length <= 10) {
                         this.amount = 200
                     } else {
-                        this.amount = 400
+                        this.amount = 500
                     }
                     MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                         .then(resp => {
@@ -821,10 +833,12 @@
                         this.addcart = false
                         this.managecandidate = true
                         this.pickeddevs = resp.data.devspending.split(',');
-                        if (this.pickeddevs.length <= 10) {
+                        if (this.pickeddevs.length <= 4) {
+                            this.amount = 100
+                        } else if (this.pickeddevs.length <= 10) {
                             this.amount = 200
                         } else {
-                            this.amount = 400
+                            this.amount = 500
                         }
 
 

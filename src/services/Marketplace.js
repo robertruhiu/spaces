@@ -87,6 +87,12 @@ export default {
     },
     talentpickedmanagerview(application_id,auth){
         return Api().get(`marketplace/talentpickedmanagerview/${application_id} `, auth)
+    },
+    newjobemail(job_id,auth){
+        return Api().get(`marketplace/newjobemail/${job_id} `, auth)
+    },
+    newapplicationemail(application_id,auth){
+        return Api().get(`marketplace/newjobapplication/${application_id} `, auth)
     }
 
 }

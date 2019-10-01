@@ -8,6 +8,23 @@
     </a>
     <a-menu slot="overlay">
       <a-menu-item key="0">
+          <router-link to="/post/true"  v-if="$store.state.usertype ==='recruiter'">
+
+                    <span>Post a job for free</span>
+                </router-link>
+          <router-link to="/developer" v-else-if="$store.state.usertype ==='developer'">
+
+                    <span>Post a job for free</span>
+                </router-link>
+          <router-link to="/login" v-else>
+
+                    <span>Post a job for free</span>
+                </router-link>
+
+          <router-link to="/prices">
+
+                    <span>Pricing</span>
+                </router-link>
         <router-link to="/talent">
 
                     <span>Talent pool</span>

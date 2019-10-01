@@ -31,15 +31,14 @@
 
                                             />
                                             <div v-for="error in step1errors" v-bind:key="error">
-                                            <div v-if="error === 'github'" style="color: red">
-                                                required
+                                                <div v-if="error === 'github'" style="color: red">
+                                                    required
+                                                </div>
+                                                <div v-else-if="error === 'githubininvalid'" style="color: red">
+                                                    input a valid url
+                                                </div>
                                             </div>
-                                            <div v-else-if="error === 'githubininvalid'" style="color: red">
-                                                input a valid url
-                                            </div>
-                                        </div>
                                         </a-form-item>
-
 
 
                                     </a-col>
@@ -174,9 +173,12 @@
                                                 :wrapper-col="{ span: 24 }"
                                         >
                                             <a-select
+                                                    mode="tags"
                                                     name="work_type"
+                                                    @change="Availabiltytags"
                                                     placeholder="Select a option and change input text above"
-                                                    v-model="currentUserProfile.availabilty"
+                                                    v-model="availabiltytags"
+
                                             >
                                                 <a-select-option value="contract">
                                                     contract
@@ -309,7 +311,8 @@
                                         </div>
                                         <div v-else>
                                             Upload cv
-                                            <input style="margin-top: 1rem" accept="application/pdf" type="file" @change="handleUpload">
+                                            <input style="margin-top: 1rem" accept="application/pdf" type="file"
+                                                   @change="handleUpload">
                                         </div>
                                         <div v-for="error in errorlist" v-bind:key="error">
                                             <div v-if="error === 'cv'" style="color: red">
@@ -331,7 +334,7 @@
                         </div>
 
                         <div if v-else-if="current === 3">
-                                    <experience/>
+                            <experience/>
                         </div>
 
                     </div>
@@ -383,11 +386,6 @@
 
 
 
-
-
-
-
-
     </div>
 </template>
 
@@ -400,11 +398,6 @@
     import axios from 'axios'
     import Experience from "./experience";
     import Portfolio from "./portfolio";
-
-
-
-
-
 
 
     export default {
@@ -470,7 +463,8 @@
                 experienceform: this.$form.createForm(this),
                 projectform: this.$form.createForm(this),
                 developerstep1: this.$form.createForm(this),
-                doneloading: false
+                doneloading: false,
+                availabiltytags:[]
             }
         },
         async mounted() {
@@ -495,6 +489,7 @@
 
                         this.tags = array
                     }
+                    this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
 
                 }
             }
@@ -524,7 +519,7 @@
                 }
 
 
-                UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
+                UsersService.updatepatch(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
                         this.current++
                         this.loading = false
@@ -549,7 +544,7 @@
                 }
                 this.doneloading = true
                 this.currentUserProfile.stage = 'complete'
-                 this.currentUserProfile.user_type = 'developer'
+                this.currentUserProfile.user_type = 'developer'
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
                         if (this.currentUserProfile.user_type === 'developer') {
@@ -638,7 +633,7 @@
                         this.step1errors.push('linkedin')
 
                     }
-                    if (this.currentUserProfile.country === null || this.currentUserProfile.country === '' ) {
+                    if (this.currentUserProfile.country === null || this.currentUserProfile.country === '') {
                         this.step1errors.push('location')
 
                     }
@@ -699,11 +694,6 @@
             },
 
 
-
-
-
-
-
             async handleUpload(e) {
                 this.uploading = true
                 const cloudName = 'dwtvwjhn3';
@@ -732,7 +722,11 @@
                 this.currentUserProfile.file = this.cv.slice(48)
 
 
-            }
+            },
+            Availabiltytags(value) {
+                console.log(`selected ${value}`);
+                this.currentUserProfile.availabilty = this.availabiltytags.join(", ")
+            },
 
 
         }
