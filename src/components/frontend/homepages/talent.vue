@@ -313,7 +313,10 @@
                 let skills = skill_list
                 let about = this.devs[i].about
                 let location = this.devs[i].country
-                let availabilty = this.devs[i].availabilty.split(',').slice(0, 2)
+                let availabilty = []
+                if(this.devs[i].availabilty){
+                    availabilty = this.devs[i].availabilty.split(',').slice(0, 2)
+                }
                 let verified = false
                 if (this.devs[i].verified_skills) {
                     verified = true
