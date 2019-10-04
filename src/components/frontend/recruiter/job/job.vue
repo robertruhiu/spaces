@@ -11,6 +11,96 @@
 
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '80vh',maxWidth:'72rem' }">
                     <div style="padding-top: 2%;">
+                        <a-row style="padding-bottom: 1%">
+                            <a-col span="20"></a-col>
+                            <a-col span="4">
+                                <div v-if="dataload" style="text-align: center">
+                                    <a-spin/>
+                                </div>
+                                <div v-else>
+                                    <a-popover title="Picked candidates" trigger="click" placement="bottomRight"
+                                               v-if="pickedprofiles.length >0">
+                                        <template slot="content">
+                                            <div>
+                                                <div v-for="profile in pickedprofiles" v-bind:key="profile"
+                                                     style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">
+                                                    <p>{{profile.name}}
+
+                                                        <span style="float: right"><a
+                                                                @click="remove(profile.id,profile.type,profile.application_id)"><a-icon
+                                                                type="close-circle" theme="twoTone"/></a></span>
+                                                    </p>
+
+                                                </div>
+                                                <span v-if="paidbundleexists === false">
+                                            <p style="padding-top: 1rem">Total:{{amount}}</p>
+                                        </span>
+                                                <div style="text-align: center" v-if="waiting">
+                                                    <a-spin/>
+
+                                                </div>
+                                                <p style="font-size: 12px" v-if="conditions === false">
+
+                                                    <a-checkbox @change="Check" v-model="conditions"></a-checkbox>
+                                                    <a @click="TermsModal"> I agree to the terms and conditions</a>
+                                                </p>
+                                                <p style="font-size: 12px">
+                                                    <router-link to="/prices">Bundle prices</router-link>
+                                                </p>
+
+
+                                                <div v-if="paidbundleexists">
+                                                    <p style="font-size: 12px">
+                                                        existing bundle. bundle limit
+                                                        {{paiddevs.length}}/{{bundlelimit}}
+                                                    </p>
+                                                    <p v-if="exceeded" style="font-size: 12px;color: red">
+                                                        {{exceeded}}</p>
+                                                    <div style="text-align: center">
+                                                        <a-button type="primary" @click="addtopaid">Checkout</a-button>
+                                                    </div>
+
+
+                                                </div>
+                                                <div v-else>
+                                                    <div style="text-align: center" v-if="conditions">
+                                                        <Rave
+                                                                style-class="paymentbtn"
+                                                                :email="email"
+                                                                :amount="amount"
+                                                                :reference="reference"
+                                                                :rave-key="raveKey"
+                                                                :callback="callback"
+                                                                :close="close"
+                                                                :currency="currency"
+                                                                :country="country"
+                                                                :customer_firstname="customer_firstname"
+                                                                :customer_lastname="customer_lastname"
+                                                                :custom_title="custom.title"
+                                                                :custom_description="custom.description"
+                                                                :custom_logo="custom.logo"
+                                                                :redirect_url="redirectUrl"
+                                                                :payment_plan="paymentPlan"
+                                                                :subaccounts="subaccounts"
+                                                                :payment_method="paymentMethod">
+                                                        </Rave>
+                                                    </div>
+                                                    <div style="text-align: center" v-else>
+                                                        <a-button type="primary" disabled>Checkout</a-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <a-button type="primary">Picked Candidates</a-button>
+                                    </a-popover>
+                                </div>
+
+
+                            </a-col>
+
+                        </a-row>
+
+
                         <a-tabs defaultActiveKey="1"
                                 style="z-index: 0;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                             <!------allapplicants tabs  ------>
@@ -272,7 +362,11 @@
                                                                         Pick/Reject
                                                                     </div>
                                                                     <template slot-scope="text,record">
-                                                                        <a-button-group>
+                                                                        <div v-if="record.carted">
+                                                                            --
+                                                                        </div>
+
+                                                                        <a-button-group v-else>
                                                                             <a-button
                                                                                     @click="pickrejectClick(record.action,record.profile,true,record.name)"
                                                                                     type="primary">pick
@@ -1136,6 +1230,7 @@
 
 
                         </a-tabs>
+
                     </div>
                     <!---assign project--->
                     <a-modal
@@ -1382,6 +1477,23 @@
 
                     </a-modal>
                     <!---pay model--->
+                    <!-----terms and conditions modal----->
+                    <a-modal
+                            title="Terms and Conditions"
+                            v-model="terms"
+
+                    >
+                        <template slot="footer">
+
+                            <a-button v-if="conditions === false" type="primary" @click="Agree">
+                                I Agree
+                            </a-button>
+                            <a-button v-else type="danger" @click="Agree">
+                                I Disagree
+                            </a-button>
+                        </template>
+                        <tc/>
+                    </a-modal>
 
 
                 </div>
@@ -1518,7 +1630,7 @@
     //applicants structure on table
     class Applicant {
         constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                    end, color, report, offerstatus, offerletter) {
+                    end, color, report, offerstatus, offerletter, carted) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1536,6 +1648,7 @@
             this.report = report
             this.offerstatus = offerstatus
             this.offerletter = offerletter
+            this.carted = carted
 
 
         }
@@ -1557,6 +1670,18 @@
         }
     }
 
+    class Cart {
+        constructor(id, name, verified, type, application_id) {
+            this.id = id;
+            this.name = name;
+            this.verified = verified;
+            this.type = type
+            this.application_id = application_id
+
+
+        }
+    }
+
 
     import moment from 'moment';
     import UsersService from '@/services/UsersService'
@@ -1567,6 +1692,9 @@
     import RecruiterSider from "../../../layout/RecruiterSider";
     import Projectsservice from '@/services/Projects'
     import '../../../../assets/css/vuecal.css'
+    import Rave from "@/components/frontend/recruiter/cart/Rave";
+    import tc from '@/components/frontend/homepages/tc'
+    import Payments from '@/services/Payments';
 
 
     export default {
@@ -1598,7 +1726,6 @@
                 active: false,
                 newapplications: false,
                 recommended: false,
-                amount: null,
                 deadline: null,
                 candidate: null,
                 applicationid: null,
@@ -1613,7 +1740,41 @@
                 interviewer: null,
                 interviewerapplicationid: null,
                 eventcolor: 'blue',
-                waiting: true
+                waiting: true,
+                placements: 'bottomRight',
+                dataload: false,
+                exceeded: '',
+                terms: false,
+                conditions: false,
+                pickeddevpaid: [],
+                paiddevs: [],
+                pickeddevs: [],
+                paidbundleexists: false,
+                amount: 0,
+                raveKey: "FLWPUBK-1007dc4eb48e0d1e0b6bf86d083ba020-X",
+                email: "",
+                currency: "USD",
+                country: "GH",
+                customer_firstname: '',
+                customer_lastname: '',
+
+                custom: {
+                    title: "Codeln",
+                    description: "Payment for Codeln Developers",
+                    logo: "https://www.codeln.com/img/logobg.f302741d.svg"
+                },
+
+                paymentPlan: "", // add payments plan ID here
+                paymentMethod: "", // add 'card' or 'account' if you want a specific feature. Leave empty if you want all features
+                subaccounts: {
+                    id: "RS_73954F005E68DADF3483197D5CF13E1E", // id of the subaccount; get from your dashboard
+                    transaction_split_ratio: "", //
+                    transaction_charge_type: "", //include this if the you want a flat fee eg: flat
+                    transaction_charge: "" // include the flat fee amount you want eg: 100
+                },
+                cart: [],
+                cart_items: [],
+                pickedprofiles: [],
 
 
             }
@@ -1624,6 +1785,8 @@
             ACol,
             RecruiterSider,
             Jobheader,
+            Rave,
+            tc
 
 
         },
@@ -1637,6 +1800,9 @@
             if (this.$store.state.user.pk) {
                 this.waiting = true
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.customer_firstname = this.$store.state.user.first_name
+                this.customer_lastname = this.$store.state.user.last_name
+                this.email = this.$store.state.user.email
                 // all developer profile list api fetch
                 this.alldevsprofile = (await UsersService.devs()).data;
 
@@ -1690,9 +1856,10 @@
                     let report = this.applicants[j].report
                     let offerstatus = this.applicants[j].offerstatus
                     let offerletter = this.applicants[j].offerletter
+                    let carted = this.applicants[j].carted
                     let onepickeddev = new Applicant(
                         id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                        end, color, report, offerstatus, offerletter
+                        end, color, report, offerstatus, offerletter, carted
                     );
 
                     this.applicantprofile.push(onepickeddev)
@@ -1827,9 +1994,94 @@
                 // recent projects
                 this.recentprojects = (await Projectsservice.recentprojects(this.$store.state.user.pk, auth)).data
 
+                // cart system for job ats begins here
+                this.dataload = true
+                this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
+
+
+                if (this.carts.length > 0) {
+                    this.mycart = this.carts[0]
+                    this.conditions = this.mycart.conditions
+                    if (this.mycart.devspending) {
+                        this.pickeddevs = this.mycart.devspending.split(',');
+
+                    }
+                    if (this.mycart.devspaid) {
+                        this.paiddevs = this.mycart.devspaid.split(',');
+                    }
+                    if (this.mycart.amount) {
+                        this.paidbundleexists = true
+                        if (this.mycart.amount === 100) {
+                            this.bundlelimit = 4
+                        } else if (this.mycart.amount === 200) {
+                            this.bundlelimit = 10
+                        } else if (400 <= this.mycart.amount > 200) {
+                            this.bundlelimit = 20
+                        }
+                    }
+                    if (this.paiddevs.length > this.bundlelimit) {
+                            this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
+
+                        }
+
+
+                } else {
+
+                    this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
+                }
+                this.devs = (await UsersService.devs()).data;
+
+                for (let i = 0; i < this.applicants.length; i++) {
+                    if (this.pickeddevs.length > 0) {
+                        for (let j = 0; j < this.pickeddevs.length; j++) {
+
+                            if (this.applicants[i].candidate.id === Number(this.pickeddevs[j])) {
+
+                                let id = this.applicants[i].candidate.id
+                                let name = this.applicants[i].candidate.user.first_name
+                                let type = this.applicants[i].type
+                                let verified = false
+                                let application_id = this.applicants[i].id
+                                if (this.devs[i].verified_skills) {
+                                    verified = true
+                                }
+
+                                let one_profile = new Cart(
+                                    id, name, verified, type, application_id
+                                );
+                                this.pickedprofiles.push(one_profile)
+
+                            }
+
+
+                        }
+
+                    }
+
+
+                }
+                if (this.pickeddevs.length <= 4) {
+                    this.amount = 100
+                } else if (this.pickeddevs.length <= 10) {
+                    this.amount = 200
+                } else {
+                    this.amount = 500
+                }
+                this.dataload = false
+
+
             }
 
 
+        },
+        computed: {
+            reference() {
+                let text = "";
+                let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                for (let i = 0; i < 10; i++)
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+                return text;
+            }
         },
         methods: {
             moment,
@@ -2206,22 +2458,44 @@
 
                         if (this.newapplicant[i].profile === candidate_id) {
 
-                            this.active = true
 
-                            Marketplace.pickreject(job_id, {stage: 'active', selected: true, candidatename: name}, auth)
+                            const auth = {
+                                headers: {Authorization: 'JWT ' + this.$store.state.token}
+                            };
+                            this.pickeddevs.push(candidate_id.toString())
+
+                            let developers = this.pickeddevs.join(',')
+
+                            Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
                                 .then(resp => {
-                                    this.applicants = []
-                                    this.newapplicant = []
-                                    this.pickedapplicants = []
-                                    this.interviewstage = []
-                                    this.testingstage = []
-                                    this.offerstage = []
-                                    this.hirestage = []
-                                    this.recommmedcandidates = []
-                                    this.applicantprofile = []
-                                    self.Datarefresh()
-                                    return resp
-                                })
+                                        this.pickedprofiles = []
+                                        self.refresh()
+
+
+                                    }
+                                )
+                                .catch(error => {
+                                    this.addcart = false
+                                    this.picked = false
+                                    return error
+
+                                });
+                            Marketplace.pickreject(job_id, {carted: true}, auth)
+                                .then(resp => {
+                                        this.applicants = []
+                                        this.newapplicant = []
+                                        this.pickedapplicants = []
+                                        this.interviewstage = []
+                                        this.testingstage = []
+                                        this.offerstage = []
+                                        this.hirestage = []
+                                        this.recommmedcandidates = []
+                                        this.applicantprofile = []
+                                        this.waiting = false
+                                        self.Datarefresh()
+                                        return resp
+                                    }
+                                )
                                 .catch()
 
 
@@ -2275,19 +2549,23 @@
                 if (key === 1) {
                     for (let i = 0; i < this.recommmedcandidatesverified.length; i++) {
 
+
                         if (this.recommmedcandidatesverified[i].profile === candidate_id) {
 
                             if (this.recommmedcandidates.length === 0 && this.recommmedcandidatesverified.length === 0) {
                                 this.recommended = false
                             }
                             let self = this;
+
+
                             Marketplace.pickrecommended(
                                 {
                                     job: job_id,
                                     candidate: candidate_id,
-                                    stage: 'active',
-                                    selected: true,
+                                    stage: 'new',
+                                    selected: false,
                                     recruiter: this.$store.state.user.pk,
+
 
                                 },
                                 auth
@@ -2305,7 +2583,6 @@
                                         this.applicantprofile = []
                                         this.waiting = false
                                         self.Datarefresh()
-                                        this.active = true
                                         return resp
 
 
@@ -2318,6 +2595,7 @@
                     }
 
                 } else if (key === 2) {
+                    this.dataload = true
                     for (let i = 0; i < this.recommmedcandidates.length; i++) {
                         if (this.recommmedcandidates[i].profile === candidate_id) {
 
@@ -2325,13 +2603,38 @@
                                 this.recommended = false
                             }
                             let self = this;
+
+
+                            const auth = {
+                                headers: {Authorization: 'JWT ' + this.$store.state.token}
+                            };
+                            this.pickeddevs.push(candidate_id.toString())
+
+                            let developers = this.pickeddevs.join(',')
+
+                            Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
+                                .then(resp => {
+                                    this.pickedprofiles = []
+                                    this.dataload = false
+                                    self.refresh()
+
+
+                                })
+                                .catch(error => {
+                                    this.addcart = false
+
+                                    return error
+
+                                });
                             Marketplace.pickrecommended(
                                 {
                                     job: job_id,
                                     candidate: candidate_id,
-                                    stage: 'active',
-                                    selected: true,
+                                    stage: 'new',
+                                    selected: false,
                                     recruiter: this.$store.state.user.pk,
+                                    carted: true,
+                                    type: 'recommend'
 
                                 },
                                 auth
@@ -2347,9 +2650,9 @@
                                         this.recommmedcandidates = []
                                         this.recommmedcandidatesverified = []
                                         this.applicantprofile = []
+
                                         this.waiting = false
                                         self.Datarefresh()
-                                        this.active = true
                                         return resp
 
 
@@ -2360,6 +2663,7 @@
 
                         }
                     }
+
                 }
 
 
@@ -2451,6 +2755,7 @@
             },
             // upload offer letter
             async Datarefresh() {
+                this.waiting = true
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -2502,9 +2807,10 @@
                         let report = this.applicants[j].report
                         let offerstatus = this.applicants[j].offerstatus
                         let offerletter = this.applicants[j].offerletter
+                        let carted = this.applicants[j].carted
                         let onepickeddev = new Applicant(
                             id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                            end, color, report, offerstatus, offerletter
+                            end, color, report, offerstatus, offerletter, carted
                         );
 
                         this.applicantprofile.push(onepickeddev)
@@ -2634,13 +2940,352 @@
                     }
 
 
-
                     this.waiting = false
 
 
                 }
                 this.waiting = false
 
+            },
+            async refresh() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+                };
+                this.waiting = true
+                // cart system for job ats begins here
+                // getting applicants for job
+                this.applicants = (await Marketplace.specificjobapplicants(this.$store.state.route.params.jobId, auth)).data
+                this.dataload = true
+                this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
+
+
+                if (this.carts.length > 0) {
+                    this.mycart = this.carts[0]
+                    this.conditions = this.mycart.conditions
+                    if (this.mycart.devspending) {
+                        this.pickeddevs = this.mycart.devspending.split(',');
+
+                    }
+                    if (this.mycart.devspaid) {
+                        this.paiddevs = this.mycart.devspaid.split(',');
+                    }
+                    if (this.mycart.amount) {
+                        this.paidbundleexists = true
+                        if (this.mycart.amount === 100) {
+                            this.bundlelimit = 4
+                        } else if (this.mycart.amount === 200) {
+                            this.bundlelimit = 10
+                        } else if (400 <= this.mycart.amount > 200) {
+                            this.bundlelimit = 20
+                        }
+                    }
+
+
+                } else {
+
+                    this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
+                }
+
+
+                if (this.pickeddevs.length <= 4) {
+                    this.amount = 100
+                } else if (this.pickeddevs.length <= 10) {
+                    this.amount = 200
+                } else {
+                    this.amount = 500
+                }
+                this.dataload = false
+
+
+                for (let i = 0; i < this.applicants.length; i++) {
+                    if (this.pickeddevs.length > 0) {
+                        for (let j = 0; j < this.pickeddevs.length; j++) {
+
+                            if (this.applicants[i].candidate.id === Number(this.pickeddevs[j])) {
+
+                                let id = this.applicants[i].candidate.id
+                                let name = this.applicants[i].candidate.user.first_name
+                                let type = this.applicants[i].type
+                                let verified = false
+                                let application_id = this.applicants[i].id
+                                if (this.devs[i].verified_skills) {
+                                    verified = true
+                                }
+
+                                let one_profile = new Cart(
+                                    id, name, verified, type, application_id
+                                );
+                                this.pickedprofiles.push(one_profile)
+
+                            }
+
+
+                        }
+
+                    }
+
+
+                }
+                if (this.pickeddevs.length <= 4) {
+                    this.amount = 100
+                } else if (this.pickeddevs.length <= 10) {
+                    this.amount = 200
+                } else {
+                    this.amount = 500
+                }
+                this.waiting = false
+
+            },
+            TermsModal() {
+                this.terms = true
+            },
+            Agree() {
+                if (this.conditions === true) {
+                    this.conditions = false
+                } else {
+                    this.conditions = true
+                }
+
+                this.terms = false
+            },
+            Check(e) {
+                this.conditions = e.target.checked
+            },
+            remove(dev_id, type, application_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+                };
+                this.waiting = true
+                let self = this
+
+                var index = this.pickeddevs.indexOf(dev_id.toString());
+                if (index > -1) {
+                    this.pickeddevs.splice(index, 1);
+                    let developers = this.pickeddevs.join(',')
+
+                    Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
+                        .then(resp => {
+                            this.pickedprofiles = []
+                            self.refresh()
+
+
+                        })
+                        .catch(error => {
+                            return error
+                        });
+                    if (type === 'applied') {
+                        Marketplace.pickreject(application_id, {carted: false}, auth)
+                            .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    this.waiting = false
+                                    self.Datarefresh()
+                                    return resp
+                                }
+                            )
+                            .catch()
+
+                    } else if (type === 'recommend') {
+                        Marketplace.deletejobapplication(application_id, auth)
+                            .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    this.waiting = false
+                                    self.Datarefresh()
+                                    return resp
+                                }
+                            )
+                            .catch()
+
+                    }
+
+                }
+
+            },
+            addtopaid() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+                }
+                this.waiting = true
+                let self = this
+
+                this.paiddevs = this.paiddevs.concat(this.pickeddevs);
+                if (this.paiddevs.length > this.bundlelimit) {
+                    this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
+
+                } else {
+                    this.pickeddevs = []
+                    let developerspaid = this.paiddevs.join(',')
+                    let developerspending = this.pickeddevs.join(',')
+
+                    if (this.bundlelimit === this.paiddevs.length) {
+                        Payments.cartitemadd(this.mycart.id, {
+                            devspending: developerspending,
+                            devspaid: developerspaid,
+                            checked_out: true
+
+                        }, auth)
+                            .then(resp => {
+                                return resp
+                            })
+
+                    } else {
+                        Payments.cartitemadd(this.mycart.id, {
+                            devspending: developerspending,
+                            devspaid: developerspaid,
+
+                        }, auth)
+                            .then(resp => {
+
+
+                                return resp
+                            })
+                    }
+                    for (let j = 0; j < this.pickedprofiles.length; j++) {
+
+
+                        Marketplace.pickreject(this.pickedprofiles[j].application_id, {
+                            selected: true,
+                            stage: 'active'
+                        }, auth)
+                            .then(resp => {
+                                    this.pickedprofiles = []
+                                    self.refresh()
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    this.waiting = false
+                                    return resp
+
+                                }
+                            )
+                            .catch(error => {
+                                return error
+
+
+                            });
+
+
+                    }
+
+
+                }
+
+
+            },
+
+            callback: function (response) {
+                let self = this
+                this.waiting = true
+                if (response.success) {
+                    const auth = {
+                        headers: {Authorization: 'JWT ' + this.$store.state.token}
+                    }
+                    this.paiddevs = this.paiddevs.concat(this.pickeddevs);
+                    this.pickeddevs = []
+                    let developerspaid = this.paiddevs.join(',')
+                    let developerspending = this.pickeddevs.join(',')
+
+                    Payments.cartitemadd(this.mycart.id, {
+                        devspending: developerspending,
+                        devspaid: developerspaid,
+                        amount: response.tx.amount,
+                        transaction_id: response.tx.txRef,
+                        type: 'job',
+                        conditions: true
+                    }, auth)
+                        .then(resp => {
+                            return resp
+                        })
+
+
+                    for (let j = 0; j < this.pickedprofiles.length; j++) {
+
+
+                        Marketplace.pickreject(this.pickedprofiles[j].application_id, {
+                            selected: true,
+                            stage: 'active'
+                        }, auth)
+                            .then(resp => {
+                                    this.pickedprofiles = []
+                                    self.refresh()
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    this.waiting = false
+                                    self.Datarefresh()
+                                    return resp
+
+                                }
+                            )
+                            .catch(error => {
+                                return error
+
+
+                            });
+
+
+                    }
+
+
+                    if (response.tx.amount === 100) {
+                        let bundlelimit = 4
+                        if (this.paiddevs === bundlelimit) {
+                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                                .then()
+                                .catch();
+                        }
+
+                    } else if (response.tx.amount === 200) {
+                        let bundlelimit = 10
+                        if (this.paiddevs === bundlelimit) {
+                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                                .then()
+                                .catch();
+                        }
+                    } else if (500 <= response.tx.amount > 200) {
+                        let bundlelimit = 33
+                        if (this.paiddevs === bundlelimit) {
+                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                                .then()
+                                .catch();
+                        }
+                    }
+
+
+                }
+
+
+            },
+            close: function () {
+                console.log("Payment closed")
             },
 
 

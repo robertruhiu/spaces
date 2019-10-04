@@ -48,8 +48,10 @@
                 <a-row>
 
 
+
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
+                        <a-alert message="If you have a posted  job you can attach picked candidates to it.You can do this on manage candidates page" type="info" closeText="Close Now" />
                         <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
                             <a-spin size="large"/>
                         </div>

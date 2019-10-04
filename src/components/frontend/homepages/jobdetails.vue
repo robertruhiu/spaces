@@ -41,10 +41,10 @@
                             <div>
                                 <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
                                          message="Job application successful" type="success" closeText="Close Now"/>
-                                <p><strong>Company name:</strong> {{job.company}}
-                                    <span style="margin-left: 5%">
+                                <p>
+
                                     Location : {{job.location}}
-                                </span>
+
 
                                 </p>
                                 <p>Monthly renumeration * : {{job.remuneration}}</p>
@@ -158,6 +158,7 @@
                         recruiter: this.job.posted_by,
                         stage: 'new',
                         selected: false,
+                        type:'applied'
 
                     },
                     auth

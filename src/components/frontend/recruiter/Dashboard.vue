@@ -381,7 +381,8 @@
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
                                 <a-alert
-                                        message="Your job will be under review before it appears on the job board.Contact will be made if any issue"
+                                        message="Your job is under review. It will be updated soon if it matches our specification.
+                                         Else, we will contact you directly for edits."
                                         type="info" />
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
@@ -690,8 +691,9 @@
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
                                 <a-alert
-                                        message="Your job will be under reviewed before it appears on the job board.Contact will be made if any issue"
-                                        type="info" closeText="Close Now"/>
+                                        message="Your job is under review. It will be updated soon if it matches our specification.
+                                        Else, we will contact you directly for edits."
+                                        type="info" />
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>

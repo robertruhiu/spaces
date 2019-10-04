@@ -45,7 +45,7 @@ const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
 
 let router = new Router({
-    mode: 'history',
+
     routes: [
         {
             path: '/',
@@ -92,9 +92,13 @@ let router = new Router({
             component: Forgot
         },
         {
-            path: 'rest-auth/password_reset_confirm/:Uid/:Token',
+            path: '/password_reset_confirm',
             name: 'reset',
-            component: Reset
+            component: Reset,
+            props: (route) =>({
+                uid :route.query.uid,
+                token :route.query.token,
+            })
         },
         {
             path: '/myprofile',

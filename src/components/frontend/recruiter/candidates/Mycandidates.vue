@@ -29,10 +29,24 @@
                                                         Active Applicants
                                                         <a-tag color="blue">{{paidapplicants.length}}</a-tag>
                                                     </span>
+                                                    <a-button
+                                                            type="primary"
+                                                            @click="attach"
+                                                            :disabled="!hasSelected"
+
+                                                    >
+                                                        Attach to job
+                                                    </a-button>
+                                                    <span style="margin-left: 8px">
+                                                        <template v-if="hasSelected">
+                                                            {{`Selected ${selectedRowKeys.length} candidates`}}
+                                                        </template>
+                                                    </span>
                                                     <div style="text-align: center" v-if="waiting">
-                                                         <a-spin />
+                                                        <a-spin/>
 
                                                     </div>
+
 
                                                     <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
 
@@ -42,13 +56,13 @@
                                                                     key="1">
 
                                                             <a-table :dataSource="paidapplicants" :scroll="{ y: 340 }"
-                                                                     size="middle">
+                                                                     size="middle"
+                                                                     :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}">
 
                                                                 <!-----name--------->
                                                                 <a-table-column
                                                                         dataIndex="name"
                                                                         key="name"
-                                                                        width="10%"
 
 
                                                                 >
@@ -64,17 +78,19 @@
                                                                 <a-table-column
                                                                         dataIndex="profile"
                                                                         key="profile"
-                                                                        width="10%"
 
 
                                                                 >
-                                                                    <div style="" slot="title">User profile</div>
+                                                                    <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
-                                                        <span style="margin-left: 15%">
+                                                                        <div>
+                                                                            <span>
                                                             <a @click="navigateTo({name:'mycandidatesprofile',params:{candidateId: record.profile,applicationId: record.action}})">
 
                                                                 profile</a>
                                                         </span>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -83,10 +99,10 @@
 
                                                                         dataIndex="tags"
                                                                         key="tags"
-                                                                        width="20%"
+
 
                                                                 >
-                                                                    <div style="text-align: center" slot="title">
+                                                                    <div slot="title">
                                                                         Verified
                                                                         Skills
                                                                     </div>
@@ -106,13 +122,15 @@
 
                                                                         dataIndex="stage"
                                                                         key="stage"
-                                                                        width="20%"
+                                                                        width="15%"
+
 
                                                                 >
-                                                                    <div style="margin-left: 25%" slot="title">Stage
+                                                                    <div slot="title">Stage
                                                                     </div>
                                                                     <template slot-scope="text, record">
-                                                        <span style="margin-left: 25%">
+                                                                        <div style="text-align: center">
+                                                        <span>
                                                             <a-tag v-if="record.stage === 'active'"
                                                                    color="#8BC34A"
                                                                    style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
@@ -127,6 +145,7 @@
                                                                    color="#e04a6d"
                                                                    style="text-align: center;width: 4rem;">withdrew</a-tag>
                                                         </span>
+                                                                        </div>
                                                                     </template>
 
                                                                 </a-table-column>
@@ -140,40 +159,42 @@
                                                                 >
 
                                                                     <template slot-scope="text,record">
-                                                                        <div v-if="record.stage ==='active'">
-                                                                            <a-dropdown>
-                                                                                <a-menu slot="overlay">
-                                                                                    <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,1)">
-                                                                                        <a-icon
-                                                                                                type="codepen"/>
-                                                                                        assign project test
-                                                                                    </a-menu-item>
-                                                                                    <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,2)">
-                                                                                        <a-icon
-                                                                                                type="calendar"/>
-                                                                                        interview candidate
-                                                                                    </a-menu-item>
+                                                                        <div style="text-align: center">
+                                                                            <div v-if="record.stage ==='active'">
+                                                                                <a-dropdown>
+                                                                                    <a-menu slot="overlay">
+                                                                                        <a-menu-item
+                                                                                                @click="handleMenuClick(record.action,record.profile,1)">
+                                                                                            <a-icon
+                                                                                                    type="codepen"/>
+                                                                                            assign project test
+                                                                                        </a-menu-item>
+                                                                                        <a-menu-item
+                                                                                                @click="handleMenuClick(record.action,record.profile,2)">
+                                                                                            <a-icon
+                                                                                                    type="calendar"/>
+                                                                                            interview candidate
+                                                                                        </a-menu-item>
 
-                                                                                    <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,3)">
-                                                                                        <a-icon
-                                                                                                type="close"/>
-                                                                                        reject candidate
-                                                                                    </a-menu-item>
-                                                                                </a-menu>
-                                                                                <a-button type="primary"
-                                                                                          style="height: 30px">
-                                                                                    choices
-                                                                                    <a-icon type="down"/>
-                                                                                </a-button>
-                                                                            </a-dropdown>
+                                                                                        <a-menu-item
+                                                                                                @click="handleMenuClick(record.action,record.profile,3)">
+                                                                                            <a-icon
+                                                                                                    type="close"/>
+                                                                                            reject candidate
+                                                                                        </a-menu-item>
+                                                                                    </a-menu>
+                                                                                    <a-button type="primary"
+                                                                                              style="height: 30px">
+                                                                                        choices
+                                                                                        <a-icon type="down"/>
+                                                                                    </a-button>
+                                                                                </a-dropdown>
 
-                                                                        </div>
-                                                                        <div v-else>
-                                                                            --
+                                                                            </div>
+                                                                            <div v-else>
+                                                                                --
 
+                                                                            </div>
                                                                         </div>
 
 
@@ -1026,6 +1047,17 @@
 
 
                     </a-modal>
+                    <!---attach to job---->
+                    <a-modal
+                            title="Pick a job to attach candidate to"
+                            v-model="attachjob"
+                            :footer="null"
+                    >
+                        <p v-for="job in jobs" v-bind:key="job">
+                            <a @click="addtojob(job.id)">{{job.title}}</a>
+                        </p>
+
+                    </a-modal>
 
                 </div>
 
@@ -1193,7 +1225,7 @@
         data() {
 
             return {
-                waiting:true,
+                waiting: true,
                 pickeddevs: [],
                 paiddevs: [],
                 columns,
@@ -1223,7 +1255,10 @@
                 interviewend: null,
                 interviewer: null,
                 interviewerapplicationid: null,
-                eventcolor: 'blue'
+                eventcolor: 'blue',
+                selectedRowKeys: [],
+                attachjob: false,
+                jobs: []
 
             }
         },
@@ -1234,6 +1269,11 @@
             MycandidatesHeader
 
 
+        },
+        computed: {
+            hasSelected() {
+                return this.selectedRowKeys.length > 0
+            }
         },
         async mounted() {
             const auth = {
@@ -1298,7 +1338,6 @@
                                 }
 
 
-
                                 // candidates sorting
                                 for (let i = 0; i < this.candidateprofiles.length; i++) {
                                     if (this.candidateprofiles[i].paid === true) {
@@ -1350,6 +1389,7 @@
 
                 // recent projects
                 this.recentprojects = (await Projectsservice.myrecentprojects(this.$store.state.user.pk, auth)).data
+                this.jobs = (await MarketPlaceService.myjobs(this.$store.state.user.pk, auth)).data
 
             }
 
@@ -1914,7 +1954,58 @@
 
                 }
 
+            },
+            onSelectChange(selectedRowKeys) {
+
+                this.selectedRowKeys = selectedRowKeys
+            },
+            attach() {
+                this.attachjob = true
+            },
+            addtojob(job_id) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+
+                this.selectedRowKeys.forEach(application_id => {
+                    this.pickeddevs.forEach(application => {
+                        if (application.id === application_id) {
+                            MarketPlaceService.pickrecommended(
+                                {
+                                    job: job_id,
+                                    candidate: application.developer.user.id,
+                                    stage: 'active',
+                                    selected: true,
+                                    recruiter: this.$store.state.user.pk,
+                                    type:'talent'
+
+                                },
+                                auth
+                            )
+
+                        }
+                    })
+
+                })
+                this.selectedRowKeys.forEach(application_id => {
+                    MarketPlaceService.candidatemanagerdelete(application_id, auth)
+                        .then(resp => {
+                            this.attachjob = false
+                                this.$router.push({
+                                    name: 'job',
+                                    params: {jobId: job_id}
+                                })
+                            }
+                        )
+                        .catch()
+
+                })
+
+
+
             }
+
         }
     }
 </script>

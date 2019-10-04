@@ -68,11 +68,15 @@
                                 </a-form-item>
                                 <a-form-item v-if="loading === false">
 
+
                                         <a
                                             class="login-form-forgot"
 
                                     >
+                                            <router-link to="/forgot">
                                         Forgot password
+                                    </router-link>
+
                                     </a>
 
 

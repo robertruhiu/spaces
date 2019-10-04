@@ -319,6 +319,14 @@
                                                 <a-spin/>
 
                                             </div>
+                                            <p style="font-size: 12px" v-if="conditions === false">
+
+                                                <a-checkbox @change="Check" v-model="conditions"></a-checkbox>
+                                                <a @click="TermsModal"> I agree to the terms and conditions</a>
+                                            </p>
+                                            <p style="font-size: 12px">
+                                                <router-link to="/prices">Bundle prices</router-link>
+                                            </p>
 
 
                                             <div v-if="paidbundleexists">
@@ -326,6 +334,7 @@
                                                     existing bundle. bundle limit
                                                     {{paiddevs.length}}/{{bundlelimit}}
                                                 </p>
+                                                <p v-if="exceeded" style="font-size: 12px;color: red">{{exceeded}}</p>
                                                 <div style="text-align: center">
                                                     <a-button type="primary" @click="addtopaid">Checkout</a-button>
                                                 </div>
@@ -333,7 +342,7 @@
 
                                             </div>
                                             <div v-else>
-                                                <div style="text-align: center">
+                                                <div style="text-align: center" v-if="conditions">
                                                     <Rave
                                                             style-class="paymentbtn"
                                                             :email="email"
@@ -354,6 +363,9 @@
                                                             :subaccounts="subaccounts"
                                                             :payment_method="paymentMethod">
                                                     </Rave>
+                                                </div>
+                                                <div style="text-align: center" v-else>
+                                                    <a-button type="primary" disabled>Checkout</a-button>
                                                 </div>
                                             </div>
 
@@ -432,6 +444,23 @@
 
 
                 </a-row>
+                <!-----terms and conditions modal----->
+                <a-modal
+                        title="Terms and Conditions"
+                        v-model="terms"
+
+                >
+                    <template slot="footer">
+
+                        <a-button v-if="conditions === false" type="primary" @click="Agree">
+                            I Agree
+                        </a-button>
+                        <a-button v-else type="danger" @click="Agree">
+                            I Disagree
+                        </a-button>
+                    </template>
+                    <tc/>
+                </a-modal>
 
 
             </a-layout-content>
@@ -491,6 +520,7 @@
     import Payments from '@/services/Payments';
     import {showAt, hideAt} from 'vue-breakpoints'
     import Rave from "@/components/frontend/recruiter/cart/Rave";
+    import tc from '@/components/frontend/homepages/tc'
 
 
     export default {
@@ -552,7 +582,10 @@
                 waiting: false,
                 dataload: false,
                 candidatedata: false,
-                availabiltytags:[]
+                terms: false,
+                conditions: false,
+                availabiltytags: [],
+                exceeded: ''
 
             }
         },
@@ -561,7 +594,8 @@
             ARow,
             Pageheader,
             showAt, hideAt,
-            Rave
+            Rave,
+            tc
 
 
         },
@@ -671,6 +705,7 @@
                     .catch(error => {
                         return error
                     })
+                this.candidatedata = false
 
 
                 if (this.$store.state.usertype === 'recruiter') {
@@ -680,6 +715,7 @@
 
                     if (this.carts.length > 0) {
                         this.mycart = this.carts[0]
+                        this.conditions = this.mycart.conditions
                         if (this.mycart.devspending) {
                             this.pickeddevs = this.mycart.devspending.split(',');
 
@@ -687,13 +723,20 @@
                         if (this.mycart.devspaid) {
                             this.paiddevs = this.mycart.devspaid.split(',');
                         }
+
                         if (this.mycart.amount) {
                             this.paidbundleexists = true
-                            if (this.mycart.amount === 200) {
+                            if (this.mycart.amount === 100) {
+                                this.bundlelimit = 4
+                            } else if (this.mycart.amount === 200) {
                                 this.bundlelimit = 10
                             } else if (400 <= this.mycart.amount > 200) {
                                 this.bundlelimit = 20
                             }
+                        }
+                        if (this.paiddevs.length > this.bundlelimit) {
+                            this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
+
                         }
 
 
@@ -891,10 +934,12 @@
                     }
 
                 }
-                if (this.pickeddevs.length <= 10) {
+                if (this.pickeddevs.length <= 4) {
+                    this.amount = 100
+                } else if (this.pickeddevs.length <= 10) {
                     this.amount = 200
                 } else {
-                    this.amount = 400
+                    this.amount = 500
                 }
                 this.waiting = false
 
@@ -933,57 +978,67 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 }
                 this.paiddevs = this.paiddevs.concat(this.pickeddevs);
-                this.pickeddevs = []
-                let developerspaid = this.paiddevs.join(',')
-                let developerspending = this.pickeddevs.join(',')
+                if (this.paiddevs.length > this.bundlelimit) {
+                    this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
 
-                Payments.cartitemadd(this.mycart.id, {
-                    devspending: developerspending,
-                    devspaid: developerspaid,
+                } else {
+                    this.pickeddevs = []
+                    let developerspaid = this.paiddevs.join(',')
+                    let developerspending = this.pickeddevs.join(',')
 
-                }, auth)
-                    .then(resp => {
-                        return resp
-                    })
+                    if (this.bundlelimit === this.paiddevs.length) {
+                        Payments.cartitemadd(this.mycart.id, {
+                            devspending: developerspending,
+                            devspaid: developerspaid,
+                            checked_out: true
 
+                        }, auth)
+                            .then(resp => {
+                                return resp
+                            })
 
-                this.pickeddevs = []
-                for (let j = 0; j < this.pickedprofiles.length; j++) {
-                    let picked_developer = {
-                        owner: this.$store.state.user.pk,
-                        developer: this.pickedprofiles[j].id,
-                        paid: true,
-                        stage: 'active'
+                    } else {
+                        Payments.cartitemadd(this.mycart.id, {
+                            devspending: developerspending,
+                            devspaid: developerspaid,
+
+                        }, auth)
+                            .then(resp => {
+                                return resp
+                            })
                     }
 
-                    MarketPlaceService.pickdeveloper(picked_developer, auth)
-                        .then(resp => {
+
+                    this.pickeddevs = []
+                    for (let j = 0; j < this.pickedprofiles.length; j++) {
+                        let picked_developer = {
+                            owner: this.$store.state.user.pk,
+                            developer: this.pickedprofiles[j].id,
+                            paid: true,
+                            stage: 'active'
+                        }
+
+                        MarketPlaceService.pickdeveloper(picked_developer, auth)
+                            .then(resp => {
+                                    this.$router.push({
+                                        name: 'mycandidates'
+                                    })
 
 
-                                return resp
-                            }
-                        )
-                        .catch(error => {
-                            return error
+                                    return resp
+                                }
+                            )
+                            .catch(error => {
+                                return error
 
 
-                        });
+                            });
+
+                    }
 
                 }
-                if (this.paiddevs.length === 10) {
-                    Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
-                        .then(resp => {
-                            self.close()
-                            return resp
-                        })
-                        .catch(error => {
-                            return error
-                        });
 
-                }
-                this.$router.push({
-                    name: 'mycandidates'
-                })
+
             },
 
             callback: function (response) {
@@ -1002,7 +1057,8 @@
                         devspaid: developerspaid,
                         amount: response.tx.amount,
                         transaction_id: response.tx.txRef,
-                        type: 'talent'
+                        type: 'talent',
+                        conditions: true
                     }, auth)
                         .then(resp => {
                             return resp
@@ -1032,16 +1088,30 @@
                             });
 
                     }
-                    if (this.paiddevs.length === 10) {
-                        Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
-                            .then(resp => {
-                                self.close()
-                                return resp
-                            })
-                            .catch(error => {
-                                return error
-                            });
 
+
+                    if (response.tx.amount === 100) {
+                        let bundlelimit = 4
+                        if (this.paiddevs === bundlelimit) {
+                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                                .then()
+                                .catch();
+                        }
+
+                    } else if (response.tx.amount === 200) {
+                        let bundlelimit = 10
+                        if (this.paiddevs === bundlelimit) {
+                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                                .then()
+                                .catch();
+                        }
+                    } else if (500 <= response.tx.amount > 200) {
+                        let bundlelimit = 33
+                        if (this.paiddevs === bundlelimit) {
+                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
+                                .then()
+                                .catch();
+                        }
                     }
 
 
@@ -1055,6 +1125,21 @@
             close: function () {
                 console.log("Payment closed")
             },
+            TermsModal() {
+                this.terms = true
+            },
+            Agree() {
+                if (this.conditions === true) {
+                    this.conditions = false
+                } else {
+                    this.conditions = true
+                }
+
+                this.terms = false
+            },
+            Check(e) {
+                this.conditions = e.target.checked
+            }
 
 
         }
