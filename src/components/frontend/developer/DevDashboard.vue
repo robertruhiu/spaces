@@ -160,11 +160,7 @@
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.myjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
             }
-
-
         },
-
-
         methods: {
             navigateTo(route) {
                 this.$router.push(route)

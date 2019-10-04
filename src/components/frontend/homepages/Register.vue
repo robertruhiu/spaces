@@ -275,56 +275,36 @@
                             email: this.email,
                             password1: this.password1,
                             password2: this.password2
-                        })
-                            .then(resp => {
-
+                        }).then(resp => {
                                 this.$store.dispatch('setToken', resp.data.token)
                                 this.$store.dispatch('setUser', resp.data.user)
-
                                 this.loading = false
-
-
-                            })
-                            .catch(error => {
+                            }).catch(error => {
                                 this.loading = false
-
                                 this.error = 'user already exists'
-
                             });
-
-
                     }
                 })
             },
             Choice(choice){
                 this.$store.dispatch('setUsertype', choice)
             }
-
-
         }
-
-
     }
 </script>
 
 <style scoped>
-
-
     #components-form-demo-normal-login .login-form {
         max-width: 300px;
     }
-
     #components-form-demo-normal-login .login-form-button {
         width: 100%;
     }
-
     .radiochoice {
         height: 10rem;
         width: 15rem;
         margin: 4px;
-
     }
-
     ul {
         list-style-type: none;
     }
@@ -333,10 +313,6 @@
         background-color: #fff1f0;
         border: 1px solid #ffa39e;
     }
-
-
-
-
     .actioncards {
         width: 15rem;
         border-radius: 0;

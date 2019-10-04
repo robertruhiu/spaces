@@ -1,4 +1,4 @@
-<template>
+ <template>
     <a-layout>
 
         <Pageheader/>
@@ -109,29 +109,19 @@
         },
         methods: {
             Forgot() {
-
                 this.$validator.validateAll().then((values) => {
                     if (values) {
                         this.loading = true
                         AuthService.forgot({
                             email: this.email,
-
-
-                        })
-                            .then(resp => {
+                        }).then(resp => {
                                 this.info = 'Password reset e-mail has been sent.Please check your email'
                                 this.loading = false
-
-
-                            })
-                            .catch(error => {
+                            }).catch(error => {
                                 this.loading = false
                                 this.error = 'details incorrect'
                                 return error
-
                             });
-
-
                     } else {
                         this.loading = false
                     }

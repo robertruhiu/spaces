@@ -27,6 +27,8 @@ const Calendar = () => import('@/components/frontend/recruiter/calendar')
 const DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
 const Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
 const Assessment = () => import('@/components/frontend/developer/Assessment')
+const AssessmentType = () => import('@/components/frontend/developer/AssesmentType')
+const TestCenters = () => import('@/components/frontend/developer/TestCenters')
 const DeveloperProfile = () => import('@/components/frontend/developer/Myprofile')
 const ManageApplications = () => import('@/components/frontend/developer/ManageApplications')
 const DeveloperProjects = () => import('@/components/frontend/developer/DeveloperProjects')
@@ -44,7 +46,10 @@ const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
 
 let router = new Router({
-    mode: 'history',
+    // mode: 'history',
+    // base: document.querySelector('#app').getAttribute('data-path') || '/',
+    // relative: true,
+    // hash: false,
     routes: [
         {
             path: '/',
@@ -83,9 +88,12 @@ let router = new Router({
             component: Forgot
         },
         {
-            path: 'rest-auth/password_reset_confirm/:Uid/:Token',
+            path: '/password_reset_confirm/:Uid/:Token',
             name: 'reset',
-            component: Reset
+            component: Reset,
+            meta: {
+                requiresAuth: false
+            }
         },
         {
             path: '/myprofile',
@@ -272,6 +280,23 @@ let router = new Router({
             path: '/candidatetalentprofile/:candidateProfileID',
             name: 'candidatetalentprofile',
             component: TalentProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/selectassesment',
+            name: 'assessmenttype',
+            component: AssessmentType,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/testcenters',
+            name: 'testcenters',
+            component: TestCenters,
             meta: {
                 requiresAuth: true
             }

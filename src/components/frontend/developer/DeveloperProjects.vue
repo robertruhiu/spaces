@@ -309,8 +309,6 @@
                 this.frameworkchoices = (await Projects.getverified(auth)).data
                 this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
                 this.loading = false
-
-
             }
         },
         methods: {
