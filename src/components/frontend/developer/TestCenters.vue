@@ -22,31 +22,40 @@
                             <div v-if="current === 0">
                                 <a-row :gutter="16" style="padding-right: 2rem;padding-bottom: 1.5rem;">
                                     <p v-if="centererror" style="color: red">{{centererror}}</p>
-                                    <div v-if="testcenters.length > 0">
-                                        <a-col class="boxes" :xs="{span: 16, offset: 2  }" :sm="{span: 12, offset: 0 }"
-                                               :md="{span: 10, offset: 0 }"
-                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }"
-                                               v-for="center in testcenters"
-                                               v-bind:key="center">
-                                            <a @click="pick(center.id)">
-                                                <a-card class="actioncards"
-                                                        hoverable
-
-                                                >
-                                                    <p style="font-weight: bold">
-                                                        {{center.country}}</p>
-
-                                                    <p style="margin: 0;">from:
-                                                        {{ center.start_time }} <br>to: {{ center.end_time }} </p>
-                                                    <p style="margin: 0;">Venue: {{center.venue}}</p>
-
-
-                                                </a-card>
-                                            </a>
-
-
-                                        </a-col>
+                                    <div v-if="dataload">
+                                        <div style="text-align: center;">
+                                            <a-spin/>
+                                        </div>
                                     </div>
+                                    <div v-else>
+                                        <div v-if="testcenters.length > 0">
+                                            <a-col class="boxes" :xs="{span: 16, offset: 2  }"
+                                                   :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 10, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }"
+                                                   v-for="center in testcenters"
+                                                   v-bind:key="center">
+                                                <a @click="pick(center.id)">
+                                                    <a-card class="actioncards"
+                                                            hoverable
+
+                                                    >
+                                                        <p style="font-weight: bold">
+                                                            {{center.country}}</p>
+
+                                                        <p style="margin: 0;">from:
+                                                            {{ center.start_time }} <br>to: {{ center.end_time }} </p>
+                                                        <p style="margin: 0;">Venue: {{center.venue}}</p>
+
+
+                                                    </a-card>
+                                                </a>
+
+
+                                            </a-col>
+                                        </div>
+                                    </div>
+
                                 </a-row>
                             </div>
                             <div v-else-if="current === 1">
@@ -67,7 +76,7 @@
                             </div>
 
                         </div>
-                        <div class="steps-action">
+                        <div v-if="loading === false" class="steps-action">
                             <a-button
                                     v-if="current < steps.length - 1"
                                     type="primary" @click="next(current)"
@@ -88,6 +97,11 @@
                             >
                                 Previous
                             </a-button>
+                        </div>
+                        <div v-else>
+                            <div style="text-align: center;">
+                                <a-spin/>
+                            </div>
                         </div>
                     </div>
                     <div v-else>
@@ -135,6 +149,8 @@
         name: "TestCenters",
         data() {
             return {
+                loading: false,
+                dataload: false,
                 currentUserProfile: {},
                 testcenters: [],
                 selected_center: "",
@@ -173,7 +189,9 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data;
+                this.dataload = true
                 this.testcenters = (await ServerManagement.testcenters(auth)).data
+                this.dataload = false
                 this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
                 if (this.projectlist) {
                     for (let i = 0; i < this.projectlist.length; i++) {
@@ -202,6 +220,7 @@
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 };
+                this.loading = true
 
                 ServerManagement.selectcenter(
                     {
@@ -222,7 +241,7 @@
                                             if (this.projectlist[i].test_center) {
                                                 this.info = 'You have succesfully booked an appointment.more details have been sent to your email'
                                                 this.appointment = this.projectlist[i]
-
+                                                this.loading = false
 
 
                                             }
@@ -236,7 +255,6 @@
                             MarketPlaceService.newonsite(resp.data.id, auth)
                                 .then()
                                 .catch()
-
 
 
                         }
