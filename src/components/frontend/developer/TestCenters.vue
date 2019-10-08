@@ -13,7 +13,13 @@
                         </a-col>
 
                     </a-row>
-                    <div v-if="info === null"
+                    <div v-if="dataload">
+                        <div style="text-align: center;">
+                            <a-spin/>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div v-if="info === null"
                          :style="{boxShadow:'0 .125rem .25rem rgba(0,0,0,.075)!important',padding:'3%'}">
                         <a-steps :current="current">
                             <a-step v-for="item in steps" :key="item.title" :title="item.title"/>
@@ -22,12 +28,8 @@
                             <div v-if="current === 0">
                                 <a-row :gutter="16" style="padding-right: 2rem;padding-bottom: 1.5rem;">
                                     <p v-if="centererror" style="color: red">{{centererror}}</p>
-                                    <div v-if="dataload">
-                                        <div style="text-align: center;">
-                                            <a-spin/>
-                                        </div>
-                                    </div>
-                                    <div v-else>
+
+                                    <div>
                                         <div v-if="testcenters.length > 0">
                                             <a-col class="boxes" :xs="{span: 16, offset: 2  }"
                                                    :sm="{span: 12, offset: 0 }"
@@ -124,6 +126,9 @@
                         </a-card>
                     </div>
 
+                    </div>
+
+
                 </div>
 
 
@@ -187,11 +192,12 @@
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
             }
+            this.dataload = true
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data;
-                this.dataload = true
+
                 this.testcenters = (await ServerManagement.testcenters(auth)).data
-                this.dataload = false
+
                 this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
                 if (this.projectlist) {
                     for (let i = 0; i < this.projectlist.length; i++) {
@@ -203,6 +209,7 @@
 
                     }
                 }
+                this.dataload = false
 
 
             }
