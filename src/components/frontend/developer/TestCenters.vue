@@ -233,7 +233,8 @@
                     {
                         candidate: this.$store.state.user.pk,
                         test_center: this.pickedcenter.center,
-                        frameworktested: this.pickedcenter.tags
+                        frameworktested: this.pickedcenter.tags,
+                        test_choice:'on_site_test',
                     }, auth)
                     .then(resp => {
 
