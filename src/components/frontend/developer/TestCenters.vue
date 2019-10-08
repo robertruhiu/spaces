@@ -247,7 +247,7 @@
                                     if (this.projectlist) {
                                         for (let i = 0; i < this.projectlist.length; i++) {
                                             if (this.projectlist[i].test_center) {
-                                                this.info = 'You have succesfully booked an appointment.more details have been sent to your email'
+                                                this.info = 'You have successfully booked an appointment. Check your mail for more details.'
                                                 this.appointment = this.projectlist[i]
                                                 this.loading = false
 

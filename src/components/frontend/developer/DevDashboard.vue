@@ -22,7 +22,7 @@
                                 <template slot='title'>
                                     Your profile will be published on the talent pool
                                 </template>
-                                Am available?
+                                Make profile public
                             </a-tooltip>
 
                         </a-col>
