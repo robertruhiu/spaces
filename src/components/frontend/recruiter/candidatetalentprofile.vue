@@ -618,7 +618,10 @@
                 if (this.currentUserProfile.skills) {
                     this.skilltags = this.currentUserProfile.skills.split(',');
                 }
-                this.availabiltytags = this.currentUserProfile.availabilty.split(',');
+                if(this.currentUserProfile.availabilty){
+                    this.availabiltytags = this.currentUserProfile.availabilty.split(',');
+                }
+
                 if (this.currentUserProfile.verified_skills) {
                     this.verified_skills = this.currentUserProfile.verified_skills.split(',');
                 }

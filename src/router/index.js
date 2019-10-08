@@ -28,6 +28,8 @@ const Calendar = () => import('@/components/frontend/recruiter/calendar')
 const DeveloperDashboard = () => import('@/components/frontend/developer/DevDashboard')
 const Myprofile = () => import('@/components/frontend/recruiter/Myprofile')
 const Assessment = () => import('@/components/frontend/developer/Assessment')
+const AssessmentType = () => import('@/components/frontend/developer/AssesmentType')
+const TestCenters = () => import('@/components/frontend/developer/TestCenters')
 const DeveloperProfile = () => import('@/components/frontend/developer/Myprofile')
 const ManageApplications = () => import('@/components/frontend/developer/ManageApplications')
 const DeveloperProjects = () => import('@/components/frontend/developer/DeveloperProjects')
@@ -285,6 +287,23 @@ let router = new Router({
             path: '/candidatetalentprofile/:candidateProfileID',
             name: 'candidatetalentprofile',
             component: TalentProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/selectassesment',
+            name: 'assessmenttype',
+            component: AssessmentType,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/testcenters',
+            name: 'testcenters',
+            component: TestCenters,
             meta: {
                 requiresAuth: true
             }

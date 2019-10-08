@@ -97,6 +97,9 @@ export default {
     newapplicationemail(application_id,auth){
         return Api().get(`marketplace/newjobapplication/${application_id} `, auth)
     },
+    newonsite(assesment_id,auth){
+        return Api().get(`marketplace/newonsite/${assesment_id} `, auth)
+    },
     candidatemanagerdelete(candidatemanagement_id, auth) {
         return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `,auth)
     },

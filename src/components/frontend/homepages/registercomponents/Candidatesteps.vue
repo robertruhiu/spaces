@@ -12,7 +12,7 @@
                     </a-steps>
 
                     <div class="steps-content">
-                        <div if v-if="current === 0">
+                        <div  v-if="current === 0">
                             <a-form :form="developerstep1">
                                 <a-row :gutter="16">
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
@@ -209,7 +209,7 @@
                             </a-form>
                         </div>
 
-                        <div if v-else-if="current === 1">
+                        <div v-else-if="current === 1">
                             <a-row :gutter="16">
                                 <a-col :span="24">
 
@@ -327,13 +327,13 @@
                             </a-row>
                         </div>
 
-                        <div if v-else-if="current === 2">
+                        <div v-else-if="current === 2">
                             <portfolio/>
 
 
                         </div>
 
-                        <div if v-else-if="current === 3">
+                        <div  v-else-if="current === 3">
                             <experience/>
                         </div>
 
