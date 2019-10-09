@@ -198,7 +198,7 @@
 
                 this.testcenters = (await ServerManagement.testcenters(auth)).data
 
-                this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
+                this.projectlist = (await Projects.testcenters(this.$store.state.user.pk, auth)).data
                 if (this.projectlist) {
                     for (let i = 0; i < this.projectlist.length; i++) {
                         if (this.projectlist[i].test_center) {
@@ -239,7 +239,7 @@
                     .then(resp => {
 
 
-                            Projects.myprojects(this.$store.state.user.pk, auth)
+                            Projects.testcenters(this.$store.state.user.pk, auth)
                                 .then(resp => {
 
                                     this.projectlist = resp.data
