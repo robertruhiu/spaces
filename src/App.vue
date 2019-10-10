@@ -53,8 +53,6 @@
 
 
         }
-
-
     }
 </script>
 
@@ -62,8 +60,6 @@
     #app {
         display: grid;
         background-color: white;
-
     }
-
 
 </style>

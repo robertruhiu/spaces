@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store/store'
 
+Vue.use(Router);
+
 const Home = () => import('@/components/frontend/homepages/Home')
 const Register = () => import('@/components/frontend/homepages/Register')
 const Login = () => import('@/components/frontend/homepages/Login')
@@ -39,14 +41,13 @@ const Portfolio = () => import('@/components/frontend/developer/Portfolio');
 const DevCalendar = () => import('@/components/frontend/developer/DevCalendar');
 const Commmunity = () => import('@/components/frontend/developer/community');
 const TakeQuiz = () => import('@/components/frontend/developer/quiz/takequiz');
-const SelfverifyProject = () => import('@/components/frontend/developer/SelfverifyProject');
 
+const SelfverifyProject = () => import('@/components/frontend/developer/SelfverifyProject');
 const Cart = () => import('@/components/frontend/recruiter/cart/Cart');
 const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
-Vue.use(Router);
 
 let router = new Router({
-    // mode: 'history',
+    mode: 'history',
     // base: document.querySelector('#app').getAttribute('data-path') || '/',
     // relative: true,
     // hash: false,

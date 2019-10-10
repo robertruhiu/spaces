@@ -104,6 +104,7 @@ import VueSession from 'vue-session'
 Vue.use(VueSession)
 
 sync(store, router);
+
 new Vue({
     router,
     store,

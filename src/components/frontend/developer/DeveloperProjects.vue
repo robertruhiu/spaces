@@ -24,7 +24,6 @@
                                     <div style="text-align: center">
                                         <img class="poolavatar" src="../../../assets/images/art.svg">
                                     </div>
-
                                 </a-col>
                                 <a-col span="24" style="text-align: center">
                                     <p class="ant-card-head-title" style="font-weight: bold">new project</p>
@@ -171,9 +170,9 @@
                                     <div>
                                         <a-carousel v-if="project.hasvideo === false" autoplay
                                                     style="border:1px solid #e8e8e8;">
-                                            <div v-if="project.projectimage1 "><img style="width: 100%"
-                                                                                    :src="project.projectimage1"/>
-                                            </div>
+<!--                                            <div v-if="project.projectimage1 "><img style="width: 100%"-->
+<!--                                                                                    :src="project.projectimage1"/>-->
+<!--                                            </div>-->
                                             <div v-if="project.projectimage2 "><img style="width: 100%"
                                                                                     :src="project.projectimage2"/>
                                             </div>
