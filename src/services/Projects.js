@@ -36,6 +36,9 @@ export default {
     myprojects(dev_id, auth) {
         return Api().get(`myprojects/${dev_id}`, auth)
     },
+    testcenters(dev_id, auth) {
+        return Api().get(`mytestcenters/${dev_id}`, auth)
+    },
     myprojectdetails(assessmentapplication_id,auth) {
         return Api().get(`myprojectdetails/${assessmentapplication_id}`, auth)
     },

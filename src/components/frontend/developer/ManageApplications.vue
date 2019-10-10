@@ -23,12 +23,12 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard' style="background-color: #1876d21c">
+                            <a-row class='managecard'>
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Applications</p>
                                     </div>
-                                    <a-progress  :percent="100" strokeColor="#1976D2" :showInfo="false" />
+                                    <a-progress  :percent="100" strokeColor="#4DB3D3" :showInfo="false" />
 
                                 </a-col>
                                 <a-col span="24">
@@ -82,12 +82,12 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard' style="background-color: #fa558030">
+                            <a-row class='managecard' >
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Testing</p>
                                     </div>
-                                    <a-progress :percent="100" strokeColor="#fa5580" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#4DB3D3" :showInfo="false" />
 
                                 </a-col>
                                 <a-col span="24">
@@ -143,12 +143,12 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard' style="background-color: #1d9ddf1a">
+                            <a-row class='managecard' >
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Interview</p>
                                     </div>
-                                    <a-progress :percent="100" strokeColor="#1C9DDF" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#0868AC" :showInfo="false" />
 
                                 </a-col>
                                 <a-col span="24">
@@ -197,12 +197,12 @@
 
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
-                            <a-row class='managecard' style="background-color: #3fce9d2e">
+                            <a-row class='managecard' >
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
                                         <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Offers</p>
                                     </div>
-                                    <a-progress :percent="100" strokeColor="#3FCE9D" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#084081" :showInfo="false" />
 
                                 </a-col>
                                 <a-col span="24">
@@ -639,7 +639,7 @@
 
 <style scoped>
     .managecard {
-
+        border: 1px solid #1876d21c;
         min-height: 65vh;
         box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 

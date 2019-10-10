@@ -6,6 +6,7 @@
 
             <div :style="{ background: '#fff', minHeight: '81vh' }">
                 <a-row style="padding: 3%">
+
                     <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 12, offset: 6 }" :md="{span: 12, offset: 6 }"
                            :lg="{span: 12, offset: 8 }" :xl="{span: 12, offset: 9 }">
                         <a-card v-if="!$store.state.isUserLoggedIn" title="Password reset" :style="{width:'21rem'}">
@@ -26,7 +27,7 @@
 
                                     <a-input
                                             v-model="password"
-                                            placeholder="Password"
+                                            placeholder="new_password1"
                                             style="z-index: 0"
                                             type="password"
                                             name="password"
@@ -49,10 +50,10 @@
 
                                     <a-input
                                             v-model="password1"
-                                            placeholder="Password"
+                                            placeholder="new_password2"
                                             style="z-index: 0"
                                             type="password"
-                                            name="password"
+                                            name="password1"
                                             v-validate="'required'"
                                     >
                                         <a-icon
@@ -61,9 +62,9 @@
                                                 style="color: rgba(0,0,0,.25)"
                                         />
                                     </a-input>
-                                    <div v-if="errors.has('password')" style="color: #f5222d;" class="ant-form-explain">
+                                    <div v-if="errors.has('password1')" style="color: #f5222d;" class="ant-form-explain">
                                         {{
-                                        errors.first('password') }}
+                                        errors.first('password1') }}
                                     </div>
 
 
@@ -72,7 +73,7 @@
                                 <a-form-item v-if="loading === false">
 
 
-                                    <a-button @click="Forgot"
+                                    <a-button @click="Reset"
                                               type="primary"
                                               class="login-form-button"
 
@@ -122,6 +123,16 @@
             Footer,
 
         },
+        props:{
+            uid:{
+                type: String,
+                required:true
+            },
+            token:{
+                type: String,
+                required:true
+            }
+        },
         data() {
             return {
                 password: '',
@@ -133,18 +144,21 @@
             }
         },
         methods: {
-            Forgot() {
+            Reset() {
 
                 this.$validator.validateAll().then((values) => {
                     if (values) {
                         this.loading = true
-                        AuthService.forgot({
-                            email: this.email,
+                        AuthService.reset({
+                            new_password1: this.password,
+                            new_password2: this.password1,
+                            uid:this.uid,
+                            token:this.token
 
 
                         })
                             .then(resp => {
-                                this.info = 'Password reset e-mail has been sent.Please check your email'
+                                this.info = resp.data.detail
                                 this.loading = false
 
 

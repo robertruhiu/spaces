@@ -18,23 +18,25 @@
                             </a-row>
                             <br>
                             <a-row>
-                                <a-col :span="8">
+                                <a-col :span="6">
                                     Experience:
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.years}} years
                                     </a-tag>
                                 </a-col>
-                                <a-col :span="8">
+                                <a-col :span="12">
                                 <span>
-                                    Availability :
+                                    Availability:
+                                <span style="" v-for="available in availability" v-bind:key="available">
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                 {{currentUserProfile.availabilty}}
-                            </a-tag>
+                                    {{available}}
+                                </a-tag>
+                            </span>
                             </span>
                                 </a-col>
-                                <a-col :span="8">
+                                <a-col :span="6">
                                 <span>
-                                    Location :
+                                    Location:
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
                                  {{currentUserProfile.country}}
                             </a-tag>
@@ -1005,7 +1007,8 @@
                 experienceduration: '',
                 experiencelocation: '',
                 experiencetech: '',
-                experiencedescription: ''
+                experiencedescription: '',
+                availability:[]
 
 
             }
@@ -1025,6 +1028,9 @@
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             if(this.currentUserProfile.skills){
                 this.skills = this.currentUserProfile.skills.split(',');
+            }
+            if(this.currentUserProfile.availabilty){
+                this.availability = this.currentUserProfile.availabilty.split(',');
             }
 
             if(this.currentUserProfile.verified_skills){

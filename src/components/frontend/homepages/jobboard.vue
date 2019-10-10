@@ -101,10 +101,7 @@
                                                         <a-icon type="environment"/>
                                                         {{item.location}}
                                                     </a-tag>
-                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                        <a-icon type="bank"/>
-                                                        {{item.company}}
-                                                    </a-tag>
+
 
 
                                                 </div>
@@ -132,7 +129,7 @@
                                                        :md="{span: 24, offset: 0 }"
                                                        :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
                                                        style="padding: 2%">
-                                                    <span><strong>{{item.title}} | {{item.company}} | {{item.location}}</strong></span>
+                                                    <span><strong>{{item.title}} |  {{item.location}}</strong></span>
                                                     <p>{{item.description | truncate(100)}}<a
                                                             @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
                                                         more</a>

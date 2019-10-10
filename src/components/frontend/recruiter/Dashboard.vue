@@ -148,7 +148,6 @@
                 </div>
 
 
-
                 <!----Post Job drawer desktops------->
                 <a-drawer
                         title="Create a new job"
@@ -382,8 +381,9 @@
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
                                 <a-alert
-                                        message="Your job will be under reviewed before it appears on the job board.Contact will be made if any issue"
-                                        type="info" closeText="Close Now"/>
+                                        message="Your job is under review. It will be updated soon if it matches our specification.
+                                         Else, we will contact you directly for edits."
+                                        type="info" />
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
@@ -448,7 +448,7 @@
                 <a-modal
                         title="Create a new job"
                         v-model="jobmobile"
-                       style="top: 20px;"
+                        style="top: 20px;"
                         :footer="null"
                 >
                     <a-steps :current="current">
@@ -548,7 +548,8 @@
                                 <a-row>
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 12, offset: 0 }"
-                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Contract type">
                                             <a-select
                                                     placeholder="Select a option"
@@ -579,7 +580,8 @@
                                     </a-col>
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 12, offset: 0 }"
-                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Location">
                                             <country-select v-model="job.location"
                                                             class="ant-input"
@@ -593,7 +595,8 @@
                                     </a-col>
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 12, offset: 0 }"
-                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"style="padding-right: 1%">
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Salary range per month ">
                                             <a-input placeholder="1000-1500$" v-model="job.remuneration">
                                             </a-input>
@@ -608,7 +611,8 @@
                                 <a-row>
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 12, offset: 0 }"
-                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Deadline ">
                                             <a-date-picker v-model="job.deadline"
                                                            placeholder="Applications deadline"
@@ -626,7 +630,8 @@
                                     </a-col>
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 12, offset: 0 }"
-                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }" style="padding-right: 1%">
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Developers needed ">
                                             <a-input-number :min="1" v-model="job.num_devs_wanted"/>
 
@@ -686,8 +691,9 @@
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
                                 <a-alert
-                                        message="Your job will be under reviewed before it appears on the job board.Contact will be made if any issue"
-                                        type="info" closeText="Close Now"/>
+                                        message="Your job is under review. It will be updated soon if it matches our specification.
+                                        Else, we will contact you directly for edits."
+                                        type="info" />
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
@@ -817,7 +823,7 @@
 
                 }],
 
-                jobmobile:false
+                jobmobile: false
 
             }
 
@@ -831,13 +837,20 @@
 
 
         },
+        created() {
+            if (this.$route.params.post) {
+                this.showDrawer()
+            }
+        },
         async mounted() {
+
 
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
             if (this.$store.state.user.pk) {
+
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.jobs = (await Marketplace.myjobssliced(this.$store.state.user.pk, auth)).data
 
@@ -992,10 +1005,18 @@
                 }
                 Marketplace.createjob(this.job, auth)
                     .then(resp => {
+
                         this.visible = false
                         this.$router.push({
                             name: 'managejobs'
                         })
+                        Marketplace.newjobemail(resp.data.id,auth)
+                            .then()
+                            .catch()
+
+
+
+
 
 
                     })

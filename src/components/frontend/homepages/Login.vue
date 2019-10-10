@@ -67,12 +67,25 @@
 
                                 </a-form-item>
                                 <a-form-item v-if="loading === false">
-                                    <router-link to="/forgot">
-                                        <a class="login-form-forgot">
+
+
+                                        <a
+                                            class="login-form-forgot"
+
+                                    >
+                                            <router-link to="/forgot">
                                         Forgot password
-                                        </a>
                                     </router-link>
-                                    <a-button @click="login" type="primary" class="login-form-button">
+
+                                    </a>
+
+
+
+                                    <a-button @click="login"
+                                              type="primary"
+                                              class="login-form-button"
+
+                                    >
                                         Log in
                                     </a-button>
                                     Or

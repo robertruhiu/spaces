@@ -48,8 +48,10 @@
                 <a-row>
 
 
+
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
+                        <a-alert message="If you have a posted  job you can attach picked candidates to it.You can do this on manage candidates page" type="info" closeText="Close Now" />
                         <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
                             <a-spin size="large"/>
                         </div>
@@ -154,10 +156,13 @@
                                                         <a-icon type="environment"/>
                                                         {{item.location}}
                                                     </a-tag>
-                                                    <a-tag color="#F7E7F5" style="color: #B82EA4">
-                                                        {{item.availabilty}}
 
-                                                    </a-tag>
+
+                                                    <span style="" v-for="available in item.availabilty"
+                                                          v-bind:key="available.id">
+                                                <a-tag color="#F7E7F5" style="color:#B82EA4;">{{available}}</a-tag>
+
+                                            </span>
 
 
                                                 </div>
@@ -308,7 +313,10 @@
                 let skills = skill_list
                 let about = this.devs[i].about
                 let location = this.devs[i].country
-                let availabilty = this.devs[i].availabilty
+                let availabilty = []
+                if(this.devs[i].availabilty){
+                    availabilty = this.devs[i].availabilty.split(',').slice(0, 2)
+                }
                 let verified = false
                 if (this.devs[i].verified_skills) {
                     verified = true

@@ -55,6 +55,9 @@ export default {
     pickreject(jobapplication_id,Currentapplication, auth) {
         return Api().patch(`marketplace/pickreject/${jobapplication_id} `, Currentapplication,auth)
     },
+    deletejobapplication(jobapplication_id, auth) {
+        return Api().delete(`marketplace/pickreject/${jobapplication_id} `,auth)
+    },
     retrieveapplication(jobapplication_id, auth) {
         return Api().get(`marketplace/applicationprofile/${jobapplication_id} `, auth)
     },
@@ -87,6 +90,18 @@ export default {
     },
     talentpickedmanagerview(application_id,auth){
         return Api().get(`marketplace/talentpickedmanagerview/${application_id} `, auth)
-    }
+    },
+    newjobemail(job_id,auth){
+        return Api().get(`marketplace/newjobemail/${job_id} `, auth)
+    },
+    newapplicationemail(application_id,auth){
+        return Api().get(`marketplace/newjobapplication/${application_id} `, auth)
+    },
+    newonsite(assesment_id,auth){
+        return Api().get(`marketplace/newonsite/${assesment_id} `, auth)
+    },
+    candidatemanagerdelete(candidatemanagement_id, auth) {
+        return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `,auth)
+    },
 
 }

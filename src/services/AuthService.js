@@ -9,5 +9,8 @@ export default {
   },
   forgot (credentials){
     return Api().post('rest-auth/password/reset/',credentials)
+  },
+  reset (credentials){
+    return Api().post('rest-auth/password/reset/confirm/',credentials)
   }
 }
