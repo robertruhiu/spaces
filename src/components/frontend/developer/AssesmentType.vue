@@ -61,6 +61,7 @@
 
 
             </a-layout-content>
+            <banner/>
 
 
         </a-layout>
@@ -73,6 +74,7 @@
     import DevHeader from "../../layout/DevHeader";
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
+    import banner from '@/components/layout/banner'
 
     export default {
         name: "AssesmentType",
@@ -89,6 +91,7 @@
             CandidateSider,
             ACol,
             ARow,
+            banner
         },
         async mounted() {
             const auth = {

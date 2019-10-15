@@ -264,14 +264,14 @@
 
             </a-modal>
         </a-layout-content>
+        <banner/>
 
     </a-layout>
 </template>
 
 <script>
     import DevHeader from "../../layout/DevHeader";
-
-
+    import banner from '@/components/layout/banner'
     import UsersService from '@/services/UsersService'
     import Projects from '@/services/Projects'
     import CandidateSider from "../../layout/CandidateSider";
@@ -298,7 +298,7 @@
             ACol,
             DevHeader,
             CandidateSider,
-            showAt, hideAt
+            showAt, hideAt,banner
         },
         async mounted() {
             const auth = {

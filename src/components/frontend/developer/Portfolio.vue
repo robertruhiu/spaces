@@ -924,6 +924,7 @@
                 </a-modal>
 
             </a-layout-content>
+            <banner/>
         </a-layout>
     </a-layout>
 </template>
@@ -931,6 +932,7 @@
 <script>
     //experience structure on table
     import ACol from "ant-design-vue/es/grid/Col";
+    import banner from '@/components/layout/banner'
 
     class Experience {
         constructor(id, title, description, company, location, duration, tech_used) {
@@ -1017,7 +1019,7 @@
             ACol,
             PortfolioHeader,
             CandidateSider,
-            hideAt, showAt
+            hideAt, showAt,banner
         },
         async mounted() {
             const auth = {

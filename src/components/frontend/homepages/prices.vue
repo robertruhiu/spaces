@@ -169,6 +169,7 @@
 
 
         </a-layout-content>
+        <banner/>
 
         <Footer/>
     </a-layout>
@@ -181,13 +182,14 @@
     import Footer from '@/components/layout/Footer.vue'
     import AuthService from '@/services/AuthService'
     import User from '@/services/UsersService'
+    import banner from '@/components/layout/banner'
 
     export default {
         name: "prices",
         components: {
 
             Pageheader,
-            Footer,
+            Footer,banner
 
         },
         data() {

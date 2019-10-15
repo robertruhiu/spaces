@@ -86,6 +86,7 @@
 
                 </div>
             </a-layout-content>
+            <banner/>
         </a-layout>
     </a-layout>
 
@@ -98,6 +99,7 @@
     import DevHeader from "../../../layout/DevHeader";
     import QuizService from '@/services/QuizService';
     import UsersService from '@/services/UsersService'
+    import banner from '@/components/layout/banner'
 
     export default {
         name: "QuizzesList",
@@ -116,7 +118,7 @@
         },
         components: {
             DevHeader,
-            CandidateSider,
+            CandidateSider,banner
 
         },
         async mounted() {

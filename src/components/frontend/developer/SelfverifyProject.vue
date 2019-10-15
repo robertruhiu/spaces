@@ -141,6 +141,7 @@
 
                 </div>
             </a-layout-content>
+            <banner/>
         </a-layout>
     </a-layout>
 
@@ -153,6 +154,7 @@
     import DevHeader from "../../layout/DevHeader";
     import moment from 'moment';
     import {showAt, hideAt} from 'vue-breakpoints'
+    import banner from '@/components/layout/banner'
 
     export default {
         name: "SelfverifyProject",
@@ -168,7 +170,7 @@
         components: {
             DevHeader,
             CandidateSider,
-            showAt, hideAt
+            showAt, hideAt,banner
 
         },
         async mounted() {

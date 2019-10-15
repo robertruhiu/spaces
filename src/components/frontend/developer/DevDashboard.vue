@@ -1,5 +1,5 @@
 <template>
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh;">
+    <a-layout id="components-layout-demo-side" style="min-height: 100vh;" >
         <CandidateSider/>
         <a-layout>
 
@@ -133,7 +133,9 @@
                 <br>
 
 
+
             </a-layout-content>
+            <banner/>
 
 
         </a-layout>
@@ -148,6 +150,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
+    import banner from '@/components/layout/banner'
 
     export default {
         name: "DevDashboard",
@@ -163,6 +166,7 @@
             ACol,
             DevHeader,
             CandidateSider,
+            banner
         },
         async mounted() {
             const auth = {

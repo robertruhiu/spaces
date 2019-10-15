@@ -216,6 +216,7 @@
 
 
             </a-layout-content>
+            <banner/>
         </a-layout>
     </a-layout>
 </template>
@@ -229,6 +230,7 @@
     import axios from 'axios'
     import cloudinary from 'cloudinary-core'
     import Vue from 'vue'
+    import banner from '@/components/layout/banner'
 
     Vue.use(cloudinary)
 
@@ -238,6 +240,7 @@
         components: {
             DevHeader,
             CandidateSider,
+            banner
         },
         data() {
 

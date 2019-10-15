@@ -8,166 +8,166 @@
                 <a-layout-content :style="{ padding: '0 0px', marginTop: '2rem' }">
                     <!-----header---->
                     <hide-at breakpoint="mediumAndBelow">
-                         <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
-                        <a-row>
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                   :md="{span: 18, offset: 4 }"
-                                   :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
-                                <show-at breakpoint="mediumAndBelow">
-                                    <div style="margin-top: 3rem">
-                                        <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
-                                            Hire Skilled African Programmers Faster
-                                        </h1>
+                        <div :style="{ background: '#fff', padding: '24px', minHeight: '100vh' }">
+                            <a-row>
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 18, offset: 4 }"
+                                       :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
+                                    <show-at breakpoint="mediumAndBelow">
+                                        <div style="margin-top: 3rem">
+                                            <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                                Hire Skilled African Programmers Faster
+                                            </h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
-                                            click away</h4>
-                                        <router-link to="/talent">
-                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
-                                                Hire a
-                                                Dev
-                                            </a-button>
-                                        </router-link>
-                                        <router-link to="/jobs">
-                                            <a-button type="primary"
-                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
-                                                      ghost>Get hired
-                                            </a-button>
-                                        </router-link>
+                                            <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                                click away</h4>
+                                            <router-link to="/talent">
+                                                <a-button type="primary" style="height: 2.6rem;width: 8rem"
+                                                          :size="large">
+                                                    Hire a
+                                                    Dev
+                                                </a-button>
+                                            </router-link>
+                                            <router-link to="/jobs">
+                                                <a-button type="primary"
+                                                          style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                          ghost>Get hired
+                                                </a-button>
+                                            </router-link>
 
 
-                                    </div>
-                                </show-at>
+                                        </div>
+                                    </show-at>
+                                    <hide-at breakpoint="mediumAndBelow">
+                                        <div style="margin-top: 8rem">
+                                            <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                                Hire Skilled African Programmers Faster
+                                            </h1>
+
+                                            <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                                click away</h4>
+                                            <router-link to="/talent">
+                                                <a-button type="primary" style="height: 2.6rem;width: 8rem"
+                                                          :size="large">
+                                                    Hire a
+                                                    Dev
+                                                </a-button>
+                                            </router-link>
+                                            <router-link to="/jobs">
+                                                <a-button type="primary"
+                                                          style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                          ghost>Get hired
+                                                </a-button>
+                                            </router-link>
+
+
+                                        </div>
+                                    </hide-at>
+
+
+                                </a-col>
                                 <hide-at breakpoint="mediumAndBelow">
-                                    <div style="margin-top: 8rem">
-                                        <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
-                                            Hire Skilled African Programmers Faster
-                                        </h1>
-
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
-                                            click away</h4>
-                                        <router-link to="/talent">
-                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
-                                                Hire a
-                                                Dev
-                                            </a-button>
-                                        </router-link>
-                                        <router-link to="/jobs">
-                                            <a-button type="primary"
-                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
-                                                      ghost>Get hired
-                                            </a-button>
-                                        </router-link>
 
 
-                                    </div>
+                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                           :md="{span: 24, offset: 0 }"
+                                           :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
+                                        <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/header_bg_hstf4v.png"
+                                             style="width: 100%;float: right;">
+                                        <div>
+
+                                        </div>
+                                    </a-col>
                                 </hide-at>
 
 
-                            </a-col>
+                            </a-row>
                             <hide-at breakpoint="mediumAndBelow">
+                                <a-row :style="{ padding: '0 5%'  }">
+                                    <div class="press">
+                                        <div>
+                                            <a-row>
+                                                <a-col :span="6">
+                                                    <a target="_blank"
+                                                       href="https://techcrunch.com/2018/12/11/introducing-the-startups-and-agenda-for-startup-battlefield-africa/">
+                                                        <img class="pressitemtech"
+                                                             src="../../../assets/images/props/b_tc.png">
+                                                    </a>
+                                                </a-col>
+                                                <a-col :span="6">
+                                                    <a target="_blank"
+                                                       href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
+                                                        <img class="pressitemseed"
+                                                             src="https://smwlagos.com/wp-content/uploads/2019/09/SMW-LAGOS-03.png">
+                                                    </a>
 
+                                                </a-col>
+                                                <a-col :span="6">
+                                                    <a target="_blank"
+                                                       href="http://disrupt-africa.com/2018/09/mest-invests-700k-in-7-african-tech-startups/">
+                                                        <img class="pressitemdisrupt"
+                                                             src="../../../assets/images/props/b_da.png">
+                                                    </a>
 
-                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                       :md="{span: 24, offset: 0 }"
-                                       :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
-                                    <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/header_bg_hstf4v.png"
-                                         style="width: 100%;float: right;">
-                                    <div>
+                                                </a-col>
+                                                <a-col :span="6">
+                                                    <a target="_blank"
+                                                       href="https://www.forbes.com/sites/tobyshapshak/2018/09/10/renowned-african-incubator-mest-celebrates-10-years-with-700000-investment/#6821e7772af5">
+                                                        <img class="pressitemforbes"
+                                                             src="../../../assets/images/props/b_f.png">
+                                                    </a>
 
+                                                </a-col>
+                                            </a-row>
+                                        </div>
                                     </div>
-                                </a-col>
+                                </a-row>
                             </hide-at>
 
 
-                        </a-row>
-                        <hide-at breakpoint="mediumAndBelow">
-                            <a-row :style="{ padding: '0 5%'  }">
-                                <div class="press">
-                                    <div>
-                                        <a-row>
-                                            <a-col :span="6">
-                                                <a target="_blank"
-                                                   href="https://techcrunch.com/2018/12/11/introducing-the-startups-and-agenda-for-startup-battlefield-africa/">
-                                                    <img class="pressitemtech"
-                                                         src="../../../assets/images/props/b_tc.png">
-                                                </a>
-                                            </a-col>
-                                            <a-col :span="6">
-                                                <a target="_blank"
-                                                   href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
-                                                    <img class="pressitemseed"
-                                                         src="https://smwlagos.com/wp-content/uploads/2019/09/SMW-LAGOS-03.png">
-                                                </a>
-
-                                            </a-col>
-                                            <a-col :span="6">
-                                                <a target="_blank"
-                                                   href="http://disrupt-africa.com/2018/09/mest-invests-700k-in-7-african-tech-startups/">
-                                                    <img class="pressitemdisrupt"
-                                                         src="../../../assets/images/props/b_da.png">
-                                                </a>
-
-                                            </a-col>
-                                            <a-col :span="6">
-                                                <a target="_blank"
-                                                   href="https://www.forbes.com/sites/tobyshapshak/2018/09/10/renowned-african-incubator-mest-celebrates-10-years-with-700000-investment/#6821e7772af5">
-                                                    <img class="pressitemforbes"
-                                                         src="../../../assets/images/props/b_f.png">
-                                                </a>
-
-                                            </a-col>
-                                        </a-row>
-                                    </div>
-                                </div>
-                            </a-row>
-                        </hide-at>
-
-
-                    </div>
+                        </div>
 
                     </hide-at>
                     <show-at breakpoint="mediumAndBelow">
-                         <div :style="{ background: '#fff', padding: '24px', minHeight: '40vh' }">
-                        <a-row>
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                   :md="{span: 18, offset: 4 }"
-                                   :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
-                                <show-at breakpoint="mediumAndBelow">
-                                    <div style="margin-top: 3rem">
-                                        <h1 style="font-size:2rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
-                                            Hire Skilled African Programmers Faster
-                                        </h1>
+                        <div :style="{ background: '#fff', padding: '24px', minHeight: '40vh' }">
+                            <a-row>
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                       :md="{span: 18, offset: 4 }"
+                                       :lg="{span: 11, offset: 1 }" :xl="{span: 11, offset: 1 }">
+                                    <show-at breakpoint="mediumAndBelow">
+                                        <div style="margin-top: 3rem">
+                                            <h1 style="font-size:2rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
+                                                Hire Skilled African Programmers Faster
+                                            </h1>
 
-                                        <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
-                                            click away</h4>
-                                        <router-link to="/talent">
-                                            <a-button type="primary" style="height: 2.6rem;width: 8rem" :size="large">
-                                                Hire a
-                                                Dev
-                                            </a-button>
-                                        </router-link>
-                                        <router-link to="/jobs">
-                                            <a-button type="primary"
-                                                      style="margin-left: 1rem;height: 2.6rem;width: 8rem"
-                                                      ghost>Get hired
-                                            </a-button>
-                                        </router-link>
-
-
-                                    </div>
-                                </show-at>
+                                            <h4 style="color: #55A7FF;font-size: 1.5rem">Your ideal developer is just a
+                                                click away</h4>
+                                            <router-link to="/talent">
+                                                <a-button type="primary" style="height: 2.6rem;width: 8rem"
+                                                          :size="large">
+                                                    Hire a
+                                                    Dev
+                                                </a-button>
+                                            </router-link>
+                                            <router-link to="/jobs">
+                                                <a-button type="primary"
+                                                          style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                          ghost>Get hired
+                                                </a-button>
+                                            </router-link>
 
 
-
-                            </a-col>
-
-
-
-                        </a-row>
+                                        </div>
+                                    </show-at>
 
 
+                                </a-col>
 
-                    </div>
+
+                            </a-row>
+
+
+                        </div>
 
                     </show-at>
 
@@ -188,7 +188,8 @@
                                     <img class="imagecenter" src="../../../assets/images/props/search.png"/>
 
                                     <p style="text-align: center;font-size: 1rem">
-                                        Access a rich pool of verified African Programmers and Designers, that are available and ready to be hired
+                                        Access a rich pool of verified African Programmers and Designers, that are
+                                        available and ready to be hired
 
                                     </p>
 
@@ -201,7 +202,8 @@
                                     <img class="imagecenter" src="../../../assets/images/props/pick.png"/>
 
                                     <p style="text-align: center;font-size: 1rem">
-                                        Enjoy an optimized search experience as you filter through talent's profiles, resume, skills, work experience, and past projects.
+                                        Enjoy an optimized search experience as you filter through talent's profiles,
+                                        resume, skills, work experience, and past projects.
 
                                     </p>
 
@@ -214,7 +216,8 @@
                                     <img class="imagecenter" src="../../../assets/images/props/coding.png"/>
 
                                     <p style="text-align: center;font-size: 1rem">
-                                        Seamlessly manage your automated recruitment process from finding a candidate to making them an offer on Codeln.
+                                        Seamlessly manage your automated recruitment process from finding a candidate to
+                                        making them an offer on Codeln.
 
                                     </p>
 
@@ -270,8 +273,6 @@
                                         </show-at>
 
 
-
-
                                     </div>
 
 
@@ -284,7 +285,7 @@
                                         <show-at breakpoint="mediumAndBelow">
                                             <div style="padding: 2%">
 
-                                                    <a-list
+                                                <a-list
                                                         itemLayout="vertical"
                                                         size="large"
                                                         :dataSource="listData"
@@ -295,13 +296,15 @@
                                                             slot="renderItem" slot-scope="item"
                                                             key="item.title">
 
-                                                    <a-row class="lightshadow" style="height: 13rem;padding: 3%">
+                                                        <a-row class="lightshadow" style="height: 13rem;padding: 3%">
 
-                                                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                                               :md="{span: 24, offset: 0 }"
-                                                               :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
-                                                               >
-                                                            <span >
+                                                            <a-col :xs="{span: 24, offset: 0 }"
+                                                                   :sm="{span: 24, offset: 0 }"
+                                                                   :md="{span: 24, offset: 0 }"
+                                                                   :lg="{span: 15, offset: 0 }"
+                                                                   :xl="{span: 15, offset: 0 }"
+                                                            >
+                                                            <span>
                                                                 <a-avatar class="poolavatar1"
                                                                 >
                                                                     {{item.name}}
@@ -309,41 +312,41 @@
                                                                 <span style="margin-left: 1rem">Bio</span>
                                                             </span>
 
-                                                            <p>{{item.about | truncate(100)}}<a
-                                                                    @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                                more</a>
-                                                            </p>
+                                                                <p>{{item.about | truncate(100)}}<a
+                                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                                    more</a>
+                                                                </p>
 
-                                                            <p>
+                                                                <p>
 
                                                                 <span style="" v-for="skill in  item.skills.slice(0,2)"
                                                                       v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                                            </p>
+                                                                </p>
 
-                                                            <div style="text-align: center">
-                                                                <a-button type="primary" ghost
-                                                                          @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                                    View Profile
-                                                                </a-button>
-                                                            </div>
-
-
-                                                        </a-col>
+                                                                <div style="text-align: center">
+                                                                    <a-button type="primary" ghost
+                                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
+                                                                        View Profile
+                                                                    </a-button>
+                                                                </div>
 
 
-                                                    </a-row>
+                                                            </a-col>
+
+
+                                                        </a-row>
                                                     </a-list-item>
-                                                    </a-list>
+                                                </a-list>
 
                                             </div>
 
                                         </show-at>
 
 
-                                        <hide-at breakpoint="mediumAndBelow" >
+                                        <hide-at breakpoint="mediumAndBelow">
                                             <div style="padding:  0 2%">
 
                                                 <a-list
@@ -373,7 +376,8 @@
 
                                                                 <p>
                                                                     Skills :
-                                                                    <span style="" v-for="skill in item.skills.slice(0,3)"
+                                                                    <span style=""
+                                                                          v-for="skill in item.skills.slice(0,3)"
                                                                           v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill }}</a-tag>
 
@@ -454,7 +458,8 @@
                                 <img class="imagecenter" src="../../../assets/images/props/hire_icon.png"/>
                                 <h3 class="" style="text-align: center">Verified Talent</h3>
                                 <p style="text-align: center;font-size: 1rem">
-                                    We validate the coding skills of our talent by verifying that they can build real-world
+                                    We validate the coding skills of our talent by verifying that they can build
+                                    real-world
                                     projects as that is the topmost concern of every employer.
                                 </p>
 
@@ -495,87 +500,93 @@
                         </h2>
                         <hide-at breakpoint="mediumAndBelow">
                             <a-row :gutter="16" :style="{padding:'3%'}">
-                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
+                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
-                                <img class="imagecenter" style="width: 70%;margin-top: 1rem"
-                                     src="../../../assets/images/props/b_mest.png"
-                                />
-
-
-                            </a-col>
-                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
-                                   style="padding-left: 0;padding-right: 0">
-                                <img style="width: 30%" class="imagecenter" src="../../../assets/images/props/b_7a.png"
-                                />
-                            </a-col>
-                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
-
-                                <img class="imagecenter wsi" style="width: 25%;"
-                                     src="../../../assets/images/wsi.png"
-                                />
+                                    <img class="imagecenter" style="width: 70%;margin-top: 1rem"
+                                         src="../../../assets/images/props/b_mest.png"
+                                    />
 
 
-                            </a-col>
-                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
-                                   style="padding-left: 0;padding-right: 0">
-                                <img class="imagecenter" style="width: 40%;margin-top: 1rem"
-                                     src="../../../assets/images/props/b_enpact.png"
-                                />
-                            </a-col>
+                                </a-col>
+                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                       style="padding-left: 0;padding-right: 0">
+                                    <img style="width: 30%" class="imagecenter"
+                                         src="../../../assets/images/props/b_7a.png"
+                                    />
+                                </a-col>
+                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">
 
-                        </a-row>
+                                    <img class="imagecenter wsi" style="width: 25%;"
+                                         src="../../../assets/images/wsi.png"
+                                    />
+
+
+                                </a-col>
+                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                       style="padding-left: 0;padding-right: 0">
+                                    <img class="imagecenter" style="width: 40%;margin-top: 1rem"
+                                         src="../../../assets/images/props/b_enpact.png"
+                                    />
+                                </a-col>
+
+                            </a-row>
                         </hide-at>
 
                         <show-at breakpoint="mediumAndBelow">
                             <a-row :gutter="16" :style="{padding:'1%'}">
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="margin-bottom: 1rem">
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                       style="margin-bottom: 1rem">
 
-                                <img class="imagecenter" style="width: 70%;margin-top: 1rem"
-                                     src="../../../assets/images/props/b_mest.png"
-                                />
-
-
-                            </a-col>
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
-                                   style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
-                                <img style="width: 30%" class="imagecenter" src="../../../assets/images/props/b_7a.png"
-                                />
-                            </a-col>
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style="margin-bottom: 1rem">
-
-                                <img class="imagecenter wsi" style="width: 25%;"
-                                     src="../../../assets/images/wsi.png"
-                                />
+                                    <img class="imagecenter" style="width: 70%;margin-top: 1rem"
+                                         src="../../../assets/images/props/b_mest.png"
+                                    />
 
 
-                            </a-col>
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                   :md="{span: 6, offset: 0 }"
-                                   :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
-                                   style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
-                                <img class="imagecenter" style="width: 40%;margin-top: 1rem"
-                                     src="../../../assets/images/props/b_enpact.png"
-                                />
-                            </a-col>
+                                </a-col>
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                       style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
+                                    <img style="width: 30%" class="imagecenter"
+                                         src="../../../assets/images/props/b_7a.png"
+                                    />
+                                </a-col>
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                       style="margin-bottom: 1rem">
 
-                        </a-row>
+                                    <img class="imagecenter wsi" style="width: 25%;"
+                                         src="../../../assets/images/wsi.png"
+                                    />
+
+
+                                </a-col>
+                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                       :md="{span: 6, offset: 0 }"
+                                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"
+                                       style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">
+                                    <img class="imagecenter" style="width: 40%;margin-top: 1rem"
+                                         src="../../../assets/images/props/b_enpact.png"
+                                    />
+                                </a-col>
+
+                            </a-row>
                         </show-at>
 
                     </div>
+                    <banner/>
+
 
 
                 </a-layout-content>
@@ -610,6 +621,7 @@
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
     import {showAt, hideAt} from 'vue-breakpoints'
+    import banner from '@/components/layout/banner'
 
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
@@ -623,7 +635,8 @@
                 alldevs: null,
                 listData: [],
                 loading: true,
-                tempdata: []
+                tempdata: [],
+                bottom: 10,
 
             }
         },
@@ -634,6 +647,7 @@
             showAt, hideAt,
             Pageheader,
             Footer,
+            banner
 
         },
         async mounted() {
@@ -795,9 +809,10 @@
         width: 14%;
         margin-top: 0.5rem;
     }
-    .lightshadow{
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-        border: 1px solid rgba(0,0,0,.125);
+
+    .lightshadow {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+        border: 1px solid rgba(0, 0, 0, .125);
     }
 
 
