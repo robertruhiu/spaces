@@ -98,7 +98,7 @@
                                                     <a target="_blank"
                                                        href="https://meltwater.org/blog/mest-company-codeln-wins-launched-in-africa-pitch-competition-social-media-week-lagos/">
                                                         <img class="pressitemseed"
-                                                             src="https://smwlagos.com/wp-content/uploads/2019/09/SMW-LAGOS-03.png">
+                                                             src="../../../assets/images/props/smw.png">
                                                     </a>
 
                                                 </a-col>
