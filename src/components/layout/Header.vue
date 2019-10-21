@@ -18,6 +18,7 @@
                 <router-link to="/prices" class="ant-menu-item" style="margin-bottom: 0">Pricing</router-link>
 
                 <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent pool</router-link>
+                <router-link to="/jobs" class="ant-menu-item" style="margin-bottom: 0">Job board</router-link>
 
                 <router-link to="/recruiter" class="ant-menu-item" style="margin-bottom: 0"
                              v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">My account

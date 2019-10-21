@@ -54,7 +54,7 @@
 
                             <div class="icons-list">
                                 <a href="mailto:info@codeln.com" target="_top">
-                                    <a-icon type="message"/>
+                                    <a-icon type="mail" />
                                 </a>
                                 <a class="text-muted" href="https://www.facebook.com/CodelnSpaces/" target="_blank">
                                     <a-icon type="facebook"/>

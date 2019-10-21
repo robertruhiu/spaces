@@ -43,7 +43,7 @@
                                          message="Job application successful" type="success" closeText="Close Now"/>
                                 <p>
 
-                                    Location : {{job.location}}
+                                    Location : {{job.location}} <span v-if="job.city">| City : {{job.city}}</span>
 
 
                                 </p>
@@ -59,7 +59,7 @@
                             </div>
                             <div>
                                 <p style="font-weight: 700">Job Details</p>
-                                <p>{{job.description}}</p>
+                                <markdown>{{job.description}}</markdown>
                             </div>
                         </div>
 
@@ -81,6 +81,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
     import moment from 'moment';
+    import markdown from 'vue-markdown'
 
     export default {
         name: "jobdetails",
@@ -100,7 +101,8 @@
         components: {
             ACol,
             ARow,
-            Pageheader
+            Pageheader,
+            markdown
         },
         async mounted() {
             moment

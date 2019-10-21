@@ -3,21 +3,21 @@
         <pageheader></pageheader>
         <a-layout-content :style="{ padding: '0 0px' }">
             <div>
-                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem ">
+                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem " gutter="8">
                     <hide-at breakpoint="mediumAndBelow">
                         <a-col span="4">
                             <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
                         </a-col>
                     </hide-at>
 
-                    <a-col :xs="{span: 20, offset: 4 }" :sm="{span: 20, offset: 4 }" :md="{span: 20, offset: 4 }"
-                           :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
+                    <a-col :xs="{span: 16, offset: 2 }" :sm="{span: 16, offset: 2 }" :md="{span: 16, offset: 2 }"
+                           :lg="{span: 16, offset: 0 }" :xl="{span: 16, offset: 0 }">
 
                         <div style="padding-top: 2rem;" class='center'>
 
                             <a-auto-complete
                                     :dataSource="dataSource"
-                                    style="width: 80%;z-index: 0"
+                                    style="width: 100%;z-index: 0"
                                     placeholder="Search skills like react,javascript,vue python"
                                     :filterOption="filterOption"
                                     v-model="search"
@@ -31,11 +31,27 @@
                             </a-auto-complete>
 
 
-                            <span>
 
 
 
-                            </span>
+
+                        </div>
+                    </a-col>
+                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
+                           :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+
+                        <div style="padding-top: 2rem;" class='center'>
+
+
+                            <country-select
+                                                    name="location"
+
+                                                    class="ant-input"
+                                                    v-model="country"
+                                            />
+
+
+
 
 
                         </div>
@@ -245,8 +261,8 @@
                 devs: null,
                 alldevs: null,
                 search: '',
+                country:'',
                 profile: {},
-                country: null,
                 checkedList: defaultCheckedList,
                 indeterminate: true,
                 checkAll: false,
@@ -371,9 +387,20 @@
         computed: {
             filteredList() {
                 return this.listData.filter(dev => {
+                    if(this.country && this.search){
+
+                        return  dev.skills.toString().toLowerCase().includes(this.search.toLowerCase()) &&  dev.location.toLowerCase().includes(this.country.toLowerCase())
+
+                    }else if(this.country) {
+                        return dev.location.toLowerCase().includes(this.country.toLowerCase())
 
 
-                    return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
+                    }else {
+                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
+                    }
+
+
+
                 })
             }
         }

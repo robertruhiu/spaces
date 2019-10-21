@@ -293,6 +293,15 @@
                                         </a-form-item>
                                     </a-col>
                                     <a-col :span="8" style="padding-right: 1%">
+                                        <a-form-item label="City of operation  ">
+                                            <a-input placeholder="lagos,accra,nairobi...etc" v-model="job.city">
+                                            </a-input>
+
+                                        </a-form-item>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Salary range per month ">
                                             <a-input placeholder="1000-1500$" v-model="job.remuneration">
                                             </a-input>
@@ -303,8 +312,6 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
-                                </a-row>
-                                <a-row>
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Deadline ">
                                             <a-date-picker v-model="job.deadline"
@@ -321,7 +328,7 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :span="12" style="padding-right: 1%">
+                                    <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Developers needed ">
                                             <a-input-number :min="1" v-model="job.num_devs_wanted"/>
 
@@ -332,6 +339,8 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
+
+
                                 </a-row>
 
 
@@ -366,9 +375,8 @@
                                                 :label-col="{ span: 24 }"
                                                 :wrapper-col="{ span:  24}"
                                         >
-                                            <a-textarea v-model="job.description"
-                                                        placeholder="About the job"
-                                                        :rows="6"/>
+                                            <vue-simplemde v-model="job.description" ref="markdownEditor" />
+
                                             <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
                                                     * required field
@@ -383,7 +391,7 @@
                                 <a-alert
                                         message="Your job is under review. It will be updated soon if it matches our specification.
                                          Else, we will contact you directly for edits."
-                                        type="info" />
+                                        type="info"/>
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
@@ -412,7 +420,7 @@
                                     </div>
                                     <div>
                                         <p style="font-weight: 700">Job Details</p>
-                                        <p>{{job.description}}</p>
+                                        <markdown>{{job.description}}</markdown>
                                     </div>
                                 </div>
                             </div>
@@ -693,7 +701,7 @@
                                 <a-alert
                                         message="Your job is under review. It will be updated soon if it matches our specification.
                                         Else, we will contact you directly for edits."
-                                        type="info" />
+                                        type="info"/>
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
@@ -766,6 +774,8 @@
 <script>
 
 
+    import '../../../assets/css/default.css';
+    import '../../../assets/css/medium-editor.css';
     import UsersService from '@/services/UsersService'
     import Marketplace from '@/services/Marketplace'
     import ACol from "ant-design-vue/es/grid/Col";
@@ -775,6 +785,10 @@
     import moment from 'moment';
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
     import {showAt, hideAt} from 'vue-breakpoints'
+    import mde from 'simplemde'
+    import VueSimplemde from 'vue-simplemde'
+    import 'simplemde/dist/simplemde.min.css';
+    import markdown from 'vue-markdown'
 
 
     export default {
@@ -802,10 +816,13 @@
                 inputVisible: false,
                 currentUser: {},
                 inputValue: '',
-                recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql',
+                    'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
-                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
-                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#', 'C', 'Swift', 'Nodejs',
+                    'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
+                    'Nativescript ',
                     'Android', 'Website', 'Mobile'],
                 selectedTags: [],
                 loading: true,
@@ -823,7 +840,8 @@
 
                 }],
 
-                jobmobile: false
+                jobmobile: false,
+                content:''
 
             }
 
@@ -833,7 +851,8 @@
             ACol,
             Pageheader,
             RecruiterSider,
-            showAt, hideAt
+            showAt, hideAt,
+            mde,VueSimplemde,markdown
 
 
         },
@@ -1010,13 +1029,9 @@
                         this.$router.push({
                             name: 'managejobs'
                         })
-                        Marketplace.newjobemail(resp.data.id,auth)
+                        Marketplace.newjobemail(resp.data.id, auth)
                             .then()
                             .catch()
-
-
-
-
 
 
                     })

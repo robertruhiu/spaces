@@ -1197,10 +1197,9 @@
                                                         :label-col="{ span: 24 }"
                                                         :wrapper-col="{ span:  24}"
                                                 >
+                                                    <vue-simplemde v-model="job.description" ref="markdownEditor" />
 
-                                                    <a-textarea v-model="job.description"
-                                                                placeholder="A bit about the job"
-                                                                :rows="6"/>
+
                                                 </a-form-item>
 
                                             </a-col>
@@ -1511,6 +1510,9 @@
 
     // table structure
     import AFormItem from "ant-design-vue/es/form/FormItem";
+    import VueSimplemde from 'vue-simplemde'
+    import 'simplemde/dist/simplemde.min.css';
+    import markdown from 'vue-markdown'
 
     const columns = [
         {
@@ -1786,7 +1788,8 @@
             RecruiterSider,
             Jobheader,
             Rave,
-            tc
+            tc,
+            VueSimplemde,markdown
 
 
         },

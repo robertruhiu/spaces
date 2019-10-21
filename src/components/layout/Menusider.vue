@@ -21,14 +21,29 @@
                     <span>Post a job for free</span>
                 </router-link>
 
-          <router-link to="/prices">
+
+
+      </a-menu-item>
+        <a-menu-item key="6">
+            <router-link to="/prices">
 
                     <span>Pricing</span>
                 </router-link>
-        <router-link to="/talent">
+
+      </a-menu-item>
+        <a-menu-item key="7">
+            <router-link to="/talent">
 
                     <span>Talent pool</span>
                 </router-link>
+
+      </a-menu-item>
+        <a-menu-item key="8">
+            <router-link to="/jobs">
+
+                    <span>Job board </span>
+                </router-link>
+
       </a-menu-item>
 
         <a-menu-item key="1" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">

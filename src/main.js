@@ -7,6 +7,7 @@ import cloudinary from 'cloudinary-core';
 Vue.config.productionTip = false
 Vue.use(cloudinary)
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+
 import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
 import VeeValidate from 'vee-validate';

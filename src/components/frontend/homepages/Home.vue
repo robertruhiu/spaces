@@ -189,7 +189,7 @@
 
                                     <p style="text-align: center;font-size: 1rem">
                                         Access a rich pool of verified African Programmers and Designers, that are
-                                        available and ready to be hired
+                                        available and ready to be hired.
 
                                     </p>
 
