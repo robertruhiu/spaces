@@ -773,8 +773,7 @@
 <script>
 
 
-    import '../../../assets/css/default.css';
-    import '../../../assets/css/medium-editor.css';
+
     import UsersService from '@/services/UsersService'
     import Marketplace from '@/services/Marketplace'
     import ACol from "ant-design-vue/es/grid/Col";

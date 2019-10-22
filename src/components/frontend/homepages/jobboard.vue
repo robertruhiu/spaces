@@ -173,7 +173,7 @@
 
 
         </a-layout-content>
-        <banner/>
+
         <Footer/>
     </a-layout>
 
