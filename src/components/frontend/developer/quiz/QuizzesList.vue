@@ -86,7 +86,7 @@
 
                 </div>
             </a-layout-content>
-            <banner/>
+
         </a-layout>
     </a-layout>
 

@@ -362,7 +362,22 @@
                                                                         Pick/Reject
                                                                     </div>
                                                                     <template slot-scope="text,record">
-                                                                        <div v-if="record.carted">
+                                                                        <div v-if="currentUserProfile.user.is_staff">
+                                                                            <a-button-group >
+                                                                            <a-button
+                                                                                    @click="pickrejectAdmin(record.action,record.profile,true,record.name)"
+                                                                                    type="primary">pick
+                                                                            </a-button>
+                                                                            <a-button
+                                                                                    @click="pickrejectAdmin(record.action,record.profile,false,record.name)">
+                                                                                reject
+                                                                            </a-button>
+
+                                                                        </a-button-group>
+
+                                                                        </div>
+                                                                        <div v-else>
+                                                                            <div v-if="record.carted">
                                                                             --
                                                                         </div>
 
@@ -377,6 +392,8 @@
                                                                             </a-button>
 
                                                                         </a-button-group>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -478,7 +495,18 @@
                                                                         Pick
                                                                     </div>
                                                                     <template slot-scope="text,record">
-                                                                        <div style="margin-left: 5%">
+                                                                        <div v-if="currentUserProfile.user.is_staff">
+                                                                            <div style="margin-left: 5%">
+                                                                            <a-button :size="small"
+                                                                                      @click="pickrecommedationAdmin(job.id,record.profile,2)"
+                                                                                      type="primary">pick
+                                                                            </a-button>
+
+
+                                                                        </div>
+                                                                        </div>
+                                                                        <div v-else>
+                                                                            <div style="margin-left: 5%">
                                                                             <a-button :size="small"
                                                                                       @click="pickrecommedationClick(job.id,record.profile,2)"
                                                                                       type="primary">pick
@@ -486,6 +514,8 @@
 
 
                                                                         </div>
+                                                                        </div>
+
                                                                     </template>
                                                                 </a-table-column>
 
@@ -2540,6 +2570,84 @@
 
             },
 
+             //pick or reject from new applicants(admin actions)
+            pickrejectAdmin(job_id, candidate_id, key, name) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.waiting = true
+                let self = this;
+                if (key) {
+                    for (let i = 0; i < this.newapplicant.length; i++) {
+
+                        if (this.newapplicant[i].profile === candidate_id) {
+
+
+                            const auth = {
+                                headers: {Authorization: 'JWT ' + this.$store.state.token}
+                            };
+                            this.pickeddevs.push(candidate_id.toString())
+
+
+
+                            Marketplace.pickreject(job_id, {carted: true,selected:true,stage:'active'}, auth)
+                                .then(resp => {
+                                        this.applicants = []
+                                        this.newapplicant = []
+                                        this.pickedapplicants = []
+                                        this.interviewstage = []
+                                        this.testingstage = []
+                                        this.offerstage = []
+                                        this.hirestage = []
+                                        this.recommmedcandidates = []
+                                        this.applicantprofile = []
+                                        this.waiting = false
+                                        self.Datarefresh()
+                                        return resp
+                                    }
+                                )
+                                .catch()
+
+
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < this.newapplicant.length; i++) {
+                        if (this.newapplicant[i].profile === candidate_id) {
+
+
+                            if (this.newapplicant.length === 0) {
+                                this.newapplications = false
+                            }
+                            Marketplace.pickreject(job_id, {
+                                stage: 'rejected',
+                                selected: false,
+
+                            }, auth)
+                                .then(resp => {
+                                    this.applicants = []
+                                    this.newapplicant = []
+                                    this.pickedapplicants = []
+                                    this.interviewstage = []
+                                    this.testingstage = []
+                                    this.offerstage = []
+                                    this.hirestage = []
+                                    this.recommmedcandidates = []
+                                    this.applicantprofile = []
+                                    self.Datarefresh()
+                                    return resp
+                                })
+                                .catch()
+
+
+                        }
+                    }
+                }
+
+
+            },
+
             // pick from recommedation list
             pickrecommedationClick(job_id, candidate_id, key) {
 
@@ -2635,6 +2743,121 @@
                                     candidate: candidate_id,
                                     stage: 'new',
                                     selected: false,
+                                    recruiter: this.$store.state.user.pk,
+                                    carted: true,
+                                    type: 'recommend'
+
+                                },
+                                auth
+                            )
+                                .then(resp => {
+                                        this.applicants = []
+                                        this.newapplicant = []
+                                        this.pickedapplicants = []
+                                        this.interviewstage = []
+                                        this.testingstage = []
+                                        this.offerstage = []
+                                        this.hirestage = []
+                                        this.recommmedcandidates = []
+                                        this.recommmedcandidatesverified = []
+                                        this.applicantprofile = []
+
+                                        this.waiting = false
+                                        self.Datarefresh()
+                                        return resp
+
+
+                                    }
+                                )
+                                .catch()
+
+
+                        }
+                    }
+
+                }
+
+
+            },
+
+            // pick from recommedation list(admin actions)
+            pickrecommedationAdmin(job_id, candidate_id, key) {
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.waiting = true
+
+                if (key === 1) {
+                    for (let i = 0; i < this.recommmedcandidatesverified.length; i++) {
+
+
+                        if (this.recommmedcandidatesverified[i].profile === candidate_id) {
+
+                            if (this.recommmedcandidates.length === 0 && this.recommmedcandidatesverified.length === 0) {
+                                this.recommended = false
+                            }
+                            let self = this;
+
+
+                            Marketplace.pickrecommended(
+                                {
+                                    job: job_id,
+                                    candidate: candidate_id,
+                                    stage: 'new',
+                                    selected: false,
+                                    recruiter: this.$store.state.user.pk,
+
+
+                                },
+                                auth
+                            )
+                                .then(resp => {
+                                        this.applicants = []
+                                        this.newapplicant = []
+                                        this.pickedapplicants = []
+                                        this.interviewstage = []
+                                        this.testingstage = []
+                                        this.offerstage = []
+                                        this.hirestage = []
+                                        this.recommmedcandidates = []
+                                        this.recommmedcandidatesverified = []
+                                        this.applicantprofile = []
+                                        this.waiting = false
+                                        self.Datarefresh()
+                                        return resp
+
+
+                                    }
+                                )
+                                .catch()
+
+
+                        }
+                    }
+
+                } else if (key === 2) {
+
+                    for (let i = 0; i < this.recommmedcandidates.length; i++) {
+                        if (this.recommmedcandidates[i].profile === candidate_id) {
+
+                            if (this.recommmedcandidates.length === 0 && this.recommmedcandidatesverified.length === 0) {
+                                this.recommended = false
+                            }
+                            let self = this;
+
+
+                            const auth = {
+                                headers: {Authorization: 'JWT ' + this.$store.state.token}
+                            };
+
+                            Marketplace.pickrecommended(
+                                {
+                                    job: job_id,
+                                    candidate: candidate_id,
+                                    stage: 'active',
+                                    selected: true,
                                     recruiter: this.$store.state.user.pk,
                                     carted: true,
                                     type: 'recommend'

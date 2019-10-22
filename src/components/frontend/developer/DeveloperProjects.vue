@@ -264,7 +264,7 @@
 
             </a-modal>
         </a-layout-content>
-        <banner/>
+
 
     </a-layout>
 </template>

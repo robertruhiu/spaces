@@ -382,9 +382,7 @@
                                         :label-col="{ span: 24 }"
                                         :wrapper-col="{ span:  24}"
                                 >
-                                    <a-textarea v-model="job.description"
-                                                placeholder="About the job"
-                                                :rows="6"/>
+                                    <vue-simplemde v-model="job.description" ref="markdownEditor" />
                                     <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
                                                     * required field
@@ -427,7 +425,7 @@
                             </div>
                             <div>
                                 <p style="font-weight: 700">Job Details</p>
-                                <p>{{job.description}}</p>
+                                <markdown>{{job.description}}</markdown>
                             </div>
                         </div>
                     </div>
@@ -686,9 +684,8 @@
                                         :label-col="{ span: 24 }"
                                         :wrapper-col="{ span:  24}"
                                 >
-                                    <a-textarea v-model="job.description"
-                                                placeholder="About the job"
-                                                :rows="6"/>
+                                    <vue-simplemde v-model="job.description" ref="markdownEditor" />
+
                                     <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
                                                     * required field
@@ -731,7 +728,8 @@
                             </div>
                             <div>
                                 <p style="font-weight: 700">Job Details</p>
-                                <p>{{job.description}}</p>
+
+                                <markdown>{{job.description}}</markdown>
                             </div>
                         </div>
                     </div>
@@ -777,6 +775,9 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import UsersService from '@/services/UsersService'
     import {showAt, hideAt} from 'vue-breakpoints'
+    import VueSimplemde from 'vue-simplemde'
+    import 'simplemde/dist/simplemde.min.css';
+    import markdown from 'vue-markdown'
 
 
     export default {
@@ -833,7 +834,8 @@
         components: {
             ACol,
             AFormItem,
-            hideAt, showAt
+            hideAt, showAt,
+            VueSimplemde,markdown
 
 
         },
