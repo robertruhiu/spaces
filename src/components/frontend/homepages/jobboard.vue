@@ -201,7 +201,6 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
     import {showAt, hideAt} from 'vue-breakpoints'
-    import banner from '@/components/layout/banner'
     var VueTruncate = require('vue-truncate-filter')
     import Vue from 'vue'
 
@@ -264,7 +263,7 @@
             ARow,
             Pageheader,
             Footer,
-            showAt, hideAt,banner
+            showAt, hideAt,
         },
         async mounted() {
 

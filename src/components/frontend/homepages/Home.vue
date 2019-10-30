@@ -612,7 +612,6 @@
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
     import {showAt, hideAt} from 'vue-breakpoints'
-    import banner from '@/components/layout/banner'
 
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
@@ -638,8 +637,6 @@
             showAt, hideAt,
             Pageheader,
             Footer,
-            banner
-
         },
         async mounted() {
 

@@ -274,7 +274,6 @@
 
                 </div>
             </a-layout-content>
-            <banner/>
         </a-layout>
     </a-layout>
 
@@ -303,7 +302,6 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
-    import banner from '@/components/layout/banner'
 
     export default {
         name: "ManageApplications",
@@ -325,7 +323,6 @@
             ARow,
             DevHeader,
             CandidateSider,
-            banner
 
 
         },

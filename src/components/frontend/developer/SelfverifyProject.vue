@@ -84,12 +84,7 @@
                                 </div>
                                 <div style="margin-bottom: 2%" v-if="application.stage ==='project_completed'">
                                     <p>Project analysis</p>
-
                                     <span>We are currently analysing the project and a report will be generated</span>
-
-
-
-
                                 </div>
 
                                 <div>
@@ -154,7 +149,6 @@
     import DevHeader from "../../layout/DevHeader";
     import moment from 'moment';
     import {showAt, hideAt} from 'vue-breakpoints'
-    import banner from '@/components/layout/banner'
 
     export default {
         name: "SelfverifyProject",
@@ -170,7 +164,7 @@
         components: {
             DevHeader,
             CandidateSider,
-            showAt, hideAt,banner
+            showAt, hideAt,
 
         },
         async mounted() {
