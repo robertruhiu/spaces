@@ -123,8 +123,6 @@
                                     </div>
                                 </a-row>
                             </hide-at>
-
-
                         </div>
 
                     </hide-at>
@@ -168,9 +166,7 @@
 
 
                         </div>
-
                     </show-at>
-
                     <!-----how it works---->
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">
                         <div style="background-color: #ffffff;">
@@ -225,7 +221,6 @@
                                 </a-col>
                             </a-row>
                         </div>
-
                     </div>
                     <!--                    &lt;!&ndash;-&#45;&#45;services&#45;&#45;&ndash;&gt;-->
 
@@ -585,10 +580,6 @@
                         </show-at>
 
                     </div>
-                    <banner/>
-
-
-
                 </a-layout-content>
                 <Footer/>
             </a-layout>
