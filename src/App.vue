@@ -24,7 +24,7 @@
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
+            };
             if (this.$store.state.user) {
                 UsersService.authenticated(this.$store.state.user.pk, auth)
                     .then()
@@ -48,10 +48,6 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
-                this.$router.push({
-                    name: 'home'
-                })
-
             }
             this.loading = false
 

@@ -47,7 +47,8 @@ const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
 
 let router = new Router({
-
+    mode : 'history',
+    base: __dirname,
     routes: [
         {
             path: '/',
@@ -405,7 +406,7 @@ router.beforeEach((to, from, next) => {
         if (store.getters.isLoggedIn) {
 
 
-            next()
+            next();
             return
         }
         next('/login')

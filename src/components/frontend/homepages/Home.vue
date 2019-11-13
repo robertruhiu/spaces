@@ -176,7 +176,7 @@
                             </div>
 
 
-                            <a-row gutter="32" style="padding: 3%">
+                            <a-row :gutter="32" style="padding: 3%">
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
@@ -627,6 +627,7 @@
                 loading: true,
                 tempdata: [],
                 bottom: 10,
+                large: 'large',
 
             }
         },
