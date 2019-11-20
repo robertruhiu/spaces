@@ -55,7 +55,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row,Upload,Switch,Tooltip,Affix
+    Row,Upload,Switch,Tooltip,Affix,notification
 
 
 
@@ -100,6 +100,7 @@ Vue.use(Upload)
 Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Affix)
+Vue.use(notification)
 
 
 

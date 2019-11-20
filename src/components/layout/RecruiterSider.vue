@@ -880,6 +880,10 @@
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
                 this.$store.dispatch('setNext', null)
+                this.$store.dispatch('setCart', null)
+                this.$store.dispatch('setPicked', null)
+                this.$store.dispatch('setLanguage', null)
+                this.$store.dispatch('setCountry', null)
                 this.$router.push({
                     name: 'home'
                 })

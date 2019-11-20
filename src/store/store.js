@@ -1,21 +1,26 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import sharedMutations from 'vuex-shared-mutations';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict: true,
-    plugins: [
-        createPersistedState()
-    ],
+
     state: {
         user_id: null,
         token: null,
         user: null,
         isUserLoggedIn: false,
         usertype: null,
-        next:null
+        next: null,
+        language: null,
+        country: null,
+        cart: null,
+        candidate:null,
+        removed:false,
+        cart_ids:[]
     },
     mutations: {
         setToken(state, token) {
@@ -25,6 +30,9 @@ export default new Vuex.Store({
         },
         setUser(state, user) {
             state.user = user
+        },
+        setCandidate(state, candidate) {
+            state.candidate = candidate
         },
         setAuthenticated(state, isAuthenticated) {
             state.isUserLoggedIn = isAuthenticated
@@ -37,7 +45,57 @@ export default new Vuex.Store({
         },
         setNext(state, next) {
             state.next = next
-        }
+        },
+        setLanguage(state, language) {
+            state.language = language
+        },
+        setCountry(state, country) {
+            state.country = country
+        },
+        setCart(state, cart) {
+            state.cart = cart
+            state.removed = false
+            state.cart_ids = []
+        },
+        setRemove(state, remove) {
+            state.removed = remove
+        },
+        setPicked(state, picked) {
+            state.picked = picked
+        },
+        add(state, candidateobject) {
+            state.cart.push(candidateobject)
+            state.cart = state.cart.reduce(function (field, e1) {
+                var matches = field.filter(function (e2) {
+                    return e1.id == e2.id
+                });
+                if (matches.length == 0) {
+                    field.push(e1);
+                }
+                return field;
+            }, []);
+            if(candidateobject.id === state.candidate.id){
+                state.removed = false
+            }
+            state.cart_ids.push(Number(candidateobject.id))
+
+        },
+        remove(state, n) {
+            for (let i = 0; i < state.cart.length; i++) {
+                if (state.cart[i].id === n) {
+                    if (i > -1) {
+                        state.cart.splice(i, 1);
+                    }
+                }
+            }
+            if(n === state.candidate.id){
+                state.removed = true
+            }
+
+
+        },
+
+
 
     },
     actions: {
@@ -50,6 +108,9 @@ export default new Vuex.Store({
         setUser({commit}, user) {
             commit('setUser', user)
         },
+        setCandidate({commit}, candidate) {
+            commit('setCandidate', candidate)
+        },
         setUsertype({commit}, usertype) {
             commit('setUsertype', usertype)
         },
@@ -58,9 +119,26 @@ export default new Vuex.Store({
         },
         setNext({commit}, next) {
             commit('setNext', next)
-        }
+        },
+        setLanguage({commit}, language) {
+            commit('setLanguage', language)
+        },
+        setCountry({commit}, country) {
+            commit('setCountry', country)
+        },
+        setCart({commit}, cart) {
+            commit('setCart', cart)
+        },
+        setPicked({commit}, picked) {
+            commit('setPicked', picked)
+        },
+
     },
     getters: {
         isLoggedIn: state => !!state.token,
-    }
+    },
+    plugins: [
+        createPersistedState(),
+        sharedMutations({predicate: ['add', 'remove','picked',]})
+    ],
 })

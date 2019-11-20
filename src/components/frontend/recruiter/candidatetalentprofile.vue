@@ -297,7 +297,7 @@
                                     <div v-if="pickedprofiles.length>0" class="profile"
                                          style="overflow-y:scroll; height:17rem;">
                                         <div style="padding: 7%">
-                                            <p>Added Candidates</p>
+                                            <p>Picked Candidates</p>
                                             <p>
                                                 <a-icon type="check-circle" theme="twoTone"/>
                                                 indicates verified candidate
@@ -313,7 +313,7 @@
 
                                             </div>
                                             <span v-if="paidbundleexists === false">
-                                            <p style="padding-top: 1rem">Total:{{amount}}</p>
+                                            <p style="padding-top: 1rem">Total:${{amount}}</p>
                                         </span>
                                             <div style="text-align: center" v-if="waiting">
                                                 <a-spin/>
@@ -585,7 +585,9 @@
                 terms: false,
                 conditions: false,
                 availabiltytags: [],
-                exceeded: ''
+                exceeded: '',
+                verified: false,
+                statecartlist: []
 
             }
         },
@@ -721,6 +723,7 @@
                         this.conditions = this.mycart.conditions
                         if (this.mycart.devspending) {
                             this.pickeddevs = this.mycart.devspending.split(',');
+
 
                         }
                         if (this.mycart.devspaid) {

@@ -14,14 +14,14 @@
                             <show-at breakpoint="mediumAndBelow">
                                 <div v-if="application.project.hasvideo === false">
 
-                                <div v-if="application.project.projectimage1 "><img style="width: 100%"
-                                                                        :src="application.project.projectimage1"/>
+                                    <div v-if="application.project.projectimage1 "><img style="width: 100%"
+                                                                                        :src="application.project.projectimage1"/>
+                                    </div>
                                 </div>
+                                <div v-if="application.project.hasvideo">
+                                    <youtube :video-id="videoid" :width="270"
+                                             :player-vars="playerVars" @playing="playing"></youtube>
                                 </div>
-                            <div v-if="application.project.hasvideo">
-                                <youtube :video-id="videoid" :width="270"
-                                         :player-vars="playerVars" @playing="playing"></youtube>
-                            </div>
 
 
                             </show-at>
@@ -30,14 +30,14 @@
                             <hide-at breakpoint="mediumAndBelow">
                                 <div v-if="application.project.hasvideo === false">
 
-                                <div v-if="application.project.projectimage1 "><img style="width: 100%"
-                                                                        :src="application.project.projectimage1"/>
-                                </div>
+                                    <div v-if="application.project.projectimage1 "><img style="width: 100%"
+                                                                                        :src="application.project.projectimage1"/>
+                                    </div>
 
-                            <div v-if="application.project.hasvideo">
-                                <youtube :video-id="videoid" width="600"
-                                         :player-vars="playerVars"  @playing="playing"></youtube>
-                            </div>
+                                    <div v-if="application.project.hasvideo">
+                                        <youtube :video-id="videoid" width="600"
+                                                 :player-vars="playerVars" @playing="playing"></youtube>
+                                    </div>
                                 </div>
 
                             </hide-at>
@@ -74,6 +74,22 @@
 
                                 </div>
                                 <div style="margin-bottom: 2%" v-if="application.stage ==='time_set'">
+
+                                    <p>Current scheduled date:: {{application.projectstarttime}}</p>
+                                    <p>Reschedule assesment date/time</p>
+                                    <a-date-picker
+                                            format="YYYY-MM-DD HH:mm:ss"
+                                            :disabledDate="disabledDate"
+                                            v-model="projectstarttime"
+
+                                            :showTime="{ defaultValue: moment('00:00', 'HH:mm') }"
+                                            style="margin-bottom: 1rem"
+                                    />
+                                    <a-button type="primary" style="margin-left: 2%" @click="Settime(application.id)">
+                                        Submit
+                                    </a-button>
+
+
                                     <p>IDE link</p>
                                     <a target="_blank" :href="server_url">{{server_url}}</a>
                                     <br>
@@ -84,16 +100,11 @@
                                 </div>
                                 <div style="margin-bottom: 2%" v-if="application.stage ==='project_completed'">
                                     <p>Project analysis</p>
-
                                     <span>We are currently analysing the project and a report will be generated</span>
-
-
-
-
                                 </div>
 
                                 <div>
-                                    <p ><strong>Requirements</strong></p>
+                                    <p><strong>Requirements</strong></p>
                                     <ol>
                                         <li v-if="application.project.requirement1">
                                             {{application.project.requirement1}}
@@ -138,7 +149,6 @@
                     </a-row>
 
 
-
                 </div>
             </a-layout-content>
 
@@ -154,7 +164,6 @@
     import DevHeader from "../../layout/DevHeader";
     import moment from 'moment';
     import {showAt, hideAt} from 'vue-breakpoints'
-    import banner from '@/components/layout/banner'
 
     export default {
         name: "SelfverifyProject",
@@ -164,13 +173,14 @@
                 projectstarttime: null,
                 timeseterror: false,
                 server_url: "will be sent to you",
-                videoid:''
+                videoid: '',
+                reset: false
             }
         },
         components: {
             DevHeader,
             CandidateSider,
-            showAt, hideAt,banner
+            showAt, hideAt,
 
         },
         async mounted() {
@@ -179,11 +189,10 @@
 
             };
             Projects.myprojectdetails(this.$store.state.route.params.applicationId, auth)
-                .then(resp =>
-                    {
+                .then(resp => {
                         this.application = resp.data,
                             this.videoid = this.application.project.projectimage2
-                     }
+                    }
                 )
                 .catch()
 
@@ -206,12 +215,20 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 };
+                this.reset = true
+
                 if (this.projectstarttime !== null) {
                     this.application.stage = 'time_set'
                     Projects.myprojectdetailspatch(application_id, {
                         stage: 'time_set',
                         projectstarttime: this.projectstarttime
-                    }, auth)
+                    }, auth).then(resp => {
+                            this.application.projectstarttime = resp.data.projectstarttime
+                            Projects.newselfverify(this.application.id, auth)
+                                .then()
+                                .catch()
+                        }
+                    )
                 } else {
                     this.timeseterror = true
                 }

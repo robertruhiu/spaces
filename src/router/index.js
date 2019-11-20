@@ -47,7 +47,8 @@ const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
 
 let router = new Router({
-
+    mode: 'history',
+    base: __dirname,
     routes: [
         {
             path: '/',
@@ -97,9 +98,9 @@ let router = new Router({
             path: '/password_reset_confirm',
             name: 'reset',
             component: Reset,
-            props: (route) =>({
-                uid :route.query.uid,
-                token :route.query.token,
+            props: (route) => ({
+                uid: route.query.uid,
+                token: route.query.token,
             })
         },
         {
@@ -395,6 +396,13 @@ let router = new Router({
 
         },
     ],
+    scrollBehavior(to, from, savedPosition) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({x: 0, y: 0})
+            }, 1)
+        })
+    }
 
 })
 
@@ -405,7 +413,7 @@ router.beforeEach((to, from, next) => {
         if (store.getters.isLoggedIn) {
 
 
-            next()
+            next();
             return
         }
         next('/login')

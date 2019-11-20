@@ -11,9 +11,15 @@
         </div>
         <hide-at breakpoint="mediumAndBelow">
             <div class="ant-menu-horizontal " :style="{ lineHeight: '64px',float: 'right',borderBottom: 0}">
-                <router-link to="/post/true" class="ant-btn ant-btn-primary" style="margin-bottom: 0"  v-if="$store.state.usertype ==='recruiter'">Post a job for free</router-link>
-                <router-link to="/developer" class="ant-btn ant-btn-primary" style="margin-bottom: 0" v-else-if="$store.state.usertype ==='developer'" >Post a job for free</router-link>
-                <router-link to="/login" class="ant-btn ant-btn-primary" style="margin-bottom: 0" v-else >Post a job for free</router-link>
+                <router-link to="/post/true" class="ant-btn ant-btn-primary" style="margin-bottom: 0"
+                             v-if="$store.state.usertype ==='recruiter'">Post a job for free
+                </router-link>
+                <router-link to="/developer" class="ant-btn ant-btn-primary" style="margin-bottom: 0"
+                             v-else-if="$store.state.usertype ==='developer'">Post a job for free
+                </router-link>
+                <router-link to="/login" class="ant-btn ant-btn-primary" style="margin-bottom: 0" v-else>Post a job for
+                    free
+                </router-link>
 
                 <router-link to="/prices" class="ant-menu-item" style="margin-bottom: 0">Pricing</router-link>
 
@@ -21,16 +27,20 @@
                 <router-link to="/jobs" class="ant-menu-item" style="margin-bottom: 0">Job board</router-link>
 
                 <router-link to="/recruiter" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">My account
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">
+                    My account
                 </router-link>
                 <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage !=='complete' ">My account
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage !=='complete' ">
+                    My account
                 </router-link>
                 <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage !=='complete'">My account
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage !=='complete'">
+                    My account
                 </router-link>
                 <router-link to="/developer" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage ==='complete'">My account
+                             v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage ==='complete'">
+                    My account
                 </router-link>
                 <router-link to="/login" class="ant-menu-item" style="margin-bottom: 0"
                              v-if="!$store.state.isUserLoggedIn">
@@ -57,8 +67,6 @@
             </div>
 
         </show-at>
-
-
 
 
     </a-layout-header>
@@ -95,7 +103,6 @@
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
 
 
-
             }
 
 
@@ -108,7 +115,12 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
-                this.$store.dispatch('setNext',null)
+                this.$store.dispatch('setNext', null)
+                this.$store.dispatch('setCart', null)
+                this.$store.dispatch('setPicked', null)
+                this.$store.dispatch('setLanguage', null)
+                this.$store.dispatch('setCountry', null)
+
                 this.$router.push({
                     name: 'home'
                 })

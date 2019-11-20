@@ -103,5 +103,11 @@ export default {
     candidatemanagerdelete(candidatemanagement_id, auth) {
         return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `,auth)
     },
+    newpick(application_id,auth) {
+        return Api().get(`marketplace/newpick/${application_id}`, auth)
+    },
+    acceptreject(application_id,auth) {
+        return Api().get(`marketplace/acceptreject/${application_id}`, auth)
+    },
 
 }

@@ -123,8 +123,6 @@
                                     </div>
                                 </a-row>
                             </hide-at>
-
-
                         </div>
 
                     </hide-at>
@@ -585,10 +583,6 @@
                         </show-at>
 
                     </div>
-                    <banner/>
-
-
-
                 </a-layout-content>
                 <Footer/>
             </a-layout>
@@ -621,7 +615,6 @@
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
     import {showAt, hideAt} from 'vue-breakpoints'
-    import banner from '@/components/layout/banner'
 
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
@@ -637,6 +630,7 @@
                 loading: true,
                 tempdata: [],
                 bottom: 10,
+                large: 'large',
 
             }
         },
@@ -647,8 +641,6 @@
             showAt, hideAt,
             Pageheader,
             Footer,
-            banner
-
         },
         async mounted() {
 

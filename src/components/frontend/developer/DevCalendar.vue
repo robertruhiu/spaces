@@ -64,7 +64,6 @@
     import CandidateSider from "../../layout/CandidateSider";
     import VueCal from 'vue-cal'
     import '../../../assets/css/vuecal.css'
-    import banner from '@/components/layout/banner'
 
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
@@ -73,7 +72,7 @@
         components: {
 
             CandidateSider,
-            'vue-cal': VueCal,banner
+            'vue-cal': VueCal,
 
         },
         data() {

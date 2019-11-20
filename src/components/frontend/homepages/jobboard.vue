@@ -107,8 +107,13 @@
                                                 </div>
                                                 <div style="margin-top: 2rem">
                                                     <a-button type="primary" ghost
-                                                              @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">
+                                                             >
+
+                                                        <router-link v-if="currentUserProfile.stage ==='complete'" style="text-decoration: none"
+                                                                :to="{name:'jobdetails',params:{jobId: item.id}}" target= '_blank'>
                                                         View details
+                                                        </router-link>
+                                                        <router-link v-else to="/register">View details</router-link>
                                                     </a-button>
                                                 </div>
 
@@ -201,8 +206,8 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
     import {showAt, hideAt} from 'vue-breakpoints'
-    import banner from '@/components/layout/banner'
     var VueTruncate = require('vue-truncate-filter')
+    import UsersService from '@/services/UsersService'
     import Vue from 'vue'
 
     Vue.use(VueTruncate)
@@ -264,9 +269,18 @@
             ARow,
             Pageheader,
             Footer,
-            showAt, hideAt,banner
+            showAt, hideAt,
         },
         async mounted() {
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
+            if (this.$store.state.user) {
+                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
+
+            }
 
             this.jobs = (await Marketplace.alljobs()).data
             this.loading = false

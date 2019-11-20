@@ -99,7 +99,6 @@
     import DevHeader from "../../../layout/DevHeader";
     import QuizService from '@/services/QuizService';
     import UsersService from '@/services/UsersService'
-    import banner from '@/components/layout/banner'
 
     export default {
         name: "QuizzesList",
@@ -118,7 +117,7 @@
         },
         components: {
             DevHeader,
-            CandidateSider,banner
+            CandidateSider,
 
         },
         async mounted() {

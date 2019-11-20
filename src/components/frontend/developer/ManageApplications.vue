@@ -26,34 +26,45 @@
                             <a-row class='managecard'>
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
-                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Applications</p>
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                                            Applications</p>
                                     </div>
-                                    <a-progress  :percent="100" strokeColor="#4DB3D3" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#4DB3D3" :showInfo="false"/>
 
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
                                         <div v-if="waiting">
                                             <div style="text-align: center">
-                                                <a-spin />
+                                                <a-spin/>
                                             </div>
                                         </div>
                                         <div v-else>
                                             <a-timeline v-if="active.length>0">
-                                        <a-timeline-item v-for="application in active" v-bind:key="application">
-                                            <a><strong>{{application.title}}</strong></a>
-                                            <br>
-                                            <div style="color: black">
-                                                Company : {{application.company}}
+                                                <a-timeline-item v-for="application in active" v-bind:key="application">
+                                                    <a><strong>{{application.title}}</strong></a>
+                                                    <br>
+                                                    <div style="color: black">
+                                                        Company : {{application.company}}
 
-                                                <br>
-                                                <span>
+                                                        <br>
+                                                        <span>
                                                 Stage:
                                             <a-tag color="#9C27B0"
                                                    style="text-align: center;width: 4rem;">
                                                 {{application.stage}}
                                             </a-tag>
-                                                <p>
+
+                                                <p v-if="application.stage === 'pending'">
+                                                    <span><a
+                                                            @click="acceptapplication(application.key,application.type)">accept</a></span>
+                                                    <a style="color: red;margin-left: 1rem"
+                                                       @click="Withdrawapplication(application.key,application.type)">
+                                                withdraw
+                                            </a>
+                                                </p>
+                                                    <p v-else>
+
                                                     <a
                                                             @click="Withdrawapplication(application.key,application.type)">
                                                 withdraw
@@ -63,12 +74,12 @@
 
                                             </span>
 
-                                            </div>
+                                                    </div>
 
 
-                                        </a-timeline-item>
+                                                </a-timeline-item>
 
-                                    </a-timeline>
+                                            </a-timeline>
                                         </div>
 
                                     </div>
@@ -82,55 +93,57 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard' >
+                            <a-row class='managecard'>
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
-                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Testing</p>
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                                            Testing</p>
                                     </div>
-                                    <a-progress :percent="100" strokeColor="#4DB3D3" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#4DB3D3" :showInfo="false"/>
 
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
                                         <div v-if="waiting">
                                             <div style="text-align: center">
-                                                <a-spin />
+                                                <a-spin/>
                                             </div>
                                         </div>
                                         <div v-else>
-                                        <a-timeline v-if="testing.length>0">
-                                    <a-timeline-item v-for="application in testing" v-bind:key="application">
-                                        <a><strong>{{application.title}}</strong></a>
-                                        <br>
-                                        <div style="color: black">
-                                            Company : {{application.company}}
+                                            <a-timeline v-if="testing.length>0">
+                                                <a-timeline-item v-for="application in testing"
+                                                                 v-bind:key="application">
+                                                    <a><strong>{{application.title}}</strong></a>
+                                                    <br>
+                                                    <div style="color: black">
+                                                        Company : {{application.company}}
 
-                                            <br>
-                                            <div v-if="application.project">
+                                                        <br>
+                                                        <div v-if="application.project">
 
-                                                Project assigned: <span></span>
-                                                <a @click="navigateTo({name:'assignedproject',params:{projectId:application.project.id,applicationId:application.key,type:application.type}})">
-                                                    {{application.project.name}}
-                                                </a>
-
-
-                                            </div>
-                                            <div v-else>
-                                                Project assignment pending
+                                                            Project assigned: <span></span>
+                                                            <a @click="navigateTo({name:'assignedproject',params:{projectId:application.project.id,applicationId:application.key,type:application.type}})">
+                                                                {{application.project.name}}
+                                                            </a>
 
 
-                                            </div>
-                                            <a
-                                                    @click="Withdrawapplicationtest(application.key,application.type)">
-                                                withdraw
-                                            </a>
-
-                                        </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            Project assignment pending
 
 
-                                    </a-timeline-item>
+                                                        </div>
+                                                        <a
+                                                                @click="Withdrawapplicationtest(application.key,application.type)">
+                                                            withdraw
+                                                        </a>
 
-                                </a-timeline>
+                                                    </div>
+
+
+                                                </a-timeline-item>
+
+                                            </a-timeline>
                                         </div>
                                     </div>
 
@@ -143,49 +156,51 @@
                         <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                                :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-                            <a-row class='managecard' >
+                            <a-row class='managecard'>
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
-                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Interview</p>
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                                            Interview</p>
                                     </div>
-                                    <a-progress :percent="100" strokeColor="#0868AC" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#0868AC" :showInfo="false"/>
 
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
                                         <div v-if="waiting">
                                             <div style="text-align: center">
-                                                <a-spin />
+                                                <a-spin/>
                                             </div>
                                         </div>
                                         <div v-else>
-                                        <a-timeline v-if="interview.length >0">
-                                    <a-timeline-item v-for="application in interview" v-bind:key="application">
-                                        <a><strong>{{application.title}}</strong></a>
-                                        <br>
-                                        <div style="color: black">
-                                            Company : {{application.company}}
+                                            <a-timeline v-if="interview.length >0">
+                                                <a-timeline-item v-for="application in interview"
+                                                                 v-bind:key="application">
+                                                    <a><strong>{{application.title}}</strong></a>
+                                                    <br>
+                                                    <div style="color: black">
+                                                        Company : {{application.company}}
 
-                                            <br>
-                                            <div v-if="application.start !=='Invalid date'">
-                                                Interview: <span><a style="margin-left: 2%" type="primary"
-                                                                           size="small"
-                                                                           @click="showEvent(application.key,application)"><a-icon
-                                                    type="calendar"/>View</a></span>
-
-
-                                            </div>
-                                            <div v-else>
-                                                Interview time not yet set
+                                                        <br>
+                                                        <div v-if="application.start !=='Invalid date'">
+                                                            Interview: <span><a style="margin-left: 2%" type="primary"
+                                                                                size="small"
+                                                                                @click="showEvent(application.key,application)"><a-icon
+                                                                type="calendar"/>View</a></span>
 
 
-                                            </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            Interview time not yet set
 
-                                        </div>
 
-                                    </a-timeline-item>
+                                                        </div>
 
-                                </a-timeline>
+                                                    </div>
+
+                                                </a-timeline-item>
+
+                                            </a-timeline>
                                         </div>
                                     </div>
 
@@ -197,45 +212,46 @@
 
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }" :md="{span: 12, offset: 0 }"
                                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
-                            <a-row class='managecard' >
+                            <a-row class='managecard'>
                                 <a-col span="24">
                                     <div style="text-align:center;padding: 5%;">
-                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">Offers</p>
+                                        <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                                            Offers</p>
                                     </div>
-                                    <a-progress :percent="100" strokeColor="#084081" :showInfo="false" />
+                                    <a-progress :percent="100" strokeColor="#084081" :showInfo="false"/>
 
                                 </a-col>
                                 <a-col span="24">
                                     <div style="padding: 5%">
                                         <div v-if="waiting">
                                             <div style="text-align: center">
-                                                <a-spin />
+                                                <a-spin/>
                                             </div>
                                         </div>
                                         <div v-else>
-                                        <a-timeline v-if="offers.length >0">
-                                    <a-timeline-item v-for="application in offers" v-bind:key="application">
-                                        <a><strong>{{application.title}}</strong></a>
-                                        <br>
-                                        <div style="color: black">
-                                            Company : {{application.company}}
+                                            <a-timeline v-if="offers.length >0">
+                                                <a-timeline-item v-for="application in offers" v-bind:key="application">
+                                                    <a><strong>{{application.title}}</strong></a>
+                                                    <br>
+                                                    <div style="color: black">
+                                                        Company : {{application.company}}
 
-                                            <br>
-                                            Stage:
-                                            <a-tag color="#9C27B0"
-                                                   style="text-align: center;width: 4rem;">
-                                                {{application.stage}}
-                                            </a-tag>
-                                        </div>
-                                        <a-button type="primary" size="small"
-                                                  @click="Withdrawapplicationoffer(application.key,application.type)">
-                                            withdraw
-                                        </a-button>
+                                                        <br>
+                                                        Stage:
+                                                        <a-tag color="#9C27B0"
+                                                               style="text-align: center;width: 4rem;">
+                                                            {{application.stage}}
+                                                        </a-tag>
+                                                    </div>
+                                                    <a-button type="primary" size="small"
+                                                              @click="Withdrawapplicationoffer(application.key,application.type)">
+                                                        withdraw
+                                                    </a-button>
 
 
-                                    </a-timeline-item>
+                                                </a-timeline-item>
 
-                                </a-timeline>
+                                            </a-timeline>
                                         </div>
                                     </div>
 
@@ -274,7 +290,6 @@
 
                 </div>
             </a-layout-content>
-            <banner/>
         </a-layout>
     </a-layout>
 
@@ -303,7 +318,6 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
-    import banner from '@/components/layout/banner'
 
     export default {
         name: "ManageApplications",
@@ -316,7 +330,8 @@
                 offers: [],
                 visible: false,
                 currentinterview: {},
-                waiting:false
+                waiting: false,
+
 
             }
         },
@@ -325,7 +340,6 @@
             ARow,
             DevHeader,
             CandidateSider,
-            banner
 
 
         },
@@ -381,7 +395,7 @@
             }
             // sort out the varios applications to active,testing,active,offer
             for (let i = 0; i < this.applications.length; i++) {
-                if (this.applications[i].stage === 'active' || this.applications[i].stage === 'new') {
+                if (this.applications[i].stage === 'active' || this.applications[i].stage === 'new' || this.applications[i].stage === 'pending') {
                     this.active.push(this.applications[i])
                 } else if (this.applications[i].stage === 'test') {
                     this.testing.push(this.applications[i])
@@ -392,7 +406,7 @@
                 }
 
             }
-            this.waiting =false
+            this.waiting = false
 
 
         },
@@ -418,6 +432,9 @@
                         selected: false,
                     }, auth)
                         .then(resp => {
+                                Marketplace.acceptreject(application, auth)
+                                    .then()
+                                    .catch()
                                 for (let i = 0; i < this.active.length; i++) {
                                     if (this.active[i].key === application) {
                                         this.active[i].stage = 'withdrawn'
@@ -453,6 +470,58 @@
                                         this.active.splice(index, 1);
                                     }
                                 }
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                }
+
+            },
+            acceptapplication(application, type) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                };
+                if (type === 'job') {
+                    Marketplace.pickreject(application, {
+                        stage: 'active',
+
+                    }, auth)
+                        .then(resp => {
+                            for (let i = 0; i < this.active.length; i++) {
+                                    if (this.active[i].key === application) {
+                                        this.active[i].stage = 'active'
+
+                                    }
+                                }
+                                Marketplace.acceptreject(application, auth)
+                                    .then()
+                                    .catch()
+
+                                return resp
+
+                            }
+                        )
+                        .catch()
+
+                } else {
+                    Marketplace.candidatemanager(application, {
+                        stage: 'active',
+                        interviewstarttime: null,
+                        interviewendtime: null,
+                        test_stage: null,
+                        project: null,
+                        report: null,
+                        interviewstatus: null,
+                        projectstarttime: null,
+                        offerstatus: null,
+                        offerletter: null,
+                        demolink: null
+                    }, auth)
+                        .then(resp => {
+
                                 return resp
 
                             }
@@ -644,7 +713,7 @@
     .managecard {
         border: 1px solid #1876d21c;
         min-height: 65vh;
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 
     }
 

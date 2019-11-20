@@ -135,7 +135,6 @@
 
 
             </a-layout-content>
-            <banner/>
 
 
         </a-layout>
@@ -150,7 +149,6 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
-    import banner from '@/components/layout/banner'
 
     export default {
         name: "DevDashboard",
@@ -166,7 +164,6 @@
             ACol,
             DevHeader,
             CandidateSider,
-            banner
         },
         async mounted() {
             const auth = {

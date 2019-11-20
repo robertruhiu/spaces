@@ -258,6 +258,8 @@
                                             :label-col="{ span: 24 }"
                                             :wrapper-col="{ span:  24}"
                                     >
+                                        <span style="font-size: small">Please do not fill any personal details in your bio e.g
+                                            Your name, email, phone number, github, linkedin or profile link</span>
 
                                         <a-textarea name="bio"
                                                     maxlength="300"

@@ -12,7 +12,10 @@
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '80vh',maxWidth:'72rem' }">
                     <div style="padding-top: 2%;">
                         <a-row style="padding-bottom: 1%">
-                            <a-col span="20"></a-col>
+                            <a-col span="20">
+                                <a-alert v-if="updated" message="Job details have been updated" type="success"
+                                         closeText="Close Now"/>
+                            </a-col>
                             <a-col span="4">
                                 <div v-if="dataload" style="text-align: center">
                                     <a-spin/>
@@ -147,6 +150,7 @@
                                                                     <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -208,6 +212,9 @@
                                                            style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
                                                             <a-tag v-else-if="record.stage === 'offer'"
                                                                    color="#03A9F4"
+                                                                   style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
+                                                            <a-tag v-else-if="record.stage === 'pending'"
+                                                                   color="#953D66"
                                                                    style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
                                                         </span>
                                                                     </template>
@@ -363,35 +370,35 @@
                                                                     </div>
                                                                     <template slot-scope="text,record">
                                                                         <div v-if="currentUserProfile.user.is_staff">
-                                                                            <a-button-group >
-                                                                            <a-button
-                                                                                    @click="pickrejectAdmin(record.action,record.profile,true,record.name)"
-                                                                                    type="primary">pick
-                                                                            </a-button>
-                                                                            <a-button
-                                                                                    @click="pickrejectAdmin(record.action,record.profile,false,record.name)">
-                                                                                reject
-                                                                            </a-button>
+                                                                            <a-button-group>
+                                                                                <a-button
+                                                                                        @click="pickrejectAdmin(record.action,record.profile,true,record.name)"
+                                                                                        type="primary">pick
+                                                                                </a-button>
+                                                                                <a-button
+                                                                                        @click="pickrejectAdmin(record.action,record.profile,false,record.name)">
+                                                                                    reject
+                                                                                </a-button>
 
-                                                                        </a-button-group>
+                                                                            </a-button-group>
 
                                                                         </div>
                                                                         <div v-else>
                                                                             <div v-if="record.carted">
-                                                                            --
-                                                                        </div>
+                                                                                --
+                                                                            </div>
 
-                                                                        <a-button-group v-else>
-                                                                            <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,true,record.name)"
-                                                                                    type="primary">pick
-                                                                            </a-button>
-                                                                            <a-button
-                                                                                    @click="pickrejectClick(record.action,record.profile,false,record.name)">
-                                                                                reject
-                                                                            </a-button>
+                                                                            <a-button-group v-else>
+                                                                                <a-button
+                                                                                        @click="pickrejectClick(record.action,record.profile,true,record.name)"
+                                                                                        type="primary">pick
+                                                                                </a-button>
+                                                                                <a-button
+                                                                                        @click="pickrejectClick(record.action,record.profile,false,record.name)">
+                                                                                    reject
+                                                                                </a-button>
 
-                                                                        </a-button-group>
+                                                                            </a-button-group>
                                                                         </div>
 
                                                                     </template>
@@ -421,6 +428,7 @@
                                                                     <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -497,23 +505,23 @@
                                                                     <template slot-scope="text,record">
                                                                         <div v-if="currentUserProfile.user.is_staff">
                                                                             <div style="margin-left: 5%">
-                                                                            <a-button :size="small"
-                                                                                      @click="pickrecommedationAdmin(job.id,record.profile,2)"
-                                                                                      type="primary">pick
-                                                                            </a-button>
+                                                                                <a-button :size="small"
+                                                                                          @click="pickrecommedationAdmin(job.id,record.profile,2)"
+                                                                                          type="primary">pick
+                                                                                </a-button>
 
 
-                                                                        </div>
+                                                                            </div>
                                                                         </div>
                                                                         <div v-else>
                                                                             <div style="margin-left: 5%">
-                                                                            <a-button :size="small"
-                                                                                      @click="pickrecommedationClick(job.id,record.profile,2)"
-                                                                                      type="primary">pick
-                                                                            </a-button>
+                                                                                <a-button :size="small"
+                                                                                          @click="pickrecommedationClick(job.id,record.profile,2)"
+                                                                                          type="primary">pick
+                                                                                </a-button>
 
 
-                                                                        </div>
+                                                                            </div>
                                                                         </div>
 
                                                                     </template>
@@ -857,25 +865,25 @@
 
                                                         </a-table-column>
 
-                                                        <!-----interview notes--------->
-                                                        <a-table-column
+                                                        <!--                                                        &lt;!&ndash;-&#45;&#45;interview notes-&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+                                                        <!--                                                        <a-table-column-->
 
-                                                                dataIndex="notes"
-                                                                key="notes"
-                                                                width="15%"
+                                                        <!--                                                                dataIndex="notes"-->
+                                                        <!--                                                                key="notes"-->
+                                                        <!--                                                                width="15%"-->
 
-                                                        >
-                                                            <div slot="title">Interview notes
-                                                            </div>
-                                                            <template slot-scope="text,record">
-                                                        <span style="margin-left: 25%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">notes</a>
-                                                        </span>
+                                                        <!--                                                        >-->
+                                                        <!--                                                            <div slot="title">Interview notes-->
+                                                        <!--                                                            </div>-->
+                                                        <!--                                                            <template slot-scope="text,record">-->
+                                                        <!--                                                        <span style="margin-left: 25%">-->
+                                                        <!--                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">notes</a>-->
+                                                        <!--                                                        </span>-->
 
 
-                                                            </template>
+                                                        <!--                                                            </template>-->
 
-                                                        </a-table-column>
+                                                        <!--                                                        </a-table-column>-->
 
                                                         <!-----action--------->
                                                         <a-table-column
@@ -1158,7 +1166,8 @@
 
                                             </a-col>
                                             <a-col :span="8">
-                                                <a-form-item label="Location">
+                                                <a-form-item>
+                                                    <span>Location : {{job.location}}</span>
                                                     <country-select v-model="job.location"
                                                                     class="ant-input"
                                                     />
@@ -1227,7 +1236,7 @@
                                                         :label-col="{ span: 24 }"
                                                         :wrapper-col="{ span:  24}"
                                                 >
-                                                    <vue-simplemde v-model="job.description" ref="markdownEditor" />
+                                                    <vue-simplemde v-model="job.description" ref="markdownEditor"/>
 
 
                                                 </a-form-item>
@@ -1662,7 +1671,7 @@
     //applicants structure on table
     class Applicant {
         constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                    end, color, report, offerstatus, offerletter, carted) {
+                    end, color, report, offerstatus, offerletter, carted, verified) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1681,6 +1690,7 @@
             this.offerstatus = offerstatus
             this.offerletter = offerletter
             this.carted = carted
+            this.verified = verified;
 
 
         }
@@ -1689,7 +1699,7 @@
 
     //recommended candidate structure on table
     class Recommended {
-        constructor(id, name, stage, tags, user_id, selected) {
+        constructor(id, name, stage, tags, user_id, selected, verified) {
             this.key = id;
             this.name = name;
             this.stage = stage;
@@ -1697,6 +1707,7 @@
             this.action = id
             this.tags = tags;
             this.selected = selected;
+            this.verified = verified;
 
 
         }
@@ -1807,6 +1818,7 @@
                 cart: [],
                 cart_items: [],
                 pickedprofiles: [],
+                updated: false
 
 
             }
@@ -1819,7 +1831,7 @@
             Jobheader,
             Rave,
             tc,
-            VueSimplemde,markdown
+            VueSimplemde, markdown
 
 
         },
@@ -1881,6 +1893,10 @@
                         projectname = null
 
                     }
+                    let verified = false
+                    if (this.applicants[j].candidate.verified_skills) {
+                        verified = true
+                    }
 
                     let status = this.applicants[j].interviewstatus
                     let start = this.applicants[j].interviewstarttime
@@ -1892,7 +1908,7 @@
                     let carted = this.applicants[j].carted
                     let onepickeddev = new Applicant(
                         id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                        end, color, report, offerstatus, offerletter, carted
+                        end, color, report, offerstatus, offerletter, carted, verified
                     );
 
                     this.applicantprofile.push(onepickeddev)
@@ -1982,10 +1998,15 @@
 
                     for (let l = 0; l < this.alldevsprofile.length; l++) { // all user profiles
                         for (let k = 0; k < recommededlist.length; k++) {
-                            if (this.alldevsprofile[l].id === recommededlist[k]) {
+                            if (this.alldevsprofile[l].id === recommededlist[k] && this.alldevsprofile[l].country === this.job.location) {
                                 let tags = []
+                                let verified = false
                                 if (this.alldevsprofile[l].skills) {
                                     tags = this.alldevsprofile[l].skills.split(',').slice(0, 3);
+
+                                }
+                                if (this.alldevsprofile[l].verified_skills) {
+                                    verified = true
 
                                 }
 
@@ -1996,7 +2017,7 @@
                                 let name = this.alldevsprofile[l].user.first_name
                                 let selected = false
                                 let onerecommed = new Recommended(
-                                    id, name, stage, tags, user_id, selected,
+                                    id, name, stage, tags, user_id, selected, verified
                                 );
 
                                 this.recommmedcandidates.push(onerecommed)
@@ -2053,9 +2074,9 @@
                         }
                     }
                     if (this.paiddevs.length > this.bundlelimit) {
-                            this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
+                        this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
 
-                        }
+                    }
 
 
                 } else {
@@ -2213,17 +2234,20 @@
 
                     }
                     this.job.deadline = this.deadline
-                    const response = await Marketplace.updatejob(this.job.id, this.job, auth)
-                    response()
+                    this.updated = true
+                    Marketplace.updatejob(this.job.id, this.job, auth)
+                        .then()
 
 
-                } catch (error) {
+                } catch
+                    (error) {
                     this.error = error.response.data.error
 
                 }
 
 
-            },
+            }
+            ,
 
             //logout
             logout() {
@@ -2235,7 +2259,8 @@
                 this.$router.push({
                     name: 'home'
                 })
-            },
+            }
+            ,
 
             // handles active stage of applicants movement keys 1,2,3
             handleMenuClick(action, profile, id) {
@@ -2314,7 +2339,8 @@
                     }
 
                 }
-            },
+            }
+            ,
 
             // handles movement on the testing stage keys 1,2,3
             handleTestMenuClick(action, profile, id) {
@@ -2395,7 +2421,8 @@
                 }
 
 
-            },
+            }
+            ,
 
             // handles movement on the interview stage keys 1,2,3
             handleInterviewClick(action, profile, id) {
@@ -2476,7 +2503,8 @@
                 }
 
 
-            },
+            }
+            ,
 
             //pick or reject from new applicants
             pickrejectClick(job_id, candidate_id, key, name) {
@@ -2568,9 +2596,10 @@
                 }
 
 
-            },
+            }
+            ,
 
-             //pick or reject from new applicants(admin actions)
+            //pick or reject from new applicants(admin actions)
             pickrejectAdmin(job_id, candidate_id, key, name) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -2590,8 +2619,7 @@
                             this.pickeddevs.push(candidate_id.toString())
 
 
-
-                            Marketplace.pickreject(job_id, {carted: true,selected:true,stage:'active'}, auth)
+                            Marketplace.pickreject(job_id, {carted: true, selected: true, stage: 'active'}, auth)
                                 .then(resp => {
                                         this.applicants = []
                                         this.newapplicant = []
@@ -2646,7 +2674,8 @@
                 }
 
 
-            },
+            }
+            ,
 
             // pick from recommedation list
             pickrecommedationClick(job_id, candidate_id, key) {
@@ -2778,7 +2807,8 @@
                 }
 
 
-            },
+            }
+            ,
 
             // pick from recommedation list(admin actions)
             pickrecommedationAdmin(job_id, candidate_id, key) {
@@ -2805,7 +2835,7 @@
                                 {
                                     job: job_id,
                                     candidate: candidate_id,
-                                    stage: 'new',
+                                    stage: 'pending',
                                     selected: false,
                                     recruiter: this.$store.state.user.pk,
 
@@ -2856,7 +2886,7 @@
                                 {
                                     job: job_id,
                                     candidate: candidate_id,
-                                    stage: 'active',
+                                    stage: 'pending',
                                     selected: true,
                                     recruiter: this.$store.state.user.pk,
                                     carted: true,
@@ -2866,6 +2896,9 @@
                                 auth
                             )
                                 .then(resp => {
+                                        Marketplace.newpick(resp.data.id, auth)
+                                            .then()
+                                            .catch()
                                         this.applicants = []
                                         this.newapplicant = []
                                         this.pickedapplicants = []
@@ -2879,6 +2912,7 @@
 
                                         this.waiting = false
                                         self.Datarefresh()
+
                                         return resp
 
 
@@ -2893,11 +2927,13 @@
                 }
 
 
-            },
+            }
+            ,
 
             navigateTo(route) {
                 this.$router.push(route)
-            },
+            }
+            ,
 
             handleClose(removedTag) {
                 const tags = this.tags.filter(tag => tag !== removedTag)
@@ -2905,18 +2941,21 @@
                 let alltags = this.tags.join(", ")
                 this.job.tech_stack = alltags
 
-            },
+            }
+            ,
 
             showInput() {
                 this.inputVisible = true
                 this.$nextTick(function () {
                     this.$refs.input.focus()
                 })
-            },
+            }
+            ,
 
             handleInputChange(e) {
                 this.inputValue = e.target.value
-            },
+            }
+            ,
 
             handleInputConfirm() {
                 const inputValue = this.inputValue
@@ -2932,7 +2971,8 @@
                     inputVisible: false,
                     inputValue: '',
                 })
-            },
+            }
+            ,
 
 
             bundleamount(key) {
@@ -2944,7 +2984,8 @@
                     this.amount = 500
                 }
 
-            },
+            }
+            ,
 
             async CreateEvent(application_id) {
                 const auth = {
@@ -2978,7 +3019,8 @@
 
 
                 this.interviewmodal = false
-            },
+            }
+            ,
             // upload offer letter
             async Datarefresh() {
                 this.waiting = true
@@ -3172,7 +3214,8 @@
                 }
                 this.waiting = false
 
-            },
+            }
+            ,
             async refresh() {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -3261,10 +3304,12 @@
                 }
                 this.waiting = false
 
-            },
+            }
+            ,
             TermsModal() {
                 this.terms = true
-            },
+            }
+            ,
             Agree() {
                 if (this.conditions === true) {
                     this.conditions = false
@@ -3273,10 +3318,12 @@
                 }
 
                 this.terms = false
-            },
+            }
+            ,
             Check(e) {
                 this.conditions = e.target.checked
-            },
+            }
+            ,
             remove(dev_id, type, application_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -3341,7 +3388,8 @@
 
                 }
 
-            },
+            }
+            ,
             addtopaid() {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -3419,7 +3467,8 @@
                 }
 
 
-            },
+            }
+            ,
 
             callback: function (response) {
                 let self = this
@@ -3509,10 +3558,12 @@
                 }
 
 
-            },
+            }
+            ,
             close: function () {
                 console.log("Payment closed")
-            },
+            }
+            ,
 
 
         },
