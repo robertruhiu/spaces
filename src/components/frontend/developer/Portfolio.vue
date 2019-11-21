@@ -1017,7 +1017,7 @@
             ACol,
             PortfolioHeader,
             CandidateSider,
-            hideAt, showAt,banner
+            hideAt, showAt,
         },
         async mounted() {
             const auth = {

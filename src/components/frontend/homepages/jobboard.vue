@@ -103,18 +103,30 @@
                                                     </a-tag>
 
 
-
                                                 </div>
                                                 <div style="margin-top: 2rem">
-                                                    <a-button type="primary" ghost
-                                                             >
 
-                                                        <router-link v-if="currentUserProfile.stage ==='complete'" style="text-decoration: none"
-                                                                :to="{name:'jobdetails',params:{jobId: item.id}}" target= '_blank'>
+                                                        <span v-if="currentUserProfile">
+                                                            <a-button type="primary" ghost
+                                                            >
+                                                            <router-link v-if="currentUserProfile.stage ==='complete'"
+                                                                         style="text-decoration: none"
+                                                                         :to="{name:'jobdetails',params:{jobId: item.id}}"
+                                                                         target='_blank'>
                                                         View details
                                                         </router-link>
                                                         <router-link v-else to="/register">View details</router-link>
+                                                                </a-button>
+                                                        </span>
+                                                    <span v-else>
+                                                            <a-button type="primary" ghost
+                                                                      @click="navigateTo({name:'login'})">
+                                                        View details
                                                     </a-button>
+
+                                                        </span>
+
+
                                                 </div>
 
 
@@ -206,6 +218,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
     import {showAt, hideAt} from 'vue-breakpoints'
+
     var VueTruncate = require('vue-truncate-filter')
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
@@ -220,6 +233,7 @@
         name: 'jobboard',
         data() {
             return {
+                currentUserProfile: null,
                 jobs: null,
                 alljobs: null,
                 job: {},
@@ -377,10 +391,12 @@
         font-weight: 700;
         font-size: 1rem;
     }
-    .lightshadow{
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-        border: 1px solid rgba(0,0,0,.125);
+
+    .lightshadow {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+        border: 1px solid rgba(0, 0, 0, .125);
     }
+
     .poolavatar1 {
         background-color: #0679FB;
 

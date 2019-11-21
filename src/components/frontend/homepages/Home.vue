@@ -166,9 +166,7 @@
 
 
                         </div>
-
                     </show-at>
-
                     <!-----how it works---->
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">
                         <div style="background-color: #ffffff;">
@@ -178,7 +176,7 @@
                             </div>
 
 
-                            <a-row gutter="32" style="padding: 3%">
+                            <a-row :gutter="32" style="padding: 3%">
                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                        :md="{span: 8, offset: 0 }"
                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
@@ -223,7 +221,6 @@
                                 </a-col>
                             </a-row>
                         </div>
-
                     </div>
                     <!--                    &lt;!&ndash;-&#45;&#45;services&#45;&#45;&ndash;&gt;-->
 

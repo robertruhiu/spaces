@@ -115,10 +115,8 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            if (this.$store.state.user.pk) {
+            if (this.$store.state.user && this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-
-
             }
 
 
