@@ -343,26 +343,20 @@
                                             </div>
                                             <div v-else>
                                                 <div style="text-align: center" v-if="conditions">
-                                                    <Rave
-                                                            style-class="paymentbtn"
+                                                                              </Rave>-->
+                                                    <paystack
+                                                            :amount="paystack_amount"
                                                             :email="email"
-                                                            :amount="amount"
+                                                            :paystackkey="paystackkey"
+                                                            :currency="currency"
                                                             :reference="reference"
-                                                            :rave-key="raveKey"
                                                             :callback="callback"
                                                             :close="close"
-                                                            :currency="currency"
-                                                            :country="country"
-                                                            :customer_firstname="customer_firstname"
-                                                            :customer_lastname="customer_lastname"
-                                                            :custom_title="custom.title"
-                                                            :custom_description="custom.description"
-                                                            :custom_logo="custom.logo"
-                                                            :redirect_url="redirectUrl"
-                                                            :payment_plan="paymentPlan"
-                                                            :subaccounts="subaccounts"
-                                                            :payment_method="paymentMethod">
-                                                    </Rave>
+                                                            :embed="false"
+                                                    >
+                                                        <i class="fas fa-money-bill-alt"></i>
+                                                        Make Payment
+                                                    </paystack>
                                                 </div>
                                                 <div style="text-align: center" v-else>
                                                     <a-button type="primary" disabled>Checkout</a-button>
@@ -473,8 +467,6 @@
 
 <script>
     //experience structure on table
-
-
     class Experience {
         constructor(id, title, description, company, location, duration, tech_used) {
             this.key = id;
@@ -510,15 +502,17 @@
         }
     }
 
-
     import UsersService from '@/services/UsersService'
+
+
+    import paystack from 'vue-paystack';
     import Pageheader from '@/components/layout/Header.vue'
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
     import QuizService from '@/services/QuizService';
     import Payments from '@/services/Payments';
-    import {showAt, hideAt} from 'vue-breakpoints'
+    import {hideAt, showAt} from 'vue-breakpoints'
     import Rave from "@/components/frontend/recruiter/cart/Rave";
     import tc from '@/components/frontend/homepages/tc'
 
@@ -547,28 +541,14 @@
                 carts: [],
                 devs: [],
                 pickedprofiles: [],
-                amount: 0,
-                raveKey: "FLWPUBK-1007dc4eb48e0d1e0b6bf86d083ba020-X",
-                email: "",
-                currency: "USD",
-                country: "GH",
-                customer_firstname: '',
-                customer_lastname: '',
-
-                custom: {
-                    title: "Codeln",
-                    description: "Payment for Codeln Developers",
-                    logo: "https://www.codeln.com/img/logobg.f302741d.svg"
-                },
-
-                paymentPlan: "", // add payments plan ID here
-                paymentMethod: "", // add 'card' or 'account' if you want a specific feature. Leave empty if you want all features
-                subaccounts: {
-                    id: "RS_73954F005E68DADF3483197D5CF13E1E", // id of the subaccount; get from your dashboard
-                    transaction_split_ratio: "", //
-                    transaction_charge_type: "", //include this if the you want a flat fee eg: flat
-                    transaction_charge: "" // include the flat fee amount you want eg: 100
-                },
+                //paystck config
+                // paystackkey: "pk_test_b152b53265c577aaee13f4e6ed09bca1768fbbb2", //paystack public key
+                paystackkey: "pk_live_33025d4840017202a65e05c8ba2d2e907aae7cf9", //paystack public key
+                email: "", // Customer email
+                // amount: 363000,// in kobo
+                amount:0,
+                paystack_amount: 0,
+                currency: "NGN",
                 pickeddevpaid: [],
                 paidprofile: false,
                 paiddevs: [],
@@ -585,8 +565,7 @@
                 terms: false,
                 conditions: false,
                 availabiltytags: [],
-                exceeded: ''
-
+                exceeded: '',
             }
         },
         components: {
@@ -595,9 +574,8 @@
             Pageheader,
             showAt, hideAt,
             Rave,
-            tc
-
-
+            tc,
+            paystack
         },
         async mounted() {
 
@@ -618,7 +596,7 @@
                 if (this.currentUserProfile.skills) {
                     this.skilltags = this.currentUserProfile.skills.split(',');
                 }
-                if(this.currentUserProfile.availabilty){
+                if (this.currentUserProfile.availabilty) {
                     this.availabiltytags = this.currentUserProfile.availabilty.split(',');
                 }
 
@@ -800,10 +778,13 @@
                     this.picked = p
                     if (this.pickeddevs.length <= 4) {
                         this.amount = 100
+                        this.paystack_amount = 3630000
                     } else if (this.pickeddevs.length <= 10) {
                         this.amount = 200
+                        this.paystack_amount = 7260000
                     } else {
                         this.amount = 500
+                        this.paystack_amount = 18150000
                     }
                     MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                         .then(resp => {
@@ -898,8 +879,6 @@
 
 
             },
-
-
             logout() {
                 this.$store.dispatch('setToken', null);
                 this.$store.dispatch('setUser', null)
@@ -911,8 +890,6 @@
                 })
             },
             async refresh() {
-
-
                 for (let i = 0; i < this.devs.length; i++) {
                     if (this.pickeddevs.length > 0) {
                         for (let j = 0; j < this.pickeddevs.length; j++) {
@@ -938,7 +915,7 @@
 
                 }
                 if (this.pickeddevs.length <= 4) {
-                    this.amount = 100
+                    this.amount = 10000
                 } else if (this.pickeddevs.length <= 10) {
                     this.amount = 200
                 } else {
@@ -947,7 +924,6 @@
                 this.waiting = false
 
             },
-
             remove(dev_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -1043,9 +1019,9 @@
 
 
             },
-
             callback: function (response) {
-                let self = this
+                let self = this;
+                console.log(response);
                 if (response.success) {
                     const auth = {
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -1122,8 +1098,6 @@
                         name: 'mycandidates'
                     })
                 }
-
-
             },
             close: function () {
                 console.log("Payment closed")
