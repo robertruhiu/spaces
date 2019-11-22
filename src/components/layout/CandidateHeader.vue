@@ -1,14 +1,29 @@
 <template>
-    <a-layout-header
-            :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',
+    <a-affix offsetTop="this.top">
+        <a-layout-header
+                :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',
             padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
-        <div style="margin-left: 1%">
+            <div style="margin-left: 1%">
 
-            <a-row>
-                <a-col :span="24">
+                <a-row>
+                    <a-col :span="24">
                             <span>
                                 <span style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
-                                {{currentUserProfile.user.first_name |capitalize}}</span>
+                                    <span v-if="myapplicant !== null">
+                                        <span v-if="myapplicant.stage === 'active' ||myapplicant.stage === 'test'|| myapplicant.stage === 'interview' || myapplicant.stage === 'offer' ">
+                                            {{currentUserProfile.user.first_name |capitalize}} {{ currentUserProfile.user.last_name |capitalize }}
+                                        </span>
+                                        <span v-else>
+                                            {{currentUserProfile.user.first_name |capitalize}}
+                                        </span>
+
+                                    </span>
+                                    <span v-else>
+                                        {{currentUserProfile.user.first_name |capitalize}}
+
+                                    </span>
+
+                                </span>
                                 <span v-if="myapplicant !== null">
                                     <span style="float: right" v-if="myapplicant.test_stage === 'complete'">
                                     <a-button type="primary">Schedule Interview</a-button>
@@ -17,21 +32,23 @@
 
                             </span>
 
-                    <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;" v-if="myapplicant !== null">
+                        <p style="color: white;font-size: 12px;font-weight: bold;line-height: 0;"
+                           v-if="myapplicant !== null">
                                 <span>
                     Job Application Stage :
                 </span>
-                        <a-tag color="#BA68C8" style="text-align: center;width: 4rem;">{{myapplicant.stage}}</a-tag>
-                    </p>
+                            <a-tag color="#BA68C8" style="text-align: center;width: 4rem;">{{myapplicant.stage}}</a-tag>
+                        </p>
 
-                </a-col>
-
-
-            </a-row>
-        </div>
+                    </a-col>
 
 
-    </a-layout-header>
+                </a-row>
+            </div>
+
+
+        </a-layout-header>
+    </a-affix>
 
 </template>
 
@@ -47,14 +64,13 @@
             return {
                 currentUserProfile: null,
                 allapplicant: null,
-                myapplicant: null
+                myapplicant: null,
+                top: 0
 
 
             }
         },
-        components: {
-
-        },
+        components: {},
         filters: {
             capitalize: function (value) {
                 if (!value) return ''
@@ -83,7 +99,7 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
-                this.$store.dispatch('setNext',null)
+                this.$store.dispatch('setNext', null)
                 this.$router.push({
                     name: 'home'
                 })

@@ -21,17 +21,63 @@
                                     <p>{{currentUserProfile.about}}</p>
                                 </a-col>
                             </a-row>
-                            <br>
-                            <a-row>
+
+
+                            <div style="margin-top: 0.5rem" v-if="application.stage === 'active' ||application.stage === 'test'|| application.stage === 'interview' ||
+                             application.stage === 'offer' ">
+                                <a-row>
+                                <a-col :span="12" class="spacer">
+                                    <a-icon type="mail" /> : {{application.candidate.user.email}}
+
+                                </a-col>
+                                     <a-col :span="12" class="spacer">
+                                <span>
+                                    Salary expectations: ${{application.candidate.salary}} monthly
+
+                            </span>
+                                </a-col>
                                 <a-col :span="6">
-                                    Experience:
+                                <span>
+                                    <a-icon type="linkedin" /> :
+                                    <a :href="application.candidate.linkedin_url" target='_blank'> Linkedin profile</a>
+
+
+
+                            </span>
+                                </a-col>
+                                <a-col :span="6">
+                                <span> <a-icon type="github" /> :
+
+                                    <a :href="application.candidate.github_repo" target='_blank'>Github profile </a>
+
+
+                            </span>
+                                </a-col>
+                                    <a-col :span="6">
+                                <span>
+                                    <a-icon type="file-pdf" /> :
+                                    <a :href="cv" target='_blank'> Cv link</a>
+
+
+                            </span>
+                                </a-col>
+
+
+                            </a-row>
+
+
+                            </div>
+
+                            <a-row style="margin-top: 1rem">
+                                <a-col :span="6" >
+                                    Experience <br>
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.years}} years
                                     </a-tag>
                                 </a-col>
-                                <a-col :span="6">
+                                <a-col :span="10">
                                 <span>
-                                    Availability :
+                                    Availability <br>
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
                                  {{currentUserProfile.availabilty}}
                             </a-tag>
@@ -39,7 +85,7 @@
                                 </a-col>
                                 <a-col :span="6">
                                 <span>
-                                    Location :
+                                    Location <br>
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
                                  {{currentUserProfile.country}}
                             </a-tag>
@@ -47,6 +93,7 @@
                                 </a-col>
 
                             </a-row>
+
                         </div>
                         <div class="bio">
                             <a-tabs defaultActiveKey="1">
@@ -312,6 +359,7 @@
                 events: [],
                 picked: true,
                 takenquizzes: [],
+                cv:''
             }
         },
         components: {
@@ -353,6 +401,16 @@
 
                 })
             this.job = (await Marketplace.specificjob(jobId, auth)).data
+            if (this.currentUserProfile.file) {
+                if (this.currentUserProfile.file.includes("http")) {
+                    this.cv = this.currentUserProfile.file
+                } else {
+                    this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
+
+
+                }
+
+            }
 
 
             for (let i = 0; i < this.portfoliolist.length; i++) {
@@ -504,6 +562,9 @@
         background-color: white;
         margin: 1%;
         padding: 4%;
+    }
+    .spacer{
+        margin-bottom: 2%;
     }
 
 </style>

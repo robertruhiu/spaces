@@ -5,7 +5,7 @@
 
             <a-layout-content style="background-color: white">
                 <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
+                <div :style="{ padding: '5px', background: '#fff',marginTop:'0' }">
                     <a-row style="margin-bottom: 2%">
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
                                :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
@@ -126,6 +126,7 @@
 
                             </a-col>
                         </router-link>
+
 
                     </a-row>
 

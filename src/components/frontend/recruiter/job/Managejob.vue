@@ -1,8 +1,8 @@
 <template>
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh">
+    <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
 
         <RecruiterSider/>
-        <a-layout :style="{ backgroundColor:'#F8FAFB' }">
+
 
             <a-layout-content>
                 <Pageheader/>
@@ -13,9 +13,10 @@
                         <a-spin/>
                     </div>
                     <div v-else>
-                        <a-row :gutter="16">
+                        <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
                             <a-col :xs="{span: 24 }" :sm="{span: 7 }" :md="{span: 5 }"
                                    :lg="{span: 5 }" :xl="{span: 5 }" style="margin-bottom: 1rem">
+
                                 <a-card title="Jobs Overview"
                                         style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
@@ -42,6 +43,7 @@
 
 
                                 </a-card>
+
 
 
                             </a-col>
@@ -119,7 +121,7 @@
 
             </a-layout-content>
 
-        </a-layout>
+
     </a-layout>
 </template>
 
@@ -158,7 +160,8 @@
                 allapplicants: 0,
                 testingstage: 0,
                 interviewstage: 0,
-                total:0
+                total:0,
+                top:200
 
 
             }

@@ -550,6 +550,9 @@
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
                         if (this.currentUserProfile.user_type === 'developer') {
+                            UsersService.newuser(this.$store.state.user.pk, auth)
+                                .then()
+                                .catch()
 
 
                             this.$router.push({

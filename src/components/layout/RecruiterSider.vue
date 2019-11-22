@@ -8,6 +8,7 @@
             style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white"
 
     >
+        <a-affix offsetTop="this.top">
         <hide-at :breakpoints="{small: 425, medium: 768}" breakpoint="mediumAndBelow">
             <router-link to="/">
 
@@ -18,158 +19,160 @@
 
             </router-link>
         </hide-at>
-        <hide-at breakpoint="mediumAndBelow">
-            <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
-            <a-menu-item key="1">
-                <router-link to="/recruiter">
-                    <a-icon type="dashboard"/>
-                    <span>Dashboard</span>
-                </router-link>
-            </a-menu-item>
+
+            <hide-at breakpoint="mediumAndBelow">
+                <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
+                    <a-menu-item key="1">
+                        <router-link to="/recruiter">
+                            <a-icon type="dashboard"/>
+                            <span>Dashboard</span>
+                        </router-link>
+                    </a-menu-item>
 
 
-            <a-menu-item key="10">
+                    <a-menu-item key="10">
 
-                    <a v-on:click="showDrawer">
-                        <a-icon type="edit"/>
-                        <span>Post a job</span>
-                    </a>
+                        <a v-on:click="showDrawer">
+                            <a-icon type="edit"/>
+                            <span>Post a job</span>
+                        </a>
 
-            </a-menu-item>
+                    </a-menu-item>
 
 
-            <a-menu-item key="2" v-if="myjobs.length >0">
-                <router-link to="/managejobs">
-                    <a-icon type="project"/>
-                    <span>My jobs
+                    <a-menu-item key="2" v-if="myjobs.length >0">
+                        <router-link to="/managejobs">
+                            <a-icon type="project"/>
+                            <span>My jobs
                     </span>
-                </router-link>
-            </a-menu-item>
-            <a-menu-item v-else disabled>
+                        </router-link>
+                    </a-menu-item>
+                    <a-menu-item v-else disabled>
 
-                <a-icon type="project"/>
-                <span>My jobs</span>
+                        <a-icon type="project"/>
+                        <span>My jobs</span>
 
-            </a-menu-item>
-            <a-menu-item key="3" v-if="mycandidates.length >0">
-                <router-link to="/mycandidates">
-                    <a-icon type="team"/>
-                    <span>My Candidates</span>
-                </router-link>
+                    </a-menu-item>
+                    <a-menu-item key="3" v-if="mycandidates.length >0">
+                        <router-link to="/mycandidates">
+                            <a-icon type="team"/>
+                            <span>My Candidates</span>
+                        </router-link>
 
-            </a-menu-item>
-            <a-menu-item v-else disabled>
+                    </a-menu-item>
+                    <a-menu-item v-else disabled>
 
-                <a-icon type="team"/>
-                <span>My Candidates</span>
+                        <a-icon type="team"/>
+                        <span>My Candidates</span>
 
-            </a-menu-item>
+                    </a-menu-item>
 
-            <a-menu-item key="4">
-                <router-link to="/talent">
-                    <a-icon type="star"/>
-                    <span>Talent Pool</span>
-                </router-link>
+                    <a-menu-item key="4">
+                        <router-link to="/talent">
+                            <a-icon type="star"/>
+                            <span>Talent Pool</span>
+                        </router-link>
 
-            </a-menu-item>
-            <a-menu-item key="8">
-                <router-link to="/calendar">
-                    <a-icon type="calendar"/>
-                    <span>Calendar</span>
-                </router-link>
+                    </a-menu-item>
+                    <a-menu-item key="8">
+                        <router-link to="/calendar">
+                            <a-icon type="calendar"/>
+                            <span>Calendar</span>
+                        </router-link>
 
-            </a-menu-item>
+                    </a-menu-item>
 
-            <a-menu-item key="6">
-                <router-link to="/myprofile">
-                    <a-icon type="user"/>
-                    <span>My profile</span>
-                </router-link>
+                    <a-menu-item key="6">
+                        <router-link to="/myprofile">
+                            <a-icon type="user"/>
+                            <span>My profile</span>
+                        </router-link>
 
-            </a-menu-item>
-            <a-menu-item key="7">
-                <a @click="logout">
-                    <a-icon type="export"/>
-                    <span>  Logout</span>
-                </a>
+                    </a-menu-item>
+                    <a-menu-item key="7">
+                        <a @click="logout">
+                            <a-icon type="export"/>
+                            <span>  Logout</span>
+                        </a>
 
-            </a-menu-item>
+                    </a-menu-item>
 
 
-        </a-menu>
-        </hide-at>
+                </a-menu>
+            </hide-at>
+
+        </a-affix>
+
+
         <show-at breakpoint="mediumAndBelow">
             <a-menu :defaultSelectedKeys="['1']" mode="inline" style="min-height: 85vh">
-            <a-menu-item key="1">
-                <router-link to="/recruiter">
-                    <a-icon type="dashboard"/>
-                    <span>Dashboard</span>
-                </router-link>
-            </a-menu-item>
+                <a-menu-item key="1">
+                    <router-link to="/recruiter">
+                        <a-icon type="dashboard"/>
+                        <span>Dashboard</span>
+                    </router-link>
+                </a-menu-item>
 
 
-
-
-
-            <a-menu-item key="2" v-if="myjobs.length >0">
-                <router-link to="/managejobs">
-                    <a-icon type="project"/>
-                    <span>My jobs
+                <a-menu-item key="2" v-if="myjobs.length >0">
+                    <router-link to="/managejobs">
+                        <a-icon type="project"/>
+                        <span>My jobs
                     </span>
-                </router-link>
-            </a-menu-item>
-            <a-menu-item v-else disabled>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item v-else disabled>
 
-                <a-icon type="project"/>
-                <span>My jobs</span>
+                    <a-icon type="project"/>
+                    <span>My jobs</span>
 
-            </a-menu-item>
-            <a-menu-item key="3" v-if="mycandidates.length >0">
-                <router-link to="/mycandidates">
+                </a-menu-item>
+                <a-menu-item key="3" v-if="mycandidates.length >0">
+                    <router-link to="/mycandidates">
+                        <a-icon type="team"/>
+                        <span>My Candidates</span>
+                    </router-link>
+
+                </a-menu-item>
+                <a-menu-item v-else disabled>
+
                     <a-icon type="team"/>
                     <span>My Candidates</span>
-                </router-link>
 
-            </a-menu-item>
-            <a-menu-item v-else disabled>
+                </a-menu-item>
 
-                <a-icon type="team"/>
-                <span>My Candidates</span>
+                <a-menu-item key="4">
+                    <router-link to="/talent">
+                        <a-icon type="star"/>
+                        <span>Talent Pool</span>
+                    </router-link>
 
-            </a-menu-item>
+                </a-menu-item>
+                <a-menu-item key="8">
+                    <router-link to="/calendar">
+                        <a-icon type="calendar"/>
+                        <span>Calendar</span>
+                    </router-link>
 
-            <a-menu-item key="4">
-                <router-link to="/talent">
-                    <a-icon type="star"/>
-                    <span>Talent Pool</span>
-                </router-link>
+                </a-menu-item>
 
-            </a-menu-item>
-            <a-menu-item key="8">
-                <router-link to="/calendar">
-                    <a-icon type="calendar"/>
-                    <span>Calendar</span>
-                </router-link>
+                <a-menu-item key="6">
+                    <router-link to="/myprofile">
+                        <a-icon type="user"/>
+                        <span>My profile</span>
+                    </router-link>
 
-            </a-menu-item>
+                </a-menu-item>
+                <a-menu-item key="7">
+                    <a @click="logout">
+                        <a-icon type="export"/>
+                        <span>  Logout</span>
+                    </a>
 
-            <a-menu-item key="6">
-                <router-link to="/myprofile">
-                    <a-icon type="user"/>
-                    <span>My profile</span>
-                </router-link>
-
-            </a-menu-item>
-            <a-menu-item key="7">
-                <a @click="logout">
-                    <a-icon type="export"/>
-                    <span>  Logout</span>
-                </a>
-
-            </a-menu-item>
+                </a-menu-item>
 
 
-        </a-menu>
+            </a-menu>
         </show-at>
 
         <!----Post Job modal------->
@@ -382,7 +385,7 @@
                                         :label-col="{ span: 24 }"
                                         :wrapper-col="{ span:  24}"
                                 >
-                                    <vue-simplemde v-model="job.description" ref="markdownEditor" />
+                                    <vue-simplemde v-model="job.description" ref="markdownEditor"/>
                                     <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
                                                     * required field
@@ -684,7 +687,7 @@
                                         :label-col="{ span: 24 }"
                                         :wrapper-col="{ span:  24}"
                                 >
-                                    <vue-simplemde v-model="job.description" ref="markdownEditor" />
+                                    <vue-simplemde v-model="job.description" ref="markdownEditor"/>
 
                                     <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
@@ -785,6 +788,7 @@
         data() {
 
             return {
+                top: 0,
                 defaultlogo: Largelogo,
                 visible: false,
                 job: {
@@ -805,8 +809,8 @@
                 recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql',
                     'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
-                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#','C','Swift','Nodejs',
-                    'Typescript','Firebase','Xamarin','Spark','.Net','Redis','Sqlite','Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#', 'C', 'Swift', 'Nodejs',
+                    'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
                     'Android', 'Website', 'Mobile'],
@@ -835,7 +839,7 @@
             ACol,
             AFormItem,
             hideAt, showAt,
-            VueSimplemde,markdown
+            VueSimplemde, markdown
 
 
         },

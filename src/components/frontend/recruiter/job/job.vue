@@ -149,7 +149,7 @@
                                                                     <span slot="title">Name</span>
                                                                     <template slot-scope="text,record">
                                                         <span>
-                                                            {{record.name}}
+                                                            {{record.name}} {{record.last_name}}
                                                             <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                                     </template>
@@ -551,14 +551,15 @@
                                                         <a-table-column
                                                                 dataIndex="name"
                                                                 key="name"
-                                                                width="10%"
+                                                                width="12%"
 
 
                                                         >
                                                             <span slot="title">Name</span>
                                                             <template slot-scope="text,record">
                                                         <span>
-                                                            {{record.name}}
+                                                            {{record.name}} {{record.last_name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -738,14 +739,15 @@
                                                         <a-table-column
                                                                 dataIndex="name"
                                                                 key="name"
-                                                                width="10%"
+                                                                width="12%"
 
 
                                                         >
                                                             <span slot="title">Name</span>
                                                             <template slot-scope="text,record">
                                                         <span>
-                                                            {{record.name}}
+                                                            {{record.name}} {{record.last_name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -942,14 +944,15 @@
                                                         <a-table-column
                                                                 dataIndex="name"
                                                                 key="name"
-                                                                width="10%"
+                                                                width="12%"
 
 
                                                         >
                                                             <span slot="title">Name</span>
                                                             <template slot-scope="text,record">
                                                         <span>
-                                                            {{record.name}}
+                                                            {{record.name}} {{record.last_name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -1671,9 +1674,10 @@
     //applicants structure on table
     class Applicant {
         constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                    end, color, report, offerstatus, offerletter, carted, verified) {
+                    end, color, report, offerstatus, offerletter, carted, verified,last_name) {
             this.key = id;
             this.name = name;
+            this.last_name = last_name;
             this.stage = stage;
             this.profile = user_id;
             this.action = pk
@@ -1880,6 +1884,7 @@
                     let pk = this.applicants[j].id
                     let user_id = this.applicants[j].candidate.id
                     let name = this.applicants[j].candidate.user.first_name
+                    let last_name = this.applicants[j].candidate.user.last_name
                     let selected = this.applicants[j].selected
                     let test_stage = this.applicants[j].test_stage
                     let project = ''
@@ -1908,7 +1913,7 @@
                     let carted = this.applicants[j].carted
                     let onepickeddev = new Applicant(
                         id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                        end, color, report, offerstatus, offerletter, carted, verified
+                        end, color, report, offerstatus, offerletter, carted, verified,last_name
                     );
 
                     this.applicantprofile.push(onepickeddev)

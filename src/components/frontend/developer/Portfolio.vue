@@ -16,17 +16,56 @@
                                     <p>{{currentUserProfile.about}}</p>
                                 </a-col>
                             </a-row>
-                            <br>
-                            <a-row>
+
+                            <a-row style="margin-top: 0.5rem">
+                                <a-col :span="12" class="spacer">
+                                    <a-icon type="mail" /> : {{currentUserProfile.user.email}}
+
+                                </a-col>
+                                     <a-col :span="12" class="spacer">
+                                <span>
+                                    Salary expectations: ${{currentUserProfile.salary}} monthly
+
+                            </span>
+                                </a-col>
                                 <a-col :span="6">
-                                    Experience:
+                                <span>
+                                    <a-icon type="linkedin" /> :
+                                    <a :href="currentUserProfile.linkedin_url" target='_blank'> Linkedin profile</a>
+
+
+
+                            </span>
+                                </a-col>
+                                <a-col :span="6">
+                                <span> <a-icon type="github" /> :
+
+                                    <a :href="currentUserProfile.github_repo" target='_blank'>Github profile </a>
+
+
+                            </span>
+                                </a-col>
+                                    <a-col :span="6">
+                                <span>
+                                    <a-icon type="file-pdf" /> :
+                                    <a :href="cv" target='_blank'> Cv link</a>
+
+
+                            </span>
+                                </a-col>
+
+
+                            </a-row>
+                            <a-row style="margin-top: 1rem">
+                                <a-col :span="6">
+                                    Experience <br>
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         {{currentUserProfile.years}} years
                                     </a-tag>
                                 </a-col>
-                                <a-col :span="12">
+                                <a-col :span="10">
                                 <span>
-                                    Availability:
+                                    Availability <br>
                                 <span style="" v-for="available in availability" v-bind:key="available">
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
                                     {{available}}
@@ -36,7 +75,7 @@
                                 </a-col>
                                 <a-col :span="6">
                                 <span>
-                                    Location:
+                                    Location<br>
                                 <a-tag color="#F0F6FD" style="color:#007BFF;">
                                  {{currentUserProfile.country}}
                             </a-tag>
@@ -1008,7 +1047,8 @@
                 experiencelocation: '',
                 experiencetech: '',
                 experiencedescription: '',
-                availability:[]
+                availability:[],
+                cv :''
 
 
             }
@@ -1090,6 +1130,16 @@
 
                 }
             });
+            if (this.currentUserProfile.file) {
+                if (this.currentUserProfile.file.includes("http")) {
+                    this.cv = this.currentUserProfile.file
+                } else {
+                    this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
+
+
+                }
+
+            }
 
         },
 

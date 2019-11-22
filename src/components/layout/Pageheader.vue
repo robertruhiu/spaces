@@ -14,6 +14,7 @@
 
         </a-layout-header>
         </show-at>
+        <a-affix offsetTop="this.top">
         <hide-at breakpoint="mediumAndBelow">
             <a-layout-header :style="{width: '100%',backgroundColor:'#004ec7',height:'6rem',padding: '1px 30px 0',
             borderBottom: '1px solid #e8e8e8'}">
@@ -51,6 +52,7 @@
 
         </a-layout-header>
         </hide-at>
+        </a-affix>
 
 
     </div>
@@ -89,6 +91,7 @@
                 greeting: null,
                 events: [],
                 defaultlogo: Largelogo,
+                top:0
 
             }
         },
