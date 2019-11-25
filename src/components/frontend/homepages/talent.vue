@@ -183,9 +183,12 @@
 
                                                 </div>
                                                 <div style="margin-top: 2rem">
-                                                    <a-button type="primary" ghost
-                                                              @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                        View Profile
+                                                    <a-button type="primary" ghost>
+                                                        <router-link style="text-decoration: none"
+                                                                     :to="{name:'candidatetalentprofile',params:{candidateProfileID: item.id}}"
+                                                                     target='_blank'>
+                                                            View Profile
+                                                        </router-link>
                                                     </a-button>
                                                 </div>
 

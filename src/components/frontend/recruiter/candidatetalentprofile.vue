@@ -60,7 +60,7 @@
 
                                 </p>
                                 <p>
-                                    Salary expectation :
+                                    Min monthly salary expectation :
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">
                                         ${{currentUserProfile.salary}} /month
                                     </a-tag>
@@ -290,11 +290,14 @@
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                    :md="{span: 24, offset: 0 }"
                                    :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+
+
+
                                 <div v-if="dataload" style="text-align: center">
                                     <a-spin/>
                                 </div>
                                 <div v-else>
-                                    <div v-if="pickedprofiles.length>0" class="profile"
+                                    <div v-if="this.$store.state.cart.length>0" class="profile"
                                          style="overflow-y:scroll; height:17rem;">
                                         <div style="padding: 7%">
                                             <p>Picked Candidates</p>
@@ -302,13 +305,16 @@
                                                 <a-icon type="check-circle" theme="twoTone"/>
                                                 indicates verified candidate
                                             </p>
-                                            <div v-for="profile in pickedprofiles" v-bind:key="profile"
+                                            <div v-for="profile in this.$store.state.cart" v-bind:key="profile"
                                                  style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">
                                                 <p>{{profile.name}} <span v-if="profile.verified"><a-icon
                                                         type="check-circle" theme="twoTone"/></span>
 
-                                                    <span style="float: right"><a @click="remove(profile.id)"><a-icon
-                                                            type="close-circle" theme="twoTone"/></a></span>
+                                                    <span style="float: right">
+                                                        <a @click="$store.commit('remove',profile.id);">
+                                                        <a @click="remove(profile.id)"><a-icon
+                                                                type="close-circle" theme="twoTone"/></a>
+                                                        </a></span>
                                                 </p>
 
                                             </div>
@@ -336,13 +342,16 @@
                                                 </p>
                                                 <p v-if="exceeded" style="font-size: 12px;color: red">{{exceeded}}</p>
                                                 <div style="text-align: center">
+
                                                     <a-button type="primary" @click="addtopaid">Checkout</a-button>
+
                                                 </div>
 
 
                                             </div>
                                             <div v-else>
                                                 <div style="text-align: center" v-if="conditions">
+
                                                     <Rave
                                                             style-class="paymentbtn"
                                                             :email="email"
@@ -363,6 +372,7 @@
                                                             :subaccounts="subaccounts"
                                                             :payment_method="paymentMethod">
                                                     </Rave>
+
                                                 </div>
                                                 <div style="text-align: center" v-else>
                                                     <a-button type="primary" disabled>Checkout</a-button>
@@ -370,6 +380,46 @@
                                             </div>
 
 
+                                        </div>
+                                    </div>
+
+                                    <div v-if="this.$store.state.removed === true">
+                                        <div class="profile">
+                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
+                                                <div style="text-align: center">
+                                                    <img src="../../../assets/images/profile.png"
+                                                         style="width: 50%;padding-bottom: 2rem">
+                                                </div>
+
+
+                                                <p style="text-align: center;">I like this profile</p>
+                                                <div style="text-align: center">
+
+                                                    <div v-if="paidprofile === false">
+                                                        <div v-if="addcart">
+                                                            <div style="text-align: center;">
+                                                                <a-spin/>
+                                                            </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,
+                                                            name:currentUserProfile.user.first_name,verified:verified})">
+
+
+                                                                <a-button type="primary"
+                                                                          @click="pickcandidate(currentUserProfile.id)">
+                                                                    Pick candidate
+                                                                </a-button>
+
+                                                            </a>
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div v-if="managecandidate === false">
@@ -391,10 +441,17 @@
                                                             </div>
                                                         </div>
                                                         <div v-else>
-                                                            <a-button v-if="picked === false" type="primary"
-                                                                      @click="pickcandidate(currentUserProfile.id)">
-                                                                Add to my Candidates
-                                                            </a-button>
+                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,
+                                                            name:currentUserProfile.user.first_name,verified:verified})">
+
+
+                                                                <a-button type="primary"
+                                                                          @click="pickcandidate(currentUserProfile.id)">
+                                                                    Pick candidate
+                                                                </a-button>
+
+                                                            </a>
+
                                                         </div>
 
 
@@ -419,12 +476,14 @@
                                                     <div style="text-align: center">
                                                         <div>
 
+
                                                             <a-button
                                                                     style="margin-left: 1rem;"
                                                                     type="primary"
                                                                     @click="navigateTo({name:'mycandidates'})">
                                                                 manage candidate
                                                             </a-button>
+
 
                                                         </div>
 
@@ -434,6 +493,35 @@
                                             </div>
                                         </div>
 
+                                    </div>
+                                    <div v-if="this.$store.state.managed">
+                                        <div class="profile">
+                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
+                                                <div style="text-align: center">
+                                                    <img src="../../../assets/images/profile.png"
+                                                         style="width: 50%;padding-bottom: 2rem">
+                                                </div>
+
+
+                                                <p style="text-align: center;">I like this profile</p>
+                                                <div style="text-align: center">
+                                                    <div>
+
+
+                                                        <a-button
+                                                                style="margin-left: 1rem;"
+                                                                type="primary"
+                                                                @click="navigateTo({name:'mycandidates'})">
+                                                            manage candidate
+                                                        </a-button>
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -587,7 +675,9 @@
                 availabiltytags: [],
                 exceeded: '',
                 verified: false,
-                statecartlist: []
+                statecartlist: [],
+                pickeddevsids: null,
+                paidfor:[]
 
             }
         },
@@ -608,6 +698,7 @@
 
             }
 
+
             if (this.$store.state.user.pk) {
                 this.customer_firstname = this.$store.state.user.first_name
                 this.customer_lastname = this.$store.state.user.last_name
@@ -620,11 +711,12 @@
                 if (this.currentUserProfile.skills) {
                     this.skilltags = this.currentUserProfile.skills.split(',');
                 }
-                if(this.currentUserProfile.availabilty){
+                if (this.currentUserProfile.availabilty) {
                     this.availabiltytags = this.currentUserProfile.availabilty.split(',');
                 }
 
                 if (this.currentUserProfile.verified_skills) {
+                    this.verified = true
                     this.verified_skills = this.currentUserProfile.verified_skills.split(',');
                 }
                 this.candidatedata = true
@@ -750,31 +842,32 @@
 
                         this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
                     }
-                    for (let i = 0; i < this.pickeddevs.length; i++) {
-                        if (this.pickeddevs[i] === this.$route.params.candidateProfileID) {
-                            this.managecandidate = true
-                        }
-                    }
 
 
                     this.devs = (await UsersService.devs()).data;
 
-                    for (let i = 0; i < this.devs.length; i++) {
-                        if (this.pickeddevs.length > 0) {
-                            for (let j = 0; j < this.pickeddevs.length; j++) {
+
+                    if (this.pickeddevs.length > 0) {
+                        for (let j = 0; j < this.pickeddevs.length; j++) {
+
+                            for (let i = 0; i < this.devs.length; i++) {
+
 
                                 if (this.devs[i].id === Number(this.pickeddevs[j])) {
+
                                     let id = this.devs[i].id
                                     let name = this.devs[i].user.first_name
                                     let verified = false
                                     if (this.devs[i].verified_skills) {
                                         verified = true
+
                                     }
 
                                     let one_profile = new Cart(
                                         id, name, verified
                                     );
                                     this.pickedprofiles.push(one_profile)
+
 
                                 }
                                 if (this.$route.params.candidateProfileID === Number(this.pickeddevs[j])) {
@@ -787,6 +880,11 @@
 
 
                     }
+
+                    this.$store.dispatch('setCandidate', this.currentUserProfile)
+                    this.$store.dispatch('setPicked', this.pickeddevs)
+                    this.$store.dispatch('setCart', this.pickedprofiles)
+
                     this.dataload = false
 
 
@@ -808,6 +906,8 @@
                     } else {
                         this.amount = 500
                     }
+
+
                     MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                         .then(resp => {
 
@@ -816,10 +916,12 @@
 
                                     for (let i = 0; i < resp.data.length; i++) {
                                         this.pickeddevpaid.push(resp.data[i].developer)
+
+
                                     }
 
                                     for (let i = 0; i < this.pickeddevpaid.length; i++) {
-                                        if (this.$route.params.candidateProfileID === this.pickeddevpaid[i].id) {
+                                        if (this.currentUserProfile.id === this.pickeddevpaid[i].id) {
                                             this.paidprofile = true
                                             this.managecandidate = true
 
@@ -834,6 +936,11 @@
                         .catch();
 
 
+
+
+
+
+
                 }
 
 
@@ -841,6 +948,7 @@
 
 
         },
+
         computed: {
             reference() {
                 let text = "";
@@ -848,47 +956,38 @@
                 for (let i = 0; i < 10; i++)
                     text += possible.charAt(Math.floor(Math.random() * possible.length));
                 return text;
-            }
+            },
+
+
         },
         methods: {
             navigateTo(route) {
                 this.$router.push(route)
             },
-            pickcandidate() {
+            async pickcandidate() {
                 this.addcart = true
 
 
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 };
+                let cartdata = (await Payments.cartget(this.mycart.id, auth)).data
+                if (cartdata.devspending.length > 0) {
+                    this.pickeddevs = cartdata.devspending.split(',')
+                } else {
+                    this.pickeddevs = []
+                }
+
+
                 this.pickeddevs.push(this.currentUserProfile.id.toString())
 
                 let developers = this.pickeddevs.join(',')
 
+
                 Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
                     .then(resp => {
-                        this.picked = true
-
-                        let id = this.currentUserProfile.id
-                        let name = this.currentUserProfile.user.first_name
-                        let verified = false
-                        if (this.currentUserProfile.verified_skills) {
-                            verified = true
-                        }
-                        let one_profile = new Cart(
-                            id, name, verified
-                        );
-                        this.pickedprofiles.push(one_profile)
                         this.addcart = false
                         this.managecandidate = true
-                        this.pickeddevs = resp.data.devspending.split(',');
-                        if (this.pickeddevs.length <= 4) {
-                            this.amount = 100
-                        } else if (this.pickeddevs.length <= 10) {
-                            this.amount = 200
-                        } else {
-                            this.amount = 500
-                        }
 
 
                     })
@@ -939,6 +1038,7 @@
 
                     }
 
+
                 }
                 if (this.pickeddevs.length <= 4) {
                     this.amount = 100
@@ -947,43 +1047,53 @@
                 } else {
                     this.amount = 500
                 }
+                let pickedlist = []
+                for (let i = 0; i < this.$store.state.cart.length; i++) {
+                    pickedlist.push(this.$store.state.cart[i].id)
+                }
+                this.managecandidate = pickedlist.includes(this.currentUserProfile.id);
                 this.waiting = false
 
             },
 
-            remove(dev_id) {
+            async remove(dev_id) {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 };
-                this.waiting = true
-                let self = this
-                if (dev_id === this.currentUserProfile.id) {
-                    this.picked = false
+                let cartdata = (await Payments.cartget(this.mycart.id, auth)).data
+                if (cartdata.devspending.length > 0) {
+                    this.pickeddevs = cartdata.devspending.split(',')
+                } else {
+                    this.pickeddevs = []
                 }
-                var index = this.pickeddevs.indexOf(dev_id.toString());
+                let ids = []
+                for (let i = 0; i < this.pickeddevs.length; i++) {
+                    ids.push(Number(this.pickeddevs[i]))
+                }
+
+                var index = ids.indexOf(dev_id);
                 if (index > -1) {
-                    this.pickeddevs.splice(index, 1);
-                    let developers = this.pickeddevs.join(',')
-
-                    Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
-                        .then(resp => {
-                            this.pickedprofiles = []
-                            this.managecandidate = false
-                            self.refresh()
-
-
-                        })
-                        .catch(error => {
-                            return error
-                        });
+                    ids.splice(index, 1);
                 }
+
+
+                Payments.cartitemadd(this.mycart.id, {devspending: ids.join(',')}, auth)
+                    .then(resp => {
+
+
+                    })
+                    .catch(error => {
+                        return error
+                    });
+
 
             },
-            addtopaid() {
+            async addtopaid() {
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 }
-                this.paiddevs = this.paiddevs.concat(this.pickeddevs);
+                let cartdata = (await Payments.cartget(this.mycart.id, auth)).data
+                this.paiddevs = this.paiddevs.concat(cartdata.devspending.split(','));
                 if (this.paiddevs.length > this.bundlelimit) {
                     this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
 
@@ -1000,6 +1110,7 @@
 
                         }, auth)
                             .then(resp => {
+                                this.$store.commit('manage')
                                 return resp
                             })
 
@@ -1010,16 +1121,17 @@
 
                         }, auth)
                             .then(resp => {
+                                this.$store.commit('manage')
                                 return resp
                             })
                     }
 
 
                     this.pickeddevs = []
-                    for (let j = 0; j < this.pickedprofiles.length; j++) {
+                    for (let j = 0; j < this.paiddevs.length; j++) {
                         let picked_developer = {
                             owner: this.$store.state.user.pk,
-                            developer: this.pickedprofiles[j].id,
+                            developer: this.paiddevs[j],
                             paid: true,
                             stage: 'active'
                         }
@@ -1067,6 +1179,7 @@
                         conditions: true
                     }, auth)
                         .then(resp => {
+                            this.$store.commit('manage')
                             return resp
                         })
 

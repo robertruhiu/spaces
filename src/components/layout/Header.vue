@@ -120,6 +120,7 @@
                 this.$store.dispatch('setPicked', null)
                 this.$store.dispatch('setLanguage', null)
                 this.$store.dispatch('setCountry', null)
+                this.$store.dispatch('setManaged',false)
 
                 this.$router.push({
                     name: 'home'

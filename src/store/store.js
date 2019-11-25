@@ -18,9 +18,10 @@ export default new Vuex.Store({
         language: null,
         country: null,
         cart: null,
-        candidate:null,
-        removed:false,
-        cart_ids:[]
+        candidate: null,
+        removed: false,
+        cart_ids: [],
+        managed: false
     },
     mutations: {
         setToken(state, token) {
@@ -55,6 +56,7 @@ export default new Vuex.Store({
         setCart(state, cart) {
             state.cart = cart
             state.removed = false
+            state.managed = false
             state.cart_ids = []
         },
         setRemove(state, remove) {
@@ -63,6 +65,7 @@ export default new Vuex.Store({
         setPicked(state, picked) {
             state.picked = picked
         },
+
         add(state, candidateobject) {
             state.cart.push(candidateobject)
             state.cart = state.cart.reduce(function (field, e1) {
@@ -74,10 +77,20 @@ export default new Vuex.Store({
                 }
                 return field;
             }, []);
-            if(candidateobject.id === state.candidate.id){
+            if (candidateobject.id === state.candidate.id) {
                 state.removed = false
             }
             state.cart_ids.push(Number(candidateobject.id))
+
+        },
+        manage(state) {
+            for (let i = 0; i < state.cart.length; i++) {
+                if (state.cart[i].id === state.candidate.id) {
+                    state.managed = true
+                }
+            }
+            state.cart = []
+
 
         },
         remove(state, n) {
@@ -88,13 +101,12 @@ export default new Vuex.Store({
                     }
                 }
             }
-            if(n === state.candidate.id){
+            if (n === state.candidate.id) {
                 state.removed = true
             }
 
 
         },
-
 
 
     },
@@ -133,12 +145,13 @@ export default new Vuex.Store({
             commit('setPicked', picked)
         },
 
+
     },
     getters: {
         isLoggedIn: state => !!state.token,
     },
     plugins: [
         createPersistedState(),
-        sharedMutations({predicate: ['add', 'remove','picked',]})
+        sharedMutations({predicate: ['add', 'remove', 'picked', 'manage']})
     ],
 })
