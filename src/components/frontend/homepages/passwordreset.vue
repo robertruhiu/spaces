@@ -140,9 +140,11 @@
                 loading: false,
                 form: this.$form.createForm(this),
                 info:null,
-                error:null
+                error:null,
+
             }
         },
+
         methods: {
             Reset() {
 
@@ -152,8 +154,8 @@
                         AuthService.reset({
                             new_password1: this.password,
                             new_password2: this.password1,
-                            uid:this.uid,
-                            token:this.token
+                            uid:this.$store.state.route.params.uid,
+                            token:this.$store.state.route.params.token
 
 
                         })

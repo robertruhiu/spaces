@@ -95,7 +95,7 @@ let router = new Router({
             component: Forgot
         },
         {
-            path: '/password_reset_confirm',
+            path: '/password_reset_confirm/:uid/:token',
             name: 'reset',
             component: Reset,
             props: (route) => ({
