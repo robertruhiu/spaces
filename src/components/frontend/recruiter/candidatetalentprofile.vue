@@ -352,27 +352,19 @@
                                             <div v-else>
                                                 <div style="text-align: center" v-if="conditions">
 
-                                                    <Rave
-                                                            style-class="paymentbtn"
+                                                    <paystack
+                                                            :amount="topay"
                                                             :email="email"
-                                                            :amount="amount"
+                                                            :paystackkey="paystackkey"
+                                                            :currency="currency"
                                                             :reference="reference"
-                                                            :rave-key="raveKey"
                                                             :callback="callback"
                                                             :close="close"
-                                                            :currency="currency"
-                                                            :country="country"
-                                                            :customer_firstname="customer_firstname"
-                                                            :customer_lastname="customer_lastname"
-                                                            :custom_title="custom.title"
-                                                            :custom_description="custom.description"
-                                                            :custom_logo="custom.logo"
-                                                            :redirect_url="redirectUrl"
-                                                            :payment_plan="paymentPlan"
-                                                            :subaccounts="subaccounts"
-                                                            :payment_method="paymentMethod">
-                                                    </Rave>
-
+                                                            :embed="false"
+                                                    >
+                                                        <i class="fas fa-money-bill-alt"></i>
+                                                        Make Payment
+                                                    </paystack>
                                                 </div>
                                                 <div style="text-align: center" v-else>
                                                     <a-button type="primary" disabled>Checkout</a-button>
@@ -384,6 +376,7 @@
                                     </div>
 
                                     <div v-if="this.$store.state.removed === true">
+
                                         <div class="profile">
                                             <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
                                                 <div style="text-align: center">
@@ -423,6 +416,7 @@
                                         </div>
                                     </div>
                                     <div v-if="managecandidate === false">
+
                                         <div class="profile">
                                             <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
                                                 <div style="text-align: center">
@@ -598,15 +592,17 @@
         }
     }
 
-
     import UsersService from '@/services/UsersService'
+
+
+    import paystack from 'vue-paystack';
     import Pageheader from '@/components/layout/Header.vue'
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import MarketPlaceService from '@/services/Marketplace'
     import QuizService from '@/services/QuizService';
     import Payments from '@/services/Payments';
-    import {showAt, hideAt} from 'vue-breakpoints'
+    import {hideAt, showAt} from 'vue-breakpoints'
     import Rave from "@/components/frontend/recruiter/cart/Rave";
     import tc from '@/components/frontend/homepages/tc'
 
@@ -635,28 +631,15 @@
                 carts: [],
                 devs: [],
                 pickedprofiles: [],
-                amount: 0,
-                raveKey: "FLWPUBK-1007dc4eb48e0d1e0b6bf86d083ba020-X",
-                email: "",
+                //paystck config
+                // paystackkey: "pk_test_b152b53265c577aaee13f4e6ed09bca1768fbbb2", //paystack public key
+                paystackkey: "pk_live_33025d4840017202a65e05c8ba2d2e907aae7cf9", //paystack public key
+                email: "", // Customer email
+                // amount: 363000,// in kobo
+                amount:0,
+                mount:100,
+                paystack_amount: 0,
                 currency: "USD",
-                country: "GH",
-                customer_firstname: '',
-                customer_lastname: '',
-
-                custom: {
-                    title: "Codeln",
-                    description: "Payment for Codeln Developers",
-                    logo: "https://www.codeln.com/img/logobg.f302741d.svg"
-                },
-
-                paymentPlan: "", // add payments plan ID here
-                paymentMethod: "", // add 'card' or 'account' if you want a specific feature. Leave empty if you want all features
-                subaccounts: {
-                    id: "RS_73954F005E68DADF3483197D5CF13E1E", // id of the subaccount; get from your dashboard
-                    transaction_split_ratio: "", //
-                    transaction_charge_type: "", //include this if the you want a flat fee eg: flat
-                    transaction_charge: "" // include the flat fee amount you want eg: 100
-                },
                 pickeddevpaid: [],
                 paidprofile: false,
                 paiddevs: [],
@@ -687,9 +670,8 @@
             Pageheader,
             showAt, hideAt,
             Rave,
-            tc
-
-
+            tc,
+            paystack
         },
         async mounted() {
 
@@ -697,7 +679,6 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-
 
             if (this.$store.state.user.pk) {
                 this.customer_firstname = this.$store.state.user.first_name
@@ -816,7 +797,6 @@
                         if (this.mycart.devspending) {
                             this.pickeddevs = this.mycart.devspending.split(',');
 
-
                         }
                         if (this.mycart.devspaid) {
                             this.paiddevs = this.mycart.devspaid.split(',');
@@ -871,6 +851,7 @@
 
                                 }
                                 if (this.$route.params.candidateProfileID === Number(this.pickeddevs[j])) {
+                                    console.log(this.pickeddevs[j])
                                     this.managecandidate = true
                                 }
 
@@ -901,13 +882,14 @@
                     this.picked = p
                     if (this.pickeddevs.length <= 4) {
                         this.amount = 100
+
                     } else if (this.pickeddevs.length <= 10) {
                         this.amount = 200
+
                     } else {
                         this.amount = 500
+
                     }
-
-
                     MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
                         .then(resp => {
 
@@ -957,6 +939,9 @@
                     text += possible.charAt(Math.floor(Math.random() * possible.length));
                 return text;
             },
+            topay(){
+                return this.amount * 100
+            }
 
 
         },
@@ -1161,7 +1146,7 @@
 
             callback: function (response) {
                 let self = this
-                if (response.success) {
+                if (response.status === 'success') {
                     const auth = {
                         headers: {Authorization: 'JWT ' + this.$store.state.token}
                     }
@@ -1173,8 +1158,8 @@
                     Payments.cartitemadd(this.mycart.id, {
                         devspending: developerspending,
                         devspaid: developerspaid,
-                        amount: response.tx.amount,
-                        transaction_id: response.tx.txRef,
+                        amount:this.amount,
+                        transaction_id: response.trxref,
                         type: 'talent',
                         conditions: true
                     }, auth)
@@ -1209,7 +1194,7 @@
                     }
 
 
-                    if (response.tx.amount === 100) {
+                    if (this.amount === 100) {
                         let bundlelimit = 4
                         if (this.paiddevs === bundlelimit) {
                             Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
@@ -1217,14 +1202,14 @@
                                 .catch();
                         }
 
-                    } else if (response.tx.amount === 200) {
+                    } else if (this.amount === 200) {
                         let bundlelimit = 10
                         if (this.paiddevs === bundlelimit) {
                             Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
                                 .then()
                                 .catch();
                         }
-                    } else if (500 <= response.tx.amount > 200) {
+                    } else if (500 <= this.amount > 200) {
                         let bundlelimit = 33
                         if (this.paiddevs === bundlelimit) {
                             Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
