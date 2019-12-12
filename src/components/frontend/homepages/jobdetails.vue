@@ -18,29 +18,44 @@
                             <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
                                 <span style="font-weight: 700;font-size: large">{{job.title}}</span>
-
-                                <span style="float: right"
-                                      v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
+                                <span v-if="this.$store.state.isUserLoggedIn">
+                                    <span style="float: right"
+                                          v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
                                     <div v-if="save">
                                         <a-spin/>
                                     </div>
-                                    <a-button v-else type="primary"
-                                              @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
+                                        <span v-else>
+                                            <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
+                                                      @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
+
+                                        </span>
+
 
 
                                 </span>
+
                                 <span style="float: right"
                                       v-if="currentUserProfile.user_type ==='developer' && applied === true  ">
                                     <a-button type="primary" @click="navigateTo({name:'manageapplications'})"
                                     >Manage Job application</a-button>
 
                                 </span>
+                                </span>
+
+                                <span v-else style="float: right">
+                                        <a-button type="primary" @click="navigateTo({name:'login'})">Login to apply</a-button>
+                                    </span>
+
+
                             </span>
 
                             </div>
                             <div>
-                                <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
-                                         message="Job application successful" type="success" closeText="Close Now"/>
+                                <span v-if="this.$store.state.isUserLoggedIn">
+                                    <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
+                                             message="Job application successful" type="success" closeText="Close Now"/>
+                                </span>
+
                                 <p>
 
                                     Location : {{job.location}} <span v-if="job.city">| City : {{job.city}}</span>
@@ -60,6 +75,7 @@
                             <div>
                                 <p style="font-weight: 700">Job Details</p>
                                 <markdown>{{job.description}}</markdown>
+
                             </div>
                         </div>
 
@@ -106,14 +122,16 @@
         },
         async mounted() {
             moment
+
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
             this.dataload = true
-            if (this.$store.state.user.pk) {
+
+            if (this.$store.state.isUserLoggedIn) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId, auth)).data
+                this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId)).data
                 this.skills = this.job.tech_stack.split(',');
                 this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
                 this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
@@ -128,6 +146,13 @@
                 } else {
                     this.applied = false
                 }
+            } else {
+                this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId)).data
+
+                this.skills = this.job.tech_stack.split(',');
+                this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+
+
             }
             this.dataload = false
 
@@ -137,15 +162,7 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
-            openNotification() {
-                this.$notification.open({
-                    message: 'Notification Title',
-                    description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-                    onClick: () => {
-                        console.log('Notification Clicked!');
-                    },
-                });
-            },
+
 
             ApplyJob(job, dev) {
                 const auth = {
@@ -160,7 +177,7 @@
                         recruiter: this.job.posted_by,
                         stage: 'new',
                         selected: false,
-                        type:'applied'
+                        type: 'applied'
 
                     },
                     auth
@@ -170,9 +187,9 @@
                             this.applied = true
 
 
-                        MarketPlaceService.newapplicationemail(resp.data.id,auth)
-                            .then()
-                            .catch()
+                            MarketPlaceService.newapplicationemail(resp.data.id, auth)
+                                .then()
+                                .catch()
 
                         }
                     )

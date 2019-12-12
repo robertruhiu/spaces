@@ -119,10 +119,16 @@
                                                                 </a-button>
                                                         </span>
                                                     <span v-else>
-                                                            <a-button type="primary" ghost
-                                                                      @click="navigateTo({name:'login'})">
-                                                        View details
-                                                    </a-button>
+                                                        <a-button type="primary" ghost
+                                                                 >
+                                                            <router-link
+                                                                         style="text-decoration: none"
+                                                                         :to="{name:'jobdetails',params:{jobId: item.id}}"
+                                                                         target='_blank'>
+                                                            View details
+                                                            </router-link>
+                                                        </a-button>
+
 
                                                         </span>
 

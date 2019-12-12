@@ -3,7 +3,8 @@
         <pageheader></pageheader>
         <a-layout-content :style="{ padding: '0 0px' }">
             <div>
-                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem " gutter="8">
+                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem "
+                       gutter="8">
                     <hide-at breakpoint="mediumAndBelow">
                         <a-col span="4">
                             <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
@@ -31,10 +32,6 @@
                             </a-auto-complete>
 
 
-
-
-
-
                         </div>
                     </a-col>
                     <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
@@ -44,14 +41,11 @@
 
 
                             <country-select
-                                                    name="location"
+                                    name="location"
 
-                                                    class="ant-input"
-                                                    v-model="country"
-                                            />
-
-
-
+                                    class="ant-input"
+                                    v-model="country"
+                            />
 
 
                         </div>
@@ -64,10 +58,15 @@
                 <a-row>
 
 
-
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
-                        <a-alert message="If you have a posted  job you can attach picked candidates to it.You can do this on manage candidates page" type="info" closeText="Close Now" />
+                        <a-alert
+                                message="If you have a posted  job you can attach picked candidates to it.You can do this on manage candidates page"
+                                type="info" closeText="Close Now"/>
+
+
+
+
                         <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
                             <a-spin size="large"/>
                         </div>
@@ -93,7 +92,7 @@
                                                        :md="{span: 24, offset: 0 }"
                                                        :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
                                                        style="padding: 2%">
-                                                    <span >
+                                                    <span>
                                                                 <a-avatar class="poolavatar1"
                                                                 >
                                                                     {{item.name}}
@@ -264,7 +263,7 @@
                 devs: null,
                 alldevs: null,
                 search: '',
-                country:'',
+                country: '',
                 profile: {},
                 checkedList: defaultCheckedList,
                 indeterminate: true,
@@ -307,6 +306,8 @@
                     {type: 'like-o', text: '156'},
                     {type: 'message', text: '2'},
                 ],
+                talentorder: [],
+                ordered_list: []
             }
         },
         components: {
@@ -319,8 +320,10 @@
 
         async mounted() {
             this.devs = (await UsersService.devs()).data;
+            this.talentorder = (await UsersService.talentorder()).data
             this.loading = false
             for (let i = 0; i < this.devs.length; i++) {
+
                 let skill_list = []
                 if (this.devs[i].skills) {
                     skill_list = this.devs[i].skills.split(',').slice(0, 4)
@@ -333,7 +336,7 @@
                 let about = this.devs[i].about
                 let location = this.devs[i].country
                 let availabilty = []
-                if(this.devs[i].availabilty){
+                if (this.devs[i].availabilty) {
                     availabilty = this.devs[i].availabilty.split(',').slice(0, 2)
                 }
                 let verified = false
@@ -348,6 +351,8 @@
                 this.listData.push(onedev)
 
             }
+
+
 
 
         },
@@ -388,24 +393,32 @@
 
         },
         computed: {
+            orderedlist(){
+                let list = []
+                for(let i=0;i<this.listData.length;i++){
+                    let index =this.talentorder.indexOf(this.listData[i].id);
+                    list[index]=this.listData[i]
+                }
+                return list
+            },
             filteredList() {
-                return this.listData.filter(dev => {
-                    if(this.country && this.search){
+                return this.orderedlist.filter(dev => {
+                    if (this.country && this.search) {
 
-                        return  dev.skills.toString().toLowerCase().includes(this.search.toLowerCase()) &&  dev.location.toLowerCase().includes(this.country.toLowerCase())
+                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase()) && dev.location.toLowerCase().includes(this.country.toLowerCase())
 
-                    }else if(this.country) {
+                    } else if (this.country) {
                         return dev.location.toLowerCase().includes(this.country.toLowerCase())
 
 
-                    }else {
+                    } else {
                         return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
                     }
 
 
-
                 })
             }
+
         }
     }
 
@@ -421,10 +434,12 @@
         background-color: #0679FB;
         margin: 25% 25%;
     }
-    .lightshadow{
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-        border: 1px solid rgba(0,0,0,.125);
+
+    .lightshadow {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+        border: 1px solid rgba(0, 0, 0, .125);
     }
+
     .poolavatar1 {
         background-color: #0679FB;
 

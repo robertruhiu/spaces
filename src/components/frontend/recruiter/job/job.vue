@@ -95,6 +95,7 @@
                             </a-col>
 
                         </a-row>
+                        <a-alert v-if="currentUserProfile.user.is_staff" :message="adminmodewarning" type="warning" closeText="Close Now" />
 
 
                         <a-tabs defaultActiveKey="1"
@@ -1052,6 +1053,7 @@
 
                                             </a-tabs>
 
+
                                         </a-col>
 
                                     </a-row>
@@ -1261,6 +1263,7 @@
 
 
                             </a-tab-pane>
+
 
 
                         </a-tabs>
@@ -1803,7 +1806,8 @@
                 cart: [],
                 cart_items: [],
                 pickedprofiles: [],
-                updated: false
+                updated: false,
+                adminmodewarning:''
 
 
             }
@@ -1840,6 +1844,7 @@
                 const jobId = this.$store.state.route.params.jobId
                 // current job
                 this.job = (await Marketplace.specificjob(jobId, auth)).data
+                this.adminmodewarning = 'You are in admin mode this job is posted by'+' '+ this.job.company + '.Dont move candidates if you not assigned as their account manager'
                 this.deadline = this.job.deadline
                 // used as part of system recommendation of candidates
                 this.skills = this.job.tech_stack.split(',')

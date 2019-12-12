@@ -54,6 +54,10 @@
                                     <a-col :span="24">
                                         <a-card style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                             <h3 style="font-weight: bold">{{job.title}}</h3>
+                                            <span v-if="currentUserProfile.user.is_staff">posted by : {{job.posted_by}}</span>
+
+
+
                                             <p>
                                               <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
@@ -128,13 +132,14 @@
 
 <script>
     class Job {
-        constructor(id, title, skills, applicants, test, interview) {
+        constructor(id, title, skills, applicants, test, interview,posted_by) {
             this.id = id;
             this.title = title;
             this.skills = skills;
             this.applicants = applicants;
             this.test = test;
             this.interview = interview
+            this.posted_by = posted_by
 
         }
     }
@@ -208,9 +213,10 @@
                     let id = this.jobs[i].id
                     let title = this.jobs[i].title
                     let skills = skill_list
+                    let posted_by = this.jobs[i].company
                     let applicants = this.applicants.length
                     let onejob = new Job(
-                        id, title, skills, applicants, test, interview
+                        id, title, skills, applicants, test, interview,posted_by
                     )
 
 

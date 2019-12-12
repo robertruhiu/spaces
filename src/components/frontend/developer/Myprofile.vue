@@ -140,11 +140,29 @@
                                             :label-col="{ span: 24 }"
                                             :wrapper-col="{ span:  24}"
                                     >
+                                        <span style="font-size: small">Please do not fill any personal details in your bio e.g
+                                            Your
+                                            <span v-if="flags[0] === false && flags[1]=== false">name</span><span v-else
+                                                                                                                  style="color: red">name</span> ,
+                                             <span v-if="flags[2] === false">email</span><span v-else
+                                                                                               style="color: red">email</span>,
+                                            <span v-if="flags[3] === false">github</span><span v-else
+                                                                                               style="color: red">github</span>,
+                                            <span v-if="flags[4] === false">linkedin</span><span v-else
+                                                                                                 style="color: red">linkedin</span>
+
+                                        </span>
                                         <a-textarea name="bio"
                                                     maxlength="300"
                                                     v-model="currentUserProfile.about"
                                                     placeholder="Tell us something about yourself"
                                                     :rows="6"/>
+                                        <div v-for="error in errorlist" v-bind:key="error">
+                                            <div v-if="error === 'flags'" style="color: red">
+                                                you have included personal info please remove where necessary
+                                            </div>
+
+                                        </div>
 
                                     </a-form-item>
 
@@ -171,7 +189,7 @@
                             </p>
 
 
-                                <div v-if="uploading">
+                            <div v-if="uploading">
 
                                 <span>Uploading file <a-spin/></span>
 
@@ -214,7 +232,6 @@
                 </div>
 
 
-
             </a-layout-content>
         </a-layout>
     </a-layout>
@@ -250,8 +267,11 @@
                 fileList: [],
                 uploading: false,
                 cv: '',
-                alert:false,
-                availabiltytags:[]
+                alert: false,
+                availabiltytags: [],
+                github: '',
+                linkedin: '',
+                errorlist: [],
 
 
             }
@@ -267,6 +287,20 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                if (this.currentUserProfile.github_repo.includes('https')) {
+                    this.github = this.currentUserProfile.github_repo.slice(8)
+
+                } else if (this.currentUserProfile.github_repo.includes('http')) {
+                    this.github = this.currentUserProfile.github_repo.slice(7)
+                }
+
+
+                if (this.currentUserProfile.linkedin_url.includes('https')) {
+                    this.linkedin = this.currentUserProfile.linkedin_url.slice(8)
+
+                } else if (this.currentUserProfile.linkedin_url.includes('http')) {
+                    this.linkedin = this.currentUserProfile.linkedin_url.slice(7)
+                }
                 if (this.currentUserProfile.skills) {
                     if (this.currentUserProfile.skills.length >= 0) {
                         let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
@@ -293,6 +327,57 @@
 
 
         },
+        computed: {
+            cleanbio() {
+                let bio = this.currentUserProfile.about
+
+                return bio
+            },
+            flags() {
+                let blacklist = []
+                blacklist[0] = this.$store.state.user.first_name
+                blacklist[1] = this.$store.state.user.last_name
+                blacklist[2] = this.$store.state.user.email
+                blacklist[3] = this.github
+                blacklist[4] = this.linkedin
+
+
+                let first = false
+                let last = false
+                let email = false
+                let github = false
+                let linkedin = false
+                if (this.currentUserProfile.about) {
+                    if (this.currentUserProfile.about.includes(blacklist[0])) {
+                        first = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[1])) {
+                        last = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[2])) {
+                        email = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[3])) {
+                        github = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[4])) {
+                        linkedin = true
+                    }
+                }
+
+                let flag = []
+                flag[0] = first
+                flag[1] = last
+                flag[2] = email
+                flag[3] = github
+                flag[4] = linkedin
+
+
+                return flag
+            },
+
+
+        },
         methods: {
             Save() {
 
@@ -310,11 +395,16 @@
                     }
                     this.currentUserProfile.skills = this.tags.join(',')
                 }
+                if (this.flags.includes(true)) {
+                    this.errorlist.push('flags')
+                }
+
 
                 this.currentUserProfile.file = this.cv.slice(48)
 
                 this.currentUserProfile.user = this.$store.state.user.pk
-                this.loading = true
+                if(this.errorlist.length === 0){
+                    this.loading = true
 
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
@@ -340,6 +430,8 @@
 
 
                     });
+                }
+
 
 
             },
@@ -446,7 +538,7 @@
 
                 this.cv = res.data.secure_url
                 this.currentUserProfile.file = this.cv.slice(48)
-                UsersService.updatepatch(this.$store.state.user.pk, {file:this.cv.slice(48)}, auth)
+                UsersService.updatepatch(this.$store.state.user.pk, {file: this.cv.slice(48)}, auth)
                     .then(resp => {
                         this.currentUserProfile.file = this.cv
                         this.uploading = false
@@ -462,8 +554,6 @@
 
 
                     });
-
-
 
 
             },

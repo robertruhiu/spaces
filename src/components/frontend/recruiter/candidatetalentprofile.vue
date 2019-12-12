@@ -137,7 +137,9 @@
                                                             </p>
                                                             <p>{{item.description}}
                                                             </p>
-                                                            <a :href=" item.demo" target="_blank">view project</a>
+                                                            <span v-if="item.demo">
+                                                                <a :href=" item.demo" target="_blank">view project</a>
+                                                            </span>
 
                                                         </div>
                                                     </div>
@@ -232,7 +234,10 @@
                                             </p>
                                             <p>{{item.description}}
                                             </p>
-                                            <a :href=" item.demo" target="_blank">view project</a>
+                                            <span v-if="item.demo">
+                                                <a :href=" item.demo" target="_blank">view project</a>
+                                            </span>
+
 
                                         </div>
 
@@ -290,7 +295,6 @@
                             <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                    :md="{span: 24, offset: 0 }"
                                    :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
-
 
 
                                 <div v-if="dataload" style="text-align: center">
@@ -636,8 +640,8 @@
                 paystackkey: "pk_live_33025d4840017202a65e05c8ba2d2e907aae7cf9", //paystack public key
                 email: "", // Customer email
                 // amount: 363000,// in kobo
-                amount:0,
-                mount:100,
+                amount: 0,
+                mount: 100,
                 paystack_amount: 0,
                 currency: "USD",
                 pickeddevpaid: [],
@@ -660,7 +664,7 @@
                 verified: false,
                 statecartlist: [],
                 pickeddevsids: null,
-                paidfor:[]
+                paidfor: []
 
             }
         },
@@ -726,7 +730,12 @@
                             let id = this.portfoliolist[i]
                             let title = this.portfoliolist[i].title
                             let description = this.portfoliolist[i].description
-                            let demo = this.portfoliolist[i].demo_link
+                            let demo = null
+                            if (this.portfoliolist[i].demo_link.includes('github.com') === false) {
+                                demo = this.portfoliolist[i].demo_link
+
+                            }
+
                             let tech_used = []
                             if (this.portfoliolist[i].tech_tags) {
                                 tech_used = this.portfoliolist[i].tech_tags.split(',');
@@ -918,11 +927,6 @@
                         .catch();
 
 
-
-
-
-
-
                 }
 
 
@@ -939,7 +943,7 @@
                     text += possible.charAt(Math.floor(Math.random() * possible.length));
                 return text;
             },
-            topay(){
+            topay() {
                 return this.amount * 100
             }
 
@@ -1158,7 +1162,7 @@
                     Payments.cartitemadd(this.mycart.id, {
                         devspending: developerspending,
                         devspaid: developerspaid,
-                        amount:this.amount,
+                        amount: this.amount,
                         transaction_id: response.trxref,
                         type: 'talent',
                         conditions: true

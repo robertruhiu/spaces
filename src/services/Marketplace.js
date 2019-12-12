@@ -37,8 +37,8 @@ export default {
     specificjobapplicants(job_id, auth) {
         return Api().get(`marketplace/specificjobapplicants/${job_id}`, auth)
     },
-    joboneapplicant(candidate_id, job_id, auth) {
-        return Api().get(`marketplace/myjobapplication/${candidate_id}/${job_id}`, auth)
+    joboneapplicant(candidate_id, job_id) {
+        return Api().get(`marketplace/myjobapplication/${candidate_id}/${job_id}`)
     },
     jobdetails(job_id,auth){
         return Api().get(`marketplace/jobdetails/${job_id}`, auth)
@@ -109,5 +109,6 @@ export default {
     acceptreject(application_id,auth) {
         return Api().get(`marketplace/acceptreject/${application_id}`, auth)
     },
+
 
 }

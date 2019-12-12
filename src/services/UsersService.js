@@ -57,6 +57,9 @@ export default {
      updatepatch(user_id, patchdata, auth) {
         return Api().patch(`updater/${user_id} `, patchdata, auth)
     },
+    talentorder() {
+        return Api().get('talentorder')
+    },
 
 
 }

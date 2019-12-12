@@ -175,9 +175,7 @@ let router = new Router({
             path: '/jobdetails/:jobId',
             name: 'jobdetails',
             component: JobDetails,
-            meta: {
-                requiresAuth: true
-            }
+
         },
         {
             path: '/calendar',

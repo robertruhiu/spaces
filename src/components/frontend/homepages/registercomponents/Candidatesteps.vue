@@ -12,7 +12,7 @@
                     </a-steps>
 
                     <div class="steps-content">
-                        <div  v-if="current === 0">
+                        <div v-if="current === 0">
                             <a-form :form="developerstep1">
                                 <a-row :gutter="16">
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
@@ -259,7 +259,18 @@
                                             :wrapper-col="{ span:  24}"
                                     >
                                         <span style="font-size: small">Please do not fill any personal details in your bio e.g
-                                            Your name, email, phone number, github, linkedin or profile link</span>
+                                            Your
+                                            <span v-if="flags[0] === false && flags[1]=== false">name</span><span v-else
+                                                                                                                  style="color: red">name</span> ,
+                                             <span v-if="flags[2] === false">email</span><span v-else
+                                                                                               style="color: red">email</span>,
+                                            <span v-if="flags[3] === false">github</span><span v-else
+                                                                                               style="color: red">github</span>,
+                                            <span v-if="flags[4] === false">linkedin</span><span v-else
+                                                                                                 style="color: red">linkedin</span>
+
+                                        </span>
+
 
                                         <a-textarea name="bio"
                                                     maxlength="300"
@@ -270,6 +281,12 @@
                                         <div v-for="error in errorlist" v-bind:key="error">
                                             <div v-if="error === 'about'" style="color: red">
                                                 write something about yourself
+                                            </div>
+
+                                        </div>
+                                        <div v-for="error in errorlist" v-bind:key="error">
+                                            <div v-if="error === 'flags'" style="color: red">
+                                                you have included personal info please remove where necessary
                                             </div>
 
                                         </div>
@@ -335,7 +352,7 @@
 
                         </div>
 
-                        <div  v-else-if="current === 3">
+                        <div v-else-if="current === 3">
                             <experience/>
                         </div>
 
@@ -383,9 +400,9 @@
                     </div>
                 </div>
 
+
             </a-col>
         </a-row>
-
 
 
     </div>
@@ -466,7 +483,9 @@
                 projectform: this.$form.createForm(this),
                 developerstep1: this.$form.createForm(this),
                 doneloading: false,
-                availabiltytags:[]
+                availabiltytags: [],
+                github: '',
+                linkedin: ''
             }
         },
         async mounted() {
@@ -477,11 +496,30 @@
 
             if (this.$store.state.user) {
                 let Profile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+
                 if (Profile.gender === null) {
                     this.currentUserProfile = {}
 
                 } else {
                     this.currentUserProfile = Profile
+
+
+                    if (this.currentUserProfile.github_repo.includes('https')) {
+                        this.github = this.currentUserProfile.github_repo.slice(8)
+
+                    } else if (this.currentUserProfile.github_repo.includes('http')) {
+                        this.github = this.currentUserProfile.github_repo.slice(7)
+                    }
+
+
+                    if (this.currentUserProfile.linkedin_url.includes('https')) {
+                        this.linkedin = this.currentUserProfile.linkedin_url.slice(8)
+
+                    } else if (this.currentUserProfile.linkedin_url.includes('http')) {
+                        this.linkedin = this.currentUserProfile.linkedin_url.slice(7)
+                    }
+
+
                     this.cv = this.currentUserProfile.file
                     if (this.currentUserProfile.skills) {
 
@@ -495,6 +533,57 @@
 
                 }
             }
+
+
+        },
+        computed: {
+            cleanbio() {
+                let bio = this.currentUserProfile.about
+
+                return bio
+            },
+            flags() {
+                let blacklist = []
+                blacklist[0] = this.$store.state.user.first_name
+                blacklist[1] = this.$store.state.user.last_name
+                blacklist[2] = this.$store.state.user.email
+                blacklist[3] = this.github
+                blacklist[4] = this.linkedin
+
+
+                let first = false
+                let last = false
+                let email = false
+                let github = false
+                let linkedin = false
+                if (this.currentUserProfile.about) {
+                    if (this.currentUserProfile.about.includes(blacklist[0])) {
+                        first = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[1])) {
+                        last = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[2])) {
+                        email = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[3])) {
+                        github = true
+                    }
+                    if (this.currentUserProfile.about.includes(blacklist[4])) {
+                        linkedin = true
+                    }
+                }
+
+                let flag = []
+                flag[0] = first
+                flag[1] = last
+                flag[2] = email
+                flag[3] = github
+                flag[4] = linkedin
+
+
+                return flag
+            },
 
 
         },
@@ -667,6 +756,9 @@
                         if (this.currentUserProfile.about === null || this.currentUserProfile.about === '') {
                             this.errorlist.push('about')
 
+                        }
+                        if (this.flags.includes(true)) {
+                            this.errorlist.push('flags')
                         }
                         if (this.cv === null || this.cv === '') {
                             this.errorlist.push('cv')
