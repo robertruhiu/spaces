@@ -19,12 +19,14 @@
                                 <a-col :span="22">
                                     <p>About</p>
                                     <p>{{currentUserProfile.about}}</p>
+                                    {{staff}}
                                 </a-col>
                             </a-row>
 
 
+
                             <div style="margin-top: 0.5rem" v-if="application.stage === 'active' ||application.stage === 'test'|| application.stage === 'interview' ||
-                             application.stage === 'offer' ">
+                             application.stage === 'offer' || staff ">
                                 <a-row>
                                 <a-col :span="12" class="spacer">
                                     <a-icon type="mail" /> : {{application.candidate.user.email}}
@@ -280,6 +282,7 @@
                 </a-modal>
 
 
+
             </a-layout-content>
 
         </a-layout>
@@ -359,7 +362,8 @@
                 events: [],
                 picked: true,
                 takenquizzes: [],
-                cv:''
+                cv:'',
+                staff:false
             }
         },
         components: {
@@ -377,7 +381,10 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateId, auth)).data
+            this.currentUser = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+            this.staff = this.currentUser.user.is_staff
+
+
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
             this.skilltags = this.currentUserProfile.skills.split(',');
             this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateId, auth)).data
@@ -387,8 +394,8 @@
 
             const jobId = this.$store.state.route.params.jobId
             // current application
-
-            await Marketplace.retrieveapplication(this.ApplicationId, auth)
+            if(this.ApplicationId){
+                await Marketplace.retrieveapplication(this.ApplicationId, auth)
                 .then(response => {
                     this.application = response.data
 
@@ -400,6 +407,12 @@
 
 
                 })
+            }
+
+
+
+
+
             this.job = (await Marketplace.specificjob(jobId, auth)).data
             if (this.currentUserProfile.file) {
                 if (this.currentUserProfile.file.includes("http")) {

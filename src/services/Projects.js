@@ -49,6 +49,6 @@ export default {
         return Api().post(`projects/developerprojects/${project_id}`, auth)
     },
     newselfverify(assessmentapplication_id,auth) {
-        return Api().get(`newselfverify/${assessmentapplication_id}`, auth)
+        return Api().post(`newselfverify/${assessmentapplication_id}`, auth)
     },
 }

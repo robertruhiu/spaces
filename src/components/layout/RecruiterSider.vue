@@ -888,6 +888,7 @@
                 this.$store.dispatch('setPicked', null)
                 this.$store.dispatch('setLanguage', null)
                 this.$store.dispatch('setCountry', null)
+                this.$store.dispatch('setRecommend', null)
                 this.$router.push({
                     name: 'home'
                 })

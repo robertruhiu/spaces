@@ -101,6 +101,11 @@
                                                         <a-icon type="environment"/>
                                                         {{item.location}}
                                                     </a-tag>
+                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                                        <a-icon type="tags"/>
+                                                        {{item.tag}}
+                                                    </a-tag>
+
 
 
                                                 </div>
@@ -204,7 +209,7 @@
 
 <script>
     class Job {
-        constructor(id, title, deadline, location, contract, skills, description, company) {
+        constructor(id, title, deadline, location, contract, skills, description, company,tag) {
             this.id = id;
             this.title = title;
             this.description = description;
@@ -212,6 +217,7 @@
             this.contract = contract;
             this.skills = skills;
             this.company = company
+            this.tag = tag
 
         }
     }
@@ -318,9 +324,10 @@
                 let contract = this.jobs[i].engagement_type
                 let description = this.jobs[i].description
                 let company = this.jobs[i].company
+                let tag = this.jobs[i].tag
 
 
-                let onejob = new Job(id, title, deadline, location, contract, skills, description, company)
+                let onejob = new Job(id, title, deadline, location, contract, skills, description, company,tag)
 
 
                 this.listData.push(onejob)

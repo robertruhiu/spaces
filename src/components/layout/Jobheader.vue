@@ -2,22 +2,33 @@
     <div>
         <a-affix offsetTop="this.top">
 
-        <a-layout-header
-                :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
+            <a-layout-header
+                    :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
 
-            <a-row>
-                <a-col :span="22">
+                <a-row>
+                    <a-col :span="22">
 
                             <span>
                                 <a style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
                                 {{job.title}}</a>
-
-
-
+                                <span v-if="currentUserProfile.user.is_staff" style="float: right">
                                     <span style="float: right" v-if="job.published" id="unpublishbutton">
                                     <a-button type="primary" @click="unpublishjob(job.id)">Unpublish Job</a-button>
+                                    </span>
+                                <span v-else>
+                                    <a-button type="primary" @click="publishjob(job.id)">Publish Job</a-button>
+                                </span>
+                                </span>
+                                <span v-else>
+                                    <span style="float: right" v-if="job.published">
+                                    <a-button type="primary" @click="unpublishjob(job.id)">Unpublish Job</a-button>
+                                    </span>
 
                                 </span>
+
+
+
+
                                 <br>
 
 
@@ -26,48 +37,47 @@
                             </span>
 
 
-                </a-col>
+                    </a-col>
 
 
-                <a-button type="primary" @click="showDrawer">
-                    <a-icon type="calendar"/>
-                    Calendar
-                </a-button>
+                    <a-button type="primary" @click="showDrawer">
+                        <a-icon type="calendar"/>
+                        Calendar
+                    </a-button>
 
 
-                <a-button-group style="margin-left: 1%">
-                    <a-button type="primary" icon="share-alt">Share Job</a-button>
-                    <social-sharing :url=joburl
-                                    :title=job.title
-                                    :description=job.description
-                                    quote="Apply for this job at the link below."
-                                    :hashtags=job.tech_stack
-                                    inline-template>
-                        <network network="facebook">
-                            <a-button type="primary" icon="facebook"/>
-                        </network>
+                    <a-button-group style="margin-left: 1%">
+                        <a-button type="primary" icon="share-alt">Share Job</a-button>
+                        <social-sharing :url=joburl
+                                        :title=job.title
+                                        :description=job.description
+                                        quote="Apply for this job at the link below."
+                                        :hashtags=job.tech_stack
+                                        inline-template>
+                            <network network="facebook">
+                                <a-button type="primary" icon="facebook"/>
+                            </network>
 
-                    </social-sharing>
-                    <social-sharing :url=joburl
-                                    :title=job.title
-                                    :description=job.description
-                                    :hashtags=job.tech_stack
-                                    inline-template>
+                        </social-sharing>
+                        <social-sharing :url=joburl
+                                        :title=job.title
+                                        :description=job.description
+                                        :hashtags=job.tech_stack
+                                        inline-template>
 
-                        <network network="twitter">
-                            <a-button type="primary" icon="twitter"/>
-                        </network>
-                    </social-sharing>
+                            <network network="twitter">
+                                <a-button type="primary" icon="twitter"/>
+                            </network>
+                        </social-sharing>
 
-                </a-button-group>
-
-
-            </a-row>
+                    </a-button-group>
 
 
+                </a-row>
 
-        </a-layout-header>
-            </a-affix>
+
+            </a-layout-header>
+        </a-affix>
 
         <a-drawer
                 placement="right"
@@ -85,8 +95,6 @@
 
             >
             </vue-cal>
-
-
 
 
         </a-drawer>
@@ -116,6 +124,7 @@
     import VueCal from 'vue-cal'
     import '../../assets/css/vuecal.css'
     import moment from 'moment';
+    import UsersService from '@/services/UsersService'
 
 
     export default {
@@ -123,7 +132,7 @@
         data() {
 
             return {
-                top:0,
+                top: 0,
                 job: {},
                 visible: false,
                 appointments: [],
@@ -136,8 +145,9 @@
                     current_day: new Date()
                 },
                 bgColor: '#1372cc',
-                joburl:'',
-                events: []
+                joburl: '',
+                events: [],
+                currentUserProfile: {}
 
 
             }
@@ -154,13 +164,14 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.job = (await Marketplace.specificjob(this.$route.params.jobId, auth)).data
-            this.joburl = `http://codeln.com/#/jobdetails/${this.job.id}`
+            this.joburl = `http://codeln.com/jobdetails/${this.job.id}`
             this.allevents = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
             this.alldevrequests = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
             for (let i = 0; i < this.allevents.length; i++) {
 
-                    if (this.allevents[i].interviewstatus !== null ) {
+                if (this.allevents[i].interviewstatus !== null) {
 
                     let id = this.allevents[i].id
                     let title = this.allevents[i].candidate.user.first_name
@@ -173,9 +184,7 @@
                     this.events.push(one_event)
 
 
-
                 }
-
 
 
             }
@@ -199,6 +208,8 @@
             }
 
 
+
+
         },
         methods: {
             //unpublish job
@@ -214,6 +225,24 @@
 
                 }
                 Marketplace.unpublishjob(job_id, {published: false}, auth)
+                    .then(resp => {
+                        this.job.published = false
+                    })
+
+
+            },
+            publishjob(job_id) {
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.unpublishjob(job_id, {published: true, verified: true}, auth)
+                    .then(resp => {
+                        this.job.published = true
+                        Marketplace.publishedemails(job_id)
+
+                    })
 
 
             },
@@ -223,7 +252,7 @@
                 this.$store.dispatch('setisLoggedIn', false)
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
-                this.$store.dispatch('setNext',null)
+                this.$store.dispatch('setNext', null)
                 this.$router.push({
                     name: 'home'
                 })

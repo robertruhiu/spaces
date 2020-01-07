@@ -95,7 +95,7 @@
                             </a-col>
 
                         </a-row>
-                        <a-alert v-if="currentUserProfile.user.is_staff" :message="adminmodewarning" type="warning" closeText="Close Now" />
+                        <a-alert v-if="currentUserProfile.user.is_staff" :message="adminmodewarning" type="warning" style="margin-bottom: 1rem" closeText="Close Now" />
 
 
                         <a-tabs defaultActiveKey="1"
@@ -406,6 +406,8 @@
                                                         <!-------system recommmended candidates-------->
                                                         <a-tab-pane v-if="recommended" tab="Recommended Candidates"
                                                                     key="3">
+
+
                                                             <a-table :dataSource="recommmedcandidates"
                                                                      :scroll="{ y: 340 }"
                                                                      size="middle">
@@ -1807,7 +1809,8 @@
                 cart_items: [],
                 pickedprofiles: [],
                 updated: false,
-                adminmodewarning:''
+                adminmodewarning:'',
+                recommend_id:[]
 
 
             }
@@ -2007,6 +2010,8 @@
                                 let user_id = this.alldevsprofile[l].id
                                 let name = this.alldevsprofile[l].user.first_name
                                 let selected = false
+                                this.recommend_id.push(this.alldevsprofile[l].user.email)
+
                                 let onerecommed = new Recommended(
                                     id, name, stage, tags, user_id, selected, verified
                                 );
@@ -2025,6 +2030,7 @@
                 } else {
                     this.recommended = false
                 }
+                this.$store.dispatch('setRecommend', this.recommend_id )
 
 
                 // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one

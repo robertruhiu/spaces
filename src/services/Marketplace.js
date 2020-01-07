@@ -92,23 +92,27 @@ export default {
         return Api().get(`marketplace/talentpickedmanagerview/${application_id} `, auth)
     },
     newjobemail(job_id,auth){
-        return Api().get(`marketplace/newjobemail/${job_id} `, auth)
+        return Api().post(`marketplace/newjobemail/${job_id} `, auth)
     },
     newapplicationemail(application_id,auth){
-        return Api().get(`marketplace/newjobapplication/${application_id} `, auth)
+        return Api().post(`marketplace/newjobapplication/${application_id} `, auth)
     },
     newonsite(assesment_id,auth){
-        return Api().get(`marketplace/newonsite/${assesment_id} `, auth)
+        return Api().post(`marketplace/newonsite/${assesment_id} `, auth)
     },
     candidatemanagerdelete(candidatemanagement_id, auth) {
         return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `,auth)
     },
     newpick(application_id,auth) {
-        return Api().get(`marketplace/newpick/${application_id}`, auth)
+        return Api().post(`marketplace/newpick/${application_id}`, auth)
     },
     acceptreject(application_id,auth) {
-        return Api().get(`marketplace/acceptreject/${application_id}`, auth)
+        return Api().post(`marketplace/acceptreject/${application_id}`, auth)
     },
+    publishedemails(job_id,){
+        return Api().get(`marketplace/publishedemails/${job_id}`)
+    },
+
 
 
 }

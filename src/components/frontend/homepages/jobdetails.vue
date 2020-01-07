@@ -43,8 +43,10 @@
                                 </span>
 
                                 <span v-else style="float: right">
-                                        <a-button type="primary" @click="navigateTo({name:'login'})">Login to apply</a-button>
+                                        <a-button type="primary"
+                                                  @click="navigateTo({name:'login'})">Login to apply</a-button>
                                     </span>
+
 
 
                             </span>
@@ -54,6 +56,12 @@
                                 <span v-if="this.$store.state.isUserLoggedIn">
                                     <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
                                              message="Job application successful" type="success" closeText="Close Now"/>
+                                </span>
+                                <span> Job tag :
+                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                        <a-icon type="tags"/>
+                                        {{job.tag}}
+                                    </a-tag>
                                 </span>
 
                                 <p>
@@ -139,7 +147,7 @@
 
                 if (this.myjobs.length > 0) {
                     for (let i = 0; i < this.myjobs.length; i++) {
-                        if (this.myjobs[i].job.id === this.$route.params.jobId) {
+                        if (this.myjobs[i].job.id === this.job.id) {
                             this.applied = true
                         }
                     }

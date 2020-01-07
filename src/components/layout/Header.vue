@@ -121,6 +121,7 @@
                 this.$store.dispatch('setLanguage', null)
                 this.$store.dispatch('setCountry', null)
                 this.$store.dispatch('setManaged',false)
+                this.$store.dispatch('setRecommend', null)
 
                 this.$router.push({
                     name: 'home'

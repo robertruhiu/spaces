@@ -21,7 +21,8 @@ export default new Vuex.Store({
         candidate: null,
         removed: false,
         cart_ids: [],
-        managed: false
+        managed: false,
+        recommended:[]
     },
     mutations: {
         setToken(state, token) {
@@ -64,6 +65,9 @@ export default new Vuex.Store({
         },
         setPicked(state, picked) {
             state.picked = picked
+        },
+        setRecommend(state, recommended) {
+            state.recommended = recommended
         },
 
         add(state, candidateobject) {
@@ -143,6 +147,9 @@ export default new Vuex.Store({
         },
         setPicked({commit}, picked) {
             commit('setPicked', picked)
+        },
+        setRecommend({commit}, recommended) {
+            commit('setRecommend', recommended)
         },
 
 

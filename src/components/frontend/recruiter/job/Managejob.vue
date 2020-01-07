@@ -4,76 +4,74 @@
         <RecruiterSider/>
 
 
-            <a-layout-content>
-                <Pageheader/>
+        <a-layout-content>
+            <Pageheader/>
 
 
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }">
-                    <div v-if="loading" class="loading" style="text-align: center;">
-                        <a-spin/>
-                    </div>
-                    <div v-else>
-                        <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
-                            <a-col :xs="{span: 24 }" :sm="{span: 7 }" :md="{span: 5 }"
-                                   :lg="{span: 5 }" :xl="{span: 5 }" style="margin-bottom: 1rem">
+            <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }">
+                <div v-if="loading" class="loading" style="text-align: center;">
+                    <a-spin/>
+                </div>
+                <div v-else>
+                    <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
+                        <a-col :xs="{span: 24 }" :sm="{span: 7 }" :md="{span: 5 }"
+                               :lg="{span: 5 }" :xl="{span: 5 }" style="margin-bottom: 1rem">
 
-                                <a-card title="Jobs Overview"
-                                        style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                            <a-card title="Jobs Overview"
+                                    style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
-                                    <p><span>Total Applicants: </span>
+                                <p><span>Total Applicants: </span>
 
 
-                                        <span style="float: right">
+                                    <span style="float: right">
                                             <a-tag color="#9FC6F2"
                                                    style="color:white;border-radius: 50%">{{allapplicants}} </a-tag>
 
                                         </span>
 
-                                    </p>
-                                    <p><span>Testing Stage: </span><span style="float: right">
+                                </p>
+                                <p><span>Testing Stage: </span><span style="float: right">
                                         <a-tag color="#92DDDD"
                                                style="color:white;border-radius: 50%">{{testingstage}}</a-tag>
                                         </span>
-                                    </p>
-                                    <p><span>Interview Stage: </span><span style="float: right">
+                                </p>
+                                <p><span>Interview Stage: </span><span style="float: right">
                                         <a-tag color="#DA92D0"
                                                style="color:white;border-radius: 50%">{{interviewstage}}</a-tag>
                                         </span>
-                                    </p>
+                                </p>
 
 
-                                </a-card>
+                            </a-card>
 
 
+                        </a-col>
+                        <a-col :xs="{span: 24 }" :sm="{span: 17 }" :md="{span: 16 }"
+                               :lg="{span: 16 }" :xl="{span: 16 }">
+                            <a-row v-for="job in myjobs" v-bind:key="job.id">
 
-                            </a-col>
-                            <a-col :xs="{span: 24 }" :sm="{span: 17 }" :md="{span: 16 }"
-                                   :lg="{span: 16 }" :xl="{span: 16 }">
-                                <a-row v-for="job in myjobs" v-bind:key="job.id">
-
-                                    <a-col :span="24">
-                                        <a-card style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                            <h3 style="font-weight: bold">{{job.title}}</h3>
-                                            <span v-if="currentUserProfile.user.is_staff">posted by : {{job.posted_by}}</span>
-
+                                <a-col :span="24">
+                                    <a-card style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                        <h3 style="font-weight: bold">{{job.title}}</h3>
+                                        <span v-if="currentUserProfile.user.is_staff">posted by : {{job.posted_by}}</span>
 
 
-                                            <p>
+                                        <p>
                                               <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                            </p>
+                                        </p>
 
-                                            <p>
-                                                <a-alert style="color:#1976D2;border: 0 "
-                                                         message="Applicant Tracker"
-                                                         type="info"/>
-                                            </p>
+                                        <p>
+                                            <a-alert style="color:#1976D2;border: 0 "
+                                                     message="Applicant Tracker"
+                                                     type="info"/>
+                                        </p>
 
-                                            <p>
-                                                <a-row>
-                                                    <a-col :span="8">
+                                        <p>
+                                            <a-row>
+                                                <a-col :span="8">
                                                             <span>
                                                                 Applicants
                                                                 <a-tag color="#9fc6f2"
@@ -81,8 +79,8 @@
                                                             </span>
 
 
-                                                    </a-col>
-                                                    <a-col :span="8">
+                                                </a-col>
+                                                <a-col :span="8">
                                             <span>
                                                 Testing Stage
 
@@ -90,40 +88,41 @@
                                                    style="color:white;border-radius: 50%">{{job.test}}</a-tag>
                                             </span>
 
-                                                    </a-col>
-                                                    <a-col :span="8">
+                                                </a-col>
+                                                <a-col :span="8">
                                             <span>
                                                   Interview Stage
                                             <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
                                             </span>
 
-                                                    </a-col>
-                                                </a-row>
+                                                </a-col>
+                                            </a-row>
 
-                                            </p>
-                                            <div style="text-align: center">
+                                        </p>
+                                        <div style="text-align: center">
 
-                                                <a-button style="width: 60%"
-                                                          @click="navigateTo({name:'job',params:{jobId: job.id}})"
-                                                          type="primary" block>Manage Job
-                                                </a-button>
+                                            <a-button style="width: 60%"
+                                                      @click="navigateTo({name:'job',params:{jobId: job.id}})"
+                                                      type="primary" block>Manage Job
+                                            </a-button>
 
-                                            </div>
-
-
-                                        </a-card>
-                                    </a-col>
+                                        </div>
 
 
-                                </a-row>
+                                    </a-card>
 
-                            </a-col>
-                        </a-row>
-                    </div>
+                                </a-col>
+
+
+                            </a-row>
+
+                        </a-col>
+                    </a-row>
                 </div>
+            </div>
 
 
-            </a-layout-content>
+        </a-layout-content>
 
 
     </a-layout>
@@ -132,7 +131,7 @@
 
 <script>
     class Job {
-        constructor(id, title, skills, applicants, test, interview,posted_by) {
+        constructor(id, title, skills, applicants, test, interview, posted_by, tag) {
             this.id = id;
             this.title = title;
             this.skills = skills;
@@ -140,6 +139,7 @@
             this.test = test;
             this.interview = interview
             this.posted_by = posted_by
+            this.tag = tag
 
         }
     }
@@ -165,8 +165,8 @@
                 allapplicants: 0,
                 testingstage: 0,
                 interviewstage: 0,
-                total:0,
-                top:200
+                total: 0,
+                top: 200
 
 
             }
@@ -185,6 +185,19 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+
+            function dec2hex(dec) {
+                return ('0' + dec.toString(16)).substr(-2)
+            }
+
+            // generateId :: Integer -> String
+            function generateId(len) {
+                var arr = new Uint8Array((len || 40) / 2)
+                window.crypto.getRandomValues(arr)
+                return Array.from(arr, dec2hex).join('')
+            }
+
+
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
@@ -203,7 +216,7 @@
 
                         } else if (this.applicants[j].stage === 'interview') {
                             interview++
-                            this.interviewstage =this.interviewstage + 1
+                            this.interviewstage = this.interviewstage + 1
 
                         }
 
@@ -215,8 +228,28 @@
                     let skills = skill_list
                     let posted_by = this.jobs[i].company
                     let applicants = this.applicants.length
+                    let tag = ''
+                    if (this.jobs[i].tag === null || this.jobs[i].tag === '') {
+                        if (this.currentUserProfile.user.is_staff) {
+                            let generatedtag = generateId(16)
+                            this.jobs[i].tag = generatedtag
+                            tag = generatedtag
+
+                            Marketplace.updatejob(id, this.jobs[i], auth)
+                                .then(resp => {
+                                    tag = resp.data.tag
+                                })
+
+                        } else {
+                            tag = ''
+                        }
+
+                    } else {
+                        tag = this.jobs[i].tag
+                    }
+
                     let onejob = new Job(
-                        id, title, skills, applicants, test, interview,posted_by
+                        id, title, skills, applicants, test, interview, posted_by, tag
                     )
 
 
