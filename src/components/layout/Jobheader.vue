@@ -166,7 +166,7 @@
             }
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.job = (await Marketplace.specificjob(this.$route.params.jobId, auth)).data
-            this.joburl = `http://codeln.com/jobdetails/${this.job.id}`
+            this.joburl = `https://www.codeln.com/jobdetails/${this.job.id}`
             this.allevents = (await Marketplace.allmyjobapplicants(this.$store.state.user.pk, auth)).data
             this.alldevrequests = (await Marketplace.mydevelopers(this.$store.state.user.pk, auth)).data
             for (let i = 0; i < this.allevents.length; i++) {
