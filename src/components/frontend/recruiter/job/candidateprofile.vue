@@ -18,8 +18,8 @@
 
                                 <a-col :span="22">
                                     <p>About</p>
-                                    <p>{{currentUserProfile.about}}</p>
-                                    {{staff}}
+                                    <p>{{application.candidate.about}}</p>
+
                                 </a-col>
                             </a-row>
 
