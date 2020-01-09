@@ -10,17 +10,19 @@
                 <CandidateHeader/>
 
 
+
                 <a-row style="padding: 1% 1%">
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 16, offset: 0 }"
                                    :lg="{span: 16, offset: 0 }" :xl="{span: 16,offset: 0 }" style=" padding-left: 15px;padding-right: 15px;">
                         <div class="profile" style="padding-bottom: 2%">
-                            <a-row>
+                            <a-row >
 
-                                <a-col :span="22">
+                                <a-col :span="22" v>
                                     <p>About</p>
-                                    <p>{{application.candidate.about}}</p>
+                                    <p>{{currentUserProfile.about}}</p>
 
                                 </a-col>
+
                             </a-row>
 
 
@@ -29,19 +31,19 @@
                              application.stage === 'offer' || staff ">
                                 <a-row>
                                 <a-col :span="12" class="spacer">
-                                    <a-icon type="mail" /> : {{application.candidate.user.email}}
+                                    <a-icon type="mail" /> : {{currentUserProfile.user.email}}
 
                                 </a-col>
                                      <a-col :span="12" class="spacer">
                                 <span>
-                                    Salary expectations: ${{application.candidate.salary}} monthly
+                                    Salary expectations: ${{currentUserProfile.salary}} monthly
 
                             </span>
                                 </a-col>
                                 <a-col :span="6">
                                 <span>
                                     <a-icon type="linkedin" /> :
-                                    <a :href="application.candidate.linkedin_url" target='_blank'> Linkedin profile</a>
+                                    <a :href="currentUserProfile.linkedin_url" target='_blank'> Linkedin profile</a>
 
 
 
@@ -50,7 +52,7 @@
                                 <a-col :span="6">
                                 <span> <a-icon type="github" /> :
 
-                                    <a :href="application.candidate.github_repo" target='_blank'>Github profile </a>
+                                    <a :href="currentUserProfile.github_repo" target='_blank'>Github profile </a>
 
 
                             </span>
@@ -230,6 +232,7 @@
 
                     </a-col>
                 </a-row>
+
                 <a-modal
                         title="Project assignments "
                         v-model="visible"
@@ -386,16 +389,20 @@
 
 
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
-            this.skilltags = this.currentUserProfile.skills.split(',');
-            this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateId, auth)).data
-            this.experienceslist = (await UsersService.experience(this.$route.params.candidateId, auth)).data
+
+            if (this.currentUserProfile.skills){
+                this.skilltags = this.currentUserProfile.skills.split(',');
+            }else {
+                this.skilltags = []
+            }
+
             this.ApplicationId = this.$store.state.route.params.applicationId
             this.takenquizzes = (await QuizService.taken(this.currentUserProfile.id, auth)).data;
 
             const jobId = this.$store.state.route.params.jobId
             // current application
             if(this.ApplicationId){
-                await Marketplace.retrieveapplication(this.ApplicationId, auth)
+                Marketplace.retrieveapplication(this.ApplicationId, auth)
                 .then(response => {
                     this.application = response.data
 
@@ -424,6 +431,8 @@
                 }
 
             }
+            this.portfoliolist = (await UsersService.portfolio(this.$route.params.candidateId, auth)).data
+            this.experienceslist = (await UsersService.experience(this.$route.params.candidateId, auth)).data
 
 
             for (let i = 0; i < this.portfoliolist.length; i++) {
