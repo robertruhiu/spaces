@@ -231,7 +231,7 @@
                     let tag = ''
                     if (this.jobs[i].tag === null || this.jobs[i].tag === '') {
                         if (this.currentUserProfile.user.is_staff) {
-                            let generatedtag = generateId(16)
+                            let generatedtag = generateId(6)
                             this.jobs[i].tag = generatedtag
                             tag = generatedtag
 

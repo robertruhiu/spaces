@@ -230,6 +230,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'
     import {showAt, hideAt} from 'vue-breakpoints'
+    const countries = require("@/store/countries")
 
     var VueTruncate = require('vue-truncate-filter')
     import UsersService from '@/services/UsersService'
@@ -319,8 +320,14 @@
                 let skills = skill_list
                 let title = this.jobs[i].title
                 let deadline = this.jobs[i].deadline
+                let location =''
+                for (const [key, value] of Object.entries(countries)) {
+                    if(key === this.jobs[i].location){
+                        location = value
+                    }
+                }
 
-                let location = this.jobs[i].location
+
                 let contract = this.jobs[i].engagement_type
                 let description = this.jobs[i].description
                 let company = this.jobs[i].company

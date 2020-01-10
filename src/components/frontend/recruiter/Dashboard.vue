@@ -375,7 +375,7 @@
                                                 :label-col="{ span: 24 }"
                                                 :wrapper-col="{ span:  24}"
                                         >
-                                            <vue-simplemde v-model="job.description" ref="markdownEditor" />
+                                            <vue-simplemde v-model="job.description" ref="markdownEditor"/>
 
                                             <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
@@ -817,11 +817,12 @@
                 recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql',
                     'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
-                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#', 'C', 'Swift', 'Nodejs',
-                    'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#','C','Swift','Nodejs',
+                    'Typescript','Firebase','Xamarin','Spark','.Net','Redis','Sqlite','Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
-                    'Android', 'Website', 'Mobile'],
+                    'Android', 'Website', 'Mobile','DevOps','MongoDb'],
+
                 selectedTags: [],
                 loading: true,
                 errorlist: [],

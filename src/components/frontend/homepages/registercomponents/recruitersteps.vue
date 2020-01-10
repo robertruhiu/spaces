@@ -222,7 +222,7 @@
                     'Typescript','Firebase','Xamarin','Spark','.Net','Redis','Sqlite','Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
-                    'Android', 'Website', 'Mobile'],
+                    'Android', 'Website', 'Mobile','DevOps','MongoDb'],
                 selectedTags: [],
 
                 current1: 0,

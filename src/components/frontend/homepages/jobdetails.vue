@@ -66,10 +66,12 @@
 
                                 <p>
 
-                                    Location : {{job.location}} <span v-if="job.city">| City : {{job.city}}</span>
+                                    Country :  {{country}} <span
+                                        v-if="job.city">| City : {{job.city}}</span>
 
 
                                 </p>
+                                <p>Contract type: {{job.engagement_type}}</p>
                                 <p>Monthly renumeration * : {{job.remuneration}}</p>
 
                                 <p>
@@ -107,6 +109,8 @@
     import moment from 'moment';
     import markdown from 'vue-markdown'
 
+    const countries = require("@/store/countries")
+
     export default {
         name: "jobdetails",
         data() {
@@ -118,7 +122,9 @@
                 myjobs: [],
                 dataload: false,
                 deadline: '',
-                save: false
+                save: false,
+                country: '',
+
 
             }
         },
@@ -135,7 +141,9 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+
             this.dataload = true
+
 
             if (this.$store.state.isUserLoggedIn) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
@@ -143,6 +151,11 @@
                 this.skills = this.job.tech_stack.split(',');
                 this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
                 this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+                for (const [key, value] of Object.entries(countries)) {
+                    if(key === this.job.location){
+                        this.country = value
+                    }
+                }
 
 
                 if (this.myjobs.length > 0) {
@@ -159,9 +172,16 @@
 
                 this.skills = this.job.tech_stack.split(',');
                 this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+                for (const [key, value] of Object.entries(countries)) {
+                    if(key === this.job.location){
+                        this.country = value
+                    }
+                }
 
 
             }
+
+
             this.dataload = false
 
 
