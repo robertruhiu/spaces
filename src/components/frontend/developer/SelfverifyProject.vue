@@ -227,6 +227,7 @@
                             Projects.newselfverify(this.application.id, auth)
                                 .then()
                                 .catch()
+
                         }
                     )
                 } else {

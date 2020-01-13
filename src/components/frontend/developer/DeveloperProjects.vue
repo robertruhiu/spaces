@@ -362,9 +362,7 @@
                     .then(resp => {
                             this.projectlist.push(projectobject)
                             this.acceptload = false
-                            Projects.newselfverify(resp.data.id, auth)
-                                .then()
-                                .catch()
+
 
                             this.$router.push({
                                 name: 'selfverifyproject',
