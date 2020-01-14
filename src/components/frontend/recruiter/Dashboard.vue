@@ -9,13 +9,22 @@
             <a-layout-content>
                 <Pageheader/>
 
+
                 <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
                     <a-row style="margin-bottom: 1rem">
+
                         <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
+                               :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
 
                             <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">What would you like to
                                 do today?</h3>
+
+                        </a-col>
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                               :lg="{span: 4, offset: 0 }" :xl="{span:4, offset: 0 }">
+                            <a-button @click="tor" type="primary" icon="info-circle">Page tour</a-button>
+
+
                         </a-col>
 
                     </a-row>
@@ -30,7 +39,7 @@
                                        :md="{span: 10, offset: 2 }"
                                        :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                                    <a-row class="ant-card actioncards">
+                                    <a-row class="ant-card actioncards v-step-3">
                                         <a-col span="24">
                                             <div style="text-align: center">
                                                 <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
@@ -48,13 +57,14 @@
                                 </a-col>
                             </a>
                         </show-at>
+
                         <hide-at breakpoint="mediumAndBelow">
                             <a v-on:click="showDrawer">
                                 <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }"
                                        :md="{span: 10, offset: 2 }"
                                        :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                                    <a-row class="ant-card actioncards">
+                                    <a-row class="ant-card actioncards v-step-0 ">
                                         <a-col span="24">
                                             <div style="text-align: center">
                                                 <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
@@ -75,11 +85,11 @@
 
 
                         <router-link to="managejobs" v-if="jobs.length>0">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
+                            <a-col class="boxes  " :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
                                    :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
 
-                                <a-row class="ant-card actioncards">
+                                <a-row class="ant-card actioncards v-step-1">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/cv.svg">
@@ -100,10 +110,10 @@
 
                         <router-link to="mycandidates" v-if="mycandidates.length >0">
 
-                            <a-col class="boxes" :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }"
+                            <a-col class="boxes " :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }"
                                    :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
-                                <a-row class="ant-card actioncards">
+                                <a-row class="ant-card actioncards v-step-2">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/statistics.svg">
@@ -122,10 +132,10 @@
                         </router-link>
 
                         <router-link to="talent">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
+                            <a-col class="boxes " :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
                                    :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
-                                <a-row class="ant-card actioncards">
+                                <a-row class="ant-card actioncards" data-v-step="2">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/star.svg">
@@ -142,6 +152,7 @@
                                 </a-row>
                             </a-col>
                         </router-link>
+                        <v-tour name="demo" :steps="steps"></v-tour>
 
                     </a-row>
 
@@ -157,7 +168,7 @@
                         :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
                 >
                     <a-steps :current="current">
-                        <a-step v-for="item in steps" :key="item.title" :title="item.title"/>
+                        <a-step v-for="item in job_steps" :key="item.title" :title="item.title"/>
                     </a-steps>
                     <a-form :form="form">
                         <div class="steps-content">
@@ -460,7 +471,7 @@
                         :footer="null"
                 >
                     <a-steps :current="current">
-                        <a-step v-for="item in steps" :key="item.title" :title="item.title"/>
+                        <a-step v-for="item in job_steps" :key="item.title" :title="item.title"/>
                     </a-steps>
                     <a-form :form="form">
                         <div class="steps-content">
@@ -684,7 +695,7 @@
                                                 :label-col="{ span: 24 }"
                                                 :wrapper-col="{ span:  24}"
                                         >
-                                            <vue-simplemde v-model="job.description" ref="markdownEditor" />
+                                            <vue-simplemde v-model="job.description" ref="markdownEditor"/>
                                             <span v-for="error in errorlist1" v-bind:key="error">
                                                 <span v-if="error === 'description'" style="color: red">
                                                     * required field
@@ -773,7 +784,6 @@
 <script>
 
 
-
     import UsersService from '@/services/UsersService'
     import Marketplace from '@/services/Marketplace'
     import ACol from "ant-design-vue/es/grid/Col";
@@ -787,6 +797,11 @@
     import VueSimplemde from 'vue-simplemde'
     import 'simplemde/dist/simplemde.min.css';
     import markdown from 'vue-markdown'
+    import Vue from 'vue'
+    import VueTour from 'vue-tour'
+    import 'vue-tour/dist/vue-tour.css'
+
+    Vue.use(VueTour)
 
 
     export default {
@@ -817,18 +832,18 @@
                 recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql',
                     'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
-                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#','C','Swift','Nodejs',
-                    'Typescript','Firebase','Xamarin','Spark','.Net','Redis','Sqlite','Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#', 'C', 'Swift', 'Nodejs',
+                    'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
-                    'Android', 'Website', 'Mobile','DevOps','MongoDb'],
+                    'Android', 'Website', 'Mobile', 'DevOps', 'MongoDb'],
 
                 selectedTags: [],
                 loading: true,
                 errorlist: [],
                 errorlist1: [],
                 current: 0,
-                steps: [{
+                job_steps: [{
                     title: 'Job details',
 
                 }, {
@@ -840,7 +855,8 @@
                 }],
 
                 jobmobile: false,
-                content:''
+                content: '',
+                steps: []
 
             }
 
@@ -851,7 +867,7 @@
             Pageheader,
             RecruiterSider,
             showAt, hideAt,
-            mde,VueSimplemde,markdown
+            mde, VueSimplemde, markdown
 
 
         },
@@ -867,12 +883,93 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+            let viewport_width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
             if (this.$store.state.user.pk) {
 
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 this.jobs = (await Marketplace.myjobssliced(this.$store.state.user.pk, auth)).data
 
                 this.mycandidates = (await Marketplace.mydeveloperssimple(this.$store.state.user.pk, auth)).data
+                if (viewport_width >= 1128) {
+                    if (this.mycandidates.length > 0) {
+                        this.steps.push(
+                            {
+                                target: '.v-step-0',  // We're using document.querySelector() under the hood
+                                content: 'A form enabling you to post a job on the platform'
+                            },
+                            {
+                                target: '.v-step-1',
+                                content: 'Access your list of jobs you previously placed'
+                            },
+                            {
+                                target: '.v-step-2',
+                                content: 'Manage picked candidates from the talent pool'
+                            },
+                            {
+                                target: '[data-v-step="2"]',
+                                content: 'Our talent pool a list of profiles from which you can pick from',
+
+                            }
+                        )
+
+                    } else {
+                        this.steps.push(
+                            {
+                                target: '.v-step-0',  // We're using document.querySelector() under the hood
+                                content: 'A form enabling you to post a job on the platform'
+                            },
+                            {
+                                target: '.v-step-1',
+                                content: 'Access your list of jobs you previously placed'
+                            },
+                            {
+                                target: '[data-v-step="2"]',
+                                content: 'Our talent pool a list of profiles from which you can pick from',
+
+                            })
+                    }
+
+                } else {
+                    if (this.mycandidates.length > 0) {
+                        this.steps.push(
+                            {
+                                target: '.v-step-3',  // We're using document.querySelector() under the hood
+                                content: 'A form enabling you to post a job on the platform'
+                            },
+                            {
+                                target: '.v-step-1',
+                                content: 'Access your list of jobs you previously placed'
+                            },
+                            {
+                                target: '.v-step-2',
+                                content: 'Manage picked candidates from the talent pool'
+                            },
+                            {
+                                target: '[data-v-step="2"]',
+                                content: 'Our talent pool a list of profiles from which you can pick from',
+
+                            }
+                        )
+
+                    } else {
+                        this.steps.push(
+                            {
+                                target: '.v-step-3',  // We're using document.querySelector() under the hood
+                                content: 'A form enabling you to post a job on the platform'
+                            },
+                            {
+                                target: '.v-step-1',
+                                content: 'Access your list of jobs you previously placed'
+                            },
+                            {
+                                target: '[data-v-step="2"]',
+                                content: 'Our talent pool a list of profiles from which you can pick from',
+
+                            })
+                    }
+
+                }
 
 
                 this.loading = false
@@ -893,6 +990,9 @@
             },
             onBreakpoint(broken) {
                 return broken;
+            },
+            tor() {
+                this.$tours['demo'].start()
             },
 
 

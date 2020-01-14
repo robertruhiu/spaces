@@ -11,7 +11,7 @@ import VueCarousel from 'vue-carousel';
 import VueFormWizard from 'vue-form-wizard'
 import VeeValidate from 'vee-validate';
 import SocialSharing from 'vue-social-sharing'
-import 'shepherd.js/dist/css/shepherd.css';
+
 Vue.use(SocialSharing)
 import VueYoutube from 'vue-youtube'
 Vue.use(VueYoutube)
@@ -21,7 +21,11 @@ const config = {
 Vue.use(VeeValidate, config);
 
 import Multiselect from 'vue-multiselect'
+import VueTour from 'vue-tour'
+import  'vue-tour/dist/vue-tour.css'
 
+
+Vue.use(VueTour)
 Vue.component('multiselect', Multiselect)
 import {
     Spin,

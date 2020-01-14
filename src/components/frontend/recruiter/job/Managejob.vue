@@ -8,7 +8,19 @@
             <Pageheader/>
 
 
+
             <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }">
+                <a-row style="margin-bottom: 1rem">
+
+                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                               :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
+
+                            <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">Easily manage your posted jobs</h3>
+
+                        </a-col>
+
+
+                    </a-row>
                 <div v-if="loading" class="loading" style="text-align: center;">
                     <a-spin/>
                 </div>

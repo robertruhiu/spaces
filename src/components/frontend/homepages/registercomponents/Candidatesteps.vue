@@ -268,6 +268,7 @@
                                                                                                style="color: red">github</span>,
                                             <span v-if="flags[4] === false">linkedin</span><span v-else
                                                                                                  style="color: red">linkedin</span>
+                                            (Write an expressive statement about yourself eg hobbies etc)
 
                                         </span>
 
@@ -318,6 +319,12 @@
                                     </a-checkbox>
 
                                 </a-col>
+                                <a-col :span="24" style="margin-bottom: 1rem">
+                                    <a-checkbox v-model="currentUserProfile.student">Are you currently a
+                                        Student?(enables us to easily notify you of internship opportunities)
+                                    </a-checkbox>
+
+                                </a-col>
                                 <a-col :span="24">
                                     <div v-if="cv">
                                         <a :href="cv" target="_blank">cv link</a>
@@ -358,23 +365,29 @@
 
                     </div>
                     <div class="steps-action">
-
-
-                                    <span>
-                                        <span v-if="loading">
+                        <span>
+                            <span v-if="loading">
                                             <a-spin/>
                                         </span>
-                                        <span v-else>
-                                            <a-button
-                                                    v-if="current < steps.length - 1"
-                                                    type="primary" @click="next(current)"
-                                            >
+                            <span v-else>
+                                <span style="margin-right: 1%">
+                            <a-button
+                                    v-if="current>0"
+                                    style="margin-left: 8px"
+                                    @click="prev"
+                            >
+                            Previous
+                        </a-button>
+                        </span>
+                                <span>
+                                    <a-button
+                                    v-if="current < steps.length - 1"
+                                    type="primary" @click="next(current)"
+                            >
                                     Next
                                 </a-button>
-                                        </span>
-                                    </span>
-
-                        <span>
+                                </span>
+                                <span>
                                     <div v-if="doneloading" style="text-align: center;">
                                 <a-spin/>
                             </div>
@@ -389,14 +402,10 @@
                                     </span>
 
                                 </span>
+                            </span>
+                        </span>
 
-                        <a-button
-                                v-if="current>0"
-                                style="margin-left: 8px"
-                                @click="prev"
-                        >
-                            Previous
-                        </a-button>
+
                     </div>
                 </div>
 

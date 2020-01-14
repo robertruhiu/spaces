@@ -162,33 +162,40 @@
                         </div>
                     </div>
                     <div class="steps-action">
-                                <span>
-                                        <span v-if="loading">
+                        <span>
+                            <span v-if="loading">
                                             <a-spin/>
                                         </span>
-                                        <span v-else>
-                                            <a-button
-                                                    v-if="current1 < steps1.length - 1"
-                                                    type="primary" @click="next1(current1)"
-                                            >
-                                    Next
-                                </a-button>
-                                        </span>
-                                    </span>
-                        <a-button
-                                v-if="current1 == steps1.length - 1"
-                                type="primary"
-                                @click="onCompleteRecruiter"
-                        >
-                            Done
-                        </a-button>
-                        <a-button
+                            <span v-else>
+                                <span style="margin-right: 1%">
+                            <a-button
                                 v-if="current1>0"
                                 style="margin-left: 8px"
                                 @click="prev1"
                         >
                             Previous
                         </a-button>
+                        </span>
+                                <span>
+                                    <a-button
+                                            v-if="current1 < steps1.length - 1"
+                                            type="primary" @click="next1(current1)">
+                                    Next
+                                </a-button>
+                                </span>
+                                <a-button
+                                v-if="current1 == steps1.length - 1"
+                                type="primary"
+                                @click="onCompleteRecruiter">
+                                    Done
+                                </a-button>
+                            </span>
+                        </span>
+
+
+
+
+
                     </div>
                 </div>
             </a-col>

@@ -95,7 +95,25 @@
                             </a-col>
 
                         </a-row>
-                        <a-alert v-if="currentUserProfile.user.is_staff" :message="adminmodewarning" type="warning" style="margin-bottom: 1rem" closeText="Close Now" />
+                        <span>
+                            <a-row :gutter="16" style="margin-bottom: 1rem">
+                                <a-col span="20" style="margin-bottom: 1rem">
+                                    <a-alert v-if="currentUserProfile.user.is_staff" :message="adminmodewarning"
+                                             type="warning" closeText="Close Now"/>
+
+                                </a-col>
+                                 <a-col span="2">
+                                    <a-button @click="tor" type="primary" icon="info-circle">Page tour</a-button>
+                                </a-col>
+                                <a-col span="20">
+
+                                    <a-alert message="Feeling lost hover over labels with the ? character to get tips"
+                                             type="warning" closeText="Close Now"/>
+                                </a-col>
+                            </a-row>
+
+
+                        </span>
 
 
                         <a-tabs defaultActiveKey="1"
@@ -111,10 +129,11 @@
 
                                         <a-col :span="24"
                                                style="padding-bottom: 1%;padding-right: 2%">
-                                            <a-tabs defaultActiveKey="1" tabPosition=left style="z-index: 0;">
+                                            <a-tabs defaultActiveKey="1" tabPosition=left
+                                                    style="z-index: 0;min-height: 350px">
                                                 <!------allapplicants stage ------>
                                                 <a-tab-pane key="1">
-                                                    <span slot="tab">
+                                                    <span slot="tab" class="v-step-0">
                                                         Active Applicants
                                                         <a-tag color="blue">{{pickedapplicants.length}}</a-tag>
                                                     </span>
@@ -126,8 +145,18 @@
                                                     <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
 
                                                         <!-------active  candidates-------->
-                                                        <a-tab-pane v-if="active" tab="Active"
+                                                        <a-tab-pane v-if="active"
                                                                     key="1">
+                                                            <span slot="tab">
+                                                                <a-tooltip placement="topLeft">
+                                                                    <template slot="title">
+                                                                        <span>active candidates track and easily move them to other stages</span>
+                                                                    </template>
+                                                                    Active <a-icon type="question-circle" />
+                                                                </a-tooltip>
+
+                                                            </span>
+
 
                                                             <a-table :dataSource="pickedapplicants" :scroll="{ y: 340 }"
                                                                      size="middle">
@@ -271,8 +300,17 @@
                                                         </a-tab-pane>
 
                                                         <!-------new  candidates-------->
-                                                        <a-tab-pane v-if="newapplicant.length >0" tab="New Applicants"
+                                                        <a-tab-pane v-if="newapplicant.length >0"
                                                                     key="2">
+                                                            <span slot="tab">
+                                                                <a-tooltip placement="topLeft">
+                                                                    <template slot="title">
+                                                                        <span>Pick or reject candidates who applied from the job board</span>
+                                                                    </template>
+                                                                    New Applicants <a-icon type="question-circle" />
+                                                                </a-tooltip>
+
+                                                            </span>
 
                                                             <a-table :dataSource="newapplicant" :scroll="{ y: 340 }"
                                                                      size="middle">
@@ -404,8 +442,17 @@
                                                         </a-tab-pane>
 
                                                         <!-------system recommmended candidates-------->
-                                                        <a-tab-pane v-if="recommended" tab="Recommended Candidates"
+                                                        <a-tab-pane v-if="recommended"
                                                                     key="3">
+                                                            <span slot="tab">
+                                                                <a-tooltip placement="topLeft">
+                                                                    <template slot="title">
+                                                                        <span>Pick profiles to make them active in your job from Codeln system recommendations</span>
+                                                                    </template>
+                                                                    Recommended Candidates <a-icon type="question-circle" />
+                                                                </a-tooltip>
+
+                                                            </span>
 
 
                                                             <a-table :dataSource="recommmedcandidates"
@@ -535,7 +582,7 @@
 
                                                 <!------test stage ------>
                                                 <a-tab-pane key="2">
-                                                    <span slot="tab">
+                                                    <span slot="tab" class="v-step-1">
                                                         Coding test
                                                         <a-tag color="blue">{{testingstage.length}}</a-tag>
                                                     </span>
@@ -608,7 +655,14 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div style="" slot="title">Test assigned
+                                                            <div style="" slot="title">
+                                                                <a-tooltip placement="topLeft">
+                                                                    <template slot="title">
+                                                                        <span>Enables you to easily assign project to candidate,recommended projects are filtered using the skills you looking for.</span>
+                                                                    </template>
+                                                                    Test assigned <a-icon type="question-circle" />
+                                                                </a-tooltip>
+
                                                             </div>
                                                             <template slot-scope="text,record">
                                                                 <span style="">
@@ -640,7 +694,13 @@
                                                                 width="15%"
 
                                                         >
-                                                            <div slot="title">Project status
+                                                            <div slot="title">
+                                                                <a-tooltip placement="topLeft">
+                                                                    <template slot="title">
+                                                                        <span>Easily track project status by candidate from invitation,inprogress to completion on completion a report link will be generated and presented here</span>
+                                                                    </template>
+                                                                    Project status <a-icon type="question-circle" />
+                                                                </a-tooltip>
                                                             </div>
                                                             <template slot-scope="text,record">
                                                         <span v-if="record.test_stage " style="margin-left: 20%">
@@ -720,7 +780,7 @@
 
                                                 <!------interview stage ------>
                                                 <a-tab-pane key="3">
-                                                    <span slot="tab">
+                                                    <span slot="tab" class="v-step-2">
                                                         Interview
                                                         <a-tag color="blue">{{interviewstage.length}}</a-tag>
                                                     </span>
@@ -929,7 +989,7 @@
 
                                                 <!------offers stage ------>
                                                 <a-tab-pane key="4">
-                                                    <span slot="tab">
+                                                    <span slot="tab" class="v-step-3">
                                                         Offers
                                                         <a-tag color="blue">{{offerstage.length}}</a-tag>
                                                     </span>
@@ -1051,6 +1111,7 @@
                                                     </a-table>
 
                                                 </a-tab-pane>
+                                                <v-tour name="demo" :steps="steps"></v-tour>
 
 
                                             </a-tabs>
@@ -1267,10 +1328,11 @@
                             </a-tab-pane>
 
 
-
                         </a-tabs>
 
+
                     </div>
+
                     <!---assign project--->
                     <a-modal
                             title="Project assignments "
@@ -1801,16 +1863,56 @@
                 paystackkey: "pk_live_33025d4840017202a65e05c8ba2d2e907aae7cf9", //paystack public key
                 email: "", // Customer email
                 // amount: 363000,// in kobo
-                amount:0,
-                mount:100,
+                amount: 0,
+                mount: 100,
                 paystack_amount: 0,
                 currency: "USD",
                 cart: [],
                 cart_items: [],
                 pickedprofiles: [],
                 updated: false,
-                adminmodewarning:'',
-                recommend_id:[]
+                adminmodewarning: '',
+                recommend_id: [],
+                steps: [
+                    {
+                        target: '.v-step-0',
+                        content: 'This tab enables you to manage new applicants,recommended applicants and active applicants.' +
+                            'You have various actions at your disposal either pick or reject candidates.From here you can move and easily track which stage all candidates are',
+                        params: {
+                            placement: 'bottom',
+                            enableScrolling: false
+
+                        }
+                    },
+                    {
+                        target: '.v-step-1',
+                        content: 'Testing stage meant to asign projects to candidates,recieve reports on their perfomance,You can opt to move them to interview stage or reject them',
+                        params: {
+                            placement: 'bottom',
+                            enableScrolling: false
+
+                        }
+                    },
+                    {
+                        target: '.v-step-2',
+                        content: 'Interview stage,set interview dates with your candidates,Interview will be available on your calendar,For the interview you can opt for a video call or physical meeting',
+                        params: {
+                            placement: 'bottom',
+                            enableScrolling: false
+
+                        }
+                    },
+                    {
+                        target: '.v-step-3',
+                        content: 'Offer stage,you can easily upload an offer letter for the potential candidate for their acceptance',
+                        params: {
+                            placement: 'bottom',
+                            enableScrolling: false
+
+                        }
+
+                    }
+                ]
 
 
             }
@@ -1847,7 +1949,7 @@
                 const jobId = this.$store.state.route.params.jobId
                 // current job
                 this.job = (await Marketplace.specificjob(jobId, auth)).data
-                this.adminmodewarning = 'You are in admin mode this job is posted by'+' '+ this.job.company + '.Dont move candidates if you not assigned as their account manager'
+                this.adminmodewarning = 'Admin mode this job is posted by' + ' ' + this.job.company + '.Dont move candidates if you not assigned as their account manager'
                 this.deadline = this.job.deadline
                 // used as part of system recommendation of candidates
                 this.skills = this.job.tech_stack.split(',')
@@ -2030,7 +2132,7 @@
                 } else {
                     this.recommended = false
                 }
-                this.$store.dispatch('setRecommend', this.recommend_id )
+                this.$store.dispatch('setRecommend', this.recommend_id)
 
 
                 // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
@@ -2139,6 +2241,10 @@
         },
         methods: {
             moment,
+            // tour section
+            tor() {
+                this.$tours['demo'].start()
+            },
             onEventClick(application_id, name, start, end, color) {
                 this.interviewerapplicationid = application_id
                 this.interviewer = name
