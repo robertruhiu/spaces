@@ -89,6 +89,25 @@
                                         </a-form-item>
 
                                     </a-col>
+                                    <a-col :span="24" style="margin-bottom: 1rem">
+                                        <a-checkbox v-model="currentUserProfile.csa">Are you part of the CodeLn
+                                            Student
+                                            Ambassador Program?
+                                        </a-checkbox>
+
+                                    </a-col>
+                                    <a-col :span="24" style="margin-bottom: 1rem">
+                                        <a-checkbox v-model="currentUserProfile.student">Are you currently a
+                                            Student?(enables us to easily notify you of internship opportunities)
+                                        </a-checkbox>
+
+                                    </a-col>
+                                    <a-col :span="24" style="margin-bottom: 1rem">
+                                        <a-checkbox v-model="currentUserProfile.notifications">Unsubscribe/Opt out from
+                                            future Codeln email notifications
+                                        </a-checkbox>
+
+                                    </a-col>
 
 
                                 </a-row>
@@ -195,6 +214,7 @@
 
 
                                 </a-col>
+
 
                             </a-col>
                         </a-row>

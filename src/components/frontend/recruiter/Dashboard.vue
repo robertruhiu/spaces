@@ -892,7 +892,7 @@
 
                 this.mycandidates = (await Marketplace.mydeveloperssimple(this.$store.state.user.pk, auth)).data
                 if (viewport_width >= 1128) {
-                    if (this.mycandidates.length > 0) {
+                    if (this.mycandidates.length > 0 && this.jobs.length > 0) {
                         this.steps.push(
                             {
                                 target: '.v-step-0',  // We're using document.querySelector() under the hood
@@ -914,24 +914,54 @@
                         )
 
                     } else {
-                        this.steps.push(
-                            {
-                                target: '.v-step-0',  // We're using document.querySelector() under the hood
-                                content: 'A form enabling you to post a job on the platform'
-                            },
-                            {
-                                target: '.v-step-1',
-                                content: 'Access your list of jobs you previously placed'
-                            },
-                            {
-                                target: '[data-v-step="2"]',
-                                content: 'Our talent pool a list of profiles from which you can pick from',
+                        if (this.jobs.length > 0) {
+                            this.steps.push(
+                                {
+                                    target: '.v-step-0',  // We're using document.querySelector() under the hood
+                                    content: 'A form enabling you to post a job on the platform'
+                                },
+                                {
+                                    target: '.v-step-1',
+                                    content: 'Access your list of jobs you previously placed'
+                                },
+                                {
+                                    target: '[data-v-step="2"]',
+                                    content: 'Our talent pool a list of profiles from which you can pick from',
 
-                            })
+                                })
+                        } else if (this.mycandidates.length > 0) {
+                            this.steps.push(
+                                {
+                                    target: '.v-step-0',  // We're using document.querySelector() under the hood
+                                    content: 'A form enabling you to post a job on the platform'
+                                },
+                                {
+                                    target: '.v-step-2',
+                                    content: 'Manage picked candidates from the talent pool'
+                                },
+                                {
+                                    target: '[data-v-step="2"]',
+                                    content: 'Our talent pool a list of profiles from which you can pick from',
+
+                                })
+
+                        } else {
+                            this.steps.push(
+                                {
+                                    target: '.v-step-0',  // We're using document.querySelector() under the hood
+                                    content: 'A form enabling you to post a job on the platform'
+                                },
+                                {
+                                    target: '[data-v-step="2"]',
+                                    content: 'Our talent pool a list of profiles from which you can pick from',
+
+                                })
+                        }
+
                     }
 
                 } else {
-                    if (this.mycandidates.length > 0) {
+                    if (this.mycandidates.length > 0 && this.jobs.length > 0) {
                         this.steps.push(
                             {
                                 target: '.v-step-3',  // We're using document.querySelector() under the hood
@@ -953,20 +983,51 @@
                         )
 
                     } else {
-                        this.steps.push(
-                            {
-                                target: '.v-step-3',  // We're using document.querySelector() under the hood
-                                content: 'A form enabling you to post a job on the platform'
-                            },
-                            {
-                                target: '.v-step-1',
-                                content: 'Access your list of jobs you previously placed'
-                            },
-                            {
-                                target: '[data-v-step="2"]',
-                                content: 'Our talent pool a list of profiles from which you can pick from',
+                        if (this.jobs.length > 0) {
+                            this.steps.push(
+                                {
+                                    target: '.v-step-3',  // We're using document.querySelector() under the hood
+                                    content: 'A form enabling you to post a job on the platform'
+                                },
+                                {
+                                    target: '.v-step-1',
+                                    content: 'Access your list of jobs you previously placed'
+                                },
+                                {
+                                    target: '[data-v-step="2"]',
+                                    content: 'Our talent pool a list of profiles from which you can pick from',
 
-                            })
+                                })
+                        } else if (this.mycandidates.length > 0) {
+                            this.steps.push(
+                                {
+                                    target: '.v-step-3',  // We're using document.querySelector() under the hood
+                                    content: 'A form enabling you to post a job on the platform'
+                                },
+                                {
+                                    target: '.v-step-2',
+                                    content: 'Manage picked candidates from the talent pool'
+                                },
+                                {
+                                    target: '[data-v-step="2"]',
+                                    content: 'Our talent pool a list of profiles from which you can pick from',
+
+                                })
+
+                        } else {
+                            this.steps.push(
+                                {
+                                    target: '.v-step-3',  // We're using document.querySelector() under the hood
+                                    content: 'A form enabling you to post a job on the platform'
+                                },
+                                {
+                                    target: '[data-v-step="2"]',
+                                    content: 'Our talent pool a list of profiles from which you can pick from',
+
+                                })
+                        }
+
+
                     }
 
                 }

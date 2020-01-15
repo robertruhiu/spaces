@@ -41,7 +41,7 @@ const DevCalendar = () => import('@/components/frontend/developer/DevCalendar');
 const Commmunity = () => import('@/components/frontend/developer/community');
 const TakeQuiz = () => import('@/components/frontend/developer/quiz/takequiz');
 const SelfverifyProject = () => import('@/components/frontend/developer/SelfverifyProject');
-
+const Unsubscribe = () => import('@/components/frontend/homepages/unsubscribed')
 const Cart = () => import('@/components/frontend/recruiter/cart/Cart');
 const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 Vue.use(Router);
@@ -93,6 +93,11 @@ let router = new Router({
             path: '/forgot',
             name: 'forgot',
             component: Forgot
+        },
+        {
+            path: '/unsubscribe/:userId',
+            name: 'unsubscribe',
+            component: Unsubscribe
         },
         {
             path: '/password_reset_confirm/:uid/:token',

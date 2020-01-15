@@ -189,7 +189,13 @@
                                                                     <div style="" slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a  @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})" target='_blank'>profile</a>-->
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -342,7 +348,13 @@
                                                                     <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -487,7 +499,13 @@
                                                                     <div slot="title">User profile</div>
                                                                     <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})">profile</a>
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})" target='_blank'>profile</a>-->
                                                         </span>
                                                                     </template>
                                                                 </a-table-column>
@@ -619,10 +637,16 @@
                                                             <template slot-scope="text,record">
 
                                                         <span style="margin-left: 15%">
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
 
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile
+                                                            <!--&lt;!&ndash;                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})" target='_blank'>profile&ndash;&gt;-->
 
-                                                            </a>
+                                                            <!--                                                            </a>-->
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -666,11 +690,18 @@
                                                             </div>
                                                             <template slot-scope="text,record">
                                                                 <span style="">
-                                                                    <a style="margin-left: 15%;" v-if="record.project"
-                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,
-                                                                       applicationId: record.action}})">
-                                                                        {{record.projectname}}
-                                                                    </a>
+                                                                    <router-link v-if="record.project"
+                                                                                 style="text-decoration: none"
+                                                                                 :to="{name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,
+                                                                       applicationId: record.action}}"
+                                                                                 target='_blank'>
+                                                            {{record.projectname}}
+                                                            </router-link>
+                                                                    <!--                                                                    <a style="margin-left: 15%;" v-if="record.project"-->
+                                                                    <!--                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,-->
+                                                                    <!--                                                                       applicationId: record.action}})" target='_blank'>-->
+                                                                    <!--                                                                        {{record.projectname}}-->
+                                                                    <!--                                                                    </a>-->
 
                                                                     <a-button :size="small"
                                                                               style="background-color: #9c27b0;color: white"
@@ -819,7 +850,13 @@
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
                                                         </span>
                                                             </template>
                                                         </a-table-column>
@@ -1024,7 +1061,13 @@
                                                             <div style="" slot="title">User profile</div>
                                                             <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
-                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
                                                         </span>
                                                             </template>
                                                         </a-table-column>

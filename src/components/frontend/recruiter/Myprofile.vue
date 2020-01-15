@@ -86,6 +86,12 @@
                                         </a-form-item>
 
                                     </a-col>
+                                    <a-col :span="24" style="margin-bottom: 1rem">
+                                        <a-checkbox v-model="currentUserProfile.notifications">Unsubscribe/Opt out from
+                                            future Codeln email notifications
+                                        </a-checkbox>
+
+                                    </a-col>
 
                                 </a-row>
 

@@ -59,9 +59,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row,Upload,Switch,Tooltip,Affix,notification
-
-
+    Row, Upload, Switch, Tooltip, Affix, Notification
 
 
 } from 'ant-design-vue';
@@ -104,7 +102,7 @@ Vue.use(Upload)
 Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Affix)
-Vue.use(notification)
+Vue.use(Notification)
 
 
 
