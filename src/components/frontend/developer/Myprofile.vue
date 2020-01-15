@@ -136,7 +136,7 @@
                                 </a-col>
                                 <a-col :span="24">
                                     <a-form-item
-                                            label="Bio"
+                                            label="(300 characters max)"
                                             :label-col="{ span: 24 }"
                                             :wrapper-col="{ span:  24}"
                                     >
@@ -150,6 +150,7 @@
                                                                                                style="color: red">github</span>,
                                             <span v-if="flags[4] === false">linkedin</span><span v-else
                                                                                                  style="color: red">linkedin</span>
+                                            (Write an expressive statement about yourself eg hobbies etc)
 
                                         </span>
                                         <a-textarea name="bio"
@@ -157,12 +158,26 @@
                                                     v-model="currentUserProfile.about"
                                                     placeholder="Tell us something about yourself"
                                                     :rows="6"/>
-                                        <div v-for="error in errorlist" v-bind:key="error">
+
+                                        <div v-for="error in error_watcher" v-bind:key="error">
+
+                                            <div v-if="error === 'about'" style="color: red">
+                                                write something about yourself
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div v-for="error in error_watcher" v-bind:key="error">
+
                                             <div v-if="error === 'flags'" style="color: red">
                                                 you have included personal info please remove where necessary
                                             </div>
 
+
                                         </div>
+
 
                                     </a-form-item>
 
@@ -375,6 +390,17 @@
 
                 return flag
             },
+            error_watcher() {
+                let errors = []
+                if (this.flags.includes(true)) {
+                    errors.push('flags')
+                }
+                if (this.currentUserProfile.about === null || this.currentUserProfile.about === '') {
+                    errors.push('about')
+
+                }
+                return errors
+            },
 
 
         },
@@ -395,43 +421,39 @@
                     }
                     this.currentUserProfile.skills = this.tags.join(',')
                 }
-                if (this.flags.includes(true)) {
-                    this.errorlist.push('flags')
-                }
 
 
                 this.currentUserProfile.file = this.cv.slice(48)
 
                 this.currentUserProfile.user = this.$store.state.user.pk
-                if(this.errorlist.length === 0){
+                if (this.error_watcher.length === 0) {
                     this.loading = true
 
-                UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
-                    .then(resp => {
-                        if (this.currentUserProfile.user_type === 'developer') {
+                    UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
+                        .then(resp => {
+                            if (this.currentUserProfile.user_type === 'developer') {
 
-                            this.$router.push({
-                                name: 'developer'
-                            })
+                                this.$router.push({
+                                    name: 'developer'
+                                })
 
-                        } else {
-                            this.$router.push({
-                                name: 'recruiter'
-                            })
+                            } else {
+                                this.$router.push({
+                                    name: 'recruiter'
+                                })
 
-                        }
-                        return resp
-
-
-                    })
-                    .catch(error => {
-                        this.loading = false
-                        return error
+                            }
+                            return resp
 
 
-                    });
+                        })
+                        .catch(error => {
+                            this.loading = false
+                            return error
+
+
+                        });
                 }
-
 
 
             },

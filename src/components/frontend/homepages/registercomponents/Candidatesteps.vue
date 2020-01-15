@@ -278,20 +278,27 @@
                                                     v-model="currentUserProfile.about"
                                                     placeholder="Tell us something about yourself"
                                                     :rows="4"/>
-
-                                        <div v-for="error in errorlist" v-bind:key="error">
-                                            <div v-if="error === 'about'" style="color: red">
-                                                write something about yourself
+                                        <div v-for="error in error_watcher" v-bind:key="error">
+                                            <div v-for="errorl in errorlist" v-bind:key="errorl">
+                                                <div v-if="error === errorl">
+                                                    <div v-if="error === 'about'" style="color: red">
+                                                        write something about yourself
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
-                                        <div v-for="error in errorlist" v-bind:key="error">
+                                        <div v-for="error in error_watcher" v-bind:key="error">
+
                                             <div v-if="error === 'flags'" style="color: red">
                                                 you have included personal info please remove where necessary
                                             </div>
 
+
                                         </div>
+
+
                                     </a-form-item>
+
 
                                 </a-col>
                                 <a-col :span="24" style="margin-bottom: 1rem">
@@ -304,11 +311,16 @@
                                             :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                                             v-model="currentUserProfile.salary"
                                     />
-                                    <div v-for="error in errorlist" v-bind:key="error">
-                                        <div v-if="error === 'salary'" style="color: red">
-                                            Your salary value required
-                                        </div>
 
+
+                                    <div v-for="error in error_watcher" v-bind:key="error">
+                                        <div v-for="errorl in errorlist" v-bind:key="errorl">
+                                            <div v-if="error === errorl">
+                                                <div v-if="error === 'salary'" style="color: red">
+                                                    Your salary value required
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </a-col>
@@ -340,11 +352,14 @@
                                             <input style="margin-top: 1rem" accept="application/pdf" type="file"
                                                    @change="handleUpload">
                                         </div>
-                                        <div v-for="error in errorlist" v-bind:key="error">
-                                            <div v-if="error === 'cv'" style="color: red">
-                                                please upload cv
+                                        <div v-for="error in error_watcher" v-bind:key="error">
+                                            <div v-for="errorl in errorlist" v-bind:key="errorl">
+                                                <div v-if="error === errorl">
+                                                    <div v-if="error === 'cv'" style="color: red">
+                                                        please upload cv
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
 
 
@@ -381,9 +396,9 @@
                         </span>
                                 <span>
                                     <a-button
-                                    v-if="current < steps.length - 1"
-                                    type="primary" @click="next(current)"
-                            >
+                                            v-if="current < steps.length - 1"
+                                            type="primary" @click="next(current)"
+                                    >
                                     Next
                                 </a-button>
                                 </span>
@@ -494,7 +509,8 @@
                 doneloading: false,
                 availabiltytags: [],
                 github: '',
-                linkedin: ''
+                linkedin: '',
+
             }
         },
         async mounted() {
@@ -592,6 +608,27 @@
 
 
                 return flag
+            },
+            error_watcher() {
+                let errors = []
+                if (this.flags.includes(true)) {
+                    errors.push('flags')
+                }
+                if (this.currentUserProfile.about === null || this.currentUserProfile.about === '') {
+                    errors.push('about')
+
+                }
+                if (this.cv === null || this.cv === '') {
+                    errors.push('cv')
+
+                }
+                if (this.currentUserProfile.salary === null || this.currentUserProfile.salary === '') {
+                    errors.push('salary')
+
+                }
+
+
+                return errors
             },
 
 
