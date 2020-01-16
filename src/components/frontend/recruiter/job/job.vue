@@ -107,7 +107,7 @@
                                 </a-col>
                                 <a-col span="20">
 
-                                    <a-alert message="Feeling lost hover over labels with the ? character to get tips"
+                                    <a-alert message="Hover over the labels with ‘?’ for product guide"
                                              type="warning" closeText="Close Now"/>
                                 </a-col>
                             </a-row>
@@ -150,9 +150,10 @@
                                                             <span slot="tab">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
-                                                                        <span>active candidates track and easily move them to other stages</span>
+                                                                        <span>See all the candidates that you picked for this job. Here you can see what stage
+                                                                            they are in under the “Stage” column.</span>
                                                                     </template>
-                                                                    Active <a-icon type="question-circle" />
+                                                                    Picked Candidates <a-icon type="question-circle"/>
                                                                 </a-tooltip>
 
                                                             </span>
@@ -313,7 +314,7 @@
                                                                     <template slot="title">
                                                                         <span>Pick or reject candidates who applied from the job board</span>
                                                                     </template>
-                                                                    New Applicants <a-icon type="question-circle" />
+                                                                    New Applicants <a-icon type="question-circle"/>
                                                                 </a-tooltip>
 
                                                             </span>
@@ -459,9 +460,10 @@
                                                             <span slot="tab">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
-                                                                        <span>Pick profiles to make them active in your job from Codeln system recommendations</span>
+                                                                        <span>See candidates that match the skills on your job and invite them to apply by picking.</span>
                                                                     </template>
-                                                                    Recommended Candidates <a-icon type="question-circle" />
+                                                                    Recommended Candidates <a-icon
+                                                                        type="question-circle"/>
                                                                 </a-tooltip>
 
                                                             </span>
@@ -682,9 +684,10 @@
                                                             <div style="" slot="title">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
-                                                                        <span>Enables you to easily assign project to candidate,recommended projects are filtered using the skills you looking for.</span>
+                                                                        <span>Enables you to easily assign project tests to candidates. Recommended projects are suggested based on the skills on your job.</span>
                                                                     </template>
-                                                                    Test assigned <a-icon type="question-circle" />
+                                                                    Test assigned
+                                                                    <a-icon type="question-circle"/>
                                                                 </a-tooltip>
 
                                                             </div>
@@ -728,9 +731,10 @@
                                                             <div slot="title">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
-                                                                        <span>Easily track project status by candidate from invitation,inprogress to completion on completion a report link will be generated and presented here</span>
+                                                                        <span>Easily track the candidate’s progress in the test from invitation, in progress to completion. Upon completion, a report link will appear.</span>
                                                                     </template>
-                                                                    Project status <a-icon type="question-circle" />
+                                                                    Test status
+                                                                    <a-icon type="question-circle"/>
                                                                 </a-tooltip>
                                                             </div>
                                                             <template slot-scope="text,record">
@@ -1172,7 +1176,13 @@
                             <a-tab-pane key="2" forceRender>
                                 <span slot="tab">
                                     <a-icon type="profile"/>
-                                    Job Details
+                                    <a-tooltip placement="topLeft">
+                                        <template slot="title">
+                                            <span>Click to edit your job post</span>
+                                        </template>
+                                        Job Details <a-icon type="question-circle"/>
+                                    </a-tooltip>
+
                                 </span>
                                 <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
                                     <a-form :form="form"
@@ -1919,8 +1929,9 @@
                 steps: [
                     {
                         target: '.v-step-0',
-                        content: 'This tab enables you to manage new applicants,recommended applicants and active applicants.' +
-                            'You have various actions at your disposal either pick or reject candidates.From here you can move and easily track which stage all candidates are',
+                        content: 'You can pick or reject applications from the “new applicants” tab.  Note that candidates with a tick are candidates that we have pre-verified. ' +
+                            'You can also invite candidates to apply by picking from the “recommended candidates” tab. Manage all picked candidates from the “picked candidates” tab.' +
+                            ' Take action by clicking the “choices” button to move active candidates to the test or interview stage.',
                         params: {
                             placement: 'bottom',
                             enableScrolling: false
@@ -1929,7 +1940,10 @@
                     },
                     {
                         target: '.v-step-1',
-                        content: 'Testing stage meant to asign projects to candidates,recieve reports on their perfomance,You can opt to move them to interview stage or reject them',
+                        content: 'Here you see only candidates you have chosen to test. Click on the “Assign test” button to assign them a test from our library. ' +
+                            'Note that our tests are project-based tests and take about 3 hours for candidates to complete. You can pick a test by yourself or get a' +
+                            ' recommendation based on your job. Once the candidate is done with the project test,' +
+                            ' you will receive a report on their performance. You can choose to move them to the next stage.',
                         params: {
                             placement: 'bottom',
                             enableScrolling: false
@@ -1938,7 +1952,9 @@
                     },
                     {
                         target: '.v-step-2',
-                        content: 'Interview stage,set interview dates with your candidates,Interview will be available on your calendar,For the interview you can opt for a video call or physical meeting',
+                        content: 'Here you see only candidates you have chosen to interview. Click on the ‘Create” button to invite the candidate for an interview, ' +
+                            'select time and date and save. Once the candidate accepts, ' +
+                            'the event will drop under your calendar. After the interview, click the “Choices” button for the next action.',
                         params: {
                             placement: 'bottom',
                             enableScrolling: false
@@ -1947,7 +1963,7 @@
                     },
                     {
                         target: '.v-step-3',
-                        content: 'Offer stage,you can easily upload an offer letter for the potential candidate for their acceptance',
+                        content: 'At this stage, you can easily upload an offer letter for the candidate to see. If they accept or reject, it will be reflected.\n',
                         params: {
                             placement: 'bottom',
                             enableScrolling: false
