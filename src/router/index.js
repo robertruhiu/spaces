@@ -95,7 +95,7 @@ let router = new Router({
             component: Forgot
         },
         {
-            path: '/unsubscribe/:userId',
+            path: '/unsubscribe/:token',
             name: 'unsubscribe',
             component: Unsubscribe
         },
