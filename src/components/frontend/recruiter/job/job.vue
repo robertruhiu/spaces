@@ -9,8 +9,8 @@
                 <Jobheader/>
 
 
-                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '80vh',maxWidth:'72rem' }">
-                    <div style="padding-top: 2%;">
+                <div :style="{ padding: '4px 20px', background: '#fff', minHeight: '80vh',maxWidth:'72rem' }">
+                    <div>
                         <a-row style="padding-bottom: 1%">
                             <a-col span="20">
                                 <a-alert v-if="updated" message="Job details have been updated" type="success"
@@ -159,7 +159,7 @@
                                                             </span>
 
 
-                                                            <a-table :dataSource="pickedapplicants" :scroll="{ y: 340 }"
+                                                            <a-table :dataSource="pickedapplicants"
                                                                      size="middle">
 
                                                                 <!-----name--------->
@@ -319,7 +319,7 @@
 
                                                             </span>
 
-                                                            <a-table :dataSource="newapplicant" :scroll="{ y: 340 }"
+                                                            <a-table :dataSource="newapplicant"
                                                                      size="middle">
 
                                                                 <!-----name--------->
@@ -470,7 +470,7 @@
 
 
                                                             <a-table :dataSource="recommmedcandidates"
-                                                                     :scroll="{ y: 340 }"
+
                                                                      size="middle">
 
                                                                 <!-----name--------->
@@ -595,6 +595,110 @@
 
 
                                                         </a-tab-pane>
+                                                        <!-------rejected candidates-------->
+                                                        <a-tab-pane v-if="rejectedcandidates"
+                                                                    key="4">
+                                                            <span slot="tab">
+
+                                                                    Rejected Candidates
+
+
+                                                            </span>
+
+
+                                                            <a-table :dataSource="rejectedcandidateslist"
+
+                                                                     size="middle">
+
+                                                                <!-----name--------->
+                                                                <a-table-column
+                                                                        dataIndex="name"
+                                                                        key="name"
+                                                                        width="25%"
+
+
+                                                                >
+                                                                    <span slot="title">Name</span>
+                                                                    <template slot-scope="text,record">
+                                                        <span>
+                                                            {{record.name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
+                                                        </span>
+                                                                    </template>
+                                                                </a-table-column>
+
+                                                                <!-----profile--------->
+                                                                <a-table-column
+                                                                        dataIndex="profile"
+                                                                        key="profile"
+                                                                        width="25%"
+
+
+                                                                >
+                                                                    <div slot="title">User profile</div>
+                                                                    <template slot-scope="text,record">
+                                                        <span style="margin-left: 15%">
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})" target='_blank'>profile</a>-->
+                                                        </span>
+                                                                    </template>
+                                                                </a-table-column>
+
+                                                                <!-----skills--------->
+                                                                <a-table-column
+
+                                                                        dataIndex="tags"
+                                                                        key="tags"
+                                                                        width="25%"
+
+                                                                >
+                                                                    <div style="text-align: center;" slot="title">Skills
+                                                                    </div>
+                                                                    <template slot-scope="tags">
+                                                                        <div style="text-align: center;">
+                                                                            <span>
+                                                            <a-tag v-for="tag in tags" color="blue"
+                                                                   :key="tag">{{tag}}</a-tag>
+                                                        </span>
+                                                                        </div>
+
+                                                                    </template>
+                                                                </a-table-column>
+
+                                                                <!-----stage--------->
+                                                                <a-table-column
+
+                                                                        dataIndex="stage"
+                                                                        key="stage"
+                                                                        width="25%"
+
+                                                                >
+                                                                    <div style="text-align: center" slot="title">Stage
+                                                                    </div>
+                                                                    <template slot-scope="text, record">
+                                                                        <div style="text-align: center">
+                                                                            <span>
+
+                                                            <a-tag color="#1C4E80"
+                                                                   style="">{{record.stage}}</a-tag>
+
+                                                        </span>
+                                                                        </div>
+
+                                                                    </template>
+
+                                                                </a-table-column>
+
+
+                                                            </a-table>
+
+
+                                                        </a-tab-pane>
 
 
                                                     </a-tabs>
@@ -607,7 +711,7 @@
                                                         <a-tag color="blue">{{testingstage.length}}</a-tag>
                                                     </span>
 
-                                                    <a-table :dataSource="testingstage" :scroll="{ y: 340 }"
+                                                    <a-table :dataSource="testingstage" :scroll="{ y: 400 }"
                                                              size="middle">
 
                                                         <!-----name--------->
@@ -822,7 +926,7 @@
                                                     <a-alert style="margin-bottom: 1%"
                                                              message="Interview notes enables you to write and keep notes on the candidate"
                                                              type="info" closeText="Close Now"/>
-                                                    <a-table :dataSource="interviewstage" :scroll="{ y: 340 }"
+                                                    <a-table :dataSource="interviewstage" :scroll="{ y: 400 }"
                                                              size="middle">
 
 
@@ -1034,7 +1138,7 @@
                                                         Offers
                                                         <a-tag color="blue">{{offerstage.length}}</a-tag>
                                                     </span>
-                                                    <a-table :dataSource="offerstage" :scroll="{ y: 340 }"
+                                                    <a-table :dataSource="offerstage" :scroll="{ y: 400 }"
                                                              size="middle">
 
                                                         <!-----name--------->
@@ -1158,6 +1262,7 @@
                                                     </a-table>
 
                                                 </a-tab-pane>
+
                                                 <v-tour name="demo" :steps="steps"></v-tour>
 
 
@@ -1334,8 +1439,9 @@
                                             </a-col>
                                             <a-col :span="12">
                                                 <a-form-item label="Deadline ">
-                                                    Current deadline {{deadline}}
+                                                    Current deadline {{deadlineformated}}
                                                     <a-date-picker @change="onDate"
+
 
                                                                    format="YYYY-MM-DD"
                                                                    :disabledDate="disabledDate"
@@ -1398,7 +1504,7 @@
                         <p style="text-align: center;">Would you like to get a project recommendation or pick a
                             project?</p>
                         <a-row :gutter="16">
-                            <a-col :span="12">
+                            <a-col :span="8">
                                 <a @click="navigateTo({name:'projectlist',params:{jobId:job.id,applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%"
@@ -1409,12 +1515,24 @@
 
                                 </a>
                             </a-col>
-                            <a-col :span="12">
+                            <a-col :span="8">
                                 <a @click="navigateTo({name:'projectdetails',params:{jobId:job.id,candidateId: candidate,applicationId:applicationid}})">
                                     <div style="border: 1px solid #e8e8e8;padding: 2%;">
                                         <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
                                              src="../../../../assets/images/recommend.png">
                                         <p style="text-align: center">Get recommendation</p>
+
+
+                                    </div>
+
+                                </a>
+                            </a-col>
+                            <a-col :span="8">
+                                <a href="mailto:info@codeln.com" target="_top">
+                                    <div style="border: 1px solid #e8e8e8;padding: 2%;">
+                                        <img style="margin-left: 25%;width: 50%;margin-right: 25%;"
+                                             src="../../../../assets/images/custom.png">
+                                        <p style="text-align: center">Custom test</p>
 
 
                                     </div>
@@ -1870,6 +1988,7 @@
                 columns,
                 applicants: [],
                 recommmedcandidates: [],
+                rejectedcandidateslist: [],
                 recommmedcandidatesverified: [],
                 applicantprofile: [],
                 newapplicant: [],
@@ -1887,6 +2006,7 @@
                 active: false,
                 newapplications: false,
                 recommended: false,
+                rejectedcandidates: false,
                 deadline: null,
                 candidate: null,
                 applicationid: null,
@@ -1971,7 +2091,8 @@
                         }
 
                     }
-                ]
+                ],
+                deadlineformated: ''
 
 
             }
@@ -2009,6 +2130,7 @@
                 // current job
                 this.job = (await Marketplace.specificjob(jobId, auth)).data
                 this.adminmodewarning = 'Admin mode this job is posted by' + ' ' + this.job.company + '.Dont move candidates if you not assigned as their account manager'
+                this.deadlineformated = moment(this.job.deadline).format("YYYY-MM-DD")
                 this.deadline = this.job.deadline
                 // used as part of system recommendation of candidates
                 this.skills = this.job.tech_stack.split(',')
@@ -2078,6 +2200,9 @@
                         this.newapplicant.push(this.applicantprofile[i])
                     } else if (this.applicantprofile[i].selected) {
                         this.pickedapplicants.push(this.applicantprofile[i])
+
+                    } else if (this.applicantprofile[i].stage === 'rejected') {
+                        this.rejectedcandidateslist.push(this.applicantprofile[i])
 
                     }
                     // second part of sorting conditional coz the fist condition met
@@ -2201,6 +2326,9 @@
                     this.newapplications = true
                 } else if (this.recommmedcandidates.length > 0) {
                     this.recommended = true
+                }
+                if (this.rejectedcandidateslist.length > 0) {
+                    this.rejectedcandidates = true
                 }
 
                 // recent projects
@@ -2366,8 +2494,9 @@
                 return current && current < moment().endOf('day');
             },
             onDate(date, dateString) {
+                this.deadlineformated = moment(date).format("YYYY-MM-DD")
 
-                this.deadline = dateString
+                this.deadline = date
             },
 
             // acts as filters to project to be asigned under testing stage
@@ -2496,6 +2625,8 @@
                                     this.recommmedcandidates = []
                                     this.applicantprofile = []
                                     self.Datarefresh()
+                                    Marketplace.rejectionemail(action, auth)
+                                        .then()
                                     return resp
                                 })
                                 .catch()
@@ -2576,6 +2707,8 @@
                                     this.recommmedcandidates = []
                                     this.applicantprofile = []
                                     self.Datarefresh()
+                                    Marketplace.rejectionemail(action, auth)
+                                        .then()
                                     return resp
                                 })
                                 .catch()
@@ -2658,6 +2791,8 @@
                                     this.recommmedcandidates = []
                                     this.applicantprofile = []
                                     self.Datarefresh()
+                                    Marketplace.rejectionemail(action, auth)
+                                        .then()
                                     return resp
                                 })
                                 .catch()
@@ -2751,6 +2886,8 @@
                                     this.recommmedcandidates = []
                                     this.applicantprofile = []
                                     self.Datarefresh()
+                                    Marketplace.rejectionemail(job_id, auth)
+                                        .then()
                                     return resp
                                 })
                                 .catch()
@@ -2829,6 +2966,8 @@
                                     this.recommmedcandidates = []
                                     this.applicantprofile = []
                                     self.Datarefresh()
+                                    Marketplace.rejectionemail(job_id, auth)
+                                        .then()
                                     return resp
                                 })
                                 .catch()

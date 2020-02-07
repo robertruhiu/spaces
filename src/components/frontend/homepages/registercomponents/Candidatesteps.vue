@@ -422,6 +422,7 @@
 
 
                     </div>
+
                 </div>
 
 
@@ -572,8 +573,8 @@
                 blacklist[0] = this.$store.state.user.first_name
                 blacklist[1] = this.$store.state.user.last_name
                 blacklist[2] = this.$store.state.user.email
-                blacklist[3] = this.github
-                blacklist[4] = this.linkedin
+                blacklist[3] = this.currentUserProfile.github_repo
+                blacklist[4] = this.currentUserProfile.linkedin_url
 
 
                 let first = false

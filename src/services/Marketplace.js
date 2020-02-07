@@ -12,12 +12,15 @@ export default {
     mydeveloperssimple(user_id, auth) {
         return Api().get(`marketplace/mydevssimple/${user_id} `, auth)
     },
-    allmyjobapplicants(user_id,auth){
+    allmyjobapplicants(user_id, auth) {
         return Api().get(`marketplace/myapplicants/${user_id} `, auth)
     },
 
     alljobs() {
         return Api().get('marketplace/alljobs')
+    },
+    alljobsfiltered() {
+        return Api().get('marketplace/alljobsdeadlinefilter')
     },
     myjobs(user_id, auth) {
         return Api().get(`marketplace/myjobs/${user_id}`, auth)
@@ -97,22 +100,27 @@ export default {
     newapplicationemail(application_id,auth){
         return Api().post(`marketplace/newjobapplication/${application_id} `, auth)
     },
-    newonsite(assesment_id,auth){
+    newonsite(assesment_id, auth) {
         return Api().post(`marketplace/newonsite/${assesment_id} `, auth)
     },
     candidatemanagerdelete(candidatemanagement_id, auth) {
-        return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `,auth)
+        return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `, auth)
     },
-    newpick(application_id,auth) {
-        return Api().post(`marketplace/newpick/${application_id}`, auth)
+    newpick(application_id, auth) {
+        return Api().post(`marketplace/newpick/${application_id}/`, auth)
     },
-    acceptreject(application_id,auth) {
-        return Api().post(`marketplace/acceptreject/${application_id}`, auth)
+    acceptreject(application_id, auth) {
+        return Api().post(`marketplace/acceptreject/${application_id}/`, auth)
     },
-    publishedemails(job_id,){
-        return Api().get(`marketplace/publishedemails/${job_id}`)
+    publishedemails(job_id, auth) {
+        return Api().get(`marketplace/publishedemails/${job_id}`, auth)
     },
-
+    recruiterpublished(job_id, auth) {
+        return Api().get(`marketplace/recruiterpublished/${job_id}`, auth)
+    },
+    rejectionemail(application_id, auth) {
+        return Api().get(`marketplace/rejectionemail/${application_id}`, auth)
+    },
 
 
 }

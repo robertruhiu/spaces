@@ -231,6 +231,7 @@
     import Marketplace from '@/services/Marketplace'
     import {showAt, hideAt} from 'vue-breakpoints'
     const countries = require("@/store/countries")
+    import moment from 'moment';
 
     var VueTruncate = require('vue-truncate-filter')
     import UsersService from '@/services/UsersService'
@@ -263,7 +264,7 @@
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
                     'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
-                    'Android', 'Website', 'Mobile'],
+                    'Android', 'Website', 'Mobile', 'Laravel'],
                 loading: true,
                 plainOptions1,
 
@@ -299,6 +300,7 @@
             showAt, hideAt,
         },
         async mounted() {
+
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -310,6 +312,7 @@
             }
 
             this.jobs = (await Marketplace.alljobs()).data
+            // this.jobs = (await Marketplace.alljobsfiltered()).data
             this.loading = false
 
             for (let i = 0; i < this.jobs.length; i++) {
@@ -346,6 +349,7 @@
         },
 
         methods: {
+            moment,
             navigateTo(route) {
                 this.$router.push(route)
             },

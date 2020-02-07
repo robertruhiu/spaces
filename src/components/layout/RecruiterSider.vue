@@ -813,7 +813,7 @@
                     'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
-                    'Android', 'Website', 'Mobile'],
+                    'Android', 'figma', 'photoshop', 'adobexd', 'UI/UX'],
                 selectedTags: [],
                 errorlist: [],
                 errorlist1: [],

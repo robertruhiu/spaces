@@ -240,7 +240,10 @@
                 Marketplace.unpublishjob(job_id, {published: true, verified: true}, auth)
                     .then(resp => {
                         this.job.published = true
-                        Marketplace.publishedemails(job_id)
+                        Marketplace.recruiterpublished(job_id, auth)
+                            .then()
+                        Marketplace.publishedemails(job_id, auth)
+                            .then()
 
                     })
 
