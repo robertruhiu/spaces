@@ -59,7 +59,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row, Upload, Switch, Tooltip, Affix, Notification
+    Row, Upload, Switch, Tooltip, Affix, Notification, Collapse
 
 
 } from 'ant-design-vue';
@@ -103,6 +103,7 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Affix)
 Vue.use(Notification)
+Vue.use(Collapse)
 
 
 

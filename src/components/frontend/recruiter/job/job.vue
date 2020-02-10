@@ -95,6 +95,7 @@
                             </a-col>
 
                         </a-row>
+                        <hide-at breakpoint="mediumAndBelow">
                         <span>
                             <a-row :gutter="16" style="margin-bottom: 1rem">
                                 <a-col span="20" style="margin-bottom: 1rem">
@@ -105,15 +106,12 @@
                                  <a-col span="2">
                                     <a-button @click="tor" type="primary" icon="info-circle">Page tour</a-button>
                                 </a-col>
-                                <a-col span="20">
 
-                                    <a-alert message="Hover over the labels with ‘?’ for product guide"
-                                             type="warning" closeText="Close Now"/>
-                                </a-col>
                             </a-row>
 
 
                         </span>
+                        </hide-at>
 
 
                         <a-tabs defaultActiveKey="1"
@@ -209,7 +207,8 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="margin-left: 40%" slot="title">Skills
+                                                                    <div style="margin-left: 40%" slot="title">
+                                                                        Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
                                                                         <div style="text-align: center">
@@ -368,7 +367,8 @@
                                                                         width="25%"
 
                                                                 >
-                                                                    <div style="margin-left: 33%" slot="title">Skills
+                                                                    <div style="margin-left: 33%" slot="title">
+                                                                        Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
                                                                         <div style="text-align: center">
@@ -520,7 +520,8 @@
                                                                         width="20%"
 
                                                                 >
-                                                                    <div style="text-align: center;" slot="title">Skills
+                                                                    <div style="text-align: center;" slot="title">
+                                                                        Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
                                                                         <div style="text-align: center;">
@@ -657,7 +658,8 @@
                                                                         width="25%"
 
                                                                 >
-                                                                    <div style="text-align: center;" slot="title">Skills
+                                                                    <div style="text-align: center;" slot="title">
+                                                                        Skills
                                                                     </div>
                                                                     <template slot-scope="tags">
                                                                         <div style="text-align: center;">
@@ -678,7 +680,8 @@
                                                                         width="25%"
 
                                                                 >
-                                                                    <div style="text-align: center" slot="title">Stage
+                                                                    <div style="text-align: center" slot="title">
+                                                                        Stage
                                                                     </div>
                                                                     <template slot-scope="text, record">
                                                                         <div style="text-align: center">
@@ -1195,7 +1198,8 @@
                                                                 <div style="text-align: center">
                                                                     <a-button v-if="record.offerletter === null "
                                                                               type="primary" size="small"
-                                                                              @click="openWidget()">Upload offer letter
+                                                                              @click="openWidget()">Upload offer
+                                                                        letter
                                                                     </a-button>
                                                                     <a v-else :href="record.offerletter"
                                                                        target="_blank">{{record.offerletter}}</a>
@@ -1214,7 +1218,8 @@
                                                                 width="20%"
 
                                                         >
-                                                            <div style="text-align: center" slot="title">Offer Status
+                                                            <div style="text-align: center" slot="title">Offer
+                                                                Status
                                                             </div>
                                                             <template slot-scope="text, record">
                                                                 <div style="text-align: center">
@@ -1293,14 +1298,18 @@
                                     <a-form :form="form"
                                             @submit="handleSubmit">
                                         <a-row :gutter="16">
-                                            <a-col :span="8">
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                 <a-form-item label="Title">
                                                     <a-input v-model="job.title">
 
                                                     </a-input>
                                                 </a-form-item>
                                             </a-col>
-                                            <a-col :span="8">
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                 <a-form-item label="Job role">
                                                     <a-select
 
@@ -1333,8 +1342,10 @@
 
 
                                             </a-col>
-                                            <a-col :span="8">
-                                                <a-form-item label="Developer Experience">
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                <a-form-item label="Experience">
                                                     <a-select
 
                                                             placeholder="Select a option and change input text above"
@@ -1357,7 +1368,9 @@
                                                 </a-form-item>
 
                                             </a-col>
-                                            <a-col :span="8">
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                 <a-form-item label="Contract type">
                                                     <a-select
 
@@ -1384,7 +1397,9 @@
                                                 </a-form-item>
 
                                             </a-col>
-                                            <a-col :span="8">
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                 <a-form-item>
                                                     <span>Location : {{job.location}}</span>
                                                     <country-select v-model="job.location"
@@ -1393,7 +1408,9 @@
                                                 </a-form-item>
 
                                             </a-col>
-                                            <a-col :span="8">
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                 <a-form-item label="Salary range ">
                                                     <a-input v-model="job.remuneration">
 
@@ -1401,16 +1418,18 @@
                                                 </a-form-item>
 
                                             </a-col>
-                                            <a-col :span="12">
+                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                   :md="{span: 24, offset: 0 }"
+                                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
                                                 <a-form-item
                                                         label="Which tech skills are you looking for? "
-                                                        :label-col="{ span: 24 }"
-                                                        :wrapper-col="{ span:  24}"
+
                                                 >
                                                     <template v-for="(tag, index) in tags">
                                                         <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
                                                             <a-tag :key="tag"
-                                                                   :afterClose="() => handleClose(tag)" color="#2db7f5">
+                                                                   :afterClose="() => handleClose(tag)"
+                                                                   color="#2db7f5">
                                                                 {{`${tag.slice(0, 20)}...`}}
                                                             </a-tag>
                                                         </a-tooltip>
@@ -1437,9 +1456,11 @@
                                                     </a-tag>
                                                 </a-form-item>
                                             </a-col>
-                                            <a-col :span="12">
-                                                <a-form-item label="Deadline ">
-                                                    Current deadline {{deadlineformated}}
+                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                   :md="{span: 12, offset: 0 }"
+                                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                                <a-form-item :label="deadlineformated">
+
                                                     <a-date-picker @change="onDate"
 
 
@@ -1974,6 +1995,7 @@
     import Rave from "@/components/frontend/recruiter/cart/Rave";
     import tc from '@/components/frontend/homepages/tc'
     import Payments from '@/services/Payments';
+    import {hideAt, showAt} from 'vue-breakpoints'
 
 
     export default {
@@ -2092,7 +2114,10 @@
 
                     }
                 ],
-                deadlineformated: ''
+                deadlineformated: '',
+                text: `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`,
+                customStyle:
+                    'background: #f0f6fd;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden',
 
 
             }
@@ -2105,7 +2130,7 @@
             Jobheader,
             Rave,
             tc,
-            VueSimplemde, markdown, paystack
+            VueSimplemde, markdown, paystack, hideAt,
 
 
         },
@@ -2431,6 +2456,9 @@
             // tour section
             tor() {
                 this.$tours['demo'].start()
+            },
+            tabscroller(val) {
+                console.log(val);
             },
             onEventClick(application_id, name, start, end, color) {
                 this.interviewerapplicationid = application_id

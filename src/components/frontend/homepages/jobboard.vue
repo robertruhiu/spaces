@@ -260,11 +260,11 @@
                 checkedList1: defaultCheckedList1,
                 indeterminate1: true,
                 checkAll1: false,
-                dataSource: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
+                dataSource: ['Django', 'Laravel', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
                     'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
-                    'Android', 'Website', 'Mobile', 'Laravel'],
+                    'Android', 'Website', 'Mobile'],
                 loading: true,
                 plainOptions1,
 

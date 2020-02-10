@@ -36,27 +36,27 @@
 
                 </a-row>
                 <div>
-                    <a-row gutter="8" style="margin-top: 4rem;padding: 3%">
-                        <a-col span="8"  v-for="item in filteredList" v-bind:key="item" >
+                    <a-row gutter="16" style="margin-top: 4rem;padding: 3% 10%">
+                        <a-col span="8" style="margin-bottom: 1rem" v-for="item in filteredList" v-bind:key="item">
 
                             <a @click="navigateTo({name:'pickedprojectdetails',params:{projectId:item.id,candidateId: application.candidate.id,jobId:application.job.id,
                                                                        applicationId: application.id}})">
                                 <a-card
-                                    hoverable
+                                        hoverable
 
-                            >
-                                <img
-                                        alt="example"
-                                        :src="item.image"
-                                        slot="cover"
-                                        style="height: 10rem"
-                                />
-                                <a-card-meta
-                                        :title="item.name">
-                                    <template slot="description">
-                                        <p>
-                                            Project skill tags :
-                                            <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+                                >
+                                    <img
+                                            alt="example"
+                                            :src="item.image"
+                                            slot="cover"
+                                            style="height: 10rem"
+                                    />
+                                    <a-card-meta
+                                            :title="item.name">
+                                        <template slot="description">
+                                            <p>
+                                                Project skill tags :
+                                                <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>

@@ -121,6 +121,12 @@ export default {
     rejectionemail(application_id, auth) {
         return Api().get(`marketplace/rejectionemail/${application_id}`, auth)
     },
+    projectemail(application_id, auth) {
+        return Api().post(`marketplace/projectemail/${application_id}`, auth)
+    },
+    timesetemail(application_id, auth) {
+        return Api().post(`marketplace/timesetemail/${application_id}`, auth)
+    },
 
 
 }

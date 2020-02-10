@@ -5,36 +5,36 @@
         <a-layout-content style="background-color: white">
             <DevHeader/>
 
-            <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
+            <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',
                 marginTop:'0%',marginLeft: '1%',marginRight:'1%' }">
 
                 <a-row gutter="8">
                     <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
-                               :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }" style="margin-bottom: 1rem">
+                           :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }" style="margin-bottom: 1rem">
 
                         <show-at breakpoint="mediumAndBelow">
-                                <div v-if="project.hasvideo === false">
+                            <div v-if="project.hasvideo === false">
 
                                 <div v-if="project.projectimage1 "><img style="width: 100%"
                                                                         :src="project.projectimage1"/>
                                 </div>
-                                    </div>
+                            </div>
                             <div v-if="project.hasvideo">
                                 <youtube :video-id="videoid" :width="270"
                                          :player-vars="playerVars" @playing="playing"></youtube>
                             </div>
 
 
-                            </show-at>
+                        </show-at>
 
 
-                            <hide-at breakpoint="mediumAndBelow">
-                                <div v-if="project.hasvideo === false">
+                        <hide-at breakpoint="mediumAndBelow">
+                            <div v-if="project.hasvideo === false">
 
                                 <div v-if="project.projectimage1 "><img style="width: 100%"
                                                                         :src="project.projectimage1"/>
                                 </div>
-                                    </div>
+                            </div>
 
                             <div v-if="project.hasvideo">
                                 <youtube :video-id="videoid" :width="600"
@@ -42,7 +42,7 @@
                             </div>
 
 
-                            </hide-at>
+                        </hide-at>
 
 
                         <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
@@ -54,7 +54,7 @@
 
                     </a-col>
                     <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
-                               :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }"  style="padding: 0 1%;">
+                           :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
 
                         <div style="border:1px solid #e8e8e8;;padding: 2%;">
                             <div style="margin-left: 5%;margin-bottom: 2%"
@@ -145,7 +145,7 @@
                 projectstarttime: null,
                 timeseterror: false,
                 type: '',
-                videoid:''
+                videoid: ''
             }
         },
         components: {
@@ -241,12 +241,24 @@
                             test_stage: 'timeset',
                             projectstarttime: this.projectstarttime
                         }, auth)
+                            .then(resp => {
+                                    Marketplace.timesetemail(resp.data.id, auth)
+                                        .then()
+                                        .catch()
+                                }
+                            )
 
                     } else {
                         Marketplace.candidatemanager(application_id, {
                             test_stage: 'timeset',
                             projectstarttime: this.projectstarttime
                         }, auth)
+                            .then(resp => {
+                                    Marketplace.timesetemail(resp.data.id, auth)
+                                        .then()
+                                        .catch()
+                                }
+                            )
 
                     }
 

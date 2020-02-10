@@ -1,12 +1,23 @@
 <template>
     <div>
+        <show-at breakpoint="mediumAndBelow">
+            <a-layout-header :style="{width: '100%',backgroundColor:'#004ec7',height:'5rem',padding: '1px 30px 0',
+            borderBottom: '1px solid #e8e8e8'}">
+                <a style="color: white;line-height: 13px;font-size: 15px;font-weight:bold;margin-top: 15%">
+                    {{job.title}}</a>
+
+
+            </a-layout-header>
+        </show-at>
+
         <a-affix offsetTop="this.top">
+            <hide-at breakpoint="mediumAndBelow">
 
-            <a-layout-header
-                    :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
+                <a-layout-header
+                        :style="{width: '100%',backgroundColor:'#004ec7',height:'100px',padding: '1px 30px 0',borderBottom: '1px solid #e8e8e8' }">
 
-                <a-row>
-                    <a-col :span="22">
+                    <a-row>
+                        <a-col :span="22">
 
                             <span>
                                 <a style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
@@ -37,46 +48,47 @@
                             </span>
 
 
-                    </a-col>
+                        </a-col>
 
 
-                    <a-button type="primary" @click="showDrawer">
-                        <a-icon type="calendar"/>
-                        Calendar
-                    </a-button>
+                        <a-button type="primary" @click="showDrawer">
+                            <a-icon type="calendar"/>
+                            Calendar
+                        </a-button>
 
 
-                    <a-button-group style="margin-left: 1%">
-                        <a-button type="primary" icon="share-alt">Share Job</a-button>
-                        <social-sharing :url=joburl
-                                        :title=job.title
-                                        :description=job.description
-                                        quote="Apply for this job at the link below."
-                                        :hashtags=job.tech_stack
-                                        inline-template>
-                            <network network="facebook">
-                                <a-button type="primary" icon="facebook"/>
-                            </network>
+                        <a-button-group style="margin-left: 1%">
+                            <a-button type="primary" icon="share-alt">Share Job</a-button>
+                            <social-sharing :url=joburl
+                                            :title=job.title
+                                            :description=job.description
+                                            quote="Apply for this job at the link below."
+                                            :hashtags=job.tech_stack
+                                            inline-template>
+                                <network network="facebook">
+                                    <a-button type="primary" icon="facebook"/>
+                                </network>
 
-                        </social-sharing>
-                        <social-sharing :url=joburl
-                                        :title=job.title
-                                        :description=job.description
-                                        :hashtags=job.tech_stack
-                                        inline-template>
+                            </social-sharing>
+                            <social-sharing :url=joburl
+                                            :title=job.title
+                                            :description=job.description
+                                            :hashtags=job.tech_stack
+                                            inline-template>
 
-                            <network network="twitter">
-                                <a-button type="primary" icon="twitter"/>
-                            </network>
-                        </social-sharing>
+                                <network network="twitter">
+                                    <a-button type="primary" icon="twitter"/>
+                                </network>
+                            </social-sharing>
 
-                    </a-button-group>
-
-
-                </a-row>
+                        </a-button-group>
 
 
-            </a-layout-header>
+                    </a-row>
+
+
+                </a-layout-header>
+            </hide-at>
         </a-affix>
 
         <a-drawer
@@ -125,6 +137,7 @@
     import '../../assets/css/vuecal.css'
     import moment from 'moment';
     import UsersService from '@/services/UsersService'
+    import {hideAt, showAt} from 'vue-breakpoints'
 
 
     export default {
@@ -154,7 +167,7 @@
         },
         components: {
             ACol,
-            'vue-cal': VueCal,
+            'vue-cal': VueCal, hideAt, showAt
 
 
         },

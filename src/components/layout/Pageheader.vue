@@ -1,18 +1,18 @@
 <template>
     <div>
+
         <show-at breakpoint="mediumAndBelow">
             <a-layout-header :style="{width: '100%',backgroundColor:'#ffffff',height:'5rem',padding: '1px 30px 0',
             borderBottom: '1px solid #e8e8e8'}">
                 <router-link to="/">
-                <img v-bind:style="logo"
-                 style="width: 120px;height: 31px;margin-top: 1rem;margin-bottom: 6%;margin-left: 9%"
-                 v-bind:src="defaultlogo"
-            >
+                    <img v-bind:style="logo"
+                         style="width: 120px;height: 31px;margin-top: 1rem;margin-bottom: 6%;margin-left: 9%"
+                         v-bind:src="defaultlogo"
+                    >
                 </router-link>
 
 
-
-        </a-layout-header>
+            </a-layout-header>
         </show-at>
         <a-affix offsetTop="this.top">
         <hide-at breakpoint="mediumAndBelow">

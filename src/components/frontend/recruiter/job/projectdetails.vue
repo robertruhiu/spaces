@@ -8,14 +8,14 @@
 
             <a-layout-content>
                 <Jobheader/>
-                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
+                <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',
                 marginTop:'2%',marginLeft: '1%',marginRight:'1%' }">
 
                     <a-row gutter="8">
                         <a-col span="14">
 
 
-                            <div v-if="project.hasvideo === false" >
+                            <div v-if="project.hasvideo === false">
                                 <div v-if="project.projectimage1 "><img style="width: 100%"
                                                                         :src="project.projectimage1"/></div>
 
@@ -44,7 +44,7 @@
                                     <li v-if="project.requirement7">{{project.requirement7}}</li>
                                     <li v-if="project.requirement8">{{project.requirement8}}</li>
                                     <li v-if="project.requirement9">{{project.requirement9}}</li>
-                                    <li v-if="project.requirement10">{{project.requirement10}}</li>
+                                    <li v-if="project.requirement10"><p>{{project.requirement10}}</p>></li>
 
 
                                 </ol>
@@ -133,7 +133,10 @@
 
                     })
                     .catch(error => {
-                        this.$router.push({name: 'projectlist', params: {jobId:this.job.id,applicationId:this.ApplicationId}});
+                        this.$router.push({
+                            name: 'projectlist',
+                            params: {jobId: this.job.id, applicationId: this.ApplicationId}
+                        });
                         return error
                     })
 
@@ -150,11 +153,16 @@
                 };
 
                 Marketplace.pickreject(application, {test_stage: 'invite_sent', project: project}, auth)
-                    .then(
-                        this.$router.push({
-                            name: 'job',
-                            params: {jobId: job}
-                        })
+                    .then(resp => {
+                            Marketplace.projectemail(resp.data.id, auth)
+                                .then(
+                                    this.$router.push({
+                                        name: 'job',
+                                        params: {jobId: job}
+                                    })
+                                )
+
+                        }
                     )
                     .catch()
 
