@@ -403,6 +403,9 @@
 
 
                         </template>
+                         <a-alert
+                                 message="Resource submitted will be first verified by moderators before appearing on the resources list"
+                                 type="info"/>
                         <a-form
                                 :form="form"
 

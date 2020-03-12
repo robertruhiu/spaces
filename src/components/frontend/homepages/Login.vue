@@ -138,8 +138,8 @@
         },
         data() {
             return {
-                email: '',
-                password: '',
+                email: 'codeln.workspaces@gmail.com',
+                password: 'Pokerface1994',
                 emailnull: null,
                 passwordnull: null,
                 error: null,
