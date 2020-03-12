@@ -21,17 +21,20 @@ export default {
     developerprojects(framework,auth) {
         return Api().get(`projects/developerprojects/${framework}`, auth)
     },
-    developerprojectreport(developer_id, project_id, auth){
+    developerprojectreport(developer_id, project_id, auth) {
         return Api().get(`projects/developerprojectreport/${developer_id}/${project_id}/`, auth)
     },
-    getverified(auth){
-        return Api().get('projects/frameworks',auth)
+    getverified(auth) {
+        return Api().get('projects/frameworks', auth)
     },
-    selfverifyproject(developer_id,framework,auth){
-        return Api().get(`projects/selfverifyproject/${developer_id}/${framework}`,auth)
+    selfverifyproject(developer_id, framework, auth) {
+        return Api().get(`projects/selfverifyproject/${developer_id}/${framework}`, auth)
     },
-    selfassessprojectcreate(currentAssess,auth) {
-        return Api().post('createassess',currentAssess, auth)
+    basicproject(developer_id, framework, auth) {
+        return Api().get(`projects/basicproject/${developer_id}/${framework}`, auth)
+    },
+    selfassessprojectcreate(currentAssess, auth) {
+        return Api().post('createassess', currentAssess, auth)
     },
     myprojects(dev_id, auth) {
         return Api().get(`myprojects/${dev_id}`, auth)
@@ -39,7 +42,7 @@ export default {
     testcenters(dev_id, auth) {
         return Api().get(`mytestcenters/${dev_id}`, auth)
     },
-    myprojectdetails(assessmentapplication_id,auth) {
+    myprojectdetails(assessmentapplication_id, auth) {
         return Api().get(`myprojectdetails/${assessmentapplication_id}`, auth)
     },
     myprojectdetailspatch(assessmentapplication_id,currentAssess,auth) {

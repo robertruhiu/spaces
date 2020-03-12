@@ -1,5 +1,5 @@
 <template>
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh;" >
+    <a-layout id="components-layout-demo-side" style="min-height: 100vh;">
         <CandidateSider/>
         <a-layout>
 
@@ -31,12 +31,12 @@
                     <a-row :gutter="16" style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
 
 
-                        <router-link to="/assessment">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                               :md="{span: 10, offset: 2 }"
+                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                                <a-row class="ant-card actioncards">
+                            <a-row class="ant-card actioncards">
+                                <router-link to="/assessment" style="color: black">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/check1.svg">
@@ -49,18 +49,20 @@
 
 
                                     </a-col>
+                                </router-link>
 
 
-                                </a-row>
+                            </a-row>
 
-                            </a-col>
-                        </router-link>
-                        <router-link to="/manageapplications">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+                        </a-col>
 
-                                <a-row class="ant-card actioncards">
+
+                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                               :md="{span: 10, offset: 2 }"
+                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+
+                            <a-row class="ant-card actioncards">
+                                <router-link to="/manageapplications" style="color: black">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/resume.svg">
@@ -72,18 +74,20 @@
 
 
                                     </a-col>
+                                </router-link>
 
 
-                                </a-row>
+                            </a-row>
 
-                            </a-col>
-                        </router-link>
-                        <router-link to="/jobs">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+                        </a-col>
 
-                                <a-row class="ant-card actioncards">
+
+                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                               :md="{span: 10, offset: 2 }"
+                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+
+                            <a-row class="ant-card actioncards">
+                                <router-link to="/jobs" style="color: black">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/board.svg">
@@ -96,18 +100,20 @@
 
 
                                     </a-col>
+                                </router-link>
 
 
-                                </a-row>
+                            </a-row>
 
-                            </a-col>
-                        </router-link>
-                        <router-link to="/portfolio">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+                        </a-col>
 
-                                <a-row class="ant-card actioncards">
+
+                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                               :md="{span: 10, offset: 2 }"
+                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+
+                            <a-row class="ant-card actioncards">
+                                <router-link to="/portfolio" style="color:black">
                                     <a-col span="24">
                                         <div style="text-align: center">
                                             <img class="poolavatar" src="../../../assets/images/curriculum.svg">
@@ -120,19 +126,104 @@
 
 
                                     </a-col>
+                                </router-link>
+
+
+                            </a-row>
+
+                        </a-col>
+                        <div v-if="loading">
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }"
+                            >
+
+                                <a-row class="ant-card actioncards">
+
+                                    <a-col span="24">
+                                        <div style="text-align: center">
+                                            <img class="poolavatar" src="../../../assets/images/csa.svg">
+                                        </div>
+
+                                    </a-col>
+                                    <a-col span="24" style="text-align: center">
+                                        <p class="ant-card-head-title" style="font-weight: bold;color: gainsboro">
+                                            Developer skill
+                                            bridging</p>
+                                        <p style="margin: 0;color: gainsboro">Play n learn with coding activities</p>
+
+
+                                    </a-col>
 
 
                                 </a-row>
 
                             </a-col>
-                        </router-link>
+
+                        </div>
+                        <div v-else>
+                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                   :md="{span: 10, offset: 2 }"
+                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }"
+                                   v-if="currentUserProfile.csa">
+
+                                <a-row class="ant-card actioncards">
+                                    <router-link to="/bridgesdashboard" style="color: black">
+                                        <a-col span="24">
+                                            <div style="text-align: center">
+                                                <img class="poolavatar" src="../../../assets/images/csa.svg">
+                                            </div>
+
+                                        </a-col>
+                                        <a-col span="24" style="text-align: center">
+                                            <p class="ant-card-head-title" style="font-weight: bold">Developer skill
+                                                bridging</p>
+                                            <p style="margin: 0;">Play n learn with coding activities</p>
+
+
+                                        </a-col>
+                                    </router-link>
+
+
+                                </a-row>
+
+                            </a-col>
+
+
+                            <a @click="JoinCSA" v-else>
+                                <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                                       :md="{span: 10, offset: 2 }"
+                                       :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+
+                                    <a-row class="ant-card actioncards">
+                                        <a-col span="24">
+                                            <div style="text-align: center">
+                                                <img class="poolavatar" src="../../../assets/images/csa.svg">
+                                            </div>
+
+                                        </a-col>
+                                        <a-col span="24" style="text-align: center">
+                                            <p class="ant-card-head-title" style="font-weight: bold;color: black">Join
+                                                the
+                                                Developer
+                                                skill bridging </p>
+                                            <p style="margin: 0;color: black">Play n learn with coding activities</p>
+
+
+                                        </a-col>
+
+
+                                    </a-row>
+
+                                </a-col>
+                            </a>
+                        </div>
 
 
                     </a-row>
 
-                </div>
-                <br>
 
+                </div>
 
 
             </a-layout-content>
@@ -157,6 +248,8 @@
             return {
                 currentUserProfile: {},
                 myjobs: [],
+                loading: false
+
 
             }
         },
@@ -171,9 +264,13 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
+
             if (this.$store.state.user.pk) {
+                this.loading = true
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.loading = false
                 this.myjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
+
             }
 
 
@@ -192,7 +289,7 @@
                 }
 
 
-                UsersService.updatepatch(this.$store.state.user.pk, {available:this.currentUserProfile.available}, auth)
+                UsersService.updatepatch(this.$store.state.user.pk, {available: this.currentUserProfile.available}, auth)
                     .then(resp => {
 
                         return resp
@@ -208,6 +305,32 @@
 
 
             },
+            JoinCSA() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+
+
+                UsersService.updatepatch(this.$store.state.user.pk, {csa: true}, auth)
+                    .then(resp => {
+
+                        this.$router.push({
+                            name: 'bridgesdashboard'
+                        })
+
+
+                    })
+                    .catch(error => {
+
+                        return error
+
+
+                    });
+
+
+            }
+
         },
     }
 </script>
@@ -259,6 +382,7 @@
         padding: 0.89rem;
         border-radius: 0;
         height: 100%;
+
     }
 
 </style>

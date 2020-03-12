@@ -4,14 +4,17 @@ export default {
     allquizzes(auth) {
         return Api().get('allquizzes', auth)
     },
-    questions(quiz,auth) {
+    allsubjects(auth) {
+        return Api().get('subjects', auth)
+    },
+    questions(quiz, auth) {
         return Api().get(`questions/${quiz}`, auth)
     },
-    takequiz(candidate,quiz,auth){
-        return Api().get(`takequiz/${candidate}/${quiz}`,auth)
+    takequiz(candidate, quiz, auth) {
+        return Api().get(`takequiz/${candidate}/${quiz}`, auth)
     },
-    postanswer(instance,auth){
-        return Api().post('postanswer',instance, auth)
+    postanswer(instance, auth) {
+        return Api().post('postanswer', instance, auth)
 
     },
     score(candidate,quiz,auth){

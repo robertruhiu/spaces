@@ -172,13 +172,15 @@
                                     .then(response => {
                                         this.$store.dispatch('setUsertype', response.data.user_type)
                                         this.$store.dispatch('setUser_id', response.data.user)
+                                        if (response.data.csa) {
+                                            this.$store.dispatch('setCsa', true)
+                                        }
 
                                         if (response.data.stage === 'complete') {
                                             if (this.$store.state.usertype === 'developer') {
                                                 this.$router.push({
-                                                        name: 'developer'
-                                                    })
-
+                                                    name: 'developer'
+                                                })
 
 
                                             } else {

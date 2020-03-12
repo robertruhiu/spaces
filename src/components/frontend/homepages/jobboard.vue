@@ -151,7 +151,8 @@
 
                                     <show-at breakpoint="mediumAndBelow">
                                         <div style="padding: 2%">
-                                            <a-row class="lightshadow" style="height: 13rem;padding: 3%">
+
+                                        <a-row class="lightshadow" style="height: 13rem;padding: 3%">
 
                                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                        :md="{span: 24, offset: 0 }"

@@ -44,6 +44,15 @@ export default {
     newportfolio(Portfolio, auth) {
         return Api().post('newportfolio ', Portfolio, auth)
     },
+    newresource(Resource, auth) {
+        return Api().post('newresource ', Resource, auth)
+    },
+    subjectresources(subject_id, auth) {
+        return Api().get(`subjectresources/${subject_id} `, auth)
+    },
+    resourceslikeupdate(resource_id, path_data, auth) {
+        return Api().patch(`resourceslikeupdate/${resource_id} `, path_data, auth)
+    },
     updateportfolio(portfolio_id, Portfolio, auth) {
         return Api().patch(`updateportfolio/${portfolio_id} `, Portfolio, auth)
     },
@@ -62,6 +71,9 @@ export default {
     },
     unsubscribe(token) {
         return Api().get(`unsubscribe/${token} `)
+    },
+    portfoliolikeupdate(portfolio_id, path_data, auth) {
+        return Api().patch(`portfoliolikeupdate/${portfolio_id} `, path_data, auth)
     },
 
 

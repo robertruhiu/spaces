@@ -9,7 +9,7 @@
                 <Jobheader/>
 
 
-                <div :style="{ padding: '4px 20px', background: '#fff', minHeight: '80vh',maxWidth:'72rem' }">
+                <div :style="{ padding: '4px 10px', background: '#fff', minHeight: '80vh',maxWidth:'72rem' }">
                     <div>
                         <a-row style="padding-bottom: 1%">
                             <a-col span="20">
@@ -112,39 +112,38 @@
 
                         </span>
                         </hide-at>
-
-
-                        <a-tabs defaultActiveKey="1"
-                                style="z-index: 0;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                            <!------allapplicants tabs  ------>
-                            <a-tab-pane key="1" style="">
+                        <hide-at breakpoint="mediumAndBelow">
+                            <a-tabs defaultActiveKey="1"
+                                    style="z-index: 0;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                <!------allapplicants tabs  ------>
+                                <a-tab-pane key="1" style="">
                                 <span slot="tab">
                                     <a-icon type="usergroup-add"/>
                                     Applicants
                                 </span>
-                                <div style="margin-left:0">
-                                    <a-row :gutter="16">
+                                    <div style="margin-left:0">
+                                        <a-row :gutter="16">
 
-                                        <a-col :span="24"
-                                               style="padding-bottom: 1%;padding-right: 2%">
-                                            <a-tabs defaultActiveKey="1" tabPosition=left
-                                                    style="z-index: 0;min-height: 350px">
-                                                <!------allapplicants stage ------>
-                                                <a-tab-pane key="1">
+                                            <a-col :span="24"
+                                                   style="padding-bottom: 1%;padding-right: 2%">
+                                                <a-tabs defaultActiveKey="1" tabPosition=left
+                                                        style="z-index: 0;min-height: 350px">
+                                                    <!------allapplicants stage ------>
+                                                    <a-tab-pane key="1">
                                                     <span slot="tab" class="v-step-0">
                                                         Active Applicants
                                                         <a-tag color="blue">{{pickedapplicants.length}}</a-tag>
                                                     </span>
-                                                    <div style="text-align: center" v-if="waiting">
-                                                        <a-spin/>
+                                                        <div style="text-align: center" v-if="waiting">
+                                                            <a-spin/>
 
-                                                    </div>
+                                                        </div>
 
-                                                    <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
+                                                        <a-tabs v-else defaultActiveKey="1" style="z-index: 0;">
 
-                                                        <!-------active  candidates-------->
-                                                        <a-tab-pane v-if="active"
-                                                                    key="1">
+                                                            <!-------active  candidates-------->
+                                                            <a-tab-pane v-if="active"
+                                                                        key="1">
                                                             <span slot="tab">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
@@ -157,36 +156,36 @@
                                                             </span>
 
 
-                                                            <a-table :dataSource="pickedapplicants"
-                                                                     size="middle">
+                                                                <a-table :dataSource="pickedapplicants"
+                                                                         size="middle">
 
-                                                                <!-----name--------->
-                                                                <a-table-column
-                                                                        dataIndex="name"
-                                                                        key="name"
-                                                                        width="10%"
+                                                                    <!-----name--------->
+                                                                    <a-table-column
+                                                                            dataIndex="name"
+                                                                            key="name"
+                                                                            width="10%"
 
 
-                                                                >
-                                                                    <span slot="title">Name</span>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <span slot="title">Name</span>
+                                                                        <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}} {{record.last_name}}
                                                             <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----profile--------->
-                                                                <a-table-column
-                                                                        dataIndex="profile"
-                                                                        key="profile"
-                                                                        width="10%"
+                                                                    <!-----profile--------->
+                                                                    <a-table-column
+                                                                            dataIndex="profile"
+                                                                            key="profile"
+                                                                            width="10%"
 
 
-                                                                >
-                                                                    <div style="" slot="title">User profile</div>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <div style="" slot="title">User profile</div>
+                                                                        <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
                                                             <router-link
                                                                     style="text-decoration: none"
@@ -196,41 +195,41 @@
                                                             </router-link>
                                                             <!--                                                            <a  @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})" target='_blank'>profile</a>-->
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----skills--------->
-                                                                <a-table-column
+                                                                    <!-----skills--------->
+                                                                    <a-table-column
 
-                                                                        dataIndex="tags"
-                                                                        key="tags"
-                                                                        width="20%"
+                                                                            dataIndex="tags"
+                                                                            key="tags"
+                                                                            width="20%"
 
-                                                                >
-                                                                    <div style="margin-left: 40%" slot="title">
-                                                                        Skills
-                                                                    </div>
-                                                                    <template slot-scope="tags">
-                                                                        <div style="text-align: center">
+                                                                    >
+                                                                        <div style="margin-left: 40%" slot="title">
+                                                                            Skills
+                                                                        </div>
+                                                                        <template slot-scope="tags">
+                                                                            <div style="text-align: center">
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                            </div>
+                                                                        </template>
+                                                                    </a-table-column>
+
+                                                                    <!-----stage--------->
+                                                                    <a-table-column
+
+                                                                            dataIndex="stage"
+                                                                            key="stage"
+                                                                            width="20%"
+
+                                                                    >
+                                                                        <div style="margin-left: 25%" slot="title">Stage
                                                                         </div>
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----stage--------->
-                                                                <a-table-column
-
-                                                                        dataIndex="stage"
-                                                                        key="stage"
-                                                                        width="20%"
-
-                                                                >
-                                                                    <div style="margin-left: 25%" slot="title">Stage
-                                                                    </div>
-                                                                    <template slot-scope="text, record">
+                                                                        <template slot-scope="text, record">
                                                         <span style="margin-left: 25%">
                                                             <a-tag v-if="record.stage === 'active'"
                                                                    color="#8BC34A"
@@ -246,68 +245,68 @@
                                                                    color="#953D66"
                                                                    style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
                                                         </span>
-                                                                    </template>
+                                                                        </template>
 
-                                                                </a-table-column>
+                                                                    </a-table-column>
 
-                                                                <!-----action--------->
-                                                                <a-table-column
-                                                                        title="action"
-                                                                        width="10%"
-
-
-                                                                >
-
-                                                                    <template slot-scope="text,record">
-                                                                        <div v-if="record.stage ==='active'">
-                                                                            <a-dropdown>
-                                                                                <a-menu slot="overlay">
-                                                                                    <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,1)">
-                                                                                        <a-icon
-                                                                                                type="codepen"/>
-                                                                                        assign project test
-                                                                                    </a-menu-item>
-                                                                                    <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,2)">
-                                                                                        <a-icon
-                                                                                                type="calendar"/>
-                                                                                        interview candidate
-                                                                                    </a-menu-item>
-                                                                                    <a-menu-item
-                                                                                            @click="handleMenuClick(record.action,record.profile,3)">
-                                                                                        <a-icon
-                                                                                                type="close"/>
-                                                                                        reject candidate
-                                                                                    </a-menu-item>
-                                                                                </a-menu>
-                                                                                <a-button type="primary"
-                                                                                          style="height: 30px">
-                                                                                    choices
-                                                                                    <a-icon type="down"/>
-                                                                                </a-button>
-                                                                            </a-dropdown>
-
-                                                                        </div>
-                                                                        <div v-else>
-                                                                            --
-
-                                                                        </div>
+                                                                    <!-----action--------->
+                                                                    <a-table-column
+                                                                            title="action"
+                                                                            width="10%"
 
 
-                                                                    </template>
+                                                                    >
+
+                                                                        <template slot-scope="text,record">
+                                                                            <div v-if="record.stage ==='active'">
+                                                                                <a-dropdown>
+                                                                                    <a-menu slot="overlay">
+                                                                                        <a-menu-item
+                                                                                                @click="handleMenuClick(record.action,record.profile,1)">
+                                                                                            <a-icon
+                                                                                                    type="codepen"/>
+                                                                                            assign project test
+                                                                                        </a-menu-item>
+                                                                                        <a-menu-item
+                                                                                                @click="handleMenuClick(record.action,record.profile,2)">
+                                                                                            <a-icon
+                                                                                                    type="calendar"/>
+                                                                                            interview candidate
+                                                                                        </a-menu-item>
+                                                                                        <a-menu-item
+                                                                                                @click="handleMenuClick(record.action,record.profile,3)">
+                                                                                            <a-icon
+                                                                                                    type="close"/>
+                                                                                            reject candidate
+                                                                                        </a-menu-item>
+                                                                                    </a-menu>
+                                                                                    <a-button type="primary"
+                                                                                              style="height: 30px">
+                                                                                        choices
+                                                                                        <a-icon type="down"/>
+                                                                                    </a-button>
+                                                                                </a-dropdown>
+
+                                                                            </div>
+                                                                            <div v-else>
+                                                                                --
+
+                                                                            </div>
 
 
-                                                                </a-table-column>
+                                                                        </template>
 
 
-                                                            </a-table>
+                                                                    </a-table-column>
 
-                                                        </a-tab-pane>
 
-                                                        <!-------new  candidates-------->
-                                                        <a-tab-pane v-if="newapplicant.length >0"
-                                                                    key="2">
+                                                                </a-table>
+
+                                                            </a-tab-pane>
+
+                                                            <!-------new  candidates-------->
+                                                            <a-tab-pane v-if="newapplicant.length >0"
+                                                                        key="2">
                                                             <span slot="tab">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
@@ -318,35 +317,35 @@
 
                                                             </span>
 
-                                                            <a-table :dataSource="newapplicant"
-                                                                     size="middle">
+                                                                <a-table :dataSource="newapplicant"
+                                                                         size="middle">
 
-                                                                <!-----name--------->
-                                                                <a-table-column
-                                                                        dataIndex="name"
-                                                                        key="name"
-                                                                        width="10%"
+                                                                    <!-----name--------->
+                                                                    <a-table-column
+                                                                            dataIndex="name"
+                                                                            key="name"
+                                                                            width="10%"
 
 
-                                                                >
-                                                                    <span slot="title">Name</span>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <span slot="title">Name</span>
+                                                                        <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}}
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----profile--------->
-                                                                <a-table-column
-                                                                        dataIndex="profile"
-                                                                        key="profile"
-                                                                        width="10%"
+                                                                    <!-----profile--------->
+                                                                    <a-table-column
+                                                                            dataIndex="profile"
+                                                                            key="profile"
+                                                                            width="10%"
 
 
-                                                                >
-                                                                    <div slot="title">User profile</div>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <div slot="title">User profile</div>
+                                                                        <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
                                                             <router-link
                                                                     style="text-decoration: none"
@@ -356,107 +355,107 @@
                                                             </router-link>
                                                             <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----skills--------->
-                                                                <a-table-column
+                                                                    <!-----skills--------->
+                                                                    <a-table-column
 
-                                                                        dataIndex="tags"
-                                                                        key="tags"
-                                                                        width="25%"
+                                                                            dataIndex="tags"
+                                                                            key="tags"
+                                                                            width="25%"
 
-                                                                >
-                                                                    <div style="margin-left: 33%" slot="title">
-                                                                        Skills
-                                                                    </div>
-                                                                    <template slot-scope="tags">
-                                                                        <div style="text-align: center">
+                                                                    >
+                                                                        <div style="margin-left: 33%" slot="title">
+                                                                            Skills
+                                                                        </div>
+                                                                        <template slot-scope="tags">
+                                                                            <div style="text-align: center">
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                            </div>
+
+                                                                        </template>
+                                                                    </a-table-column>
+
+                                                                    <!-----stage--------->
+                                                                    <a-table-column
+
+                                                                            dataIndex="stage"
+                                                                            key="stage"
+                                                                            width="20%"
+
+                                                                    >
+                                                                        <div style="margin-left: 25%" slot="title">Stage
                                                                         </div>
-
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----stage--------->
-                                                                <a-table-column
-
-                                                                        dataIndex="stage"
-                                                                        key="stage"
-                                                                        width="20%"
-
-                                                                >
-                                                                    <div style="margin-left: 25%" slot="title">Stage
-                                                                    </div>
-                                                                    <template slot-scope="text, record">
+                                                                        <template slot-scope="text, record">
                                                         <span style="margin-left: 25%">
                                                             <!------------stage (new,active,test,interview,offer,hire)---------------->
                                                             <a-tag color="#EA6A47"
                                                                    style="text-align: center;">{{record.stage}}</a-tag>
 
                                                         </span>
-                                                                    </template>
+                                                                        </template>
 
-                                                                </a-table-column>
+                                                                    </a-table-column>
 
-                                                                <!-----action--------->
-                                                                <a-table-column
-                                                                        dataIndex="action"
-                                                                        key="action"
-                                                                        width="20%"
+                                                                    <!-----action--------->
+                                                                    <a-table-column
+                                                                            dataIndex="action"
+                                                                            key="action"
+                                                                            width="20%"
 
 
-                                                                >
-                                                                    <div style="margin-left: 10%" slot="title">
-                                                                        Pick/Reject
-                                                                    </div>
-                                                                    <template slot-scope="text,record">
-                                                                        <div v-if="currentUserProfile.user.is_staff">
-                                                                            <a-button-group>
-                                                                                <a-button
-                                                                                        @click="pickrejectAdmin(record.action,record.profile,true,record.name)"
-                                                                                        type="primary">pick
-                                                                                </a-button>
-                                                                                <a-button
-                                                                                        @click="pickrejectAdmin(record.action,record.profile,false,record.name)">
-                                                                                    reject
-                                                                                </a-button>
-
-                                                                            </a-button-group>
-
+                                                                    >
+                                                                        <div style="margin-left: 10%" slot="title">
+                                                                            Pick/Reject
                                                                         </div>
-                                                                        <div v-else>
-                                                                            <div v-if="record.carted">
-                                                                                --
+                                                                        <template slot-scope="text,record">
+                                                                            <div v-if="currentUserProfile.user.is_staff">
+                                                                                <a-button-group>
+                                                                                    <a-button
+                                                                                            @click="pickrejectAdmin(record.action,record.profile,true,record.name)"
+                                                                                            type="primary">pick
+                                                                                    </a-button>
+                                                                                    <a-button
+                                                                                            @click="pickrejectAdmin(record.action,record.profile,false,record.name)">
+                                                                                        reject
+                                                                                    </a-button>
+
+                                                                                </a-button-group>
+
+                                                                            </div>
+                                                                            <div v-else>
+                                                                                <div v-if="record.carted">
+                                                                                    --
+                                                                                </div>
+
+                                                                                <a-button-group v-else>
+                                                                                    <a-button
+                                                                                            @click="pickrejectClick(record.action,record.profile,true,record.name)"
+                                                                                            type="primary">pick
+                                                                                    </a-button>
+                                                                                    <a-button
+                                                                                            @click="pickrejectClick(record.action,record.profile,false,record.name)">
+                                                                                        reject
+                                                                                    </a-button>
+
+                                                                                </a-button-group>
                                                                             </div>
 
-                                                                            <a-button-group v-else>
-                                                                                <a-button
-                                                                                        @click="pickrejectClick(record.action,record.profile,true,record.name)"
-                                                                                        type="primary">pick
-                                                                                </a-button>
-                                                                                <a-button
-                                                                                        @click="pickrejectClick(record.action,record.profile,false,record.name)">
-                                                                                    reject
-                                                                                </a-button>
-
-                                                                            </a-button-group>
-                                                                        </div>
-
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
 
-                                                            </a-table>
+                                                                </a-table>
 
-                                                        </a-tab-pane>
+                                                            </a-tab-pane>
 
-                                                        <!-------system recommmended candidates-------->
-                                                        <a-tab-pane v-if="recommended"
-                                                                    key="3">
+                                                            <!-------system recommmended candidates-------->
+                                                            <a-tab-pane v-if="recommended"
+                                                                        key="3">
                                                             <span slot="tab">
                                                                 <a-tooltip placement="topLeft">
                                                                     <template slot="title">
@@ -469,37 +468,37 @@
                                                             </span>
 
 
-                                                            <a-table :dataSource="recommmedcandidates"
+                                                                <a-table :dataSource="recommmedcandidates"
 
-                                                                     size="middle">
+                                                                         size="middle">
 
-                                                                <!-----name--------->
-                                                                <a-table-column
-                                                                        dataIndex="name"
-                                                                        key="name"
-                                                                        width="10%"
+                                                                    <!-----name--------->
+                                                                    <a-table-column
+                                                                            dataIndex="name"
+                                                                            key="name"
+                                                                            width="10%"
 
 
-                                                                >
-                                                                    <span slot="title">Name</span>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <span slot="title">Name</span>
+                                                                        <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}}
                                                             <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----profile--------->
-                                                                <a-table-column
-                                                                        dataIndex="profile"
-                                                                        key="profile"
-                                                                        width="10%"
+                                                                    <!-----profile--------->
+                                                                    <a-table-column
+                                                                            dataIndex="profile"
+                                                                            key="profile"
+                                                                            width="10%"
 
 
-                                                                >
-                                                                    <div slot="title">User profile</div>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <div slot="title">User profile</div>
+                                                                        <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
                                                             <router-link
                                                                     style="text-decoration: none"
@@ -509,96 +508,96 @@
                                                             </router-link>
                                                             <!--                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})" target='_blank'>profile</a>-->
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----skills--------->
-                                                                <a-table-column
+                                                                    <!-----skills--------->
+                                                                    <a-table-column
 
-                                                                        dataIndex="tags"
-                                                                        key="tags"
-                                                                        width="20%"
+                                                                            dataIndex="tags"
+                                                                            key="tags"
+                                                                            width="20%"
 
-                                                                >
-                                                                    <div style="text-align: center;" slot="title">
-                                                                        Skills
-                                                                    </div>
-                                                                    <template slot-scope="tags">
-                                                                        <div style="text-align: center;">
+                                                                    >
+                                                                        <div style="text-align: center;" slot="title">
+                                                                            Skills
+                                                                        </div>
+                                                                        <template slot-scope="tags">
+                                                                            <div style="text-align: center;">
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                            </div>
+
+                                                                        </template>
+                                                                    </a-table-column>
+
+                                                                    <!-----stage--------->
+                                                                    <a-table-column
+
+                                                                            dataIndex="stage"
+                                                                            key="stage"
+                                                                            width="20%"
+
+                                                                    >
+                                                                        <div style="margin-left: 15%" slot="title">Stage
                                                                         </div>
-
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----stage--------->
-                                                                <a-table-column
-
-                                                                        dataIndex="stage"
-                                                                        key="stage"
-                                                                        width="20%"
-
-                                                                >
-                                                                    <div style="margin-left: 15%" slot="title">Stage
-                                                                    </div>
-                                                                    <template slot-scope="text, record">
+                                                                        <template slot-scope="text, record">
                                                         <span style="margin-left: 5%">
 
                                                             <a-tag color="#1C4E80"
                                                                    style="">{{record.stage}}</a-tag>
 
                                                         </span>
-                                                                    </template>
+                                                                        </template>
 
-                                                                </a-table-column>
+                                                                    </a-table-column>
 
-                                                                <!-----action--------->
-                                                                <a-table-column
-                                                                        dataIndex="action"
-                                                                        key="action"
-                                                                        width="20%"
-
-
-                                                                >
-                                                                    <div style="margin-left: 10%" slot="title">
-                                                                        Pick
-                                                                    </div>
-                                                                    <template slot-scope="text,record">
-                                                                        <div v-if="currentUserProfile.user.is_staff">
-                                                                            <div style="margin-left: 5%">
-                                                                                <a-button :size="small"
-                                                                                          @click="pickrecommedationAdmin(job.id,record.profile,2)"
-                                                                                          type="primary">pick
-                                                                                </a-button>
+                                                                    <!-----action--------->
+                                                                    <a-table-column
+                                                                            dataIndex="action"
+                                                                            key="action"
+                                                                            width="20%"
 
 
-                                                                            </div>
+                                                                    >
+                                                                        <div style="margin-left: 10%" slot="title">
+                                                                            Pick
                                                                         </div>
-                                                                        <div v-else>
-                                                                            <div style="margin-left: 5%">
-                                                                                <a-button :size="small"
-                                                                                          @click="pickrecommedationClick(job.id,record.profile,2)"
-                                                                                          type="primary">pick
-                                                                                </a-button>
+                                                                        <template slot-scope="text,record">
+                                                                            <div v-if="currentUserProfile.user.is_staff">
+                                                                                <div style="margin-left: 5%">
+                                                                                    <a-button :size="small"
+                                                                                              @click="pickrecommedationAdmin(job.id,record.profile,2)"
+                                                                                              type="primary">pick
+                                                                                    </a-button>
 
 
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                            <div v-else>
+                                                                                <div style="margin-left: 5%">
+                                                                                    <a-button :size="small"
+                                                                                              @click="pickrecommedationClick(job.id,record.profile,2)"
+                                                                                              type="primary">pick
+                                                                                    </a-button>
 
-                                                                    </template>
-                                                                </a-table-column>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </template>
+                                                                    </a-table-column>
 
 
-                                                            </a-table>
+                                                                </a-table>
 
 
-                                                        </a-tab-pane>
-                                                        <!-------rejected candidates-------->
-                                                        <a-tab-pane v-if="rejectedcandidates"
-                                                                    key="4">
+                                                            </a-tab-pane>
+                                                            <!-------rejected candidates-------->
+                                                            <a-tab-pane v-if="rejectedcandidates"
+                                                                        key="4">
                                                             <span slot="tab">
 
                                                                     Rejected Candidates
@@ -607,37 +606,37 @@
                                                             </span>
 
 
-                                                            <a-table :dataSource="rejectedcandidateslist"
+                                                                <a-table :dataSource="rejectedcandidateslist"
 
-                                                                     size="middle">
+                                                                         size="middle">
 
-                                                                <!-----name--------->
-                                                                <a-table-column
-                                                                        dataIndex="name"
-                                                                        key="name"
-                                                                        width="25%"
+                                                                    <!-----name--------->
+                                                                    <a-table-column
+                                                                            dataIndex="name"
+                                                                            key="name"
+                                                                            width="25%"
 
 
-                                                                >
-                                                                    <span slot="title">Name</span>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <span slot="title">Name</span>
+                                                                        <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}}
                                                             <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----profile--------->
-                                                                <a-table-column
-                                                                        dataIndex="profile"
-                                                                        key="profile"
-                                                                        width="25%"
+                                                                    <!-----profile--------->
+                                                                    <a-table-column
+                                                                            dataIndex="profile"
+                                                                            key="profile"
+                                                                            width="25%"
 
 
-                                                                >
-                                                                    <div slot="title">User profile</div>
-                                                                    <template slot-scope="text,record">
+                                                                    >
+                                                                        <div slot="title">User profile</div>
+                                                                        <template slot-scope="text,record">
                                                         <span style="margin-left: 15%">
                                                             <router-link
                                                                     style="text-decoration: none"
@@ -647,103 +646,103 @@
                                                             </router-link>
                                                             <!--                                                            <a @click="navigateTo({name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}})" target='_blank'>profile</a>-->
                                                         </span>
-                                                                    </template>
-                                                                </a-table-column>
+                                                                        </template>
+                                                                    </a-table-column>
 
-                                                                <!-----skills--------->
-                                                                <a-table-column
+                                                                    <!-----skills--------->
+                                                                    <a-table-column
 
-                                                                        dataIndex="tags"
-                                                                        key="tags"
-                                                                        width="25%"
+                                                                            dataIndex="tags"
+                                                                            key="tags"
+                                                                            width="25%"
 
-                                                                >
-                                                                    <div style="text-align: center;" slot="title">
-                                                                        Skills
-                                                                    </div>
-                                                                    <template slot-scope="tags">
-                                                                        <div style="text-align: center;">
+                                                                    >
+                                                                        <div style="text-align: center;" slot="title">
+                                                                            Skills
+                                                                        </div>
+                                                                        <template slot-scope="tags">
+                                                                            <div style="text-align: center;">
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                            </div>
+
+                                                                        </template>
+                                                                    </a-table-column>
+
+                                                                    <!-----stage--------->
+                                                                    <a-table-column
+
+                                                                            dataIndex="stage"
+                                                                            key="stage"
+                                                                            width="25%"
+
+                                                                    >
+                                                                        <div style="text-align: center" slot="title">
+                                                                            Stage
                                                                         </div>
-
-                                                                    </template>
-                                                                </a-table-column>
-
-                                                                <!-----stage--------->
-                                                                <a-table-column
-
-                                                                        dataIndex="stage"
-                                                                        key="stage"
-                                                                        width="25%"
-
-                                                                >
-                                                                    <div style="text-align: center" slot="title">
-                                                                        Stage
-                                                                    </div>
-                                                                    <template slot-scope="text, record">
-                                                                        <div style="text-align: center">
+                                                                        <template slot-scope="text, record">
+                                                                            <div style="text-align: center">
                                                                             <span>
 
                                                             <a-tag color="#1C4E80"
                                                                    style="">{{record.stage}}</a-tag>
 
                                                         </span>
-                                                                        </div>
+                                                                            </div>
 
-                                                                    </template>
+                                                                        </template>
 
-                                                                </a-table-column>
-
-
-                                                            </a-table>
+                                                                    </a-table-column>
 
 
-                                                        </a-tab-pane>
+                                                                </a-table>
 
 
-                                                    </a-tabs>
-                                                </a-tab-pane>
+                                                            </a-tab-pane>
 
-                                                <!------test stage ------>
-                                                <a-tab-pane key="2">
+
+                                                        </a-tabs>
+                                                    </a-tab-pane>
+
+                                                    <!------test stage ------>
+                                                    <a-tab-pane key="2">
                                                     <span slot="tab" class="v-step-1">
                                                         Coding test
                                                         <a-tag color="blue">{{testingstage.length}}</a-tag>
                                                     </span>
 
-                                                    <a-table :dataSource="testingstage" :scroll="{ y: 400 }"
-                                                             size="middle">
+                                                        <a-table :dataSource="testingstage" :scroll="{ y: 400 }"
+                                                                 size="middle">
 
-                                                        <!-----name--------->
-                                                        <a-table-column
-                                                                dataIndex="name"
-                                                                key="name"
-                                                                width="12%"
+                                                            <!-----name--------->
+                                                            <a-table-column
+                                                                    dataIndex="name"
+                                                                    key="name"
+                                                                    width="12%"
 
 
-                                                        >
-                                                            <span slot="title">Name</span>
-                                                            <template slot-scope="text,record">
+                                                            >
+                                                                <span slot="title">Name</span>
+                                                                <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}} {{record.last_name}}
                                                             <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
-                                                            </template>
-                                                        </a-table-column>
+                                                                </template>
+                                                            </a-table-column>
 
-                                                        <!-----profile--------->
-                                                        <a-table-column
-                                                                dataIndex="profile"
-                                                                key="profile"
-                                                                width="10%"
+                                                            <!-----profile--------->
+                                                            <a-table-column
+                                                                    dataIndex="profile"
+                                                                    key="profile"
+                                                                    width="10%"
 
 
-                                                        >
-                                                            <div style="" slot="title">User profile</div>
-                                                            <template slot-scope="text,record">
+                                                            >
+                                                                <div style="" slot="title">User profile</div>
+                                                                <template slot-scope="text,record">
 
                                                         <span style="margin-left: 15%">
                                                             <router-link
@@ -757,48 +756,48 @@
 
                                                             <!--                                                            </a>-->
                                                         </span>
-                                                            </template>
-                                                        </a-table-column>
+                                                                </template>
+                                                            </a-table-column>
 
-                                                        <!-----skills--------->
-                                                        <a-table-column
+                                                            <!-----skills--------->
+                                                            <a-table-column
 
-                                                                dataIndex="tags"
-                                                                key="tags"
-                                                                width="25%"
+                                                                    dataIndex="tags"
+                                                                    key="tags"
+                                                                    width="25%"
 
-                                                        >
-                                                            <div style="margin-left: 33%" slot="title">Skills</div>
-                                                            <template slot-scope="tags">
-                                                                <div style="text-align: center">
+                                                            >
+                                                                <div style="margin-left: 33%" slot="title">Skills</div>
+                                                                <template slot-scope="tags">
+                                                                    <div style="text-align: center">
                                                                     <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
                                                         </span>
+                                                                    </div>
+
+                                                                </template>
+                                                            </a-table-column>
+
+                                                            <!-----project asignment--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="project"
+                                                                    key="project"
+                                                                    width="15%"
+
+                                                            >
+                                                                <div style="" slot="title">
+                                                                    <a-tooltip placement="topLeft">
+                                                                        <template slot="title">
+                                                                            <span>Enables you to easily assign project tests to candidates. Recommended projects are suggested based on the skills on your job.</span>
+                                                                        </template>
+                                                                        Test assigned
+                                                                        <a-icon type="question-circle"/>
+                                                                    </a-tooltip>
+
                                                                 </div>
-
-                                                            </template>
-                                                        </a-table-column>
-
-                                                        <!-----project asignment--------->
-                                                        <a-table-column
-
-                                                                dataIndex="project"
-                                                                key="project"
-                                                                width="15%"
-
-                                                        >
-                                                            <div style="" slot="title">
-                                                                <a-tooltip placement="topLeft">
-                                                                    <template slot="title">
-                                                                        <span>Enables you to easily assign project tests to candidates. Recommended projects are suggested based on the skills on your job.</span>
-                                                                    </template>
-                                                                    Test assigned
-                                                                    <a-icon type="question-circle"/>
-                                                                </a-tooltip>
-
-                                                            </div>
-                                                            <template slot-scope="text,record">
+                                                                <template slot-scope="text,record">
                                                                 <span style="">
                                                                     <router-link v-if="record.project"
                                                                                  style="text-decoration: none"
@@ -807,11 +806,7 @@
                                                                                  target='_blank'>
                                                             {{record.projectname}}
                                                             </router-link>
-                                                                    <!--                                                                    <a style="margin-left: 15%;" v-if="record.project"-->
-                                                                    <!--                                                                       @click="navigateTo({name:'pickedprojectdetails',params:{projectId:record.project,candidateId: record.profile,jobId:job.id,-->
-                                                                    <!--                                                                       applicationId: record.action}})" target='_blank'>-->
-                                                                    <!--                                                                        {{record.projectname}}-->
-                                                                    <!--                                                                    </a>-->
+
 
                                                                     <a-button :size="small"
                                                                               style="background-color: #9c27b0;color: white"
@@ -822,29 +817,29 @@
                                                                 </a-button>
                                                                 </span>
 
-                                                            </template>
+                                                                </template>
 
 
-                                                        </a-table-column>
+                                                            </a-table-column>
 
-                                                        <!-----report--------->
-                                                        <a-table-column
+                                                            <!-----report--------->
+                                                            <a-table-column
 
-                                                                dataIndex="profile"
-                                                                key="report"
-                                                                width="15%"
+                                                                    dataIndex="profile"
+                                                                    key="report"
+                                                                    width="15%"
 
-                                                        >
-                                                            <div slot="title">
-                                                                <a-tooltip placement="topLeft">
-                                                                    <template slot="title">
-                                                                        <span>Easily track the candidate’s progress in the test from invitation, in progress to completion. Upon completion, a report link will appear.</span>
-                                                                    </template>
-                                                                    Test status
-                                                                    <a-icon type="question-circle"/>
-                                                                </a-tooltip>
-                                                            </div>
-                                                            <template slot-scope="text,record">
+                                                            >
+                                                                <div slot="title">
+                                                                    <a-tooltip placement="topLeft">
+                                                                        <template slot="title">
+                                                                            <span>Easily track the candidate’s progress in the test from invitation, in progress to completion. Upon completion, a report link will appear.</span>
+                                                                        </template>
+                                                                        Test status
+                                                                        <a-icon type="question-circle"/>
+                                                                    </a-tooltip>
+                                                                </div>
+                                                                <template slot-scope="text,record">
                                                         <span v-if="record.test_stage " style="margin-left: 20%">
                                                             <span v-if="record.test_stage === 'complete'">
                                                                 <a @click="navigateTo({name:'report',params:{candidateId: record.profile,projectId:record.project}})">
@@ -856,35 +851,944 @@
                                                             </span>
 
                                                         </span>
-                                                                <span v-else style="margin-left: 20%">
+                                                                    <span v-else style="margin-left: 20%">
                                                             --
                                                         </span>
-                                                            </template>
+                                                                </template>
 
-                                                        </a-table-column>
+                                                            </a-table-column>
 
-                                                        <!-----action--------->
-                                                        <a-table-column
-                                                                title="action"
-                                                                width="10%"
+                                                            <!-----action--------->
+                                                            <a-table-column
+                                                                    title="action"
+                                                                    width="10%"
 
 
+                                                            >
+
+                                                                <template slot-scope="text,record">
+
+                                                                    <a-dropdown>
+                                                                        <a-menu slot="overlay">
+
+
+                                                                            <a-menu-item
+
+                                                                                    @click="handleTestMenuClick(record.action,record.profile,2)"
+                                                                            >
+                                                                                <a-icon
+                                                                                        type="calendar"/>
+                                                                                schedule interview
+                                                                            </a-menu-item>
+
+
+                                                                            <a-menu-item
+                                                                                    @click="handleTestMenuClick(record.action,record.profile,4)">
+                                                                                <a-icon
+                                                                                        type="close"/>
+                                                                                reject candidate
+                                                                            </a-menu-item>
+                                                                        </a-menu>
+                                                                        <a-button type="primary"
+                                                                                  style="height: 30px">
+                                                                            choices
+                                                                            <a-icon type="down"/>
+                                                                        </a-button>
+                                                                    </a-dropdown>
+
+
+                                                                </template>
+
+
+                                                            </a-table-column>
+
+
+                                                        </a-table>
+                                                    </a-tab-pane>
+
+                                                    <!------interview stage ------>
+                                                    <a-tab-pane key="3">
+                                                    <span slot="tab" class="v-step-2">
+                                                        Interview
+                                                        <a-tag color="blue">{{interviewstage.length}}</a-tag>
+                                                    </span>
+                                                        <a-alert style="margin-bottom: 1%"
+                                                                 message="Interview notes enables you to write and keep notes on the candidate"
+                                                                 type="info" closeText="Close Now"/>
+                                                        <a-table :dataSource="interviewstage" :scroll="{ y: 400 }"
+                                                                 size="middle">
+
+
+                                                            <!-----name--------->
+                                                            <a-table-column
+                                                                    dataIndex="name"
+                                                                    key="name"
+                                                                    width="12%"
+
+
+                                                            >
+                                                                <span slot="title">Name</span>
+                                                                <template slot-scope="text,record">
+                                                        <span>
+                                                            {{record.name}} {{record.last_name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
+                                                        </span>
+                                                                </template>
+                                                            </a-table-column>
+
+                                                            <!-----profile--------->
+                                                            <a-table-column
+                                                                    dataIndex="profile"
+                                                                    key="profile"
+                                                                    width="10%"
+
+
+                                                            >
+                                                                <div style="" slot="title">User profile</div>
+                                                                <template slot-scope="text,record">
+                                                        <span style="margin-left: 15%">
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
+                                                        </span>
+                                                                </template>
+                                                            </a-table-column>
+
+                                                            <!-----skills--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="tags"
+                                                                    key="tags"
+                                                                    width="25%"
+
+                                                            >
+                                                                <div style="margin-left: 33%" slot="title">Skills</div>
+                                                                <template slot-scope="tags">
+                                                                    <div style="text-align: center">
+                                                                    <span>
+                                                            <a-tag v-for="tag in tags" color="blue"
+                                                                   :key="tag">{{tag}}</a-tag>
+                                                        </span>
+                                                                    </div>
+
+                                                                </template>
+                                                            </a-table-column>
+
+                                                            <!-----interview schedule--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="interview"
+                                                                    key="interview"
+                                                                    width="15%"
+
+                                                            >
+                                                                <div style="" slot="title">Interview
+                                                                </div>
+                                                                <template slot-scope="text,record">
+                                                                    <div v-if="record.interviewstatus === 'deleted'"
+                                                                         style="margin-left: 7%">
+                                                                        <a-button :size="small"
+                                                                                  style="background-color: #673AB7;color: white"
+                                                                                  @click="onEventCreate(record.action,record.name)">
+                                                                            <a-icon type="calendar"/>
+                                                                            create
+                                                                        </a-button>
+                                                                    </div>
+                                                                    <div v-else-if="record.interviewstatus === 'cancelled'"
+                                                                         style="margin-left: 7%">
+                                                                        <a-button :size="small"
+                                                                                  style="background-color: #673AB7;color: white"
+                                                                                  @click="onEventCreate(record.action,record.name)">
+                                                                            <a-icon type="calendar"/>
+                                                                            create
+                                                                        </a-button>
+                                                                    </div>
+                                                                    <div v-else-if="record.interviewstatus === null"
+                                                                         style="margin-left: 7%">
+                                                                        <a-button :size="small"
+                                                                                  style="background-color: #673AB7;color: white"
+                                                                                  @click="onEventCreate(record.action,record.name)">
+                                                                            <a-icon type="calendar"/>
+                                                                            create
+                                                                        </a-button>
+                                                                    </div>
+                                                                    <span v-else style="margin-left: 12%;">
+                                                                    <a-button type="primary" ghost
+                                                                              @click="onEventClick(record.action,record.name,record.interviewstart,record.interviewend,record.color)">
+                                                                        view
+                                                                    </a-button>
+
+
+                                                                </span>
+
+
+                                                                </template>
+
+
+                                                            </a-table-column>
+
+                                                            <!-----interview status--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="interviewstatus"
+                                                                    key="interviewstatus"
+                                                                    width="15%"
+
+                                                            >
+                                                                <div style="" slot="title">Interview status
+                                                                </div>
+                                                                <template slot-scope="text,record">
+                                                                    <div style="text-align: center">
+                                                                    <span v-if="record.interviewstatus">
+                                                                        {{record.interviewstatus}}
+                                                                    </span>
+                                                                        <span v-else>
+                                                                    ---
+                                                                </span>
+                                                                    </div>
+
+
+                                                                </template>
+
+
+                                                            </a-table-column>
+
+
+                                                            <a-table-column
+                                                                    title="action"
+                                                                    width="10%"
+
+
+                                                            >
+
+                                                                <template slot-scope="text,record">
+
+                                                                    <a-dropdown>
+                                                                        <a-menu slot="overlay">
+
+
+                                                                            <a-menu-item
+                                                                                    @click="handleInterviewClick(record.action,record.profile,2)">
+                                                                                <a-icon
+                                                                                        type="like"/>
+                                                                                make offer
+                                                                            </a-menu-item>
+                                                                            <a-menu-item
+                                                                                    @click="handleInterviewClick(record.action,record.profile,3)">
+                                                                                <a-icon
+                                                                                        type="close"/>
+                                                                                reject candidate
+                                                                            </a-menu-item>
+                                                                        </a-menu>
+                                                                        <a-button type="primary"
+                                                                                  style="height: 30px">
+                                                                            choices
+                                                                            <a-icon type="down"/>
+                                                                        </a-button>
+                                                                    </a-dropdown>
+
+
+                                                                </template>
+
+
+                                                            </a-table-column>
+
+
+                                                        </a-table>
+                                                    </a-tab-pane>
+
+                                                    <!------offers stage ------>
+                                                    <a-tab-pane key="4">
+                                                    <span slot="tab" class="v-step-3">
+                                                        Offers
+                                                        <a-tag color="blue">{{offerstage.length}}</a-tag>
+                                                    </span>
+                                                        <a-table :dataSource="offerstage" :scroll="{ y: 400 }"
+                                                                 size="middle">
+
+                                                            <!-----name--------->
+                                                            <a-table-column
+                                                                    dataIndex="name"
+                                                                    key="name"
+                                                                    width="12%"
+
+
+                                                            >
+                                                                <span slot="title">Name</span>
+                                                                <template slot-scope="text,record">
+                                                        <span>
+                                                            {{record.name}} {{record.last_name}}
+                                                            <span v-if="record.verified"><a-icon type="check"/></span>
+                                                        </span>
+                                                                </template>
+                                                            </a-table-column>
+
+                                                            <!-----profile--------->
+                                                            <a-table-column
+                                                                    dataIndex="profile"
+                                                                    key="profile"
+                                                                    width="10%"
+
+
+                                                            >
+                                                                <div style="" slot="title">User profile</div>
+                                                                <template slot-scope="text,record">
+                                                        <span style="margin-left: 15%">
+                                                            <router-link
+                                                                    style="text-decoration: none"
+                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
+                                                                    target='_blank'>
+                                                            profile
+                                                            </router-link>
+                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
+                                                        </span>
+                                                                </template>
+                                                            </a-table-column>
+
+
+                                                            <!-----offer letter--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="offerletter"
+                                                                    key="offerletter"
+                                                                    width="10%"
+
+                                                            >
+                                                                <div style="text-align: center" slot="title">Make offer
+                                                                </div>
+                                                                <template slot-scope="text, record">
+                                                                    <div style="text-align: center">
+                                                                        <a-button v-if="record.offerletter === null "
+                                                                                  type="primary" size="small"
+                                                                                  @click="openWidget()">Upload offer
+                                                                            letter
+                                                                        </a-button>
+                                                                        <a v-else :href="record.offerletter"
+                                                                           target="_blank">{{record.offerletter}}</a>
+                                                                    </div>
+
+
+                                                                </template>
+
+                                                            </a-table-column>
+
+                                                            <!-----offer letter status--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="offerstatus"
+                                                                    key="offerstatus"
+                                                                    width="20%"
+
+                                                            >
+                                                                <div style="text-align: center" slot="title">Offer
+                                                                    Status
+                                                                </div>
+                                                                <template slot-scope="text, record">
+                                                                    <div style="text-align: center">
+                                                                    <span v-if="record.offerstatus">
+                                                                    {{record.offerstatus}}
+                                                                </span>
+                                                                        <span v-else>
+                                                                    --
+                                                                </span>
+                                                                    </div>
+
+
+                                                                </template>
+
+                                                            </a-table-column>
+
+                                                            <!-----action--------->
+                                                            <a-table-column
+
+                                                                    width="20%"
+
+
+                                                            >
+                                                                <div style="margin-left: 10%" slot="title">Hire/reject?
+                                                                </div>
+
+                                                                <template slot-scope="text,record">
+                                                                    <a-button-group>
+                                                                        <a-button
+                                                                                @click="pickrejectClick(record.action,record.profile,true)"
+                                                                                type="primary">Hired
+                                                                        </a-button>
+                                                                        <a-button
+                                                                                @click="pickrejectClick(record.action,record.profile,false)">
+                                                                            Rejected
+                                                                        </a-button>
+
+                                                                    </a-button-group>
+                                                                </template>
+
+
+                                                            </a-table-column>
+
+
+                                                        </a-table>
+
+                                                    </a-tab-pane>
+
+                                                    <v-tour name="demo" :steps="steps"></v-tour>
+
+
+                                                </a-tabs>
+
+
+                                            </a-col>
+
+                                        </a-row>
+                                    </div>
+
+                                </a-tab-pane>
+
+
+                                <!------job details tab  ------>
+                                <a-tab-pane key="2" forceRender>
+                                <span slot="tab">
+                                    <a-icon type="profile"/>
+                                    <a-tooltip placement="topLeft">
+                                        <template slot="title">
+                                            <span>Click to edit your job post</span>
+                                        </template>
+                                        Job Details <a-icon type="question-circle"/>
+                                    </a-tooltip>
+
+                                </span>
+                                    <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
+                                        <a-form :form="form"
+                                                @submit="handleSubmit">
+                                            <a-row :gutter="16">
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                    <a-form-item label="Title">
+                                                        <a-input v-model="job.title">
+
+                                                        </a-input>
+                                                    </a-form-item>
+                                                </a-col>
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                    <a-form-item label="Job role">
+                                                        <a-select
+
+                                                                placeholder="Select a option and change input text above"
+                                                                v-model="job.job_role"
                                                         >
+                                                            <a-select-option value="Full Stack Developer">
+                                                                Full Stack Developer
+                                                            </a-select-option>
+                                                            <a-select-option value="Frontend Developer">
+                                                                Frontend Developer
+                                                            </a-select-option>
+                                                            <a-select-option value="Backend  Developer">
+                                                                Backend Developer
+                                                            </a-select-option>
+                                                            <a-select-option value="Android  Developer">
+                                                                Android Developer
+                                                            </a-select-option>
+                                                            <a-select-option value="Graphic Designer">
+                                                                Graphic Designer
+                                                            </a-select-option>
+                                                            <a-select-option value="IOS Developer">
+                                                                IOS Developer
+                                                            </a-select-option>
+                                                            <a-select-option value="Data Scientist">
+                                                                Data Scientist
+                                                            </a-select-option>
+                                                        </a-select>
+                                                    </a-form-item>
 
-                                                            <template slot-scope="text,record">
+
+                                                </a-col>
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                    <a-form-item label="Experience">
+                                                        <a-select
+
+                                                                placeholder="Select a option and change input text above"
+                                                                v-model="job.dev_experience"
+                                                        >
+                                                            <a-select-option value="Entry">
+                                                                Entry
+                                                            </a-select-option>
+                                                            <a-select-option value="Junior">
+                                                                Junior
+                                                            </a-select-option>
+                                                            <a-select-option value="Mid-Level">
+                                                                Mid-Level
+                                                            </a-select-option>
+                                                            <a-select-option value="Senior">
+                                                                Senior
+                                                            </a-select-option>
+
+                                                        </a-select>
+                                                    </a-form-item>
+
+                                                </a-col>
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                    <a-form-item label="Contract type">
+                                                        <a-select
+
+                                                                placeholder="Select a option and change input text above"
+                                                                v-model="job.engagement_type"
+                                                        >
+                                                            <a-select-option value="Full-time">
+                                                                Full-time
+                                                            </a-select-option>
+                                                            <a-select-option value="Part-time">
+                                                                Part-time
+                                                            </a-select-option>
+                                                            <a-select-option value="Contract">
+                                                                Contract
+                                                            </a-select-option>
+                                                            <a-select-option value="Remote">
+                                                                Remote
+                                                            </a-select-option>
+                                                            <a-select-option value="Freelance">
+                                                                Freelance
+                                                            </a-select-option>
+
+                                                        </a-select>
+                                                    </a-form-item>
+
+                                                </a-col>
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                    <a-form-item>
+                                                        <span>Location : {{job.location}}</span>
+                                                        <country-select v-model="job.location"
+                                                                        class="ant-input"
+                                                        />
+                                                    </a-form-item>
+
+                                                </a-col>
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                    <a-form-item label="Salary range ">
+                                                        <a-input v-model="job.remuneration">
+
+                                                        </a-input>
+                                                    </a-form-item>
+
+                                                </a-col>
+                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                       :md="{span: 24, offset: 0 }"
+                                                       :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                                    <a-form-item
+                                                            label="Which tech skills are you looking for? "
+
+                                                    >
+                                                        <template v-for="(tag, index) in tags">
+                                                            <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                                                                <a-tag :key="tag"
+                                                                       :afterClose="() => handleClose(tag)"
+                                                                       color="#2db7f5">
+                                                                    {{`${tag.slice(0, 20)}...`}}
+                                                                </a-tag>
+                                                            </a-tooltip>
+                                                            <a-tag v-else :key="tag" :closable="index >= 0"
+                                                                   :afterClose="() => handleClose(tag)" color="#2db7f5">
+                                                                {{tag}}
+                                                            </a-tag>
+                                                        </template>
+                                                        <a-input
+                                                                v-if="inputVisible"
+                                                                ref="input"
+                                                                type="text"
+                                                                size="small"
+                                                                :style="{ width: '78px' }"
+                                                                :value="inputValue"
+                                                                @change="handleInputChange"
+                                                                @blur="handleInputConfirm"
+                                                                @keyup.enter="handleInputConfirm"
+                                                        />
+                                                        <a-tag v-else @click="showInput"
+                                                               style="background: #fff; borderStyle: dashed;">
+                                                            <a-icon type="plus"/>
+                                                            New Tag
+                                                        </a-tag>
+                                                    </a-form-item>
+                                                </a-col>
+                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                       :md="{span: 12, offset: 0 }"
+                                                       :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                                    <a-form-item :label="deadlineformated">
+
+                                                        <a-date-picker @change="onDate"
+
+
+                                                                       format="YYYY-MM-DD"
+                                                                       :disabledDate="disabledDate"
+
+                                                        />
+
+                                                    </a-form-item>
+                                                </a-col>
+                                                <a-col :span="24">
+                                                    <a-form-item
+                                                            label="Job description "
+                                                            :label-col="{ span: 24 }"
+                                                            :wrapper-col="{ span:  24}"
+                                                    >
+                                                        <vue-simplemde v-model="job.description" ref="markdownEditor"/>
+
+
+                                                    </a-form-item>
+
+                                                </a-col>
+                                            </a-row>
+
+
+                                            <a-form-item>
+
+
+                                                <a-button
+                                                        type="primary"
+                                                        html-type="submit"
+
+                                                >
+                                                    Submit Changes
+                                                </a-button>
+
+
+                                            </a-form-item>
+                                        </a-form>
+
+
+                                    </div>
+
+
+                                </a-tab-pane>
+
+
+                            </a-tabs>
+                        </hide-at>
+
+                        <show-at breakpoint="mediumAndBelow">
+                            <div style="margin-top: 1rem">
+                                <div style="width: 22rem">
+
+                                    <a-tabs defaultActiveKey="46"
+                                            :tabPosition="mode"
+
+                                            @prevClick="selectstage"
+                                            @nextClick="selectstage"
+
+                                    >
+                                        <!------picked tab  ------>
+                                        <a-tab-pane tab="Picked" key="46">
+                                            <a-list itemLayout="horizontal" :dataSource="pickedapplicants">
+                                                <a-list-item slot="renderItem" slot-scope="item" key="item.title">
+                                                    <div class="mobcards" style="width: 100%">
+                                                        <a-row>
+                                                            <a-col span="16">
+                                                                <p>Name: {{item.name}} {{item.last_name}}</p>
+
+
+                                                                <p> Stage:
+                                                                    <a-tag v-if="item.stage === 'active'"
+                                                                           color="#8BC34A"
+                                                                           style="text-align: center;width: 4rem;">
+                                                                        {{item.stage}}
+                                                                    </a-tag>
+                                                                    <a-tag v-else-if="item.stage === 'test'"
+                                                                           color="#9C27B0"
+                                                                           style="text-align: center;width: 4rem;">
+                                                                        {{item.stage}}
+                                                                    </a-tag>
+                                                                    <a-tag v-else-if="item.stage === 'interview'"
+                                                                           color="#FF4081"
+                                                                           style="text-align: center;width: 4rem;">
+                                                                        {{item.stage}}
+                                                                    </a-tag>
+                                                                    <a-tag v-else-if="item.stage === 'offer'"
+                                                                           color="#03A9F4"
+                                                                           style="text-align: center;width: 4rem;">
+                                                                        {{item.stage}}
+                                                                    </a-tag>
+                                                                    <a-tag v-else-if="item.stage === 'pending'"
+                                                                           color="#953D66"
+                                                                           style="text-align: center;width: 4rem;">
+                                                                        {{item.stage}}
+                                                                    </a-tag>
+
+                                                                </p>
+
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">{{tag}}
+                                                                </a-tag>
+                                                            </a-col>
+                                                            <a-col span="8">
+                                                                <p>
+                                                                    <router-link
+                                                                            style="text-decoration: none"
+                                                                            :to="{name:'recommendedprofile',params:{candidateId: item.profile,jobId:job.id,}}"
+                                                                            target='_blank'>
+                                                                        profile
+                                                                    </router-link>
+                                                                </p>
+                                                                <br>
+                                                                <div v-if="item.stage ==='active'">
+                                                                    <a-dropdown>
+                                                                        <a-menu slot="overlay">
+                                                                            <a-menu-item
+                                                                                    @click="handleMenuClick(item.action,item.profile,1)">
+                                                                                <a-icon
+                                                                                        type="codepen"/>
+                                                                                assign project test
+                                                                            </a-menu-item>
+                                                                            <a-menu-item
+                                                                                    @click="handleMenuClick(item.action,item.profile,2)">
+                                                                                <a-icon
+                                                                                        type="calendar"/>
+                                                                                interview candidate
+                                                                            </a-menu-item>
+                                                                            <a-menu-item
+                                                                                    @click="handleMenuClick(item.action,item.profile,3)">
+                                                                                <a-icon
+                                                                                        type="close"/>
+                                                                                reject candidate
+                                                                            </a-menu-item>
+                                                                        </a-menu>
+                                                                        <a-button type="primary"
+                                                                                  size="small"
+                                                                                  style="height: 30px">
+                                                                            choices
+                                                                            <a-icon type="down"/>
+                                                                        </a-button>
+                                                                    </a-dropdown>
+
+                                                                </div>
+                                                                <div v-else>
+                                                                    --
+
+                                                                </div>
+
+                                                            </a-col>
+                                                        </a-row>
+                                                    </div>
+
+
+                                                </a-list-item>
+                                            </a-list>
+                                        </a-tab-pane>
+                                        <!------new applicants tab  ------>
+                                        <a-tab-pane tab="New" key="47" forceRender>
+                                            <a-list itemLayout="horizontal" :dataSource="newapplicant">
+                                                <a-list-item slot="renderItem" slot-scope="item" key="item.title">
+                                                    <div class="mobcards" style="width: 100%">
+                                                        <a-row>
+                                                            <a-col span="16">
+                                                                <p>Name: {{item.name}}</p>
+
+
+                                                                <p> Stage:
+                                                                    <a-tag color="#EA6A47"
+                                                                           style="">{{item.stage}}
+                                                                    </a-tag>
+
+                                                                </p>
+
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">{{tag}}
+                                                                </a-tag>
+                                                            </a-col>
+                                                            <a-col span="8">
+                                                                <p>
+                                                                    <router-link
+                                                                            style="text-decoration: none"
+                                                                            :to="{name:'recommendedprofile',params:{candidateId: item.profile,jobId:job.id,}}"
+                                                                            target='_blank'>
+                                                                        profile
+                                                                    </router-link>
+                                                                </p>
+                                                                <br>
+                                                                <div v-if="currentUserProfile.user.is_staff">
+                                                                    <a-button-group size="small">
+                                                                        <a-button
+                                                                                @click="pickrejectAdmin(item.action,item.profile,true,item.name)"
+                                                                                type="primary">pick
+                                                                        </a-button>
+                                                                        <a-button
+                                                                                @click="pickrejectAdmin(item.action,item.profile,false,item.name)">
+                                                                            reject
+                                                                        </a-button>
+
+                                                                    </a-button-group>
+
+                                                                </div>
+                                                                <div v-else>
+                                                                    <div v-if="item.carted">
+                                                                        --
+                                                                    </div>
+
+                                                                    <a-button-group size="small" v-else>
+                                                                        <a-button
+                                                                                @click="pickrejectClick(item.action,item.profile,true,item.name)"
+                                                                                type="primary">pick
+                                                                        </a-button>
+                                                                        <a-button
+                                                                                @click="pickrejectClick(item.action,item.profile,false,item.name)">
+                                                                            reject
+                                                                        </a-button>
+
+                                                                    </a-button-group>
+                                                                </div>
+
+                                                            </a-col>
+                                                        </a-row>
+                                                    </div>
+
+
+                                                </a-list-item>
+                                            </a-list>
+                                        </a-tab-pane>
+                                        <!------recommended candidates  tab  ------>
+                                        <a-tab-pane tab="Recommended" key="48">
+                                            <a-list itemLayout="horizontal" :dataSource="recommmedcandidates"
+                                                    :pagination="paginationmob">
+                                                <a-list-item slot="renderItem" slot-scope="item" key="item.title">
+                                                    <div class="mobcards" style="width: 100%">
+                                                        <a-row>
+                                                            <a-col span="18">
+                                                                <p>Name: {{item.name}}</p>
+
+
+                                                                <p> Stage
+                                                                    <a-tag color="#1C4E80"
+                                                                           style="">{{item.stage}}
+                                                                    </a-tag>
+
+                                                                </p>
+
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">{{tag}}
+                                                                </a-tag>
+                                                            </a-col>
+                                                            <a-col span="6">
+                                                                <p>
+                                                                    <router-link
+                                                                            style="text-decoration: none"
+                                                                            :to="{name:'recommendedprofile',params:{candidateId: item.profile,jobId:job.id,}}"
+                                                                            target='_blank'>
+                                                                        profile
+                                                                    </router-link>
+                                                                </p>
+                                                                <br>
+                                                                <div v-if="currentUserProfile.user.is_staff">
+                                                                    <div style="margin-left: 5%">
+                                                                        <a-button :size="small"
+                                                                                  @click="pickrecommedationAdmin(job.id,record.profile,2)"
+                                                                                  type="primary">pick
+                                                                        </a-button>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div v-else>
+                                                                    <div style="margin-left: 5%">
+                                                                        <a-button :size="small"
+                                                                                  @click="pickrecommedationClick(job.id,record.profile,2)"
+                                                                                  type="primary">pick
+                                                                        </a-button>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </a-col>
+                                                        </a-row>
+
+
+                                                    </div>
+
+
+                                                </a-list-item>
+                                            </a-list>
+                                        </a-tab-pane>
+                                        <!------testing  tab  ------>
+                                        <a-tab-pane tab="Testing" key="49">
+                                            <a-list itemLayout="horizontal" :dataSource="testingstage">
+                                                <a-list-item slot="renderItem" slot-scope="item" key="item.title">
+                                                    <div class="mobcards" style="width: 100%">
+
+                                                        <a-row>
+                                                            <a-col span="16">
+                                                                <p>Name: {{item.name}} {{item.last_name}}</p>
+                                                                <p>
+                                                                    <router-link
+                                                                            style="text-decoration: none"
+                                                                            :to="{name:'recommendedprofile',params:{candidateId: item.profile,jobId:job.id,}}"
+                                                                            target='_blank'>
+                                                                        profile
+                                                                    </router-link>
+                                                                </p>
+
+
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">{{tag}}
+                                                                </a-tag>
+                                                            </a-col>
+                                                            <a-col span="8">
+                                                                <span v-if="item.test_stage "
+                                                                >
+                                                            <span v-if="item.test_stage === 'complete'">
+                                                                <a @click="navigateTo({name:'report',params:{candidateId: item.profile,projectId:item.project}})">
+                                                                    report
+                                                                </a>
+                                                            </span>
+                                                            <span v-else>
+                                                                {{item.test_stage}}
+                                                            </span>
+
+                                                        </span>
+                                                                <span v-else>
+                                                            --
+                                                        </span>
+                                                                <br>
+                                                                <router-link v-if="item.project"
+                                                                             style="text-decoration: none"
+                                                                             :to="{name:'pickedprojectdetails',params:{projectId:item.project,candidateId: item.profile,jobId:job.id,
+                                                                       applicationId: item.action}}"
+                                                                             target='_blank'>
+                                                                    {{item.projectname}}
+                                                                </router-link>
+
+
+                                                                <a-button :size="small"
+                                                                          style="background-color: #9c27b0;color: white"
+                                                                          v-else
+                                                                          @click="showModal(item.profile,item.action)">
+
+                                                                    Assign test
+                                                                </a-button>
 
                                                                 <a-dropdown>
                                                                     <a-menu slot="overlay">
 
 
                                                                         <a-menu-item
-                                                                                v-if="record.test_stage === 'complete'"
-                                                                                @click="handleTestMenuClick(record.action,record.profile,2)"
+                                                                                v-if="item.test_stage === 'complete'"
+                                                                                @click="handleTestMenuClick(item.action,item.profile,2)"
                                                                         >
                                                                             <a-icon
                                                                                     type="calendar"/>
                                                                             schedule interview
                                                                         </a-menu-item>
+
                                                                         <a-menu-item
                                                                                 v-else
                                                                                 disabled
@@ -897,13 +1801,13 @@
                                                                         </a-menu-item>
 
                                                                         <a-menu-item
-                                                                                @click="handleTestMenuClick(record.action,record.profile,4)">
+                                                                                @click="handleTestMenuClick(item.action,item.profile,4)">
                                                                             <a-icon
                                                                                     type="close"/>
                                                                             reject candidate
                                                                         </a-menu-item>
                                                                     </a-menu>
-                                                                    <a-button type="primary"
+                                                                    <a-button type="primary" size="small"
                                                                               style="height: 30px">
                                                                         choices
                                                                         <a-icon type="down"/>
@@ -911,154 +1815,79 @@
                                                                 </a-dropdown>
 
 
-                                                            </template>
+                                                            </a-col>
+                                                        </a-row>
+                                                    </div>
 
 
-                                                        </a-table-column>
+                                                </a-list-item>
+                                            </a-list>
+                                        </a-tab-pane>
+                                        <!------interview tab  ------>
+                                        <a-tab-pane tab="Interview" key="50">
+                                            <a-list itemLayout="horizontal" :dataSource="interviewstage">
+                                                <a-list-item slot="renderItem" slot-scope="item" key="item.title">
+                                                    <div class="mobcards" style="width: 100%">
+
+                                                        <a-row>
+                                                            <a-col span="16">
+                                                                <p>Name: {{item.name}} {{item.last_name}}</p>
+                                                                <p>
+                                                                    <router-link
+                                                                            style="text-decoration: none"
+                                                                            :to="{name:'recommendedprofile',params:{candidateId: item.profile,jobId:job.id,}}"
+                                                                            target='_blank'>
+                                                                        profile
+                                                                    </router-link>
+                                                                </p>
 
 
-                                                    </a-table>
-                                                </a-tab-pane>
-
-                                                <!------interview stage ------>
-                                                <a-tab-pane key="3">
-                                                    <span slot="tab" class="v-step-2">
-                                                        Interview
-                                                        <a-tag color="blue">{{interviewstage.length}}</a-tag>
-                                                    </span>
-                                                    <a-alert style="margin-bottom: 1%"
-                                                             message="Interview notes enables you to write and keep notes on the candidate"
-                                                             type="info" closeText="Close Now"/>
-                                                    <a-table :dataSource="interviewstage" :scroll="{ y: 400 }"
-                                                             size="middle">
-
-
-                                                        <!-----name--------->
-                                                        <a-table-column
-                                                                dataIndex="name"
-                                                                key="name"
-                                                                width="12%"
-
-
-                                                        >
-                                                            <span slot="title">Name</span>
-                                                            <template slot-scope="text,record">
-                                                        <span>
-                                                            {{record.name}} {{record.last_name}}
-                                                            <span v-if="record.verified"><a-icon type="check"/></span>
-                                                        </span>
-                                                            </template>
-                                                        </a-table-column>
-
-                                                        <!-----profile--------->
-                                                        <a-table-column
-                                                                dataIndex="profile"
-                                                                key="profile"
-                                                                width="10%"
-
-
-                                                        >
-                                                            <div style="" slot="title">User profile</div>
-                                                            <template slot-scope="text,record">
-                                                        <span style="margin-left: 15%">
-                                                            <router-link
-                                                                    style="text-decoration: none"
-                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
-                                                                    target='_blank'>
-                                                            profile
-                                                            </router-link>
-                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
-                                                        </span>
-                                                            </template>
-                                                        </a-table-column>
-
-                                                        <!-----skills--------->
-                                                        <a-table-column
-
-                                                                dataIndex="tags"
-                                                                key="tags"
-                                                                width="25%"
-
-                                                        >
-                                                            <div style="margin-left: 33%" slot="title">Skills</div>
-                                                            <template slot-scope="tags">
-                                                                <div style="text-align: center">
-                                                                    <span>
-                                                            <a-tag v-for="tag in tags" color="blue"
-                                                                   :key="tag">{{tag}}</a-tag>
-                                                        </span>
-                                                                </div>
-
-                                                            </template>
-                                                        </a-table-column>
-
-                                                        <!-----interview schedule--------->
-                                                        <a-table-column
-
-                                                                dataIndex="interview"
-                                                                key="interview"
-                                                                width="15%"
-
-                                                        >
-                                                            <div style="" slot="title">Interview
-                                                            </div>
-                                                            <template slot-scope="text,record">
-                                                                <div v-if="record.interviewstatus === 'deleted'"
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">{{tag}}
+                                                                </a-tag>
+                                                            </a-col>
+                                                            <a-col span="8">
+                                                                <!-----interview schedule--------->
+                                                                <div v-if="item.interviewstatus === 'deleted'"
                                                                      style="margin-left: 7%">
                                                                     <a-button :size="small"
                                                                               style="background-color: #673AB7;color: white"
-                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                              @click="onEventCreate(item.action,item.name)">
                                                                         <a-icon type="calendar"/>
                                                                         create
                                                                     </a-button>
                                                                 </div>
-                                                                <div v-else-if="record.interviewstatus === 'cancelled'"
+                                                                <div v-else-if="item.interviewstatus === 'cancelled'"
                                                                      style="margin-left: 7%">
                                                                     <a-button :size="small"
                                                                               style="background-color: #673AB7;color: white"
-                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                              @click="onEventCreate(item.action,item.name)">
                                                                         <a-icon type="calendar"/>
                                                                         create
                                                                     </a-button>
                                                                 </div>
-                                                                <div v-else-if="record.interviewstatus === null"
+                                                                <div v-else-if="item.interviewstatus === null"
                                                                      style="margin-left: 7%">
                                                                     <a-button :size="small"
                                                                               style="background-color: #673AB7;color: white"
-                                                                              @click="onEventCreate(record.action,record.name)">
+                                                                              @click="onEventCreate(item.action,item.name)">
                                                                         <a-icon type="calendar"/>
                                                                         create
                                                                     </a-button>
                                                                 </div>
                                                                 <span v-else style="margin-left: 12%;">
-                                                                    <a-button type="primary" ghost
-                                                                              @click="onEventClick(record.action,record.name,record.interviewstart,record.interviewend,record.color)">
+                                                                    <a-button type="primary" ghost size="small"
+                                                                              @click="onEventClick(item.action,item.name,item.interviewstart,item.interviewend,item.color)">
                                                                         view
                                                                     </a-button>
 
 
                                                                 </span>
 
-
-                                                            </template>
-
-
-                                                        </a-table-column>
-
-                                                        <!-----interview status--------->
-                                                        <a-table-column
-
-                                                                dataIndex="interviewstatus"
-                                                                key="interviewstatus"
-                                                                width="15%"
-
-                                                        >
-                                                            <div style="" slot="title">Interview status
-                                                            </div>
-                                                            <template slot-scope="text,record">
+                                                                <!-----interview status--------->
                                                                 <div style="text-align: center">
-                                                                    <span v-if="record.interviewstatus">
-                                                                        {{record.interviewstatus}}
+                                                                    <span v-if="item.interviewstatus">
+                                                                        {{item.interviewstatus}}
                                                                     </span>
                                                                     <span v-else>
                                                                     ---
@@ -1066,59 +1895,24 @@
                                                                 </div>
 
 
-                                                            </template>
-
-
-                                                        </a-table-column>
-
-                                                        <!--                                                        &lt;!&ndash;-&#45;&#45;interview notes-&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-                                                        <!--                                                        <a-table-column-->
-
-                                                        <!--                                                                dataIndex="notes"-->
-                                                        <!--                                                                key="notes"-->
-                                                        <!--                                                                width="15%"-->
-
-                                                        <!--                                                        >-->
-                                                        <!--                                                            <div slot="title">Interview notes-->
-                                                        <!--                                                            </div>-->
-                                                        <!--                                                            <template slot-scope="text,record">-->
-                                                        <!--                                                        <span style="margin-left: 25%">-->
-                                                        <!--                                                            <a @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">notes</a>-->
-                                                        <!--                                                        </span>-->
-
-
-                                                        <!--                                                            </template>-->
-
-                                                        <!--                                                        </a-table-column>-->
-
-                                                        <!-----action--------->
-                                                        <a-table-column
-                                                                title="action"
-                                                                width="10%"
-
-
-                                                        >
-
-                                                            <template slot-scope="text,record">
-
                                                                 <a-dropdown>
                                                                     <a-menu slot="overlay">
 
 
                                                                         <a-menu-item
-                                                                                @click="handleInterviewClick(record.action,record.profile,2)">
+                                                                                @click="handleInterviewClick(item.action,item.profile,2)">
                                                                             <a-icon
                                                                                     type="like"/>
                                                                             make offer
                                                                         </a-menu-item>
                                                                         <a-menu-item
-                                                                                @click="handleInterviewClick(record.action,record.profile,3)">
+                                                                                @click="handleInterviewClick(item.action,item.profile,3)">
                                                                             <a-icon
                                                                                     type="close"/>
                                                                             reject candidate
                                                                         </a-menu-item>
                                                                     </a-menu>
-                                                                    <a-button type="primary"
+                                                                    <a-button type="primary" size="small"
                                                                               style="height: 30px">
                                                                         choices
                                                                         <a-icon type="down"/>
@@ -1126,389 +1920,276 @@
                                                                 </a-dropdown>
 
 
-                                                            </template>
+                                                            </a-col>
+                                                        </a-row>
+                                                    </div>
 
 
-                                                        </a-table-column>
+                                                </a-list-item>
+                                            </a-list>
+                                        </a-tab-pane>
+                                        <!------edit job tab  ------>
+                                        <a-tab-pane tab="Edit Job" key="51">
+                                            <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
+                                                <a-form :form="form"
+                                                        @submit="handleSubmit">
+                                                    <a-row :gutter="16">
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                            <a-form-item label="Title">
+                                                                <a-input v-model="job.title">
+
+                                                                </a-input>
+                                                            </a-form-item>
+                                                        </a-col>
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                            <a-form-item label="Job role">
+                                                                <a-select
+
+                                                                        placeholder="Select a option and change input text above"
+                                                                        v-model="job.job_role"
+                                                                >
+                                                                    <a-select-option value="Full Stack Developer">
+                                                                        Full Stack Developer
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Frontend Developer">
+                                                                        Frontend Developer
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Backend  Developer">
+                                                                        Backend Developer
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Android  Developer">
+                                                                        Android Developer
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Graphic Designer">
+                                                                        Graphic Designer
+                                                                    </a-select-option>
+                                                                    <a-select-option value="IOS Developer">
+                                                                        IOS Developer
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Data Scientist">
+                                                                        Data Scientist
+                                                                    </a-select-option>
+                                                                </a-select>
+                                                            </a-form-item>
 
 
-                                                    </a-table>
-                                                </a-tab-pane>
+                                                        </a-col>
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                            <a-form-item label="Experience">
+                                                                <a-select
 
-                                                <!------offers stage ------>
-                                                <a-tab-pane key="4">
-                                                    <span slot="tab" class="v-step-3">
-                                                        Offers
-                                                        <a-tag color="blue">{{offerstage.length}}</a-tag>
-                                                    </span>
-                                                    <a-table :dataSource="offerstage" :scroll="{ y: 400 }"
-                                                             size="middle">
+                                                                        placeholder="Select a option and change input text above"
+                                                                        v-model="job.dev_experience"
+                                                                >
+                                                                    <a-select-option value="Entry">
+                                                                        Entry
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Junior">
+                                                                        Junior
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Mid-Level">
+                                                                        Mid-Level
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Senior">
+                                                                        Senior
+                                                                    </a-select-option>
 
-                                                        <!-----name--------->
-                                                        <a-table-column
-                                                                dataIndex="name"
-                                                                key="name"
-                                                                width="12%"
+                                                                </a-select>
+                                                            </a-form-item>
 
+                                                        </a-col>
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                            <a-form-item label="Contract type">
+                                                                <a-select
+
+                                                                        placeholder="Select a option and change input text above"
+                                                                        v-model="job.engagement_type"
+                                                                >
+                                                                    <a-select-option value="Full-time">
+                                                                        Full-time
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Part-time">
+                                                                        Part-time
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Contract">
+                                                                        Contract
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Remote">
+                                                                        Remote
+                                                                    </a-select-option>
+                                                                    <a-select-option value="Freelance">
+                                                                        Freelance
+                                                                    </a-select-option>
+
+                                                                </a-select>
+                                                            </a-form-item>
+
+                                                        </a-col>
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                            <a-form-item>
+                                                                <span>Location : {{job.location}}</span>
+                                                                <country-select v-model="job.location"
+                                                                                class="ant-input"
+                                                                />
+                                                            </a-form-item>
+
+                                                        </a-col>
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                            <a-form-item label="Salary range ">
+                                                                <a-input v-model="job.remuneration">
+
+                                                                </a-input>
+                                                            </a-form-item>
+
+                                                        </a-col>
+                                                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                                               :md="{span: 24, offset: 0 }"
+                                                               :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                                            <a-form-item
+                                                                    label="Which tech skills are you looking for? "
+
+                                                            >
+                                                                <template v-for="(tag, index) in tags">
+                                                                    <a-tooltip v-if="tag.length > 20" :key="tag"
+                                                                               :title="tag">
+                                                                        <a-tag :key="tag"
+                                                                               :afterClose="() => handleClose(tag)"
+                                                                               color="#2db7f5">
+                                                                            {{`${tag.slice(0, 20)}...`}}
+                                                                        </a-tag>
+                                                                    </a-tooltip>
+                                                                    <a-tag v-else :key="tag" :closable="index >= 0"
+                                                                           :afterClose="() => handleClose(tag)"
+                                                                           color="#2db7f5">
+                                                                        {{tag}}
+                                                                    </a-tag>
+                                                                </template>
+                                                                <a-input
+                                                                        v-if="inputVisible"
+                                                                        ref="input"
+                                                                        type="text"
+                                                                        size="small"
+                                                                        :style="{ width: '78px' }"
+                                                                        :value="inputValue"
+                                                                        @change="handleInputChange"
+                                                                        @blur="handleInputConfirm"
+                                                                        @keyup.enter="handleInputConfirm"
+                                                                />
+                                                                <a-tag v-else @click="showInput"
+                                                                       style="background: #fff; borderStyle: dashed;">
+                                                                    <a-icon type="plus"/>
+                                                                    New Tag
+                                                                </a-tag>
+                                                            </a-form-item>
+                                                        </a-col>
+                                                        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                               :md="{span: 12, offset: 0 }"
+                                                               :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+                                                            <a-form-item :label="deadlineformated">
+
+                                                                <a-date-picker @change="onDate"
+
+
+                                                                               format="YYYY-MM-DD"
+                                                                               :disabledDate="disabledDate"
+
+                                                                />
+
+                                                            </a-form-item>
+                                                        </a-col>
+                                                        <a-col :span="24">
+                                                            <a-form-item
+                                                                    label="Job description "
+                                                                    :label-col="{ span: 24 }"
+                                                                    :wrapper-col="{ span:  24}"
+                                                            >
+                                                                <vue-simplemde v-model="job.description"
+                                                                               ref="markdownEditor"/>
+
+
+                                                            </a-form-item>
+
+                                                        </a-col>
+                                                    </a-row>
+
+
+                                                    <a-form-item>
+
+
+                                                        <a-button
+                                                                type="primary"
+                                                                html-type="submit"
 
                                                         >
-                                                            <span slot="title">Name</span>
-                                                            <template slot-scope="text,record">
-                                                        <span>
-                                                            {{record.name}} {{record.last_name}}
-                                                            <span v-if="record.verified"><a-icon type="check"/></span>
-                                                        </span>
-                                                            </template>
-                                                        </a-table-column>
-
-                                                        <!-----profile--------->
-                                                        <a-table-column
-                                                                dataIndex="profile"
-                                                                key="profile"
-                                                                width="10%"
-
-
-                                                        >
-                                                            <div style="" slot="title">User profile</div>
-                                                            <template slot-scope="text,record">
-                                                        <span style="margin-left: 15%">
-                                                            <router-link
-                                                                    style="text-decoration: none"
-                                                                    :to="{name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}}"
-                                                                    target='_blank'>
-                                                            profile
-                                                            </router-link>
-                                                            <!--                                                            <a target='_blank' @click="navigateTo({name:'candidateprofile',params:{candidateId: record.profile,jobId:job.id,applicationId: record.action}})">profile</a>-->
-                                                        </span>
-                                                            </template>
-                                                        </a-table-column>
-
-
-                                                        <!-----offer letter--------->
-                                                        <a-table-column
-
-                                                                dataIndex="offerletter"
-                                                                key="offerletter"
-                                                                width="10%"
-
-                                                        >
-                                                            <div style="text-align: center" slot="title">Make offer
-                                                            </div>
-                                                            <template slot-scope="text, record">
-                                                                <div style="text-align: center">
-                                                                    <a-button v-if="record.offerletter === null "
-                                                                              type="primary" size="small"
-                                                                              @click="openWidget()">Upload offer
-                                                                        letter
-                                                                    </a-button>
-                                                                    <a v-else :href="record.offerletter"
-                                                                       target="_blank">{{record.offerletter}}</a>
-                                                                </div>
-
-
-                                                            </template>
-
-                                                        </a-table-column>
-
-                                                        <!-----offer letter status--------->
-                                                        <a-table-column
-
-                                                                dataIndex="offerstatus"
-                                                                key="offerstatus"
-                                                                width="20%"
-
-                                                        >
-                                                            <div style="text-align: center" slot="title">Offer
-                                                                Status
-                                                            </div>
-                                                            <template slot-scope="text, record">
-                                                                <div style="text-align: center">
-                                                                    <span v-if="record.offerstatus">
-                                                                    {{record.offerstatus}}
-                                                                </span>
-                                                                    <span v-else>
-                                                                    --
-                                                                </span>
-                                                                </div>
-
-
-                                                            </template>
-
-                                                        </a-table-column>
-
-                                                        <!-----action--------->
-                                                        <a-table-column
-
-                                                                width="20%"
-
-
-                                                        >
-                                                            <div style="margin-left: 10%" slot="title">Hire/reject?
-                                                            </div>
-
-                                                            <template slot-scope="text,record">
-                                                                <a-button-group>
-                                                                    <a-button
-                                                                            @click="pickrejectClick(record.action,record.profile,true)"
-                                                                            type="primary">Hired
-                                                                    </a-button>
-                                                                    <a-button
-                                                                            @click="pickrejectClick(record.action,record.profile,false)">
-                                                                        Rejected
-                                                                    </a-button>
-
-                                                                </a-button-group>
-                                                            </template>
-
-
-                                                        </a-table-column>
-
-
-                                                    </a-table>
-
-                                                </a-tab-pane>
-
-                                                <v-tour name="demo" :steps="steps"></v-tour>
-
-
-                                            </a-tabs>
-
-
-                                        </a-col>
-
-                                    </a-row>
-                                </div>
-
-                            </a-tab-pane>
-
-
-                            <!------job details tab  ------>
-                            <a-tab-pane key="2" forceRender>
-                                <span slot="tab">
-                                    <a-icon type="profile"/>
-                                    <a-tooltip placement="topLeft">
-                                        <template slot="title">
-                                            <span>Click to edit your job post</span>
-                                        </template>
-                                        Job Details <a-icon type="question-circle"/>
-                                    </a-tooltip>
-
-                                </span>
-                                <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
-                                    <a-form :form="form"
-                                            @submit="handleSubmit">
-                                        <a-row :gutter="16">
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                <a-form-item label="Title">
-                                                    <a-input v-model="job.title">
-
-                                                    </a-input>
-                                                </a-form-item>
-                                            </a-col>
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                <a-form-item label="Job role">
-                                                    <a-select
-
-                                                            placeholder="Select a option and change input text above"
-                                                            v-model="job.job_role"
-                                                    >
-                                                        <a-select-option value="Full Stack Developer">
-                                                            Full Stack Developer
-                                                        </a-select-option>
-                                                        <a-select-option value="Frontend Developer">
-                                                            Frontend Developer
-                                                        </a-select-option>
-                                                        <a-select-option value="Backend  Developer">
-                                                            Backend Developer
-                                                        </a-select-option>
-                                                        <a-select-option value="Android  Developer">
-                                                            Android Developer
-                                                        </a-select-option>
-                                                        <a-select-option value="Graphic Designer">
-                                                            Graphic Designer
-                                                        </a-select-option>
-                                                        <a-select-option value="IOS Developer">
-                                                            IOS Developer
-                                                        </a-select-option>
-                                                        <a-select-option value="Data Scientist">
-                                                            Data Scientist
-                                                        </a-select-option>
-                                                    </a-select>
-                                                </a-form-item>
-
-
-                                            </a-col>
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                <a-form-item label="Experience">
-                                                    <a-select
-
-                                                            placeholder="Select a option and change input text above"
-                                                            v-model="job.dev_experience"
-                                                    >
-                                                        <a-select-option value="Entry">
-                                                            Entry
-                                                        </a-select-option>
-                                                        <a-select-option value="Junior">
-                                                            Junior
-                                                        </a-select-option>
-                                                        <a-select-option value="Mid-Level">
-                                                            Mid-Level
-                                                        </a-select-option>
-                                                        <a-select-option value="Senior">
-                                                            Senior
-                                                        </a-select-option>
-
-                                                    </a-select>
-                                                </a-form-item>
-
-                                            </a-col>
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                <a-form-item label="Contract type">
-                                                    <a-select
-
-                                                            placeholder="Select a option and change input text above"
-                                                            v-model="job.engagement_type"
-                                                    >
-                                                        <a-select-option value="Full-time">
-                                                            Full-time
-                                                        </a-select-option>
-                                                        <a-select-option value="Part-time">
-                                                            Part-time
-                                                        </a-select-option>
-                                                        <a-select-option value="Contract">
-                                                            Contract
-                                                        </a-select-option>
-                                                        <a-select-option value="Remote">
-                                                            Remote
-                                                        </a-select-option>
-                                                        <a-select-option value="Freelance">
-                                                            Freelance
-                                                        </a-select-option>
-
-                                                    </a-select>
-                                                </a-form-item>
-
-                                            </a-col>
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                <a-form-item>
-                                                    <span>Location : {{job.location}}</span>
-                                                    <country-select v-model="job.location"
-                                                                    class="ant-input"
-                                                    />
-                                                </a-form-item>
-
-                                            </a-col>
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                <a-form-item label="Salary range ">
-                                                    <a-input v-model="job.remuneration">
-
-                                                    </a-input>
-                                                </a-form-item>
-
-                                            </a-col>
-                                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                                   :md="{span: 24, offset: 0 }"
-                                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
-                                                <a-form-item
-                                                        label="Which tech skills are you looking for? "
-
-                                                >
-                                                    <template v-for="(tag, index) in tags">
-                                                        <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                                                            <a-tag :key="tag"
-                                                                   :afterClose="() => handleClose(tag)"
-                                                                   color="#2db7f5">
-                                                                {{`${tag.slice(0, 20)}...`}}
-                                                            </a-tag>
-                                                        </a-tooltip>
-                                                        <a-tag v-else :key="tag" :closable="index >= 0"
-                                                               :afterClose="() => handleClose(tag)" color="#2db7f5">
-                                                            {{tag}}
-                                                        </a-tag>
-                                                    </template>
-                                                    <a-input
-                                                            v-if="inputVisible"
-                                                            ref="input"
-                                                            type="text"
-                                                            size="small"
-                                                            :style="{ width: '78px' }"
-                                                            :value="inputValue"
-                                                            @change="handleInputChange"
-                                                            @blur="handleInputConfirm"
-                                                            @keyup.enter="handleInputConfirm"
-                                                    />
-                                                    <a-tag v-else @click="showInput"
-                                                           style="background: #fff; borderStyle: dashed;">
-                                                        <a-icon type="plus"/>
-                                                        New Tag
-                                                    </a-tag>
-                                                </a-form-item>
-                                            </a-col>
-                                            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                   :md="{span: 12, offset: 0 }"
-                                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
-                                                <a-form-item :label="deadlineformated">
-
-                                                    <a-date-picker @change="onDate"
-
-
-                                                                   format="YYYY-MM-DD"
-                                                                   :disabledDate="disabledDate"
-
-                                                    />
-
-                                                </a-form-item>
-                                            </a-col>
-                                            <a-col :span="24">
-                                                <a-form-item
-                                                        label="Job description "
-                                                        :label-col="{ span: 24 }"
-                                                        :wrapper-col="{ span:  24}"
-                                                >
-                                                    <vue-simplemde v-model="job.description" ref="markdownEditor"/>
-
-
-                                                </a-form-item>
-
-                                            </a-col>
-                                        </a-row>
-
-
-                                        <a-form-item>
-
-
-                                            <a-button
-                                                    type="primary"
-                                                    html-type="submit"
-
-                                            >
-                                                Submit Changes
-                                            </a-button>
-
-
-                                        </a-form-item>
-                                    </a-form>
-
-
+                                                            Submit Changes
+                                                        </a-button>
+
+
+                                                    </a-form-item>
+                                                </a-form>
+
+
+                                            </div>
+                                        </a-tab-pane>
+                                        <!------rejected tab  ------>
+                                        <a-tab-pane tab="Rejected" key="52">
+                                            <a-list itemLayout="horizontal" :dataSource="rejectedcandidateslist">
+                                                <a-list-item slot="renderItem" slot-scope="item" key="item.title">
+                                                    <div class="mobcards" style="width: 100%">
+                                                        <a-row>
+                                                            <a-col span="18">
+                                                                <p>Name: {{item.name}}</p>
+
+
+                                                                <p> Stage:
+                                                                    <a-tag color="#1C4E80"
+                                                                           style="">{{item.stage}}
+                                                                    </a-tag>
+
+                                                                </p>
+
+                                                                <a-tag v-for="tag in item.tags" color="blue"
+                                                                       :key="tag">{{tag}}
+                                                                </a-tag>
+                                                            </a-col>
+                                                            <a-col span="6">
+                                                                <p>
+                                                                    <router-link
+                                                                            style="text-decoration: none"
+                                                                            :to="{name:'recommendedprofile',params:{candidateId: item.profile,jobId:job.id,}}"
+                                                                            target='_blank'>
+                                                                        profile
+                                                                    </router-link>
+                                                                </p>
+
+
+                                                            </a-col>
+                                                        </a-row>
+                                                    </div>
+
+
+                                                </a-list-item>
+                                            </a-list>
+                                        </a-tab-pane>
+                                    </a-tabs>
                                 </div>
 
 
-                            </a-tab-pane>
+                            </div>
 
-
-                        </a-tabs>
+                        </show-at>
 
 
                     </div>
@@ -1807,6 +2488,7 @@
     import VueSimplemde from 'vue-simplemde'
     import 'simplemde/dist/simplemde.min.css';
     import markdown from 'vue-markdown'
+    import {showAt, hideAt} from 'vue-breakpoints'
 
     const columns = [
         {
@@ -1995,7 +2677,6 @@
     import Rave from "@/components/frontend/recruiter/cart/Rave";
     import tc from '@/components/frontend/homepages/tc'
     import Payments from '@/services/Payments';
-    import {hideAt, showAt} from 'vue-breakpoints'
 
 
     export default {
@@ -2115,9 +2796,15 @@
                     }
                 ],
                 deadlineformated: '',
-                text: `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`,
                 customStyle:
                     'background: #f0f6fd;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden',
+                mode: 'top',
+                paginationmob: {
+                    onChange: page => {
+                        console.log(page);
+                    },
+                    pageSize: 10,
+                },
 
 
             }
@@ -2130,7 +2817,8 @@
             Jobheader,
             Rave,
             tc,
-            VueSimplemde, markdown, paystack, hideAt,
+            VueSimplemde, markdown, paystack,
+            showAt, hideAt
 
 
         },
@@ -2347,13 +3035,17 @@
                 // applicants tabs conditional render remains true as per state if length of applicants respectively is greater than one
                 if (this.pickedapplicants.length > 0) {
                     this.active = true
+
                 } else if (this.newapplicant.length > 0) {
                     this.newapplications = true
+
                 } else if (this.recommmedcandidates.length > 0) {
                     this.recommended = true
+
                 }
                 if (this.rejectedcandidateslist.length > 0) {
                     this.rejectedcandidates = true
+
                 }
 
                 // recent projects
@@ -2449,9 +3141,14 @@
             },
             topay() {
                 return this.amount * 100
-            }
+            },
+
         },
         methods: {
+
+            selectstage(val) {
+                console.log(val);
+            },
             moment,
             // tour section
             tor() {
@@ -3938,6 +4635,16 @@
         border-radius: 50%;
         width: 20px;
         height: 20px;
+
+    }
+
+    .mobcards {
+        padding: 1rem !important;
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+        border: 1px solid rgba(0, 0, 0, .125);
+
+
+        border-radius: .25rem !important;
 
     }
 

@@ -5,6 +5,7 @@ import store from '../store/store'
 const Home = () => import('@/components/frontend/homepages/Home')
 const Register = () => import('@/components/frontend/homepages/Register')
 const Login = () => import('@/components/frontend/homepages/Login')
+const BridgesHome = () => import('@/components/frontend/bridges/bridgeshome')
 const Prices = () => import('@/components/frontend/homepages/prices')
 const Forgot = () => import('@/components/frontend/homepages/forgot')
 const Reset = () => import('@/components/frontend/homepages/passwordreset')
@@ -41,9 +42,14 @@ const DevCalendar = () => import('@/components/frontend/developer/DevCalendar');
 const Commmunity = () => import('@/components/frontend/developer/community');
 const TakeQuiz = () => import('@/components/frontend/developer/quiz/takequiz');
 const SelfverifyProject = () => import('@/components/frontend/developer/SelfverifyProject');
+const Bridgesdashboard = () => import('@/components/frontend/bridges/bridgesdashboard');
 const Unsubscribe = () => import('@/components/frontend/homepages/unsubscribed')
 const Cart = () => import('@/components/frontend/recruiter/cart/Cart');
 const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
+const Paths = () => import('@/components/frontend/bridges/paths');
+const Resources = () => import('@/components/frontend/bridges/resources');
+const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
+
 Vue.use(Router);
 
 let router = new Router({
@@ -132,6 +138,21 @@ let router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/bridgesdashboard',
+            name: 'bridgesdashboard',
+            component: Bridgesdashboard,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/bridgesHome',
+            name: 'bridgesHome',
+            component: BridgesHome,
+
+        },
+
         {
             path: '/talent',
             name: 'talent',
@@ -396,6 +417,30 @@ let router = new Router({
             path: '/prices',
             name: 'prices',
             component: Prices,
+
+        },
+        {
+            path: '/paths',
+            name: 'paths',
+            component: Paths,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/resources/:path',
+            name: 'resources',
+            component: Resources,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/cohortsprojects',
+            name: 'cohortsprojects',
+            component: CohortSubmissions,
 
         },
     ],

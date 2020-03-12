@@ -13,9 +13,9 @@
 
                 <a-row style="padding: 1% 1%">
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 16, offset: 0 }"
-                                   :lg="{span: 16, offset: 0 }" :xl="{span: 16,offset: 0 }" style=" padding-left: 15px;padding-right: 15px;">
+                           :lg="{span: 16, offset: 0 }" :xl="{span: 16,offset: 0 }" style=" padding: 4px 20px">
                         <div class="profile" style="padding-bottom: 2%">
-                            <a-row >
+                            <a-row>
 
                                 <a-col :span="22" v>
                                     <p>About</p>

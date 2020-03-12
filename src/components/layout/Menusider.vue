@@ -130,6 +130,7 @@
                 this.$store.dispatch('setUsertype', null)
                 this.$store.dispatch('setUser_id', null)
                 this.$store.dispatch('setNext',null)
+
                 this.$router.push({
                     name: 'home'
                 })

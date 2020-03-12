@@ -39,7 +39,7 @@
                                         </div>
                                     </show-at>
                                     <hide-at breakpoint="mediumAndBelow">
-                                        <div style="margin-top: 8rem">
+                                        <div style="margin-top: 15rem">
                                             <h1 style="font-size:2.5rem;font-weight: bold;color: #007BFF;margin-bottom: 0">
                                                 Hire Skilled African Programmers Faster
                                             </h1>
@@ -168,7 +168,7 @@
                         </div>
                     </show-at>
                     <!-----how it works---->
-                    <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">
+                    <div :style="{ background: '#fff', padding: '31px', minHeight: '40vh' }">
                         <div style="background-color: #ffffff;">
                             <div style="text-align: center">
                                 <h2 class="headers">How Codeln Works</h2>
@@ -427,10 +427,11 @@
                                     <p style="text-align: center">
                                         <router-link to="talent">
                                             <a-button type='primary'
-                                                      style="width: 10rem;color: white;height: 3rem;border-radius: 23px">
+                                                      style="color: white;height: 3rem;">
                                                 View
                                                 more
                                                 Talent
+                                                <a-icon type="right"/>
                                             </a-button>
                                         </router-link>
 
@@ -441,7 +442,7 @@
                     </div>
                     <!-----why us---->
 
-                    <div :style="{ background: '#fff', padding: '31px', minHeight: '50vh' }">
+                    <div :style="{ background: '#fff', padding: '31px', minHeight: '40vh' }">
 
 
                         <h2 class="headers" style="text-align: center">Why Hire with Codeln? </h2>
@@ -487,6 +488,81 @@
                         </a-row>
 
                     </div>
+                    <!-----CSA bridging ---->
+                    <hide-at breakpoint="mediumAndBelow">
+                        <div style="background-color: #3854c6; padding: 31px;min-height: 10rem">
+                            <div style="padding: 0  20% 0 30%;color: white">
+                                <a-row>
+                                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }"
+                                           :md="{span: 6, offset: 0 }"
+                                           :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
+                                        <h2 style="color: white">Developer Skill Bridging program</h2>
+                                    </a-col>
+                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                           :md="{span: 12, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                                        <div>
+
+                                            <p>Enabling new developers to attain expected market requirements through
+                                                self
+                                                driven training</p>
+                                            <router-link to="/bridgesHome">
+                                                <a-button type='primary'
+                                                          style="color: white">
+                                                    learn more
+                                                    <a-icon type="right"/>
+                                                </a-button>
+                                            </router-link>
+                                        </div>
+
+                                    </a-col>
+
+                                    <a-col span="4">
+                                        <img class="sdg4" src="../../../assets/images/sdg4.png">
+                                    </a-col>
+
+                                </a-row>
+                            </div>
+
+
+                        </div>
+                    </hide-at>
+
+                    <show-at breakpoint="mediumAndBelow">
+                        <div style="background-color: #3854c6; padding: 31px;min-height: 10rem">
+                            <div style="color: white">
+                                <a-row :gutter="16">
+                                    <a-col :xs="{span: 8, offset: 0 }" :sm="{span: 8, offset: 0 }"
+                                           :md="{span: 8, offset: 0 }"
+                                           :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
+                                        <h2 style="color: white">Developer Skill Bridging program</h2>
+                                    </a-col>
+                                    <a-col :xs="{span: 16, offset: 0 }" :sm="{span: 16, offset: 0 }"
+                                           :md="{span: 16, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                                        <div>
+
+                                            <p>Enabling new developers to attain expected market requirements through
+                                                self
+                                                driven training</p>
+                                            <router-link to="/bridgesHome">
+                                                <a-button type='primary'
+                                                          style="color: white">
+                                                    learn more
+                                                    <a-icon type="right"/>
+                                                </a-button>
+                                            </router-link>
+                                        </div>
+
+                                    </a-col>
+
+
+                                </a-row>
+                            </div>
+
+
+                        </div>
+                    </show-at>
 
                     <!-----partners---->
                     <div :style="{  padding: '31px', minHeight: '55vh' }">
@@ -802,6 +878,10 @@
     .lightshadow {
         box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
         border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .sdg4 {
+        width: 8rem;
     }
 
 

@@ -56,6 +56,9 @@
 
                                             </a-col>
                                         </div>
+                                        <div v-else>
+                                            <p>Currently no centers are available for assesment at this period.</p>
+                                        </div>
                                     </div>
 
                                 </a-row>
@@ -148,6 +151,7 @@
     import ServerManagement from "../../../services/ServerManagement";
     import Projects from '@/services/Projects'
     import MarketPlaceService from '@/services/Marketplace'
+    import moment from 'moment';
 
 
     export default {

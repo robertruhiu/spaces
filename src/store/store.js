@@ -22,7 +22,8 @@ export default new Vuex.Store({
         removed: false,
         cart_ids: [],
         managed: false,
-        recommended:[]
+        recommended: [],
+
     },
     mutations: {
         setToken(state, token) {
@@ -87,6 +88,7 @@ export default new Vuex.Store({
             state.cart_ids.push(Number(candidateobject.id))
 
         },
+
         manage(state) {
             for (let i = 0; i < state.cart.length; i++) {
                 if (state.cart[i].id === state.candidate.id) {
@@ -124,6 +126,7 @@ export default new Vuex.Store({
         setUser({commit}, user) {
             commit('setUser', user)
         },
+
         setCandidate({commit}, candidate) {
             commit('setCandidate', candidate)
         },

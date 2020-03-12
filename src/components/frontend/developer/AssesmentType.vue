@@ -16,44 +16,50 @@
 
                     </a-row>
                     <a-row :gutter="16" style="padding-right: 2rem;padding-bottom: 1.5rem;">
-                        <router-link to="/testcenters">
+
                             <a-col class="boxes" :xs="{span: 16, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/quiz.svg">
-                                        </div>
+                                    <router-link to="/testcenters" style="color: black">
+                                        <a-col span="24">
+                                            <div style="text-align: center">
+                                                <img class="poolavatar" src="../../../assets/images/quiz.svg">
+                                            </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">Book a Test at our Test Centres</p>
-                                        <p style="margin: 0;">If in Nigeria or Ghana, Pick any of our Test centers to verify your skills.</p>
-                                        <br>
-                                         <a-button type="primary"> See Available Test Centers</a-button>
-                                    </a-col>
+                                        </a-col>
+                                        <a-col span="24" style="text-align: center">
+                                            <p class="ant-card-head-title" style="font-weight: bold">Book a Test at our
+                                                Test Centres</p>
+                                            <p style="margin: 0;">If in Nigeria or Ghana, Pick any of our Test centers
+                                                to verify your skills.</p>
+                                            <br>
+                                            <a-button type="primary"> See Available Test Centers</a-button>
+                                        </a-col>
+                                    </router-link>
                                 </a-row>
                             </a-col>
-                        </router-link>
-                        <router-link to="/developerprojects">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
+
+
+                        <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" >
                                 <a-row class="ant-card actioncards" >
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/code.svg">
-                                        </div>
+                                    <router-link to="/developerprojects" style="color: black">
+                                        <a-col span="24">
+                                            <div style="text-align: center">
+                                                <img class="poolavatar" src="../../../assets/images/code.svg">
+                                            </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">Automated Test</p>
-                                        <p style="margin: 0;">Build a real world project on our Automated Environment</p>
-                                        <br>
-                                         <a-button type="primary"> Schedule Automated Test</a-button>
-                                    </a-col>
+                                        </a-col>
+                                        <a-col span="24" style="text-align: center">
+                                            <p class="ant-card-head-title" style="font-weight: bold">Automated Test</p>
+                                            <p style="margin: 0;">Build a real world project on our Automated
+                                                Environment</p>
+                                            <br>
+                                            <a-button type="primary"> Schedule Automated Test</a-button>
+                                        </a-col>
+                                    </router-link>
                                 </a-row>
                             </a-col>
-                        </router-link>
 
 
                     </a-row>

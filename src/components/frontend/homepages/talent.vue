@@ -10,46 +10,113 @@
                             <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
                         </a-col>
                     </hide-at>
+                    <div v-if="currentUserProfile.user.is_staff">
+                        <a-col :xs="{span: 16, offset: 2 }" :sm="{span: 16, offset: 2 }" :md="{span: 16, offset: 2 }"
+                               :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
 
-                    <a-col :xs="{span: 16, offset: 2 }" :sm="{span: 16, offset: 2 }" :md="{span: 16, offset: 2 }"
-                           :lg="{span: 16, offset: 0 }" :xl="{span: 16, offset: 0 }">
+                            <div style="padding-top: 2rem;" class='center'>
 
-                        <div style="padding-top: 2rem;" class='center'>
-
-                            <a-auto-complete
-                                    :dataSource="dataSource"
-                                    style="width: 100%;z-index: 0"
-                                    placeholder="Search skills like react,javascript,vue python"
-                                    :filterOption="filterOption"
-                                    v-model="search"
-
-
-                            >
-
-                                <a-input>
-                                    <a-icon slot="suffix" type="search" class="certain-category-icon"/>
-                                </a-input>
-                            </a-auto-complete>
+                                <a-auto-complete
+                                        :dataSource="dataSource"
+                                        style="width: 100%;z-index: 0"
+                                        placeholder="Search skills like react,javascript,vue python"
+                                        :filterOption="filterOption"
+                                        v-model="search"
 
 
-                        </div>
-                    </a-col>
-                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
-                           :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+                                >
 
-                        <div style="padding-top: 2rem;" class='center'>
-
-
-                            <country-select
-                                    name="location"
-
-                                    class="ant-input"
-                                    v-model="country"
-                            />
+                                    <a-input>
+                                        <a-icon slot="suffix" type="search" class="certain-category-icon"/>
+                                    </a-input>
+                                </a-auto-complete>
 
 
-                        </div>
-                    </a-col>
+                            </div>
+                        </a-col>
+                        <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
+                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+
+                            <div style="padding-top: 2rem;" class='center'>
+
+
+                                <country-select
+                                        name="location"
+
+                                        class="ant-input"
+                                        v-model="country"
+                                />
+
+
+                            </div>
+                        </a-col>
+                        <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
+                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+
+                            <div style="padding-top: 2rem;" class='center'>
+
+
+                                <a-select
+                                        placeholder="Select a person"
+                                        optionFilterProp="children"
+                                        style="width: 200px"
+                                        v-model="gender"
+                                >
+                                    <a-select-option value="male">
+                                        male
+                                    </a-select-option>
+                                    <a-select-option value="female">
+                                        female
+                                    </a-select-option>
+                                </a-select>
+
+
+                            </div>
+                        </a-col>
+
+                    </div>
+                    <div v-else>
+                        <a-col :xs="{span: 16, offset: 2 }" :sm="{span: 16, offset: 2 }" :md="{span: 16, offset: 2 }"
+                               :lg="{span: 16, offset: 0 }" :xl="{span: 16, offset: 0 }">
+
+                            <div style="padding-top: 2rem;" class='center'>
+
+                                <a-auto-complete
+                                        :dataSource="dataSource"
+                                        style="width: 100%;z-index: 0"
+                                        placeholder="Search skills like react,javascript,vue python"
+                                        :filterOption="filterOption"
+                                        v-model="search"
+
+
+                                >
+
+                                    <a-input>
+                                        <a-icon slot="suffix" type="search" class="certain-category-icon"/>
+                                    </a-input>
+                                </a-auto-complete>
+
+
+                            </div>
+                        </a-col>
+                        <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
+                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+
+                            <div style="padding-top: 2rem;" class='center'>
+
+
+                                <country-select
+                                        name="location"
+
+                                        class="ant-input"
+                                        v-model="country"
+                                />
+
+
+                            </div>
+                        </a-col>
+                    </div>
+
 
                 </a-row>
             </div>
@@ -60,11 +127,10 @@
 
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
+
                         <a-alert
                                 message="If you have a posted  job you can attach picked candidates to it.You can do this on manage candidates page"
                                 type="info" closeText="Close Now"/>
-
-
 
 
                         <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
@@ -224,7 +290,7 @@
 <script>
 
     class Developer {
-        constructor(id, name, skills, about, location, availabilty, verified) {
+        constructor(id, name, skills, about, location, availabilty, verified, gender) {
             this.id = id;
             this.name = name;
             this.skills = skills;
@@ -232,6 +298,7 @@
             this.location = location;
             this.availabilty = availabilty
             this.verified = verified
+            this.gender = gender
         }
     }
 
@@ -279,7 +346,7 @@
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
                     'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
-                    'Android', 'Website', 'Mobile'],
+                    'Android', 'Website', 'Mobile', 'Laravel'],
 
 
                 plainOptions1,
@@ -307,7 +374,10 @@
                     {type: 'message', text: '2'},
                 ],
                 talentorder: [],
-                ordered_list: []
+                ordered_list: [],
+                currentUserProfile: {},
+                gender: '',
+
             }
         },
         components: {
@@ -319,8 +389,13 @@
         },
 
         async mounted() {
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
             this.devs = (await UsersService.devs()).data;
             this.talentorder = (await UsersService.talentorder()).data
+            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.loading = false
             for (let i = 0; i < this.devs.length; i++) {
 
@@ -343,16 +418,19 @@
                 if (this.devs[i].verified_skills) {
                     verified = true
                 }
+                let gender = null
+                if (this.devs[i].gender) {
+                    gender = this.devs[i].gender
+
+                }
                 let onedev = new Developer(
-                    id, name, skills, about, location, availabilty, verified
+                    id, name, skills, about, location, availabilty, verified, gender
                 )
 
 
                 this.listData.push(onedev)
 
             }
-
-
 
 
         },
@@ -393,22 +471,46 @@
 
         },
         computed: {
-            orderedlist(){
+            orderedlist() {
                 let list = []
-                for(let i=0;i<this.listData.length;i++){
-                    let index =this.talentorder.indexOf(this.listData[i].id);
-                    list[index]=this.listData[i]
+                for (let i = 0; i < this.listData.length; i++) {
+                    let index = this.talentorder.indexOf(this.listData[i].id);
+                    list[index] = this.listData[i]
                 }
                 return list
             },
+
             filteredList() {
                 return this.orderedlist.filter(dev => {
-                    if (this.country && this.search) {
 
-                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase()) && dev.location.toLowerCase().includes(this.country.toLowerCase())
+
+                    if (this.country && this.search && this.gender) {
+
+                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
+                            && dev.location.toLowerCase().includes(this.country.toLowerCase())
+                            && dev.gender.toLowerCase().includes(this.gender.toLowerCase())
+
+                    } else if (this.country && this.search) {
+                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
+                            && dev.location.toLowerCase().includes(this.country.toLowerCase())
+
+
+                    } else if (this.search && this.gender) {
+                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
+                            && dev.gender.toLowerCase().includes(this.gender.toLowerCase())
+
+
+                    } else if (this.country && this.gender) {
+                        return dev.location.toLowerCase().includes(this.country.toLowerCase())
+                            && dev.gender.toLowerCase().includes(this.gender.toLowerCase())
+
 
                     } else if (this.country) {
                         return dev.location.toLowerCase().includes(this.country.toLowerCase())
+
+
+                    } else if (this.gender) {
+                        return dev.gender.toLowerCase().includes(this.gender.toLowerCase())
 
 
                     } else {

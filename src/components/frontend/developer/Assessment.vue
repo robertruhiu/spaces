@@ -16,40 +16,43 @@
 
                     </a-row>
                     <a-row :gutter="16" style="padding-right: 2rem;padding-bottom: 1.5rem;">
-                        <router-link to="/quizlist">
+
                             <a-col class="boxes" :xs="{span: 16, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                 <a-row class="ant-card actioncards">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/quiz.svg">
-                                        </div>
+                                    <router-link to="/quizlist" style="color: black">
+                                        <a-col span="24">
+                                            <div style="text-align: center">
+                                                <img class="poolavatar" src="../../../assets/images/quiz.svg">
+                                            </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">Take a Quiz</p>
-                                        <p style="margin: 0;"> Jolt your memories on fundamentals</p>
-                                    </a-col>
+                                        </a-col>
+                                        <a-col span="24" style="text-align: center">
+                                            <p class="ant-card-head-title" style="font-weight: bold">Take a Quiz</p>
+                                            <p style="margin: 0;"> Jolt your memories on fundamentals</p>
+                                        </a-col>
+                                    </router-link>
                                 </a-row>
                             </a-col>
-                        </router-link>
-                        <router-link to="/selectassesment">
-                            <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
+
+
+                        <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" >
                                 <a-row class="ant-card actioncards" >
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/code.svg">
-                                        </div>
+                                    <router-link to="/selectassesment" style="color: black">
+                                        <a-col span="24">
+                                            <div style="text-align: center">
+                                                <img class="poolavatar" src="../../../assets/images/code.svg">
+                                            </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">Build a Project</p>
-                                        <p style="margin: 0;">Build a real world project</p>
-                                    </a-col>
+                                        </a-col>
+                                        <a-col span="24" style="text-align: center">
+                                            <p class="ant-card-head-title" style="font-weight: bold">Build a Project</p>
+                                            <p style="margin: 0;">Build a real world project</p>
+                                        </a-col>
+                                    </router-link>
                                 </a-row>
                             </a-col>
-                        </router-link>
 
 
                     </a-row>
