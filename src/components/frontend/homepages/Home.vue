@@ -222,27 +222,7 @@
                             </a-row>
                         </div>
                     </div>
-                    <!--                    &lt;!&ndash;-&#45;&#45;services&#45;&#45;&ndash;&gt;-->
 
-                    <!--                    <div :style="{  minHeight: '55vh' }">-->
-                    <!--                        <h2 class="headers" style="text-align: center">-->
-                    <!--                            Our Services-->
-                    <!--                        </h2>-->
-
-
-                    <!--                        <a-row  :style="{padding:'3%'}">-->
-                    <!--                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"-->
-                    <!--                                   :md="{span: 24, offset: 0 }"-->
-                    <!--                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">-->
-
-
-                    <!--                            </a-col>-->
-
-
-                    <!--                        </a-row>-->
-
-
-                    <!--                    </div>-->
                     <!-----talent---->
 
                     <div :style="{ background: '#fff', minHeight: '400px' }">
@@ -442,7 +422,7 @@
                     </div>
                     <!-----why us---->
 
-                    <div :style="{ background: '#fff', padding: '31px', minHeight: '40vh' }">
+                    <div :style="{ background: '#fff', padding: '31px', minHeight: '40vh',paddingTop:'3rem' }">
 
 
                         <h2 class="headers" style="text-align: center">Why Hire with Codeln? </h2>
@@ -490,7 +470,7 @@
                     </div>
                     <!-----CSA bridging ---->
                     <hide-at breakpoint="mediumAndBelow">
-                        <div style="background-color: #3854c6; padding: 31px;min-height: 10rem">
+                        <div style="background-color: #3854c6; padding: 31px;min-height: 10rem;padding-top: 3rem">
                             <div style="padding: 0  20% 0 30%;color: white">
                                 <a-row>
                                     <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }"
@@ -529,7 +509,7 @@
                     </hide-at>
 
                     <show-at breakpoint="mediumAndBelow">
-                        <div style="background-color: #3854c6; padding: 31px;min-height: 10rem">
+                        <div style="background-color: #3854c6; padding: 31px;min-height: 10rem;padding-top: 3rem">
                             <div style="color: white">
                                 <a-row :gutter="16">
                                     <a-col :xs="{span: 8, offset: 0 }" :sm="{span: 8, offset: 0 }"
@@ -565,7 +545,7 @@
                     </show-at>
 
                     <!-----partners---->
-                    <div :style="{  padding: '31px', minHeight: '55vh' }">
+                    <div :style="{  padding: '31px', minHeight: '55vh',paddingTop:'3rem' }">
                         <h2 class="headers" style="text-align: center">
                             Trusted By
                         </h2>
