@@ -22,9 +22,7 @@
                 </router-link>
 
                 <router-link to="/prices" class="ant-menu-item" style="margin-bottom: 0">Pricing</router-link>
-                <router-link to="/bridgesHome" class="ant-menu-item" style="margin-bottom: 0">Developer Skill Bridging
-                    program
-                </router-link>
+
 
                 <router-link to="/talent" class="ant-menu-item" style="margin-bottom: 0">Talent pool</router-link>
                 <router-link to="/jobs" class="ant-menu-item" style="margin-bottom: 0">Job board</router-link>
