@@ -106,7 +106,7 @@ export default {
     recruiterfeedback(){
         return Api().get(`feedback/recruiter_feedback/`)
     },
-    submitfeedback(){
-        return Api().post(`feedback/recruiter_feedback/`)
+    submitfeedback(survey_answers){
+        return Api().post(`feedback/recruiter_feedback/`, survey_answers)
     },
 }

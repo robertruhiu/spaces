@@ -94,9 +94,7 @@
                 };
                 Payments.cartitemdelete(cart_item_id, auth)
                     .then(resp => {
-                        this.$router.push({
-                            name: 'cart',
-                        })
+
                     })
                     .catch(err =>
                         console.log(err))

@@ -9,21 +9,19 @@
                     >
                         <h2>Product Feedback</h2>
                         {{ codeln_survey }}
+                        <button @click="onSurveySave">Save The Abv</button>
                         <br>
                         <br>
                         {{job_survey}}
+                        <button @click="onSurveySave">Save The Abv</button>
 
                         <li v-for="developer in developers">
                             {{developer.name}}
                             {{dev_survey}}
+                            <button @click="onSurveySave">Save The Abv</button>
                         </li>
-<!--                            <div style="background:#ECECEC; padding:30px">-->
-<!--                                <a-card title="Card title" :bordered="false" style="width: 300px">-->
-<!--                                    <p>Card content</p>-->
-<!--                                    <p>Card content</p>-->
-<!--                                    <p>Card content</p>-->
-<!--                                </a-card>-->
-<!--                            </div>-->
+                        <br>
+                        <button @click="submitFeedback">Submit Feedback</button>
                     </a-col>
                 </a-row>
             </div>
@@ -33,6 +31,14 @@
 </template>
 
 <script>
+    class SurveyAnswer {
+        constructor(recruiter_feedback_id, question, text, developer_id) {
+            this.recruiter_feedback_id=recruiter_feedback_id;
+            this.question=question;
+            this.text=text;
+            this.developer_id=developer_id;
+        }
+    }
     import Pageheader from '../../layout/Header';
     import Footer from '../../layout/Footer';
     import Marketplace from "../../../services/Marketplace";
@@ -47,9 +53,12 @@
                 job_survey: {},
                 dev_survey: {},
                 codeln_survey: {},
-                job_survey_answer: {},
-                dev_survey_answer: {},
-                codeln_survey_answer: {},
+               survey_answers: {
+                    "type": "codeln_survey",
+                   "question": "How likely are you to use Codeln again?",
+                   "choices": [ { "choice": "Highly Likely", "position": 1 },
+                       { "choice": "Not Likely", "position": 2 } ]
+               },
             }
         },
         async mounted() {
@@ -69,8 +78,18 @@
             }).catch()
         },
         methods: {
-            async SubmitFeedback() {
-                Marketplace.submitfeedback()
+            async submitFeedback() {
+                Marketplace.submitfeedback(this.survey_answers).then(
+                    this.$router.push({
+                            name: 'recruiter',
+                        })
+                ).catch(error=>{ return error});
+            },
+
+            onSurveySave(recruiter_feedback_id, question, text, developer_id){
+                let developer  =developer_id || null ;
+                let surveyAnswer = new SurveyAnswer(recruiter_feedback_id, question, text, developer);
+                this.survey_answers.push(surveyAnswer);
             }
         }
 
