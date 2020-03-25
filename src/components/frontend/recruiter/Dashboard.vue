@@ -792,7 +792,6 @@
     export default {
         name: 'index',
         data() {
-
             return {
                 currentUserProfile: null,
                 jobs: null,
@@ -842,7 +841,6 @@
                 content:''
 
             }
-
         },
         components: {
             ARow,
@@ -851,7 +849,6 @@
             RecruiterSider,
             showAt, hideAt,
             mde,VueSimplemde,markdown
-
 
         },
         created() {

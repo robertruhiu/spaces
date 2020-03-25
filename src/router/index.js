@@ -44,6 +44,7 @@ const SelfverifyProject = () => import('@/components/frontend/developer/Selfveri
 
 const Cart = () => import('@/components/frontend/recruiter/cart/Cart');
 const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
+const Feedback = () => import('@/components/frontend/recruiter/Feedback');
 Vue.use(Router);
 
 let router = new Router({
@@ -394,6 +395,13 @@ let router = new Router({
             name: 'prices',
             component: Prices,
 
+        },
+        {
+            path: '/feedback/',
+                // ':feedbackId/',
+            name: 'feedback',
+            component: Feedback,
+            
         },
     ],
 

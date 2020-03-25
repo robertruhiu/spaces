@@ -5,8 +5,6 @@
 
         <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
             <a-layout-content style="margin-top: 3%">
-
-
                 <a-row style="padding: 1% 1%">
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
                            :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style=" ">
@@ -343,7 +341,6 @@
                                             </div>
                                             <div v-else>
                                                 <div style="text-align: center" v-if="conditions">
-                                                                              </Rave>-->
                                                     <paystack
                                                             :amount="paystack_amount"
                                                             :email="email"
@@ -385,20 +382,15 @@
                                                             </div>
                                                         </div>
                                                         <div v-else>
-                                                            <a-button v-if="picked === false" type="primary"
-                                                                      @click="pickcandidate(currentUserProfile.id)">
+                                                            <a-button v-if="picked === false" type="primary" @click="pickcandidate(currentUserProfile.id)">
                                                                 Add to my Candidates
                                                             </a-button>
                                                         </div>
-
-
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div v-for="dev in pickeddevpaid" :key="dev">
                                         <div v-if="dev.id === currentUserProfile.id">
                                             <div class="profile">
@@ -476,10 +468,8 @@
             this.duration = duration;
             this.tags = tech_used;
             this.location = location;
-
         }
     }
-
     class Portfolio {
         constructor(id, title, description, demo, tech_used) {
             this.key = id;
@@ -487,21 +477,15 @@
             this.description = description;
             this.demo = demo;
             this.tags = tech_used;
-
-
         }
     }
-
     class Cart {
         constructor(id, name, verified) {
             this.id = id;
             this.name = name;
             this.verified = verified;
-
-
         }
     }
-
     import UsersService from '@/services/UsersService'
 
 
@@ -515,12 +499,9 @@
     import {hideAt, showAt} from 'vue-breakpoints'
     import Rave from "@/components/frontend/recruiter/cart/Rave";
     import tc from '@/components/frontend/homepages/tc'
-
-
     export default {
         name: 'candidatetalentprofile',
         data() {
-
             return {
                 currentUserProfile: {},
                 skilltags: [],
@@ -578,18 +559,14 @@
             paystack
         },
         async mounted() {
-
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
-
             }
-
             if (this.$store.state.user.pk) {
                 this.customer_firstname = this.$store.state.user.first_name
                 this.customer_lastname = this.$store.state.user.last_name
                 this.email = this.$store.state.user.email
                 let dev_id = this.$route.params.candidateProfileID
-
 
                 this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
 
@@ -816,8 +793,6 @@
 
 
             }
-
-
         },
         computed: {
             reference() {
@@ -834,8 +809,6 @@
             },
             pickcandidate() {
                 this.addcart = true
-
-
                 const auth = {
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
                 };
@@ -867,17 +840,12 @@
                         } else {
                             this.amount = 500
                         }
-
-
                     })
                     .catch(error => {
                         this.addcart = false
                         this.picked = false
                         return error
-
                     });
-
-
             },
             logout() {
                 this.$store.dispatch('setToken', null);
@@ -901,7 +869,6 @@
                                 if (this.devs[i].verified_skills) {
                                     verified = true
                                 }
-
                                 let one_profile = new Cart(
                                     id, name, verified
                                 );
@@ -980,14 +947,11 @@
                         Payments.cartitemadd(this.mycart.id, {
                             devspending: developerspending,
                             devspaid: developerspaid,
-
                         }, auth)
                             .then(resp => {
                                 return resp
                             })
                     }
-
-
                     this.pickeddevs = []
                     for (let j = 0; j < this.pickedprofiles.length; j++) {
                         let picked_developer = {
@@ -1002,22 +966,14 @@
                                     this.$router.push({
                                         name: 'mycandidates'
                                     })
-
-
                                     return resp
                                 }
                             )
                             .catch(error => {
                                 return error
-
-
                             });
-
                     }
-
                 }
-
-
             },
             callback: function (response) {
                 let self = this;
@@ -1052,23 +1008,15 @@
                             paid: true,
                             stage: 'active'
                         }
-
                         MarketPlaceService.pickdeveloper(picked_developer, auth)
                             .then(resp => {
-
-
                                     return resp
                                 }
                             )
                             .catch(error => {
                                 return error
-
-
                             });
-
                     }
-
-
                     if (response.tx.amount === 100) {
                         let bundlelimit = 4
                         if (this.paiddevs === bundlelimit) {
@@ -1076,7 +1024,6 @@
                                 .then()
                                 .catch();
                         }
-
                     } else if (response.tx.amount === 200) {
                         let bundlelimit = 10
                         if (this.paiddevs === bundlelimit) {
@@ -1111,16 +1058,12 @@
                 } else {
                     this.conditions = true
                 }
-
                 this.terms = false
             },
             Check(e) {
                 this.conditions = e.target.checked
             }
-
-
-        }
-        ,
+        },
 
     }
 
