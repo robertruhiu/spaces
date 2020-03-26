@@ -62,7 +62,7 @@
             }
         },
         async mounted() {
-            Marketplace.recruiterfeedback().then(resp => {
+            Marketplace.recruiterfeedback(this.$route.params.slug).then(resp => {
                 this.feedback = resp.data
                 this.developers = resp.data.developers
                 for (let survey of resp.data.survey_questions) {
@@ -79,7 +79,7 @@
         },
         methods: {
             async submitFeedback() {
-                Marketplace.submitfeedback(this.survey_answers).then(
+                Marketplace.submitfeedback( this.$route.params.slug, this.survey_answers).then(
                     this.$router.push({
                             name: 'recruiter',
                         })

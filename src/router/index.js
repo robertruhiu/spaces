@@ -397,8 +397,7 @@ let router = new Router({
 
         },
         {
-            path: '/feedback/',
-                // ':feedbackId/',
+            path: '/feedback/:slug/',
             name: 'feedback',
             component: Feedback,
             
