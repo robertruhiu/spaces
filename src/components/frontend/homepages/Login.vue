@@ -152,7 +152,6 @@
 
         methods: {
             login() {
-
                 this.$validator.validateAll().then((values) => {
                     if (values) {
                         this.loading = true
@@ -175,18 +174,9 @@
 
                                         if (response.data.stage === 'complete') {
                                             if (this.$store.state.usertype === 'developer') {
-                                                this.$router.push({
-                                                        name: 'developer'
-                                                    })
-
-
-
+                                                this.$router.push(this.$route.query.redirect || '/developer')
                                             } else {
-                                                 this.$router.push({
-                                                        name: 'recruiter'
-                                                    })
-
-
+                                                this.$router.push(this.$route.query.redirect || '/recruiter')
 
                                             }
                                         } else {
@@ -200,27 +190,18 @@
                                     .catch(error => {
                                         this.loading = false
                                         return error
-
-
                                     });
-
-
                             })
                             .catch(error => {
                                 this.loading = false
                                 this.error = 'login details incorrect'
                                 return error
-
                             });
-
-
                     } else {
                         this.loading = false
                     }
                 })
             },
-
-
         }
     }
 </script>

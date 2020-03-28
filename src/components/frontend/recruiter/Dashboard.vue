@@ -836,10 +836,8 @@
                     title: 'Job Review',
 
                 }],
-
                 jobmobile: false,
                 content:''
-
             }
         },
         components: {

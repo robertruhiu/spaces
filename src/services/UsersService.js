@@ -54,6 +54,9 @@ export default {
      updatepatch(user_id, patchdata, auth) {
         return Api().patch(`updater/${user_id} `, patchdata, auth)
     },
+    getreferralcode(profile_id, auth) {
+        return Api().get(`getreferral/${profile_id} `, auth)
+    },
 
 
 }

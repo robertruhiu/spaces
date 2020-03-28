@@ -12,8 +12,9 @@
                 marginLeft: '1%',marginRight:'1%',marginTop:'1rem' }">
                     <a-form :form="form">
                         <a-row :gutter="16">
-                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }" >
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
 
                                 <a-row :gutter="16">
                                     <a-col :span="24">
@@ -91,8 +92,9 @@
 
 
                             </a-col>
-                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
-                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }"  >
+                            <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
+                                   :md="{span: 12, offset: 0 }"
+                                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
                                 <a-col :span="24">
                                     <a-form-item>
                                         <p>Pick skills to enable candidate
@@ -113,6 +115,16 @@
 
                                     </a-form-item>
                                 </a-col>
+                                <a-col :span="24">
+
+                                    <div v-if="currentUserProfile.referral_code">
+                                        <p> Referral Code : {{currentUserProfile.referral_code.code}}</p>
+                                    </div>
+                                    <div v-else>
+                                        <a-button style="color: blue" @click="getReferralCode">Request referral code
+                                        </a-button>
+                                    </div>
+                                </a-col>
 
                             </a-col>
                         </a-row>
@@ -121,14 +133,13 @@
 
                         </div>
                         <div style="text-align: center" v-else>
-                             <div style="text-align: center;">
+                            <div style="text-align: center;">
                                 <a-spin/>
                             </div>
 
                         </div>
 
                     </a-form>
-
 
                 </div>
             </a-layout-content>
@@ -154,7 +165,7 @@
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
                     'Android', 'Website', 'Mobile'],
                 selectedTags: [],
-                loading:false
+                loading: false
 
 
             }
@@ -222,11 +233,23 @@
                     })
                     .catch(error => {
                         return error
-
-
                     });
 
 
+            },
+            getReferralCode() {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+                }
+                UsersService.getreferralcode(this.$store.state.user.pk, auth)
+                    .then(resp => {
+                        this.$router.push({
+                            name: 'recruiter'
+                        })
+                        console.log(resp)
+                    }).catch(error => {
+                    return error
+                });
             },
             handleClose(removedTag) {
                 const tags = this.tags.filter(tag => tag !== removedTag)
@@ -235,18 +258,15 @@
                 this.currentUserProfile.skills = alltags
 
             },
-
             showInput() {
                 this.inputVisible = true
                 this.$nextTick(function () {
                     this.$refs.input.focus()
                 })
             },
-
             handleInputChange(e) {
                 this.inputValue = e.target.value
             },
-
             handleInputConfirm() {
                 const inputValue = this.inputValue
                 let tags = this.tags

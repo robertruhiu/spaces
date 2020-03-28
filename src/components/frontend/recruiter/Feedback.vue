@@ -62,7 +62,11 @@
             }
         },
         async mounted() {
-            Marketplace.recruiterfeedback(this.$route.params.slug).then(resp => {
+            const auth = {
+                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+            }
+            Marketplace.recruiterfeedback(this.$route.params.slug, auth).then(resp => {
                 this.feedback = resp.data
                 this.developers = resp.data.developers
                 for (let survey of resp.data.survey_questions) {
@@ -78,8 +82,13 @@
             }).catch()
         },
         methods: {
+
             async submitFeedback() {
-                Marketplace.submitfeedback( this.$route.params.slug, this.survey_answers).then(
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.submitfeedback( this.$route.params.slug, this.survey_answers, auth).then(
                     this.$router.push({
                             name: 'recruiter',
                         })

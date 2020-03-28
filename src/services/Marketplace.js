@@ -103,10 +103,10 @@ export default {
     candidatemanagerdelete(candidatemanagement_id, auth) {
         return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `,auth)
     },
-    recruiterfeedback(slug){
-        return Api().get(`feedback/rec/${slug}`)
+    recruiterfeedback(slug, auth){
+        return Api().get(`feedback/rec/${slug}`, auth)
     },
-    submitfeedback(slug, survey_answers){
-        return Api().post(`feedback/rec/${slug}`, survey_answers)
+    submitfeedback(slug, survey_answers, auth){
+        return Api().post(`feedback/rec/${slug}`, survey_answers, auth)
     },
 }
