@@ -444,10 +444,12 @@ let router = new Router({
 
         },
         {
-            path: '/feedback/',
-            // ':feedbackId/',
+            path: '/feedback/:slug/',
             name: 'feedback',
             component: Feedback,
+            meta: {
+                requiresAuth: true
+            }
 
         },
     ],
@@ -463,20 +465,19 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-
-
         if (store.getters.isLoggedIn) {
-
-
             next();
             return
         }
-        next('/login')
+        next({
+            path: '/login',
+            query: {redirect: to.fullPath}
+        })
 
     } else {
         next()
     }
-})
+});
 
 
 export default router

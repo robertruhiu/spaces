@@ -4,7 +4,7 @@
         <a-layout-content :style="{ padding: '0 0px', marginTop: '4rem',backgroundColor:'white' }">
             <div style="margin-top: 3rem">
                 <a-row style>
-                    <a-col :xs="{span: 22, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 18, offset: 3 }"
+                    <a-col :xs="{span: 20, offset: 2 }" :sm="{span: 20, offset: 2 }" :md="{span: 18, offset: 3 }"
                            :lg="{span: 18, offset: 3 }" :xl="{span: 18, offset: 3 }"
 
 
@@ -60,33 +60,14 @@
 
                                 </div>
                                 <div v-if="current === 2">
-                                    <!--                                    <div v-for="developer in developers" v-bind:key="developer">-->
-                                    <!--                                        <p>{{developer.candidate.user.first_name}}-->
-                                    <!--                                            {{developer.candidate.user.last_name}}</p>-->
-                                    <!--                                        <div v-for="survey in dev_survey" v-bind:key="survey.id"-->
-                                    <!--                                             style="margin-bottom: 1rem">-->
 
-                                    <!--                                            <p>{{survey.question}}</p>-->
-                                    <!--                                            <a-radio-group-->
-                                    <!--                                            >-->
-
-                                    <!--                                                <a-radio :style="radioStyle" v-for="choice in survey.choices"-->
-                                    <!--                                                         v-bind:key="choice.id" :value="choice.choice"-->
-                                    <!--                                                         @click="onChangeperdevsurvey(recruiter,survey.question,choice.choice,developer.candidate.user.id)">-->
-                                    <!--                                                    {{choice.choice}}-->
-                                    <!--                                                </a-radio>-->
-
-                                    <!--                                            </a-radio-group>-->
-
-
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <div v-for="one_survey in survey"
-                                         v-bind:key="one_survey.developer.candidate.user.id">
-                                        <p>{{one_survey.developer.candidate.user.first_name}}
-                                            {{one_survey.developer.candidate.user.last_name}}</p>
-                                        <div v-for="surveyquestion in one_survey.survey" v-bind:key="surveyquestion.id"
+                                    <div v-for="one_dev in developers"
+                                         v-bind:key="one_dev.id">
+                                        <p v-if="errorstep3" style="color: red">*required please fill where necessary
+                                            and submit(done)</p>
+                                        <p>{{one_dev.candidate.user.first_name}}
+                                            {{one_dev.candidate.user.last_name}}</p>
+                                        <div v-for="surveyquestion in dev_survey" v-bind:key="surveyquestion.id"
                                              style="margin-bottom: 1rem">
 
                                             <p>{{surveyquestion.question}}</p>
@@ -95,7 +76,7 @@
 
                                                 <a-radio :style="radioStyle" v-for="choice in surveyquestion.choices"
                                                          v-bind:key="choice.id" :value="choice.choice"
-                                                         @click="onChangeperdevsurvey(one_survey,surveyquestion,choice.choice)">
+                                                         @click="onChangeperdevsurvey(recruiter,surveyquestion,choice.choice,one_dev.id)">
                                                     {{choice.choice}}
                                                 </a-radio>
 
@@ -126,10 +107,6 @@
                                 </a-button>
                             </div>
                         </div>
-                        {{survey[0].survey}}
-                        <p>
-                            {{survey[1].survey}}
-                        </p>
 
 
                     </a-col>
@@ -221,7 +198,7 @@
                 },
                 errorstep1: [],
                 errorstep2: [],
-                errorstep3: [],
+                errorstep3: false,
                 recruiter: null,
 
             }
@@ -275,10 +252,6 @@
 
 
                 }
-                this.developers.forEach(dev => {
-                    let survey_object = {developer: dev, survey: this.dev_survey}
-                    this.survey.push(survey_object)
-                })
 
 
             }).catch()
@@ -326,17 +299,39 @@
 
             },
 
-            onChangeperdevsurvey(survey_object, question, answer) {
-                this.survey.forEach(one_survey => {
-                    if (one_survey === survey_object) {
-                        one_survey.survey.forEach(questionobject => {
-                            if (questionobject === question) {
-                                questionobject.answer = answer
+            onChangeperdevsurvey(recruiter_feedback_id, question, answer, developer_id) {
+                if (this.survey_answers.length > 0) {
+                    let developer = developer_id || null;
+                    let surveyAnswer = new SurveyAnswer(recruiter_feedback_id, question.id, answer, developer);
+                    this.survey_answers.push(surveyAnswer);
+                    let uniquelist = []
+                    let indexlist = []
+                    for (let i = 0; i < this.survey_answers.length; i++) {
+
+                        if (this.survey_answers[i].developer_id === Number(developer_id) && this.survey_answers[i].question === Number(question.id)) {
+                            let index = this.survey_answers.indexOf(this.survey_answers[i]);
+                            uniquelist.push(this.survey_answers[i])
+                            if (uniquelist.length > 0) {
+                                indexlist.push(index)
+
                             }
 
-                        })
+
+                        }
                     }
-                })
+                    if (indexlist.length > 0) {
+                        if (indexlist[0] > -1) {
+                            this.survey_answers.splice(this.survey_answers[indexlist[0]], 1);
+                        }
+
+                    }
+
+
+                } else {
+                    let developer = developer_id || null;
+                    let surveyAnswer = new SurveyAnswer(recruiter_feedback_id, question.id, answer, developer);
+                    this.survey_answers.push(surveyAnswer);
+                }
 
 
             },
@@ -402,11 +397,18 @@
             },
             Done() {
                 let self = this
-                this.errorstep2 = []
-                self.submitFeedback()
-                this.$router.push({
-                    name: 'recruiter',
-                })
+                let devlength = this.developers.length
+                let questionlength = this.dev_survey.length
+                if (this.survey_answers.length < (devlength * questionlength)) {
+                    this.errorstep3 = true
+                } else {
+                    self.submitFeedback()
+                    this.$router.push({
+                        name: 'recruiter',
+                    })
+                }
+
+
             },
             prev() {
                 this.current--;
