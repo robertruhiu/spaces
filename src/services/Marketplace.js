@@ -127,6 +127,12 @@ export default {
     timesetemail(application_id, auth) {
         return Api().post(`marketplace/timesetemail/${application_id}`, auth)
     },
+    recruiterfeedback() {
+        return Api().get(`feedback/recruiter_feedback/`)
+    },
+    submitfeedback(survey_answers) {
+        return Api().post(`feedback/recruiter_feedback/`, survey_answers)
+    },
 
 
 }

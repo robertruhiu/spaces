@@ -49,7 +49,7 @@ const Checkout = () => import('@/components/frontend/recruiter/cart/Checkout');
 const Paths = () => import('@/components/frontend/bridges/paths');
 const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
-
+const Feedback = () => import('@/components/frontend/recruiter/Feedback');
 Vue.use(Router);
 
 let router = new Router({
@@ -441,6 +441,13 @@ let router = new Router({
             path: '/cohortsprojects',
             name: 'cohortsprojects',
             component: CohortSubmissions,
+
+        },
+        {
+            path: '/feedback/',
+            // ':feedbackId/',
+            name: 'feedback',
+            component: Feedback,
 
         },
     ],

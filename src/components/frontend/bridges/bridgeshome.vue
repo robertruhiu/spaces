@@ -9,7 +9,7 @@
                 <a-row>
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                            :md="{span: 24, offset: 0 }"
-                           :lg="{span: 12, offset: 1 }" :xl="{span: 12,offset: 0 }"
+                           :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }"
                            style="background-color: #007bff;min-height: 100vh">
                         <div style="padding: 0 3%">
                             <div class="herotext">
@@ -39,7 +39,7 @@
 
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                            :md="{span: 24, offset: 0 }"
-                           :lg="{span: 12, offset: 1 }" :xl="{span: 12,offset: 0 }">
+                           :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
 
                         <div style="overflow:scroll; height:100vh;">
                             <img src="../../../assets/images/coding.jpg" style="width: 100%">
