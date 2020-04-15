@@ -116,7 +116,7 @@ export default {
         return Api().get(`marketplace/publishedemails/${job_id}`, auth)
     },
     recruiterpublished(job_id, auth) {
-        return Api().get(`marketplace/recruiterpublished/${job_id}`, auth)
+        return Api().post(`marketplace/recruiterpublished/${job_id}`, auth)
     },
     rejectionemail(application_id, auth) {
         return Api().get(`marketplace/rejectionemail/${application_id}`, auth)
