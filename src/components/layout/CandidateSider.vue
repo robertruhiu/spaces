@@ -68,7 +68,7 @@
             <a-menu-item key="6">
                 <router-link to="/developerprofile">
                     <a-icon type="user"/>
-                    <span>My profile</span>
+                    <span>Edit profile</span>
                 </router-link>
 
             </a-menu-item>

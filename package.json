@@ -14,7 +14,7 @@
     "npm": "6.x"
   },
   "dependencies": {
-    "ant-design-vue": "^1.4.11",
+    "ant-design-vue": "^1.5.3",
     "axios": "^0.18.0",
     "cloudinary-core": "^2.8.1",
     "connect-history-api-fallback": "^1.6.0",

@@ -206,11 +206,11 @@
                                                                             width="20%"
 
                                                                     >
-                                                                        <div style="margin-left: 40%" slot="title">
+                                                                        <div style="width: 100%" slot="title">
                                                                             Skills
                                                                         </div>
                                                                         <template slot-scope="tags">
-                                                                            <div style="text-align: center">
+                                                                            <div style="">
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -227,10 +227,10 @@
                                                                             width="20%"
 
                                                                     >
-                                                                        <div style="margin-left: 25%" slot="title">Stage
+                                                                        <div style="width: 100%" slot="title">Stage
                                                                         </div>
                                                                         <template slot-scope="text, record">
-                                                        <span style="margin-left: 25%">
+                                                        <span>
                                                             <a-tag v-if="record.stage === 'active'"
                                                                    color="#8BC34A"
                                                                    style="text-align: center;width: 4rem;">{{record.stage}}</a-tag>
@@ -274,7 +274,8 @@
                                                                                             interview candidate
                                                                                         </a-menu-item>
                                                                                         <a-menu-item
-                                                                                                @click="handleMenuClick(record.action,record.profile,3)">
+                                                                                                @click="onReject(record.action,record.stage,record.profile,3)"
+                                                                                        >
                                                                                             <a-icon
                                                                                                     type="close"/>
                                                                                             reject candidate
@@ -366,11 +367,11 @@
                                                                             width="25%"
 
                                                                     >
-                                                                        <div style="margin-left: 33%" slot="title">
+                                                                        <div style="width: 100%" slot="title">
                                                                             Skills
                                                                         </div>
                                                                         <template slot-scope="tags">
-                                                                            <div style="text-align: center">
+                                                                            <div>
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -388,10 +389,10 @@
                                                                             width="20%"
 
                                                                     >
-                                                                        <div style="margin-left: 25%" slot="title">Stage
+                                                                        <div style="width: 100%" slot="title">Stage
                                                                         </div>
                                                                         <template slot-scope="text, record">
-                                                        <span style="margin-left: 25%">
+                                                        <span>
                                                             <!------------stage (new,active,test,interview,offer,hire)---------------->
                                                             <a-tag color="#EA6A47"
                                                                    style="text-align: center;">{{record.stage}}</a-tag>
@@ -420,7 +421,8 @@
                                                                                             type="primary">pick
                                                                                     </a-button>
                                                                                     <a-button
-                                                                                            @click="pickrejectAdmin(record.action,record.profile,false,record.name)">
+                                                                                            @click="onReject(record.action,record.stage,record.profile)"
+                                                                                    >
                                                                                         reject
                                                                                     </a-button>
 
@@ -438,7 +440,8 @@
                                                                                             type="primary">pick
                                                                                     </a-button>
                                                                                     <a-button
-                                                                                            @click="pickrejectClick(record.action,record.profile,false,record.name)">
+                                                                                            @click="onReject(record.action,record.stage,record.profile)"
+                                                                                    >
                                                                                         reject
                                                                                     </a-button>
 
@@ -519,11 +522,11 @@
                                                                             width="20%"
 
                                                                     >
-                                                                        <div style="text-align: center;" slot="title">
+                                                                        <div style="width: 100%;" slot="title">
                                                                             Skills
                                                                         </div>
                                                                         <template slot-scope="tags">
-                                                                            <div style="text-align: center;">
+                                                                            <div>
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -541,10 +544,10 @@
                                                                             width="20%"
 
                                                                     >
-                                                                        <div style="margin-left: 15%" slot="title">Stage
+                                                                        <div style="width: 100%" slot="title">Stage
                                                                         </div>
                                                                         <template slot-scope="text, record">
-                                                        <span style="margin-left: 5%">
+                                                        <span style="">
 
                                                             <a-tag color="#1C4E80"
                                                                    style="">{{record.stage}}</a-tag>
@@ -562,12 +565,12 @@
 
 
                                                                     >
-                                                                        <div style="margin-left: 10%" slot="title">
+                                                                        <div style="width: 100%" slot="title">
                                                                             Pick
                                                                         </div>
                                                                         <template slot-scope="text,record">
                                                                             <div v-if="currentUserProfile.user.is_staff">
-                                                                                <div style="margin-left: 5%">
+                                                                                <div>
                                                                                     <a-button :size="small"
                                                                                               @click="pickrecommedationAdmin(job.id,record.profile,2)"
                                                                                               type="primary">pick
@@ -577,7 +580,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div v-else>
-                                                                                <div style="margin-left: 5%">
+                                                                                <div>
                                                                                     <a-button :size="small"
                                                                                               @click="pickrecommedationClick(job.id,record.profile,2)"
                                                                                               type="primary">pick
@@ -637,7 +640,7 @@
                                                                     >
                                                                         <div slot="title">User profile</div>
                                                                         <template slot-scope="text,record">
-                                                        <span style="margin-left: 15%">
+                                                        <span>
                                                             <router-link
                                                                     style="text-decoration: none"
                                                                     :to="{name:'recommendedprofile',params:{candidateId: record.profile,jobId:job.id,}}"
@@ -661,7 +664,7 @@
                                                                             Skills
                                                                         </div>
                                                                         <template slot-scope="tags">
-                                                                            <div style="text-align: center;">
+                                                                            <div>
                                                                             <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -683,7 +686,7 @@
                                                                             Stage
                                                                         </div>
                                                                         <template slot-scope="text, record">
-                                                                            <div style="text-align: center">
+                                                                            <div>
                                                                             <span>
 
                                                             <a-tag color="#1C4E80"
@@ -767,9 +770,9 @@
                                                                     width="25%"
 
                                                             >
-                                                                <div style="margin-left: 33%" slot="title">Skills</div>
+                                                                <div style="width: 100%" slot="title">Skills</div>
                                                                 <template slot-scope="tags">
-                                                                    <div style="text-align: center">
+                                                                    <div>
                                                                     <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -883,7 +886,8 @@
 
 
                                                                             <a-menu-item
-                                                                                    @click="handleTestMenuClick(record.action,record.profile,4)">
+                                                                                    @click="onReject(record.action,record.profile,4)"
+                                                                            >
                                                                                 <a-icon
                                                                                         type="close"/>
                                                                                 reject candidate
@@ -931,6 +935,7 @@
                                                                 <template slot-scope="text,record">
                                                         <span>
                                                             {{record.name}} {{record.last_name}}
+
                                                             <span v-if="record.verified"><a-icon type="check"/></span>
                                                         </span>
                                                                 </template>
@@ -966,9 +971,9 @@
                                                                     width="25%"
 
                                                             >
-                                                                <div style="margin-left: 33%" slot="title">Skills</div>
+                                                                <div style="width: 100%" slot="title">Skills</div>
                                                                 <template slot-scope="tags">
-                                                                    <div style="text-align: center">
+                                                                    <div style="">
                                                                     <span>
                                                             <a-tag v-for="tag in tags" color="blue"
                                                                    :key="tag">{{tag}}</a-tag>
@@ -1056,6 +1061,43 @@
 
 
                                                             </a-table-column>
+                                                            <!-----interview notes--------->
+                                                            <a-table-column
+
+                                                                    dataIndex="notes"
+                                                                    key="notes"
+                                                                    width="15%"
+
+                                                            >
+                                                                <div style="" slot="title">Interview notes
+                                                                </div>
+                                                                <template slot-scope="text,record">
+                                                                    <div style="text-align: center">
+
+
+                                                                        <a-button :size="small"
+                                                                                  v-if="record.notes"
+                                                                                  style="background-color: #673AB7;color: white"
+                                                                                  @click="onNoteEdit(record.action,record.notes)"
+                                                                        >
+                                                                            <a-icon type="edit"/>
+                                                                            edit
+                                                                        </a-button>
+                                                                        <a-button :size="small" v-else
+                                                                                  style="background-color: #673AB7;color: white"
+                                                                                  @click="onNoteCreate(record.action)"
+                                                                        >
+                                                                            <a-icon type="plus"/>
+                                                                            add
+                                                                        </a-button>
+
+                                                                    </div>
+
+
+                                                                </template>
+
+
+                                                            </a-table-column>
 
 
                                                             <a-table-column
@@ -1078,10 +1120,12 @@
                                                                                 make offer
                                                                             </a-menu-item>
                                                                             <a-menu-item
-                                                                                    @click="handleInterviewClick(record.action,record.profile,3)">
+                                                                                    @click="onReject(record.action,record.stage,record.profile,3)"
+                                                                            >
                                                                                 <a-icon
                                                                                         type="close"/>
                                                                                 reject candidate
+
                                                                             </a-menu-item>
                                                                         </a-menu>
                                                                         <a-button type="primary"
@@ -1219,7 +1263,8 @@
                                                                                 type="primary">Hired
                                                                         </a-button>
                                                                         <a-button
-                                                                                @click="pickrejectClick(record.action,record.profile,false)">
+
+                                                                                @click="onReject(record.action,record.stage,record.profile)">
                                                                             Rejected
                                                                         </a-button>
 
@@ -2469,6 +2514,122 @@
                         <tc/>
                     </a-modal>
 
+                    <!-----add interview notes modal----->
+                    <a-modal title="Add a note" v-model="addnotemodal">
+                        <template slot="footer">
+
+
+                            <a-button key="submit"
+                                      type="primary" :loading="notesubmission" @click="Notesubmit(note_id)">
+                                Submit
+                            </a-button>
+
+                        </template>
+                        <a-textarea v-model="interviewnotes"
+
+                                    :autoSize="{ minRows: 2, maxRows: 6 }"
+                        />
+
+
+                    </a-modal>
+
+                    <!-----edit interview notes modal----->
+                    <a-modal title="Edit note" v-model="editnotemodal">
+                        <template slot="footer">
+
+
+                            <a-button key="submit"
+                                      type="primary" :loading="notesubmission" @click="Notesubmit(note_id)">
+                                Submit
+                            </a-button>
+
+                        </template>
+                        <a-textarea v-model="interviewnotes"
+
+                                    :autoSize="{ minRows: 2, maxRows: 6 }"
+                        />
+
+                    </a-modal>
+
+                    <!-----reject candidate reason modal----->
+                    <a-modal title="Rejection reasons" v-model="rejectionmodal">
+                        <template slot="footer">
+                            <a-button key="submit" v-if="rejectionstage === 'new' && currentUserProfile.user.is_staff"
+                                      type="primary" :loading="rejectsubmit"
+                                      @click="pickrejectAdmin(rejectioninstance,rejectionprofile,false)"
+
+
+                            >
+
+                                Submit
+                            </a-button>
+                            <a-button key="submit" v-else
+                                      type="primary" :loading="rejectsubmit"
+
+                                      @click="pickrejectClick(rejectioninstance,rejectionprofile,false)"
+
+
+                            >
+
+                                Submit
+                            </a-button>
+
+
+                            <a-button key="submit" v-if="rejectionstage === 'interview'"
+                                      type="primary" :loading="rejectsubmit"
+                                      @click="handleInterviewClick(rejectioninstance,rejectionprofile,3)">
+                                Submit
+                            </a-button>
+                            <a-button key="submit" v-if="rejectionstage === 'offer'"
+                                      type="primary" :loading="rejectsubmit"
+                                      @click="pickrejectClick(rejectioninstance,rejectionprofile,false)">
+
+                                Submit
+                            </a-button>
+                            <a-button key="submit" v-if="rejectionstage === 'test'"
+                                      type="primary" :loading="rejectsubmit"
+                                      @click="handleTestMenuClick(rejectioninstance,rejectionprofile,4)"
+                            >
+
+                                Submit
+                            </a-button>
+                            <a-button key="submit" v-if="rejectionstage === 'active'"
+                                      type="primary" :loading="rejectsubmit"
+                                      @click="handleMenuClick(rejectioninstance,rejectionprofile,3)"
+
+                            >
+
+                                Submit
+                            </a-button>
+
+
+                        </template>
+                        <a-checkbox-group @change="onPickReason">
+                            <a-row>
+                                <div v-for="reason in reasonslist" v-bind:key="reason">
+                                    <a-col :span="24">
+                                        <a-checkbox :value="reason">{{reason}}</a-checkbox>
+                                    </a-col>
+                                </div>
+
+
+                            </a-row>
+
+                        </a-checkbox-group>
+                        <div>
+
+
+                            <p>got a specific reason</p>
+                            <a-textarea v-model="reasoncomment"
+
+                                        :autoSize="{ minRows: 2, maxRows: 6 }"
+                            />
+
+                        </div>
+
+
+                    </a-modal>
+
 
                 </div>
 
@@ -2523,7 +2684,7 @@
         },
         {
             title: 'Notes',
-            dataIndex: 'profile',
+            dataIndex: 'notes',
             key: 'notes',
 
         },
@@ -2608,7 +2769,7 @@
     //applicants structure on table
     class Applicant {
         constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                    end, color, report, offerstatus, offerletter, carted, verified, last_name) {
+                    end, color, report, offerstatus, offerletter, carted, verified, last_name, notes) {
             this.key = id;
             this.name = name;
             this.last_name = last_name;
@@ -2629,6 +2790,7 @@
             this.offerletter = offerletter
             this.carted = carted
             this.verified = verified;
+            this.notes = notes
 
 
         }
@@ -2805,6 +2967,21 @@
                     },
                     pageSize: 10,
                 },
+                addnotemodal: false,
+                editnotemodal: false,
+                interviewnotes: '',
+                note_id: '',
+                notesubmission: false,
+                rejectionmodal: false,
+                reasonslist: ['Unaffordable salary expectations', 'Sloppy application', 'Wrong skill set', 'Unsuitable personality', 'Bad fit',
+                    'Not on time', 'Sloppy appearance', 'Lack of passion', 'Poor follow-up questions', 'Not responsive', 'Co-workers don’t approve'],
+                reasonspicked: [],
+                reasoncomment: '',
+                rejectionstage: '',
+                rejectioninstance: '',
+                rejectionprofile: '',
+                stagekey: '',
+                rejectsubmit: false
 
 
             }
@@ -2887,6 +3064,10 @@
                     if (this.applicants[j].candidate.verified_skills) {
                         verified = true
                     }
+                    let notes = ''
+                    if (this.applicants[j].notes) {
+                        notes = this.applicants[j].notes
+                    }
 
                     let status = this.applicants[j].interviewstatus
                     let start = this.applicants[j].interviewstarttime
@@ -2898,7 +3079,7 @@
                     let carted = this.applicants[j].carted
                     let onepickeddev = new Applicant(
                         id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                        end, color, report, offerstatus, offerletter, carted, verified, last_name
+                        end, color, report, offerstatus, offerletter, carted, verified, last_name, notes
                     );
 
                     this.applicantprofile.push(onepickeddev)
@@ -3157,6 +3338,36 @@
             tabscroller(val) {
                 console.log(val);
             },
+            onNoteCreate(application) {
+                this.note_id = application
+                this.addnotemodal = true
+
+
+            },
+            onReject(application, stage, profile, key) {
+                if (key !== null) {
+                    this.stagekey = key
+                }
+                this.rejectionprofile = profile
+                this.rejectioninstance = application
+                this.rejectionstage = stage
+                this.rejectionmodal = true
+
+
+            },
+            onPickReason(checkedValues) {
+                this.reasonspicked = checkedValues
+
+            },
+
+            onNoteEdit(application, notes) {
+                this.note_id = application
+                this.interviewnotes = notes
+                this.editnotemodal = true
+
+
+            },
+
             onEventClick(application_id, name, start, end, color) {
                 this.interviewerapplicationid = application_id
                 this.interviewer = name
@@ -3288,6 +3499,7 @@
 
                 }
                 this.waiting = true
+                this.rejectsubmit = true
                 let self = this;
 
                 if (id === 1) { // testing
@@ -3338,7 +3550,12 @@
                     for (let i = 0; i < this.pickedapplicants.length; i++) {
                         if (this.pickedapplicants[i].profile === profile) {
 
-                            Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
+                            Marketplace.pickreject(action, {
+                                stage: 'rejected',
+                                selected: false,
+                                rejectionreason: this.reasonspicked.join(','),
+                                rejectioncomment: this.reasoncomment
+                            }, auth)
                                 .then(resp => {
                                     this.applicants = []
                                     this.newapplicant = []
@@ -3360,6 +3577,8 @@
                     }
 
                 }
+                this.rejectsubmit = false
+                this.rejectionmodal = false
             }
             ,
 
@@ -3370,6 +3589,7 @@
 
                 }
                 this.waiting = true
+                this.rejectsubmit = true
                 let self = this;
                 if (id === 2) { // interview
                     for (let i = 0; i < this.testingstage.length; i++) {
@@ -3420,7 +3640,12 @@
                     for (let i = 0; i < this.testingstage.length; i++) {
                         if (this.testingstage[i].profile === profile) {
 
-                            Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
+                            Marketplace.pickreject(action, {
+                                stage: 'rejected',
+                                selected: false,
+                                rejectionreason: this.reasonspicked.join(','),
+                                rejectioncomment: this.reasoncomment
+                            }, auth)
                                 .then(resp => {
                                     this.applicants = []
                                     this.newapplicant = []
@@ -3442,6 +3667,8 @@
                     }
 
                 }
+                this.rejectsubmit = false
+                this.rejectionmodal = false
 
 
             }
@@ -3454,6 +3681,7 @@
 
                 }
                 this.waiting = true
+                this.rejectsubmit = true
                 let self = this;
                 if (id === 1) {
                     for (let i = 0; i < this.interviewstage.length; i++) {
@@ -3504,7 +3732,11 @@
                 } else if (id === 3) { // reject
                     for (let i = 0; i < this.interviewstage.length; i++) {
                         if (this.interviewstage[i].profile === profile) {
-                            Marketplace.pickreject(action, {stage: 'rejected', selected: false}, auth)
+
+                            Marketplace.pickreject(action, {
+                                stage: 'rejected', selected: false,
+                                rejectionreason: this.reasonspicked.join(','), rejectioncomment: this.reasoncomment
+                            }, auth)
                                 .then(resp => {
                                     this.applicants = []
                                     this.newapplicant = []
@@ -3526,6 +3758,8 @@
                     }
 
                 }
+                this.rejectsubmit = false
+                this.rejectionmodal = false
 
 
             }
@@ -3538,6 +3772,7 @@
 
                 }
                 this.waiting = true
+                this.rejectsubmit = true
                 let self = this;
                 if (key) {
                     for (let i = 0; i < this.newapplicant.length; i++) {
@@ -3598,6 +3833,8 @@
                             Marketplace.pickreject(job_id, {
                                 stage: 'rejected',
                                 selected: false,
+                                rejectionreason: this.reasonspicked.join(','),
+                                rejectioncomment: this.reasoncomment
 
                             }, auth)
                                 .then(resp => {
@@ -3621,6 +3858,8 @@
                         }
                     }
                 }
+                this.rejectsubmit = false
+                this.rejectionmodal = false
 
 
             }
@@ -4593,6 +4832,36 @@
                 console.log("Payment closed")
             }
             ,
+            Notesubmit(application) {
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                this.notesubmission = true
+
+
+                Marketplace.pickreject(application, {
+                    notes: this.interviewnotes,
+
+                }, auth)
+                    .then(resp => {
+                            for (let i = 0; i < this.interviewstage.length; i++) {
+                                if (this.interviewstage[i].key === application) {
+                                    this.interviewstage[i].notes = this.interviewnotes
+
+
+                                }
+                            }
+                            return resp
+
+                        }
+                    )
+                    .catch()
+                this.notesubmission = false
+                this.editnotemodal = false
+                this.addnotemodal = false
+
+            }
 
 
         },

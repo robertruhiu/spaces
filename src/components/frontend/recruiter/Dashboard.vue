@@ -165,7 +165,7 @@
                         :width="720"
                         @close="onClose"
                         :visible="visible"
-                        :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
+                        :wrapStyle="{overflow: 'auto',paddingBottom: '108px'}"
                 >
                     <a-steps :current="current">
                         <a-step v-for="item in job_steps" :key="item.title" :title="item.title"/>
@@ -836,7 +836,7 @@
                     'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
-                    'Android', 'figma', 'photoshop', 'adobexd', 'UI/UX'],
+                    'Android', 'figma', 'photoshop', 'adobexd', 'UI/UX', 'DevOps'],
 
                 selectedTags: [],
                 loading: true,
