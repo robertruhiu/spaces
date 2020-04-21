@@ -6,7 +6,7 @@ export default {
     },
 
     devs() {
-        return Api().get('users/')
+        return Api().get('qualified')
     },
     sliceddevs() {
         return Api().get('userssliced')

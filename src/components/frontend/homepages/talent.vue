@@ -393,7 +393,7 @@
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             }
-            this.devs = (await UsersService.devs()).data;
+            this.devs = (await UsersService.devs(auth)).data;
             this.talentorder = (await UsersService.talentorder()).data
             this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.loading = false
