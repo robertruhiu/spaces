@@ -107,10 +107,10 @@ export default {
         return Api().delete(`marketplace/candidateinfoupdater/${candidatemanagement_id} `, auth)
     },
     newpick(application_id, auth) {
-        return Api().post(`marketplace/newpick/${application_id}/`, auth)
+        return Api().post(`marketplace/newpick/${application_id}`, auth)
     },
     acceptreject(application_id, auth) {
-        return Api().post(`marketplace/acceptreject/${application_id}/`, auth)
+        return Api().post(`marketplace/acceptreject/${application_id}`, auth)
     },
     publishedemails(job_id, auth) {
         return Api().get(`marketplace/publishedemails/${job_id}`, auth)

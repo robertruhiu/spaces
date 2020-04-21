@@ -2554,7 +2554,7 @@
                     <!-----reject candidate reason modal----->
                     <a-modal title="Rejection reasons" v-model="rejectionmodal">
                         <template slot="footer">
-                            <a-button key="submit" v-if="rejectionstage === 'new' && currentUserProfile.user.is_staff"
+                            <a-button key="submit" v-if="rejectionstage === 'new' "
                                       type="primary" :loading="rejectsubmit"
                                       @click="pickrejectAdmin(rejectioninstance,rejectionprofile,false)"
 
@@ -2563,16 +2563,7 @@
 
                                 Submit
                             </a-button>
-                            <a-button key="submit" v-else
-                                      type="primary" :loading="rejectsubmit"
 
-                                      @click="pickrejectClick(rejectioninstance,rejectionprofile,false)"
-
-
-                            >
-
-                                Submit
-                            </a-button>
 
 
                             <a-button key="submit" v-if="rejectionstage === 'interview'"
