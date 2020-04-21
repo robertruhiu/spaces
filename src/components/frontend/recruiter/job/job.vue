@@ -3004,7 +3004,7 @@
                 this.customer_lastname = this.$store.state.user.last_name
                 this.email = this.$store.state.user.email
                 // all developer profile list api fetch
-                this.alldevsprofile = (await UsersService.devs()).data;
+                this.alldevsprofile = (await UsersService.devs(auth)).data;
 
 
                 const jobId = this.$store.state.route.params.jobId

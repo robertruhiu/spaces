@@ -5,8 +5,8 @@ export default {
         return Api().get(`getprofile/${user_id} `, auth)
     },
 
-    devs() {
-        return Api().get('qualified')
+    devs(auth) {
+        return Api().get('qualified', auth)
     },
     sliceddevs() {
         return Api().get('userssliced')
