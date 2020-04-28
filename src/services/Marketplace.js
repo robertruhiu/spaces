@@ -121,6 +121,9 @@ export default {
     rejectionemail(application_id, auth) {
         return Api().post(`marketplace/rejectionemail/${application_id}`, auth)
     },
+    pickedcandidateemail(application_id, auth) {
+        return Api().post(`marketplace/pickedcandidateemail/${application_id}`, auth)
+    },
     projectemail(application_id, auth) {
         return Api().post(`marketplace/projectemail/${application_id}`, auth)
     },

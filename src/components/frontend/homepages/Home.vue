@@ -72,7 +72,7 @@
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 24, offset: 0 }"
                                            :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
-                                        <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1564580623/images/header_bg_hstf4v.png"
+                                        <img src="https://res.cloudinary.com/dwtvwjhn3/image/upload/v1587985599/images/headercolor_g9gxtt.png"
                                              style="width: 100%;float: right;">
                                         <div>
 

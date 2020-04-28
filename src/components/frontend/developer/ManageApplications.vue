@@ -18,7 +18,13 @@
                     </a-row>
                     <div>
                         <a-tabs defaultActiveKey="1" @change="callback">
-                            <a-tab-pane tab="Active applications" key="1">
+
+                            <a-tab-pane key="1">
+                                <span slot="tab">
+                                    Active applications <a-tag
+                                        color="blue">{{applications.length- withdrawn.length }}</a-tag>
+
+                                </span>
                                 <a-row :gutter="16" style="padding: 2%">
 
 
@@ -271,7 +277,10 @@
 
                                 </a-row>
                             </a-tab-pane>
-                            <a-tab-pane tab="Withdrawn applications" key="2" forceRender>
+                            <a-tab-pane key="2" forceRender>
+                                <span slot="tab">
+                                    Withdrawn applications <a-tag color="purple">{{withdrawn.length}}</a-tag>
+                                </span>
                                 <div v-if="withdrawn.length > 0">
                                     <a-row :gutter="16" style="padding: 2%">
                                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
@@ -308,6 +317,18 @@
                                                                                style="text-align: center;width: 4rem;">
                                                                             {{application.stage}}
                                                                         </a-tag>
+                                                                    </div>
+                                                                    <span style="font-weight: bold">Rejection reasons</span>
+                                                                    <div v-if="application.rejectionreason.length >0">
+                                                                        <p>
+                                                                            {{application.rejectionreason}}
+
+                                                                        </p>
+
+                                                                    </div>
+                                                                    <div v-if="application.rejectioncomment.length >0">
+                                                                        <span style="font-weight: bold">Additional comment</span>
+                                                                        <p>{{application.rejectioncomment}}</p>
                                                                     </div>
 
 
@@ -390,7 +411,7 @@
 
 <script>
     class Application {
-        constructor(id, title, company, stage, type, start, end, color, project) {
+        constructor(id, title, company, stage, type, start, end, color, project, rejectioncomment, rejectionreason) {
             this.key = id;
             this.title = title
             this.company = company
@@ -400,6 +421,8 @@
             this.end = end
             this.color = color
             this.project = project
+            this.rejectioncomment = rejectioncomment
+            this.rejectionreason = rejectionreason
 
 
         }
@@ -466,8 +489,18 @@
                 let start = moment(this.alldevjobs[i].interviewstarttime).format("YYYY-MM-DD HH:mm:ss")
                 let end = moment(this.alldevjobs[i].interviewendtime).format("YYYY-MM-DD HH:mm:ss")
                 let color = this.alldevjobs[i].eventcolor
+                let rejectioncomment = ''
+                if (this.alldevjobs[i].rejectioncomment) {
+                    rejectioncomment = this.alldevjobs[i].rejectioncomment
+
+                }
+                let rejectionreason = ''
+                if (this.alldevjobs[i].rejectionreason) {
+                    rejectionreason = this.alldevjobs[i].rejectionreason
+
+                }
                 let one_job_applied = new Application(
-                    id, title, company, stage, type, start, end, color, project
+                    id, title, company, stage, type, start, end, color, project, rejectioncomment, rejectionreason
                 );
                 this.applications.push(one_job_applied)
 
@@ -606,12 +639,12 @@
 
                     }, auth)
                         .then(resp => {
-                            for (let i = 0; i < this.active.length; i++) {
-                                if (this.active[i].key === application) {
-                                    this.active[i].stage = 'active'
+                                for (let i = 0; i < this.active.length; i++) {
+                                    if (this.active[i].key === application) {
+                                        this.active[i].stage = 'active'
 
+                                    }
                                 }
-                            }
                                 Marketplace.acceptreject(application, auth)
                                     .then()
                                     .catch()

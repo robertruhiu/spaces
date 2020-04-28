@@ -112,6 +112,7 @@
 
                         </span>
                         </hide-at>
+
                         <hide-at breakpoint="mediumAndBelow">
                             <a-tabs defaultActiveKey="1"
                                     style="z-index: 0;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -247,6 +248,27 @@
                                                         </span>
                                                                         </template>
 
+                                                                    </a-table-column>
+
+                                                                    <!-----application date--------->
+                                                                    <a-table-column
+
+                                                                            dataIndex="created"
+                                                                            key="created"
+                                                                            width="25%"
+
+                                                                    >
+                                                                        <div style="width: 100%" slot="title">
+                                                                            Application date
+                                                                        </div>
+                                                                        <template slot-scope="text, record">
+                                                        <span>
+
+                                                            <a-tag
+                                                                    style="text-align: center;">{{record.created}}</a-tag>
+
+                                                        </span>
+                                                                        </template>
                                                                     </a-table-column>
 
                                                                     <!-----action--------->
@@ -386,7 +408,7 @@
 
                                                                             dataIndex="stage"
                                                                             key="stage"
-                                                                            width="20%"
+                                                                            width="10%"
 
                                                                     >
                                                                         <div style="width: 100%" slot="title">Stage
@@ -402,6 +424,27 @@
 
                                                                     </a-table-column>
 
+                                                                    <!-----application date--------->
+                                                                    <a-table-column
+
+                                                                            dataIndex="created"
+                                                                            key="created"
+                                                                            width="25%"
+
+                                                                    >
+                                                                        <div style="width: 100%" slot="title">
+                                                                            Application date
+                                                                        </div>
+                                                                        <template slot-scope="text, record">
+                                                        <span>
+
+                                                            <a-tag
+                                                                    style="text-align: center;">{{record.created}}</a-tag>
+
+                                                        </span>
+                                                                        </template>
+                                                                    </a-table-column>
+
                                                                     <!-----action--------->
                                                                     <a-table-column
                                                                             dataIndex="action"
@@ -410,7 +453,7 @@
 
 
                                                                     >
-                                                                        <div style="margin-left: 10%" slot="title">
+                                                                        <div style="width: 100%" slot="title">
                                                                             Pick/Reject
                                                                         </div>
                                                                         <template slot-scope="text,record">
@@ -2565,7 +2608,6 @@
                             </a-button>
 
 
-
                             <a-button key="submit" v-if="rejectionstage === 'interview'"
                                       type="primary" :loading="rejectsubmit"
                                       @click="handleInterviewClick(rejectioninstance,rejectionprofile,3)">
@@ -2753,6 +2795,12 @@
             key: 'offerletter',
 
         },
+        {
+            title: 'Application date',
+            dataIndex: 'created',
+            key: 'created',
+
+        },
 
     ];
 
@@ -2760,7 +2808,7 @@
     //applicants structure on table
     class Applicant {
         constructor(id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                    end, color, report, offerstatus, offerletter, carted, verified, last_name, notes) {
+                    end, color, report, offerstatus, offerletter, carted, verified, last_name, notes, created) {
             this.key = id;
             this.name = name;
             this.last_name = last_name;
@@ -2782,6 +2830,7 @@
             this.carted = carted
             this.verified = verified;
             this.notes = notes
+            this.created = created
 
 
         }
@@ -2991,6 +3040,7 @@
 
         },
         async mounted() {
+            moment
 
 
             const auth = {
@@ -3068,9 +3118,10 @@
                     let offerstatus = this.applicants[j].offerstatus
                     let offerletter = this.applicants[j].offerletter
                     let carted = this.applicants[j].carted
+                    let created = moment(this.applicants[j].created).format("YYYY-MM-DD HH:mm")
                     let onepickeddev = new Applicant(
                         id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                        end, color, report, offerstatus, offerletter, carted, verified, last_name, notes
+                        end, color, report, offerstatus, offerletter, carted, verified, last_name, notes, created
                     );
 
                     this.applicantprofile.push(onepickeddev)
@@ -3889,6 +3940,8 @@
                                         this.applicantprofile = []
                                         this.waiting = false
                                         self.Datarefresh()
+                                        Marketplace.pickedcandidateemail(job_id, auth)
+                                            .then()
                                         return resp
                                     }
                                 )

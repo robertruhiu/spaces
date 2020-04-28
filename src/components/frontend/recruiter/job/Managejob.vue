@@ -65,7 +65,14 @@
                                 <a-col :span="24">
                                     <a-card style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                                         <h3 style="font-weight: bold">{{job.title}}</h3>
-                                        <span v-if="currentUserProfile.user.is_staff">posted by : {{job.posted_by}}</span>
+                                        <a-row>
+                                            <a-col span="16">
+                                                <span v-if="currentUserProfile.user.is_staff">posted by : {{job.posted_by}} </span>
+                                            </a-col>
+                                            <a-col span="8">
+                                                <span>posted on : {{job.published}}</span>
+                                            </a-col>
+                                        </a-row>
 
 
                                         <p>
@@ -143,7 +150,7 @@
 
 <script>
     class Job {
-        constructor(id, title, skills, applicants, test, interview, posted_by, tag) {
+        constructor(id, title, skills, applicants, test, interview, posted_by, tag, published) {
             this.id = id;
             this.title = title;
             this.skills = skills;
@@ -152,6 +159,7 @@
             this.interview = interview
             this.posted_by = posted_by
             this.tag = tag
+            this.published = published
 
         }
     }
@@ -163,6 +171,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import RecruiterSider from "../../../layout/RecruiterSider";
     import Pageheader from '@/components/layout/Pageheader'
+    import moment from 'moment';
 
     export default {
         name: 'Managejob',
@@ -192,6 +201,7 @@
 
         },
         async mounted() {
+            moment
 
             const auth = {
                 headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -239,6 +249,8 @@
                     let title = this.jobs[i].title
                     let skills = skill_list
                     let posted_by = this.jobs[i].company
+
+                    let published = moment(this.jobs[i].created).format("YYYY-MM-DD")
                     let applicants = this.applicants.length
                     let tag = ''
                     if (this.jobs[i].tag === null || this.jobs[i].tag === '') {
@@ -261,7 +273,7 @@
                     }
 
                     let onejob = new Job(
-                        id, title, skills, applicants, test, interview, posted_by, tag
+                        id, title, skills, applicants, test, interview, posted_by, tag, published
                     )
 
 

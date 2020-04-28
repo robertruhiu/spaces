@@ -6,11 +6,11 @@
             <a-layout-content style="background-color: white">
 
                 <widgetbot
-                    server="465900579097411595"
-                    channel="465900751487500308"
-                    width="100%"
-                    height="100%"
-                    shard="https://cl3.widgetbot.io"
+                        server="465900579097411595"
+                        channel="465900751487500308"
+                        width="100%"
+                        height="100%"
+                        shard="https://e.widgetbot.io"
 
 
             ></widgetbot>

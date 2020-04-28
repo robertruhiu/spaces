@@ -319,6 +319,9 @@
                             })
 
                         } else {
+                            UsersService.newuser(this.$store.state.user.pk, auth)
+                                .then()
+                                .catch()
                             this.$router.push({
                                 name: 'recruiter'
                             })
