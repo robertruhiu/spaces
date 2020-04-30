@@ -223,10 +223,12 @@
                     </a-row>
 
 
+
                 </div>
 
 
             </a-layout-content>
+            <Banner/>
 
 
         </a-layout>
@@ -241,6 +243,7 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import CandidateSider from "../../layout/CandidateSider";
     import DevHeader from "../../layout/DevHeader";
+    import Banner from '@/components/layout/banner.vue'
 
     export default {
         name: "DevDashboard",
@@ -248,7 +251,7 @@
             return {
                 currentUserProfile: {},
                 myjobs: [],
-                loading: false
+                loading: false,
 
 
             }
@@ -258,6 +261,7 @@
             ACol,
             DevHeader,
             CandidateSider,
+            Banner
         },
         async mounted() {
             const auth = {

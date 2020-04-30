@@ -167,6 +167,7 @@
 
                         </div>
                     </show-at>
+
                     <!-----how it works---->
                     <div :style="{ background: '#fff', padding: '31px', minHeight: '40vh' }">
                         <div style="background-color: #ffffff;">
@@ -636,7 +637,9 @@
                         </show-at>
 
                     </div>
+
                 </a-layout-content>
+                <Banner/>
                 <Footer/>
             </a-layout>
 
@@ -668,6 +671,7 @@
     import UsersService from '@/services/UsersService'
     import Vue from 'vue'
     import {showAt, hideAt} from 'vue-breakpoints'
+    import Banner from '@/components/layout/banner.vue'
 
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
@@ -685,6 +689,7 @@
                 bottom: 10,
                 large: 'large',
 
+
             }
         },
 
@@ -694,6 +699,7 @@
             showAt, hideAt,
             Pageheader,
             Footer,
+            Banner
         },
         async mounted() {
 

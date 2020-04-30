@@ -3014,7 +3014,7 @@
                 notesubmission: false,
                 rejectionmodal: false,
                 reasonslist: ['Unaffordable salary expectations', 'Sloppy application', 'Wrong skill set', 'Unsuitable personality', 'Bad fit',
-                    'Not on time', 'Sloppy appearance', 'Lack of passion', 'Poor follow-up questions', 'Not responsive', 'Co-workers don’t approve'],
+                    'Not on time', 'Sloppy appearance', 'Lack of passion', 'Poor follow-up questions', 'Not responsive', 'Co-workers don’t approve', 'not enough experience'],
                 reasonspicked: [],
                 reasoncomment: '',
                 rejectionstage: '',

@@ -59,11 +59,12 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row, Upload, Switch, Tooltip, Affix, Notification, Collapse, Empty
+    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message
 
 
 } from 'ant-design-vue';
 
+Vue.prototype.$notification = notification;
 Vue.use(VueFormWizard)
 Vue.use(Alert);
 Vue.use(Avatar);
@@ -102,9 +103,10 @@ Vue.use(Upload)
 Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Affix)
-Vue.use(Notification)
+Vue.use(notification)
 Vue.use(Collapse)
 Vue.use(Empty)
+Vue.use(message)
 
 
 
