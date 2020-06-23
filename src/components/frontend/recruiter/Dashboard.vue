@@ -575,13 +575,13 @@
                                             >
 
                                                 <a-select-option value="0-3">
-                                                    0-3
+                                                    0-1
                                                 </a-select-option>
                                                 <a-select-option value="3-5">
-                                                    3-5
+                                                    1-3
                                                 </a-select-option>
                                                 <a-select-option value="5-above">
-                                                    5-above
+                                                    3-above
                                                 </a-select-option>
 
                                             </a-select>
