@@ -15,7 +15,7 @@
                         <a-col span="14">
 
 
-                            <div v-if="project.hasvideo === false">
+                        <div v-if="project.hasvideo === false">
                                 <div v-if="project.projectimage1 "><img style="width: 100%"
                                                                         :src="project.projectimage1"/></div>
 

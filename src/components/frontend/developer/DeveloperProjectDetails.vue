@@ -12,40 +12,18 @@
                     <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
                            :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }" style="margin-bottom: 1rem">
 
-                        <show-at breakpoint="mediumAndBelow">
-                            <div v-if="project.hasvideo === false">
+                        <div v-if="project.hasvideo === false">
+                            <div v-if="project.projectimage1 "><img style="width: 100%"
+                                                                    :src="project.projectimage1"/></div>
 
-                                <div v-if="project.projectimage1 "><img style="width: 100%"
-                                                                        :src="project.projectimage1"/>
-                                </div>
-                            </div>
+                        </div>
                             <div v-if="project.hasvideo">
-                                <youtube :video-id="videoid" :width="270"
-                                         :player-vars="playerVars" @playing="playing"></youtube>
+                                <youtube :video-id="project.projectimage2" :player-vars="playerVars"></youtube>
                             </div>
-
-
-                        </show-at>
-
-
-                        <hide-at breakpoint="mediumAndBelow">
-                            <div v-if="project.hasvideo === false">
-
-                                <div v-if="project.projectimage1 "><img style="width: 100%"
-                                                                        :src="project.projectimage1"/>
-                                </div>
-                            </div>
-
-                            <div v-if="project.hasvideo">
-                                <youtube :video-id="videoid" :width="600"
-                                         :player-vars="playerVars" @playing="playing"></youtube>
-                            </div>
-
-
-                        </hide-at>
 
 
                         <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
+
                             <h4><strong>Project name:</strong> {{project.name}}</h4>
                             <p>{{project.description}}</p>
 
@@ -144,8 +122,12 @@
                 server_url: "A Codeln respresentative will contact you with details on your test",
                 projectstarttime: null,
                 timeseterror: false,
+                playerVars: {
+                    autoplay: 1
+                },
                 type: '',
-                videoid: ''
+
+
             }
         },
         components: {
@@ -166,11 +148,11 @@
 
                 this.project = (await Projects.projectdetails(projectId, auth)).data;
                 if (this.$store.state.route.params.type === 'job') {
-                    this.application = (await Marketplace.jobmanagerview(this.$store.state.route.params.applicationId, auth)).data
+                    this.application = (await Marketplace.retrieveapplication(this.$store.state.route.params.applicationId, auth)).data
                     this.videoid = this.application.project.projectimage2
 
                 } else {
-                    this.application = (await Marketplace.talentpickedmanagerview(this.$store.state.route.params.applicationId, auth)).data
+                    this.application = (await Marketplace.retrievecandidate(this.$store.state.route.params.applicationId, auth)).data
                     this.videoid = this.application.project.projectimage2
                 }
 
@@ -273,8 +255,19 @@
 
                 };
                 this.application.test_stage = 'complete'
+                let report = {
+                    score: 0,
+
+                }
                 if (this.type === 'job') {
                     Marketplace.pickreject(application_id, {test_stage: 'complete'}, auth)
+                        .then(
+                            Marketplace.createreport(report, auth)
+                                .then(resp => {
+
+                                    Marketplace.pickreject(application_id, {report: resp.data.id}, auth)
+                                })
+                        )
 
                 } else {
                     Marketplace.candidatemanager(application_id, {test_stage: 'complete'}, auth)

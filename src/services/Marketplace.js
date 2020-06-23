@@ -31,9 +31,6 @@ export default {
     applicants(job_id, auth) {
         return Api().get(`marketplace/jobapplicants/${job_id}`, auth)
     },
-    applicantssliced(job_id, auth) {
-        return Api().get(`marketplace/jobapplicantssliced/${job_id}`, auth)
-    },
     specificjob(job_id, auth) {
         return Api().get(`marketplace/specificjob/${job_id}`, auth)
     },
@@ -88,12 +85,7 @@ export default {
         return Api().get(`marketplace/pickedapplications/${dev_id} `, auth)
 
     },
-    jobmanagerview(application_id,auth){
-        return Api().get(`marketplace/jobmanagerview/${application_id} `, auth)
-    },
-    talentpickedmanagerview(application_id,auth){
-        return Api().get(`marketplace/talentpickedmanagerview/${application_id} `, auth)
-    },
+
     newjobemail(job_id,auth){
         return Api().post(`marketplace/newjobemail/${job_id} `, auth)
     },
@@ -135,6 +127,14 @@ export default {
     },
     submitfeedback(slug, survey_answers, auth) {
         return Api().post(`feedback/rec/${slug}`, survey_answers, auth)
+    },
+    createreport(Report, auth) {
+        return Api().post(`marketplace/reportcreate`, Report, auth)
+
+    },
+    getreport(report_id, auth) {
+        return Api().get(`marketplace/reportget/${report_id}`, auth)
+
     },
 
 

@@ -22,17 +22,27 @@
                             <span>
                                 <a style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
                                 {{job.title}}</a>
-                                <span v-if="currentUserProfile.user.is_staff" style="float: right">
-                                    <span style="float: right" v-if="job.published" id="unpublishbutton">
-                                    <a-button type="primary" @click="unpublishjob(job.id)">Unpublish Job</a-button>
-                                    </span>
-                                <span v-else>
-                                    <a-button type="primary" @click="publishjob(job.id)">Publish Job</a-button>
-                                </span>
-                                </span>
+                                <div v-if="currentUserProfile.user.is_staff" style="float: right">
+                                    <div v-if="job.published">
+                                        <span>
+                                            <a-button type="primary" v-if="job.verified === false"
+                                                      @click="verifyjob(job.id)">Verify job as paid</a-button>
+                                        </span>
+                                        <span style="float: right" id="unpublishbutton">
+                                            <a-button type="primary"
+                                                      @click="unpublishjob(job.id)">Unpublish Job</a-button>
+                                        </span>
+
+                                    </div>
+                                    <div v-else>
+                                        <span>
+                                            <a-button type="primary" @click="publishjob(job.id)">Publish Job </a-button>
+                                        </span>
+                                    </div>
+                                </div>
                                 <span v-else>
                                     <span style="float: right" v-if="job.published">
-                                    <a-button type="primary" @click="unpublishjob(job.id)">Unpublish Job</a-button>
+                                        <a-button type="primary" @click="unpublishjob(job.id)">Unpublish Job</a-button>
                                     </span>
 
                                 </span>
@@ -221,8 +231,6 @@
             }
 
 
-
-
         },
         methods: {
             //unpublish job
@@ -250,13 +258,28 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
-                Marketplace.unpublishjob(job_id, {published: true, verified: true}, auth)
+                Marketplace.unpublishjob(job_id, {published: true}, auth)
                     .then(resp => {
                         this.job.published = true
                         Marketplace.recruiterpublished(job_id, auth)
                             .then()
                         Marketplace.publishedemails(job_id, auth)
                             .then()
+
+                    })
+
+
+            },
+            verifyjob(job_id) {
+
+                const auth = {
+                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                }
+                Marketplace.unpublishjob(job_id, {verified: true}, auth)
+                    .then(resp => {
+                        this.job.verified = true
+
 
                     })
 

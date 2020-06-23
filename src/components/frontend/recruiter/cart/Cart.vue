@@ -9,29 +9,7 @@
                     <!--                    convert to table and strip some data-->
                     {{ currentUserProfile}}
                     <div>
-                        <a-card v-for="item in my_cartitems">
-                            <!--                        {{item.developer}}-->
-                            {{item.developer.verified_skills}}
-                            <br>
-                            {{item.developer.country}}
-                            <br>
-                            {{item.developer.availabilty}}
-                            <br>
 
-                            {{item.developer.tags}}
-                            <br>
-                            {{item.developer.language}}
-                            <br>
-                            {{item.developer.language}}
-                            <br>
-                            <a-button type="primary" @click="RemoveDeveloper(item.id)">Remove</a-button>
-                            <template class="ant-card-actions" slot="actions">
-                                <p> Total Amount: {{ item.cart.total_amount}}</p>
-                                <router-link to="/checkout">
-                                    <p>Checkout</p>
-                                </router-link>
-                            </template>
-                        </a-card>
                     </div>
                 </a-card>
             </a-layout-content>
@@ -74,32 +52,12 @@
             navigateTo(route) {
                 this.$router.push(route)
             },
-            AddDeveloper(developer_id, cart_id) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+            AddDeveloper() {
 
-                };
-                Payments.cartitemadd(developer_id, cart_id, auth)
-                    .then(resp => {
-                        this.cartitems.push(developer)
-                    })
-                    .catch(err =>
-                        console.log(err)
-                    )
+
             },
-            RemoveDeveloper(cart_item_id) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
+            RemoveDeveloper() {
 
-                };
-                Payments.cartitemdelete(cart_item_id, auth)
-                    .then(resp => {
-                        this.$router.push({
-                            name: 'cart',
-                        })
-                    })
-                    .catch(err =>
-                        console.log(err))
             },
         },
     }

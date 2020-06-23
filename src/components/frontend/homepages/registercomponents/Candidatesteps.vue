@@ -204,6 +204,28 @@
 
                                     </a-col>
                                 </a-row>
+                                <a-row>
+
+                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                           :md="{span: 12, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+
+
+                                    >
+
+                                        <VuePhoneNumberInput name="number" v-model="currentUserProfile.phone_number"
+                                                             default-country-code="GH"
+                                                             @update="onUpdate"/>
+                                        <div v-for="error in step1errors" v-bind:key="error">
+                                            <div v-if="error === 'number'" style="color: red">
+                                                * phone number required
+                                            </div>
+                                        </div>
+
+                                    </a-col>
+
+
+                                </a-row>
 
 
                             </a-form>
@@ -437,6 +459,8 @@
 
 
     import UsersService from '@/services/UsersService'
+    import VuePhoneNumberInput from 'vue-phone-number-input';
+    import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
 
     import axios from 'axios'
@@ -446,7 +470,7 @@
 
     export default {
         name: "Candidatesteps",
-        components: {Portfolio, Experience},
+        components: {Portfolio, Experience, VuePhoneNumberInput,},
         data() {
             return {
                 loading: false,
@@ -463,11 +487,11 @@
                     title: 'Skills and bio',
 
                 }, {
-                    title: 'Work experience',
+                    title: 'Past projects',
 
                 },
                     {
-                        title: 'Past projects',
+                        title: 'Work experience',
 
                     }],
                 experienceslist: [],
@@ -511,6 +535,8 @@
                 availabiltytags: [],
                 github: '',
                 linkedin: '',
+                formattednumber: null,
+                number: 'null'
 
             }
         },
@@ -635,6 +661,11 @@
 
         },
         methods: {
+            onUpdate(payload) {
+                this.results = payload
+                this.currentUserProfile.phone_number = this.results.formattedNumber
+
+            },
 
 
             stepsaves() {
@@ -655,6 +686,7 @@
                     country: this.currentUserProfile.country
 
                 }
+                this.currentUserProfile.phone_number = this.results.formattedNumber
 
 
                 UsersService.updatepatch(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -788,6 +820,10 @@
                     }
                     if (this.currentUserProfile.availabilty === null || this.currentUserProfile.availabilty === '') {
                         this.step1errors.push('work_type')
+
+                    }
+                    if (this.currentUserProfile.phone_number === null || this.currentUserProfile.phone_number === '') {
+                        this.step1errors.push('number')
 
                     }
 

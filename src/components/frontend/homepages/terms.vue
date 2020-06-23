@@ -214,14 +214,38 @@
                             information, such as credit card, PayPal or other financial account information, and billing
                             address. Rest assured, our payment platform is safe and secure, we use integration systems
                             like flutterwave.com.</p>
+                        <h2>Timeline</h2>
+                        <p>
+                            CodeLn bears all of the costs related to candidate search and advertising.
+                            It takes between 1 - 2 weeks for a position to be filled. For certain skills it could be
+                            longer,
+                            we would communicate this to you beforehand.
+                        </p>
+                        <h2>Pricing</h2>
+                        <p>
+                            For full-time employees (remote or on-site) who will belong to the company for more than a
+                            year,
+                            we collect a one-time Commission Fee which is usually between 12% - 20% of the candidate’s
+                            annual
+                            gross salary depending on the specific role and level of Software Engineer needed. If you
+                            would
+                            like to hire a candidate on a short term contract (less than a year), the commission fee
+                            will be
+                            calculated on a prorata basis depending on the number of months that the candidate will work
+                            for you.
+
+                        </p>
                         <h2>Refund & Replacement</h2>
-                        <p>Clients must select programmers using their discretion based on their requirements. Even
-                            though CodeLn recommends programmers per job, the clients are solely responsible for the
-                            decision to pay for a programmer’s profiles and the decision to hire the programmer. CodeLn
-                            does not offer a refund for Basic and Plus Price Plan. But programmers can be replaced once
-                            if clients are not satisfied with their picks. CodeLn offers a 50% refund for Business Price
-                            Plan and a 100% refund for Enterprise Price Plan, terms and conditions apply. To report a
-                            complaint or request a refund contact us at info@codeLn.com.</p>
+                        <p>If the candidate resigns or is fired in the first month of employment, we will offer a full
+                            refund
+                            of the success fee paid or a replacement depending on the company's preference and the
+                            candidate’s
+                            reasons for leaving. The replacement will be done at no charge.If the candidate resigns
+                            within the
+                            second and sixth months of employment, we will only offer a replacement. The replacement
+                            will be done
+                            at no charge. We offer a six months guarantee period.
+                        </p>
                         <h2>Account Deactivation</h2>
                         <p>Users caught performing any malicious activity or constituting a nuisance on the platform
                             will be automatically removed. Depending on the extent of the crime, legal actions can be

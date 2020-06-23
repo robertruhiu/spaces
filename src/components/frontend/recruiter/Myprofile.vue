@@ -87,6 +87,14 @@
 
                                     </a-col>
                                     <a-col :span="24" style="margin-bottom: 1rem">
+
+                                        <VuePhoneNumberInput name="number" v-model="currentUserProfile.phone_number"
+                                                             default-country-code="GH"
+                                                             @update="onUpdate"/>
+
+
+                                    </a-col>
+                                    <a-col :span="24" style="margin-bottom: 1rem">
                                         <a-checkbox v-model="currentUserProfile.notifications">Unsubscribe/Opt out from
                                             future Codeln email notifications
                                         </a-checkbox>
@@ -147,6 +155,8 @@
     import Pageheader from '@/components/layout/Pageheader'
     import RecruiterSider from "../../layout/RecruiterSider";
     import ACol from "ant-design-vue/es/grid/Col";
+    import VuePhoneNumberInput from 'vue-phone-number-input';
+    import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
     export default {
         name: "Myprofile",
@@ -160,7 +170,9 @@
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
                     'Android', 'Website', 'Mobile'],
                 selectedTags: [],
-                loading:false
+                loading: false,
+                formattednumber: null,
+                number: 'null'
 
 
             }
@@ -169,6 +181,7 @@
             ACol,
             Pageheader,
             RecruiterSider,
+            VuePhoneNumberInput
         },
         async mounted() {
 
@@ -191,6 +204,11 @@
 
         },
         methods: {
+            onUpdate(payload) {
+                this.results = payload
+                this.currentUserProfile.phone_number = this.results.formattedNumber
+
+            },
             Save() {
 
                 const auth = {
@@ -207,6 +225,7 @@
                 this.loading = true
                 this.currentUserProfile.skills = this.selectedTags.join(',')
                 this.currentUserProfile.user = this.$store.state.user.pk
+                this.currentUserProfile.phone_number = this.results.formattedNumber
 
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {

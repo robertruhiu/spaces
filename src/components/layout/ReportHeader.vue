@@ -18,7 +18,7 @@
                 </a-col>
                 <a-col :span="4" style="color: white">
                 <p style="color: white;font-size: 15px;font-weight: bold;">
-                    Project Score : 58%
+                    Project Score : {{report.score}}%
 
                 </p>
             </a-col>
@@ -26,7 +26,7 @@
                     <p style="color: white;font-size: 15px;font-weight: bold">
                          <span>
                               <a-button type="primary">
-                                  <a style="text-decoration: none" href="https://5c9d45736280709d6db08321--byarent-static.netlify.com/" target="_blank">Demo</a>
+                                  <a style="text-decoration: none" :href="report.code_base" target="_blank">Demo</a>
                               </a-button>
 
                          </span>
@@ -44,8 +44,9 @@
 
 <script>
     import UsersService from '@/services/UsersService'
-    import Marketplace from '@/services/Marketplace'
+
     import ACol from "ant-design-vue/es/grid/Col";
+    import Marketplace from '@/services/Marketplace'
 
 
     export default {
@@ -56,7 +57,8 @@
                 currentUserProfile: {},
                 currentUser: {},
                 allapplicant: null,
-                myapplicant: null
+                myapplicant: null,
+                report: {}
 
 
             }
@@ -81,8 +83,8 @@
             }
             this.currentUser = (await UsersService.retrieveuser(this.$route.params.candidateId, auth)).data
             this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateId, auth)).data
-            this.allapplicant = (await Marketplace.joboneapplicant(this.$route.params.candidateId, this.$route.params.jobId, auth)).data
-            this.myapplicant = this.allapplicant[0]
+            const reportId = this.$store.state.route.params.reportId;
+            this.report = (await Marketplace.getreport(reportId, auth)).data
 
 
         },

@@ -19,14 +19,22 @@
                             <span>
                                 <span style="font-weight: 700;font-size: large">{{job.title}}</span>
                                 <span v-if="this.$store.state.isUserLoggedIn">
+
                                     <span style="float: right"
                                           v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
                                     <div v-if="save">
                                         <a-spin/>
                                     </div>
                                         <span v-else>
-                                            <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
-                                                      @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
+                                            <div v-if="error.length === 0 ">
+                                                <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
+                                                          @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
+                                            </div>
+                                            <div v-else>
+                                                <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
+                                                          @click="Fillprofile()">Apply</a-button>
+                                            </div>
+
 
                                         </span>
 
@@ -66,7 +74,7 @@
 
                                 <p>
 
-                                    Country :  {{country}} <span
+                                    Country : {{country}} <span
                                         v-if="job.city">| City : {{job.city}}</span>
 
 
@@ -90,7 +98,34 @@
                         </div>
 
                     </a-col>
+
                 </a-row>
+                <a-modal
+                        title="Please fill your Profile"
+                        v-model="fillprofile"
+                        style="top: 20px;"
+
+                >
+                    <template slot="footer">
+
+                        <a-button key="submit" type="primary" @click="$router.push('/portfolio')">
+                            Edit Profile
+                        </a-button>
+                    </template>
+                    <div>
+                        <p>Hello your profile is not complete.To enable us to easily analyse your fitness for the
+                            job,satisy the following below</p>
+                        <p v-for="item in error" v-bind:key="item">
+                            <span style="color: #ff0000">* {{item}}</span>
+                        </p>
+
+                        Click on Edit profile button to complete your profile.
+
+
+                    </div>
+
+
+                </a-modal>
 
 
             </a-layout-content>
@@ -124,6 +159,10 @@
                 deadline: '',
                 save: false,
                 country: '',
+                portfolio: 0,
+                experiences: 0,
+                error: [],
+                fillprofile: false
 
 
             }
@@ -152,7 +191,7 @@
                 this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
                 this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
                 for (const [key, value] of Object.entries(countries)) {
-                    if(key === this.job.location){
+                    if (key === this.job.location) {
                         this.country = value
                     }
                 }
@@ -167,13 +206,33 @@
                 } else {
                     this.applied = false
                 }
+                if (this.currentUserProfile.user_type === 'developer') {
+                    this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
+                    this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
+                    this.portfolio = this.portfoliolist.length
+                    this.experiences = this.experienceslist.length
+
+                    if (this.currentUserProfile.phone_number === '' || this.currentUserProfile.phone_number === null) {
+                        this.error.push('phone number required')
+                    }
+                    if (this.currentUserProfile.file === '' || this.currentUserProfile.file === null) {
+                        this.error.push('cv required')
+                    }
+                    if (this.experiences.length <= 0) {
+                        this.error.push('at least one work experience')
+                    }
+                    if (this.portfolio.length <= 0) {
+                        this.error.push('at least one personal project')
+                    }
+                }
+
             } else {
                 this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId)).data
 
                 this.skills = this.job.tech_stack.split(',');
                 this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
                 for (const [key, value] of Object.entries(countries)) {
-                    if(key === this.job.location){
+                    if (key === this.job.location) {
                         this.country = value
                     }
                 }
@@ -186,9 +245,13 @@
 
 
         },
+
         methods: {
             navigateTo(route) {
                 this.$router.push(route)
+            },
+            Fillprofile() {
+                this.fillprofile = true
             },
 
 

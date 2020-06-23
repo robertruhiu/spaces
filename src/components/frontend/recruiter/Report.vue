@@ -13,67 +13,78 @@
                         Report Overview
                     </span>
                         <div style="padding: 1%">
+
                             <p><strong>Key competiences</strong></p>
                             <a-card>
-                            <a-row :gutter="8">
-                                <a-col span="6">
-                                    <div style="text-align: center">
-                                        <p>Deliverables</p>
-                                    <img style="width: 25%" src="../../../assets/images/delivery.svg">
-                                        <p>60%</p>
-                                        <p>Metric used: Deliverables</p>
+                                <a-row :gutter="8">
+
+                                    <div v-for="(value, name) in report.competency" v-bind:key="name">
+
+                                        <a-col span="6" v-if="name === 'deliverables'">
+                                            <div style="text-align: center">
+                                                <p>Deliverables</p>
+                                                <img style="width: 25%" src="../../../assets/images/delivery.svg">
+                                                <p>{{value}}</p>
+                                                <p>Metric used: Deliverables</p>
+                                            </div>
+
+                                        </a-col>
+                                        <a-col span="6" v-if="name === 'code_readability'">
+                                            <div style="text-align: center">
+                                                <p>Code quality</p>
+                                                <img style="width: 25%" src="../../../assets/images/laptop.svg">
+                                                <p>{{value}}</p>
+                                                <p>Metric used : Quality gates</p>
+                                            </div>
+
+                                        </a-col>
+                                        <a-col span="6" v-if="name === 'error_handling'">
+                                            <div style="text-align: center">
+                                                <p>Error handling</p>
+                                                <img style="width: 25%" src="../../../assets/images/404.svg">
+                                                <p>{{value}}</p>
+                                                <p>Metric used: Errors</p>
+                                            </div>
+
+                                        </a-col>
+                                        <a-col span="6" v-if="name === 'project_security'">
+                                            <div style="text-align: center">
+                                                <p>Project security</p>
+                                                <img style="width: 25%" src="../../../assets/images/security.svg">
+                                                <p>{{value}}</p>
+                                                <p>Metric used: Vulnerabilities</p>
+                                            </div>
+
+                                        </a-col>
                                     </div>
 
-                                </a-col>
-                                <a-col span="6">
-                                    <div style="text-align: center">
-                                        <p>Code quality</p>
-                                    <img style="width: 25%" src="../../../assets/images/laptop.svg">
-                                        <p>2%</p>
-                                        <p>Metric used : Quality gates</p>
-                                    </div>
-
-                                </a-col>
-                                <a-col span="6">
-                                    <div style="text-align: center">
-                                        <p>Error handling</p>
-                                    <img style="width: 25%" src="../../../assets/images/404.svg">
-                                        <p>50%</p>
-                                        <p>Metric used: Errors</p>
-                                    </div>
-
-                                </a-col>
-                                <a-col span="6">
-                                    <div style="text-align: center">
-                                        <p>Project security</p>
-                                    <img style="width: 25%" src="../../../assets/images/security.svg">
-                                        <p>5%</p>
-                                        <p>Metric used: Vulnerabilities</p>
-                                    </div>
-
-                                </a-col>
-                            </a-row>
+                                </a-row>
                             </a-card>
                             <br>
                             <p><strong>Project deliverables</strong></p>
-
                             <a-list
                                     itemLayout="horizontal"
-                                    :dataSource="data"
                                     style="padding-right: 3%"
                             >
-                                <a-list-item slot="renderItem" slot-scope="item, index">
-                                    <a-list-item-meta
-                                            description=""
-                                    >
-                                        <p slot="title">{{item.title}}</p>
 
-                                    </a-list-item-meta>
-                                    <div>
-                                        <a-tag color="#87d068" v-if="item.status === 'complete'">complete</a-tag>
-                                        <a-tag color="#f50" v-else>incomplete</a-tag>
-                                    </div>
-                                </a-list-item>
+                                <div v-for="(value, name) in report.requirements" v-bind:key="name">
+                                    <a-list-item slot="renderItem">
+                                        <a-list-item-meta
+                                                description=""
+                                        >
+                                            <p slot="title">{{name}}</p>
+
+                                        </a-list-item-meta>
+                                        <div>
+                                            <a-tag color="#87d068" v-if="value === 'success'">complete</a-tag>
+                                            <a-tag color="#f50" v-else>incomplete</a-tag>
+                                        </div>
+
+                                    </a-list-item>
+                                    <br>
+
+
+                                </div>
                             </a-list>
 
 
@@ -86,95 +97,18 @@
                         Grading criteria
                     </span>
                         <div style="padding: 1%;text-align: center">
+
                             <a-row :gutter="8">
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Tests Passed">
-
-                                        <p>(Number of Unit Tests Passed)</p>
-                                        <p style="color: #00801c">3</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Tests Failed">
-
-                                        <p>(Number of Unit Tests Failed)</p>
-                                        <p style="color: #f48a9a">2</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Vulnerabilities">
-
-                                        <p>(Total Number of warnings)</p>
-                                        <p style="color: #f48a9a">8</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Errors">
-
-                                        <p>(Total Number of errors)</p>
-                                        <p style="color: #00801c">1</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Lines of Code">
-
-                                        <p>(Number of code lines)</p>
-                                        <p style="color: #00801c">562</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Duplications">
-
-                                        <p>(Density of Duplication)</p>
-                                        <p >0%</p>
-
-                                    </a-card>
-                                </a-col><a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Classes">
-
-                                        <p>Total Number of Classes)</p>
-                                        <p>44</p>
-
-                                    </a-card>
-                                </a-col><a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Comments">
-
-                                        <p>(Comment Line Density)</p>
-                                        <p>0%</p>
-
-                                    </a-card>
-                                </a-col><a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Dependencies">
-
-                                        <p>(Dependencies to cut)</p>
-                                        <p>0</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Technical Debt">
-
-                                        <p>(Cost to fix maintainability Issues)</p>
-                                        <p >3hrs</p>
-
-                                    </a-card>
-                                </a-col>
-                                <a-col :span="6" style="margin-bottom: 1%">
-                                    <a-card title="Quality Gates">
-
-                                        <p>(Rate of code quality)</p>
-                                        <p style="color: #00801c">Below Average</p>
-
-                                    </a-card>
-                                </a-col>
+                                <div v-for="(value, name) in report.grading" v-bind:key="name">
+                                    <a-col :span="6" style="margin-bottom: 1%">
+                                        <a-card :title="name">
 
 
+                                            <p style="font-size: 2rem;font-weight: bold">{{value}}</p>
 
+                                        </a-card>
+                                    </a-col>
+                                </div>
 
 
                             </a-row>
@@ -240,7 +174,15 @@
 <script>
     import ACol from "ant-design-vue/es/grid/Col";
 
-    const data = [
+    class Requirements {
+        constructor(title, status) {
+            this.title = title;
+            this.status = status;
+
+        }
+    }
+
+    const requirements = [
         {
             title: 'Create an easy to understand Ui Ux of a shopping experience.',
             status: 'complete'
@@ -267,22 +209,23 @@
         },
     ]
     import UsersService from '@/services/UsersService'
-    import Projects from '@/services/Projects'
     import RecruiterSider from "../../layout/RecruiterSider";
     import CandidateHeader from "../../layout/ReportHeader";
     import Projectsservice from '@/services/Projects'
+    import Marketplace from '@/services/Marketplace'
 
     export default {
         name: "DeveloperProjectReport",
         data() {
             return {
                 currentUserProfile: {},
-                report: [],
+                report: {},
                 project: {},
                 playerVars: {
                     autoplay: 1
                 },
-                data,
+                Requirementslist: [],
+                requirements
 
             }
         },
@@ -298,23 +241,32 @@
             };
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                const candidateId = this.$store.state.route.params.candidateId;
                 const projectId = this.$store.state.route.params.projectId;
+                const reportId = this.$store.state.route.params.reportId;
                 this.project = (await Projectsservice.projectdetails(projectId, auth)).data
-                var my_report = (await Projects.developerprojectreport(candidateId, projectId, auth));
-                this.report.push(my_report.data);
+                this.report = (await Marketplace.getreport(reportId, auth)).data
+                for (let i = 0; i < this.report.requirements.length; i++) {
+                    this.Requirementslist.push(this.report.requirements[i])
+
+
+                }
+
             }
-        },
+        }
+        ,
 
         methods: {
             navigateTo(route) {
                 this.$router.push(route);
-            },
+            }
+            ,
             callback(key) {
                 console.log(key);
-            },
+            }
+            ,
 
-        },
+        }
+        ,
     }
 </script>
 

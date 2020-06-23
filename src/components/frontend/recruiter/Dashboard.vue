@@ -235,26 +235,25 @@
                                            :md="{span: 8, offset: 0 }"
                                            :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                            style="padding-right: 1%">
-                                        <a-form-item label="Developer Experience">
+                                        <a-form-item label="Years of Experience">
                                             <a-select
                                                     placeholder="Select a option"
-                                                    v-model="job.dev_experience"
+                                                    v-model="job.years_experience"
                                             >
-                                                <a-select-option value="Entry">
-                                                    Entry
+
+                                                <a-select-option value="0-3">
+                                                    0-1
                                                 </a-select-option>
-                                                <a-select-option value="Junior">
-                                                    Junior
+                                                <a-select-option value="3-5">
+                                                    1-3
                                                 </a-select-option>
-                                                <a-select-option value="Mid-Level">
-                                                    Mid-Level
+                                                <a-select-option value="5-above">
+                                                    3-above
                                                 </a-select-option>
-                                                <a-select-option value="Senior">
-                                                    Senior
-                                                </a-select-option>
+
                                             </a-select>
                                             <span v-for="error in errorlist" v-bind:key="error">
-                                                <span v-if="error === 'experience'" style="color: red">
+                                                <span v-if="error === 'years'" style="color: red">
                                                     * required field
                                                 </span>
                                             </span>
@@ -312,15 +311,42 @@
                                     </a-col>
                                 </a-row>
                                 <a-row>
-                                    <a-col :span="8" style="padding-right: 1%">
+                                    <a-col :span="12" style="padding-right: 1%">
                                         <a-form-item label="Salary range per month ">
-                                            <a-input placeholder="1000-1500$" v-model="job.remuneration">
-                                            </a-input>
+                                            <a-input-group compact>
+                                                <a-select default-value="USD" style="width: 5rem"
+                                                          v-model="currencytype">
+
+                                                    <a-select-option v-for="currency in currenciesarray"
+                                                                     v-bind:key="currency.code">
+
+                                                        {{currency.code}}
+                                                    </a-select-option>
+
+
+                                                </a-select>
+                                                <a-input-number :min="300" style=" width: 100px; text-align: center"
+                                                                placeholder="Minimum" v-model="min"/>
+                                                <a-input
+                                                        style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"
+                                                        placeholder="~"
+                                                        disabled
+                                                />
+                                                <a-input-number :min="400"
+                                                                style="width: 100px; text-align: center; border-left: 0"
+                                                                placeholder="Maximum" v-model="max"/>
+                                            </a-input-group>
+
+
                                             <span v-for="error in errorlist" v-bind:key="error">
-                                                <span v-if="error === 'remuneration'" style="color: red">
-                                                    * required field
+                                                <span v-if="error === 'min'" style="color: red">
+                                                    * required field(min)
+                                                </span>
+                                                <span v-else-if="error==='max'" style="color: red">
+                                                    * required field(max)
                                                 </span>
                                             </span>
+
                                         </a-form-item>
                                     </a-col>
                                     <a-col :span="8" style="padding-right: 1%">
@@ -339,6 +365,11 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
+
+
+                                </a-row>
+                                <a-row>
+
                                     <a-col :span="8" style="padding-right: 1%">
                                         <a-form-item label="Developers needed ">
                                             <a-input-number :min="1" v-model="job.num_devs_wanted"/>
@@ -400,8 +431,7 @@
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
                                 <a-alert
-                                        message="Your job is under review. It will be updated soon if it matches our specification.
-                                         Else, we will contact you directly for edits."
+                                        message="Your job will be reviewed by an account manager.They will update and publish it as soon if it matches your expectations."
                                         type="info"/>
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
@@ -419,7 +449,7 @@
                                 </span>
 
                                         </p>
-                                        <p>Monthly renumeration * : {{job.remuneration}}</p>
+                                        <p>Monthly renumeration * : {{renumeration}}</p>
 
                                         <p>
                                             Skills looking for :
@@ -538,26 +568,25 @@
                                            :md="{span: 12, offset: 0 }"
                                            :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                            style="padding-right: 1%">
-                                        <a-form-item label="Developer Experience">
+                                        <a-form-item label="Years of Experience">
                                             <a-select
                                                     placeholder="Select a option"
-                                                    v-model="job.dev_experience"
+                                                    v-model="job.years_experience"
                                             >
-                                                <a-select-option value="Entry">
-                                                    Entry
+
+                                                <a-select-option value="0-3">
+                                                    0-3
                                                 </a-select-option>
-                                                <a-select-option value="Junior">
-                                                    Junior
+                                                <a-select-option value="3-5">
+                                                    3-5
                                                 </a-select-option>
-                                                <a-select-option value="Mid-Level">
-                                                    Mid-Level
+                                                <a-select-option value="5-above">
+                                                    5-above
                                                 </a-select-option>
-                                                <a-select-option value="Senior">
-                                                    Senior
-                                                </a-select-option>
+
                                             </a-select>
                                             <span v-for="error in errorlist" v-bind:key="error">
-                                                <span v-if="error === 'experience'" style="color: red">
+                                                <span v-if="error === 'years'" style="color: red">
                                                     * required field
                                                 </span>
                                             </span>
@@ -601,6 +630,47 @@
                                            :md="{span: 12, offset: 0 }"
                                            :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
                                            style="padding-right: 1%">
+                                        <a-form-item label="Salary range per month ">
+                                            <a-input-group compact>
+                                                <a-select default-value="USD" style="width: 5rem"
+                                                          v-model="currencytype">
+
+                                                    <a-select-option v-for="currency in currenciesarray"
+                                                                     v-bind:key="currency.code">
+
+                                                        {{currency.code}}
+                                                    </a-select-option>
+
+
+                                                </a-select>
+                                                <a-input-number :min="300" style=" width: 100px; text-align: center"
+                                                                placeholder="Minimum" v-model="min"/>
+                                                <a-input
+                                                        style=" width: 30px; border-left: 0; pointer-events: none; backgroundColor: #fff"
+                                                        placeholder="~"
+                                                        disabled
+                                                />
+                                                <a-input-number :min="400"
+                                                                style="width: 100px; text-align: center; border-left: 0"
+                                                                placeholder="Maximum" v-model="max"/>
+                                            </a-input-group>
+
+
+                                            <span v-for="error in errorlist" v-bind:key="error">
+                                                <span v-if="error === 'min'" style="color: red">
+                                                    * required field(min)
+                                                </span>
+                                                <span v-else-if="error==='max'" style="color: red">
+                                                    * required field(max)
+                                                </span>
+                                            </span>
+
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                           :md="{span: 12, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
+                                           style="padding-right: 1%">
                                         <a-form-item label="Location">
                                             <country-select v-model="job.location"
                                                             class="ant-input"
@@ -612,20 +682,7 @@
                                             </span>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                           :md="{span: 12, offset: 0 }"
-                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
-                                           style="padding-right: 1%">
-                                        <a-form-item label="Salary range per month ">
-                                            <a-input placeholder="1000-1500$" v-model="job.remuneration">
-                                            </a-input>
-                                            <span v-for="error in errorlist" v-bind:key="error">
-                                                <span v-if="error === 'remuneration'" style="color: red">
-                                                    * required field
-                                                </span>
-                                            </span>
-                                        </a-form-item>
-                                    </a-col>
+
                                 </a-row>
                                 <a-row>
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
@@ -708,8 +765,8 @@
                             <div v-if="current === 2">
                                 <p>Preview of how job will appear on job board</p>
                                 <a-alert
-                                        message="Your job is under review. It will be updated soon if it matches our specification.
-                                        Else, we will contact you directly for edits."
+                                        message="Your job will be reviewed by an account manager.They will update and publish it as soon if it matches your expectations.
+                                        "
                                         type="info"/>
                                 <div class="jobdetails">
                                     <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
@@ -727,7 +784,7 @@
                                 </span>
 
                                         </p>
-                                        <p>Monthly renumeration * : {{job.remuneration}}</p>
+                                        <p>Monthly renumeration * : {{renumeration}}</p>
 
                                         <p>
                                             Skills looking for :
@@ -801,6 +858,8 @@
     import VueTour from 'vue-tour'
     import 'vue-tour/dist/vue-tour.css'
 
+    let currencies = require("@/store/currency")
+
     Vue.use(VueTour)
 
 
@@ -816,14 +875,16 @@
                 job: {
                     title: null,
                     job_role: null,
-                    dev_experience: null,
                     engagement_type: null,
                     location: null,
                     remuneration: null,
                     deadline: null,
                     num_devs_wanted: null,
                     tech_stack: null,
-                    description: null
+                    description: null,
+                    commission: null,
+                    years_experience: null,
+                    dev_experience: 'Mid-Level'
 
                 },
                 inputVisible: false,
@@ -856,7 +917,11 @@
 
                 jobmobile: false,
                 content: '',
-                steps: []
+                steps: [],
+                min: null,
+                max: null,
+                currencytype: 'USD',
+
 
             }
 
@@ -874,6 +939,23 @@
         created() {
             if (this.$route.params.post) {
                 this.showDrawer()
+            }
+        },
+        computed: {
+            currenciesarray: () => currencies,
+            renumeration() {
+                let monthly = this.currencytype + this.min + ' - ' + this.max
+                return monthly
+            },
+            commission() {
+                let amount = 0
+                if (this.job.years_experience === '0-1' || this.job.years_experience === '1-3') {
+                    amount = 0.12 * (((this.max + this.min) / 2) * 12)
+                } else {
+                    amount = 0.15 * (((this.max + this.min) / 2) * 12)
+                }
+                return amount
+
             }
         },
         async mounted() {
@@ -1133,13 +1215,14 @@
                     let list1 = {
                         title: this.job.title,
                         role: this.job.job_role,
-                        experience: this.job.dev_experience,
                         engagement: this.job.engagement_type
                         ,
                         location: this.job.location,
-                        renumeration: this.job.remuneration,
+                        min: this.min,
+                        max: this.max,
                         deadline: this.job.deadline,
-                        num_devs_wanted: this.job.num_devs_wanted
+                        num_devs_wanted: this.job.num_devs_wanted,
+                        years: this.job.years_experience
                     }
                     for (const [key, value] of Object.entries(list1)) {
 
@@ -1149,6 +1232,7 @@
                         }
                     }
                     if (this.errorlist.length === 0) {
+
                         this.current++
                     }
 
@@ -1182,6 +1266,8 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.job.commission = this.commission
+                this.job.remuneration = this.renumeration
                 Marketplace.createjob(this.job, auth)
                     .then(resp => {
 

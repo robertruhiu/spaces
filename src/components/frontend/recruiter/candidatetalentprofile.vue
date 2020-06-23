@@ -297,231 +297,231 @@
                                    :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
 
 
-                                <div v-if="dataload" style="text-align: center">
-                                    <a-spin/>
-                                </div>
-                                <div v-else>
-                                    <div v-if="this.$store.state.cart.length>0" class="profile"
-                                         style="overflow-y:scroll; height:17rem;">
-                                        <div style="padding: 7%">
-                                            <p>Picked Candidates</p>
-                                            <p>
-                                                <a-icon type="check-circle" theme="twoTone"/>
-                                                indicates verified candidate
-                                            </p>
-                                            <div v-for="profile in this.$store.state.cart" v-bind:key="profile"
-                                                 style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">
-                                                <p>{{profile.name}} <span v-if="profile.verified"><a-icon
-                                                        type="check-circle" theme="twoTone"/></span>
+                                <!--                                <div v-if="dataload" style="text-align: center">-->
+                                <!--                                    <a-spin/>-->
+                                <!--                                </div>-->
+                                <!--                                <div v-else>-->
+                                <!--                                    <div v-if="this.$store.state.cart.length>0" class="profile"-->
+                                <!--                                         style="overflow-y:scroll; height:17rem;">-->
+                                <!--                                        <div style="padding: 7%">-->
+                                <!--                                            <p>Picked Candidates</p>-->
+                                <!--                                            <p>-->
+                                <!--                                                <a-icon type="check-circle" theme="twoTone"/>-->
+                                <!--                                                indicates verified candidate-->
+                                <!--                                            </p>-->
+                                <!--                                            <div v-for="profile in this.$store.state.cart" v-bind:key="profile"-->
+                                <!--                                                 style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">-->
+                                <!--                                                <p>{{profile.name}} <span v-if="profile.verified"><a-icon-->
+                                <!--                                                        type="check-circle" theme="twoTone"/></span>-->
 
-                                                    <span style="float: right">
-                                                        <a @click="$store.commit('remove',profile.id);">
-                                                        <a @click="remove(profile.id)"><a-icon
-                                                                type="close-circle" theme="twoTone"/></a>
-                                                        </a></span>
-                                                </p>
+                                <!--                                                    <span style="float: right">-->
+                                <!--                                                        <a @click="$store.commit('remove',profile.id);">-->
+                                <!--                                                        <a @click="remove(profile.id)"><a-icon-->
+                                <!--                                                                type="close-circle" theme="twoTone"/></a>-->
+                                <!--                                                        </a></span>-->
+                                <!--                                                </p>-->
 
-                                            </div>
-                                            <span v-if="paidbundleexists === false">
-                                            <p style="padding-top: 1rem">Total:${{amount}}</p>
-                                        </span>
-                                            <div style="text-align: center" v-if="waiting">
-                                                <a-spin/>
+                                <!--                                            </div>-->
+                                <!--                                            <span v-if="paidbundleexists === false">-->
+                                <!--                                            <p style="padding-top: 1rem">Total:${{amount}}</p>-->
+                                <!--                                        </span>-->
+                                <!--                                            <div style="text-align: center" v-if="waiting">-->
+                                <!--                                                <a-spin/>-->
 
-                                            </div>
-                                            <p style="font-size: 12px" v-if="conditions === false">
+                                <!--                                            </div>-->
+                                <!--                                            <p style="font-size: 12px" v-if="conditions === false">-->
 
-                                                <a-checkbox @change="Check" v-model="conditions"></a-checkbox>
-                                                <a @click="TermsModal"> I agree to the terms and conditions</a>
-                                            </p>
-                                            <p style="font-size: 12px">
-                                                <router-link to="/prices">Bundle prices</router-link>
-                                            </p>
-
-
-                                            <div v-if="paidbundleexists">
-                                                <p style="font-size: 12px">
-                                                    existing bundle. bundle limit
-                                                    {{paiddevs.length}}/{{bundlelimit}}
-                                                </p>
-                                                <p v-if="exceeded" style="font-size: 12px;color: red">{{exceeded}}</p>
-                                                <div style="text-align: center">
-
-                                                    <a-button type="primary" @click="addtopaid">Checkout</a-button>
-
-                                                </div>
+                                <!--                                                <a-checkbox @change="Check" v-model="conditions"></a-checkbox>-->
+                                <!--                                                <a @click="TermsModal"> I agree to the terms and conditions</a>-->
+                                <!--                                            </p>-->
+                                <!--                                            <p style="font-size: 12px">-->
+                                <!--                                                <router-link to="/prices">Bundle prices</router-link>-->
+                                <!--                                            </p>-->
 
 
-                                            </div>
-                                            <div v-else>
-                                                <div style="text-align: center" v-if="conditions">
+                                <!--                                            <div v-if="paidbundleexists">-->
+                                <!--                                                <p style="font-size: 12px">-->
+                                <!--                                                    existing bundle. bundle limit-->
+                                <!--                                                    {{paiddevs.length}}/{{bundlelimit}}-->
+                                <!--                                                </p>-->
+                                <!--                                                <p v-if="exceeded" style="font-size: 12px;color: red">{{exceeded}}</p>-->
+                                <!--                                                <div style="text-align: center">-->
 
-                                                    <paystack
-                                                            :amount="topay"
-                                                            :email="email"
-                                                            :paystackkey="paystackkey"
-                                                            :currency="currency"
-                                                            :reference="reference"
-                                                            :callback="callback"
-                                                            :close="close"
-                                                            :embed="false"
-                                                    >
-                                                        <i class="fas fa-money-bill-alt"></i>
-                                                        Make Payment
-                                                    </paystack>
-                                                </div>
-                                                <div style="text-align: center" v-else>
-                                                    <a-button type="primary" disabled>Checkout</a-button>
-                                                </div>
-                                            </div>
+                                <!--                                                    <a-button type="primary" @click="addtopaid">Checkout</a-button>-->
+
+                                <!--                                                </div>-->
 
 
-                                        </div>
-                                    </div>
+                                <!--                                            </div>-->
+                                <!--                                            <div v-else>-->
+                                <!--                                                <div style="text-align: center" v-if="conditions">-->
 
-                                    <div v-if="this.$store.state.removed === true">
-
-                                        <div class="profile">
-                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
-                                                <div style="text-align: center">
-                                                    <img src="../../../assets/images/profile.png"
-                                                         style="width: 50%;padding-bottom: 2rem">
-                                                </div>
-
-
-                                                <p style="text-align: center;">I like this profile</p>
-                                                <div style="text-align: center">
-
-                                                    <div v-if="paidprofile === false">
-                                                        <div v-if="addcart">
-                                                            <div style="text-align: center;">
-                                                                <a-spin/>
-                                                            </div>
-                                                        </div>
-                                                        <div v-else>
-                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,
-                                                            name:currentUserProfile.user.first_name,verified:verified})">
+                                <!--                                                    <paystack-->
+                                <!--                                                            :amount="topay"-->
+                                <!--                                                            :email="email"-->
+                                <!--                                                            :paystackkey="paystackkey"-->
+                                <!--                                                            :currency="currency"-->
+                                <!--                                                            :reference="reference"-->
+                                <!--                                                            :callback="callback"-->
+                                <!--                                                            :close="close"-->
+                                <!--                                                            :embed="false"-->
+                                <!--                                                    >-->
+                                <!--                                                        <i class="fas fa-money-bill-alt"></i>-->
+                                <!--                                                        Make Payment-->
+                                <!--                                                    </paystack>-->
+                                <!--                                                </div>-->
+                                <!--                                                <div style="text-align: center" v-else>-->
+                                <!--                                                    <a-button type="primary" disabled>Checkout</a-button>-->
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
 
 
-                                                                <a-button type="primary"
-                                                                          @click="pickcandidate(currentUserProfile.id)">
-                                                                    Pick candidate
-                                                                </a-button>
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
 
-                                                            </a>
+                                <!--                                    <div v-if="this.$store.state.removed === true">-->
 
-                                                        </div>
-
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div v-if="managecandidate === false">
-
-                                        <div class="profile">
-                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
-                                                <div style="text-align: center">
-                                                    <img src="../../../assets/images/profile.png"
-                                                         style="width: 50%;padding-bottom: 2rem">
-                                                </div>
+                                <!--                                        <div class="profile">-->
+                                <!--                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
+                                <!--                                                <div style="text-align: center">-->
+                                <!--                                                    <img src="../../../assets/images/profile.png"-->
+                                <!--                                                         style="width: 50%;padding-bottom: 2rem">-->
+                                <!--                                                </div>-->
 
 
-                                                <p style="text-align: center;">I like this profile</p>
-                                                <div style="text-align: center">
+                                <!--                                                <p style="text-align: center;">I like this profile</p>-->
+                                <!--                                                <div style="text-align: center">-->
 
-                                                    <div v-if="paidprofile === false">
-                                                        <div v-if="addcart">
-                                                            <div style="text-align: center;">
-                                                                <a-spin/>
-                                                            </div>
-                                                        </div>
-                                                        <div v-else>
-                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,
-                                                            name:currentUserProfile.user.first_name,verified:verified})">
-
-
-                                                                <a-button type="primary"
-                                                                          @click="pickcandidate(currentUserProfile.id)">
-                                                                    Pick candidate
-                                                                </a-button>
-
-                                                            </a>
-
-                                                        </div>
+                                <!--                                                    <div v-if="paidprofile === false">-->
+                                <!--                                                        <div v-if="addcart">-->
+                                <!--                                                            <div style="text-align: center;">-->
+                                <!--                                                                <a-spin/>-->
+                                <!--                                                            </div>-->
+                                <!--                                                        </div>-->
+                                <!--                                                        <div v-else>-->
+                                <!--                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,-->
+                                <!--                                                            name:currentUserProfile.user.first_name,verified:verified})">-->
 
 
-                                                    </div>
+                                <!--                                                                <a-button type="primary"-->
+                                <!--                                                                          @click="pickcandidate(currentUserProfile.id)">-->
+                                <!--                                                                    Pick candidate-->
+                                <!--                                                                </a-button>-->
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!--                                                            </a>-->
 
-                                    <div v-for="dev in pickeddevpaid" :key="dev">
-                                        <div v-if="dev.id === currentUserProfile.id">
-                                            <div class="profile">
-                                                <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
-                                                    <div style="text-align: center">
-                                                        <img src="../../../assets/images/profile.png"
-                                                             style="width: 50%;padding-bottom: 2rem">
-                                                    </div>
+                                <!--                                                        </div>-->
 
 
-                                                    <p style="text-align: center;">I like this profile</p>
-                                                    <div style="text-align: center">
-                                                        <div>
+                                <!--                                                    </div>-->
+
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div v-if="managecandidate === false">-->
+
+                                <!--                                        <div class="profile">-->
+                                <!--                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
+                                <!--                                                <div style="text-align: center">-->
+                                <!--                                                    <img src="../../../assets/images/profile.png"-->
+                                <!--                                                         style="width: 50%;padding-bottom: 2rem">-->
+                                <!--                                                </div>-->
 
 
-                                                            <a-button
-                                                                    style="margin-left: 1rem;"
-                                                                    type="primary"
-                                                                    @click="navigateTo({name:'mycandidates'})">
-                                                                manage candidate
-                                                            </a-button>
+                                <!--                                                <p style="text-align: center;">I like this profile</p>-->
+                                <!--                                                <div style="text-align: center">-->
+
+                                <!--                                                    <div v-if="paidprofile === false">-->
+                                <!--                                                        <div v-if="addcart">-->
+                                <!--                                                            <div style="text-align: center;">-->
+                                <!--                                                                <a-spin/>-->
+                                <!--                                                            </div>-->
+                                <!--                                                        </div>-->
+                                <!--                                                        <div v-else>-->
+                                <!--                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,-->
+                                <!--                                                            name:currentUserProfile.user.first_name,verified:verified})">-->
 
 
-                                                        </div>
+                                <!--                                                                <a-button type="primary"-->
+                                <!--                                                                          @click="pickcandidate(currentUserProfile.id)">-->
+                                <!--                                                                    Pick candidate-->
+                                <!--                                                                </a-button>-->
+
+                                <!--                                                            </a>-->
+
+                                <!--                                                        </div>-->
 
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <!--                                                    </div>-->
 
-                                    </div>
-                                    <div v-if="this.$store.state.managed">
-                                        <div class="profile">
-                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">
-                                                <div style="text-align: center">
-                                                    <img src="../../../assets/images/profile.png"
-                                                         style="width: 50%;padding-bottom: 2rem">
-                                                </div>
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
 
-
-                                                <p style="text-align: center;">I like this profile</p>
-                                                <div style="text-align: center">
-                                                    <div>
+                                <!--                                    <div v-for="dev in pickeddevpaid" :key="dev">-->
+                                <!--                                        <div v-if="dev.id === currentUserProfile.id">-->
+                                <!--                                            <div class="profile">-->
+                                <!--                                                <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
+                                <!--                                                    <div style="text-align: center">-->
+                                <!--                                                        <img src="../../../assets/images/profile.png"-->
+                                <!--                                                             style="width: 50%;padding-bottom: 2rem">-->
+                                <!--                                                    </div>-->
 
 
-                                                        <a-button
-                                                                style="margin-left: 1rem;"
-                                                                type="primary"
-                                                                @click="navigateTo({name:'mycandidates'})">
-                                                            manage candidate
-                                                        </a-button>
+                                <!--                                                    <p style="text-align: center;">I like this profile</p>-->
+                                <!--                                                    <div style="text-align: center">-->
+                                <!--                                                        <div>-->
 
 
-                                                    </div>
+                                <!--                                                            <a-button-->
+                                <!--                                                                    style="margin-left: 1rem;"-->
+                                <!--                                                                    type="primary"-->
+                                <!--                                                                    @click="navigateTo({name:'mycandidates'})">-->
+                                <!--                                                                manage candidate-->
+                                <!--                                                            </a-button>-->
 
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--                                                        </div>-->
+
+
+                                <!--                                                    </div>-->
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+
+                                <!--                                    </div>-->
+                                <!--                                    <div v-if="this.$store.state.managed">-->
+                                <!--                                        <div class="profile">-->
+                                <!--                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
+                                <!--                                                <div style="text-align: center">-->
+                                <!--                                                    <img src="../../../assets/images/profile.png"-->
+                                <!--                                                         style="width: 50%;padding-bottom: 2rem">-->
+                                <!--                                                </div>-->
+
+
+                                <!--                                                <p style="text-align: center;">I like this profile</p>-->
+                                <!--                                                <div style="text-align: center">-->
+                                <!--                                                    <div>-->
+
+
+                                <!--                                                        <a-button-->
+                                <!--                                                                style="margin-left: 1rem;"-->
+                                <!--                                                                type="primary"-->
+                                <!--                                                                @click="navigateTo({name:'mycandidates'})">-->
+                                <!--                                                            manage candidate-->
+                                <!--                                                        </a-button>-->
+
+
+                                <!--                                                    </div>-->
+
+
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
 
 
                             </a-col>

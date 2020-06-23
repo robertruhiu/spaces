@@ -39,18 +39,13 @@ export default {
     myprojects(dev_id, auth) {
         return Api().get(`myprojects/${dev_id}`, auth)
     },
-    testcenters(dev_id, auth) {
-        return Api().get(`mytestcenters/${dev_id}`, auth)
-    },
     myprojectdetails(assessmentapplication_id, auth) {
         return Api().get(`myprojectdetails/${assessmentapplication_id}`, auth)
     },
     myprojectdetailspatch(assessmentapplication_id,currentAssess,auth) {
         return Api().patch(`myprojectdetailsupdater/${assessmentapplication_id}`,currentAssess, auth)
     },
-    developerselectproject(project_id,auth) {
-        return Api().post(`projects/developerprojects/${project_id}`, auth)
-    },
+
     newselfverify(assessmentapplication_id,auth) {
         return Api().post(`newselfverify/${assessmentapplication_id}`, auth)
     },

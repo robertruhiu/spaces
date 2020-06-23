@@ -16,91 +16,60 @@
                                 <a-alert v-if="updated" message="Job details have been updated" type="success"
                                          closeText="Close Now"/>
                             </a-col>
-                            <a-col span="4">
-                                <div v-if="dataload" style="text-align: center">
-                                    <a-spin/>
-                                </div>
-                                <div v-else>
-                                    <a-popover title="Picked candidates" trigger="click" placement="bottomRight"
-                                               v-if="pickedprofiles.length >0">
-                                        <template slot="content">
-                                            <div>
-                                                <div v-for="profile in pickedprofiles" v-bind:key="profile"
-                                                     style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">
-                                                    <p>{{profile.name}}
 
-                                                        <span style="float: right"><a
-                                                                @click="remove(profile.id,profile.type,profile.application_id)"><a-icon
-                                                                type="close-circle" theme="twoTone"/></a></span>
-                                                    </p>
+                            <a-modal
+                                    title="Activate job"
+                                    v-model="activatejobmodal"
+                                    style="top: 20px;"
+                                    :footer="null"
+                            >
+                                <div>
+                                    <p>Hello to activate the tracking system and move candidates around.
+                                    <p>Click on the Make Payment button below.</p>
+                                    <p>This is set to enable you to pay the commission discussed with you by your
+                                        account manger.</p>
+                                    <p>Commission amount:$ {{job.commission}}</p>
 
-                                                </div>
-                                                <span v-if="paidbundleexists === false">
-                                            <p style="padding-top: 1rem">Total:{{amount}}</p>
-                                        </span>
-                                                <div style="text-align: center" v-if="waiting">
-                                                    <a-spin/>
+                                    <a-checkbox @change="Verifyterms" v-model="job.terms">
+                                        I have read and I accept
+                                        <router-link to="terms">Terms</router-link>
+                                        of service
+                                    </a-checkbox>
+                                    <div v-if="job.terms === false">
 
-                                                </div>
-                                                <p style="font-size: 12px" v-if="conditions === false">
+                                        <a-button type="primary" disabled style="margin-top: 1rem">
+                                            Make payment
+                                        </a-button>
+                                    </div>
+                                    <div v-else style="margin-top: 1rem">
+                                        <paystack
+                                                :amount="topaycommission"
+                                                :email="email"
+                                                :paystackkey="paystackkey"
+                                                :currency="currency"
+                                                :reference="reference"
+                                                :callback="callbackjobverified"
+                                                :close="close"
+                                                :embed="false"
+                                        >
+                                            <i class="fas fa-money-bill-alt"></i>
+                                            Make Payment
+                                        </paystack>
+                                    </div>
 
-                                                    <a-checkbox @change="Check" v-model="conditions"></a-checkbox>
-                                                    <a @click="TermsModal"> I agree to the terms and conditions</a>
-                                                </p>
-                                                <p style="font-size: 12px">
-                                                    <router-link to="/prices">Bundle prices</router-link>
-                                                </p>
-
-
-                                                <div v-if="paidbundleexists">
-                                                    <p style="font-size: 12px">
-                                                        existing bundle. bundle limit
-                                                        {{paiddevs.length}}/{{bundlelimit}}
-                                                    </p>
-                                                    <p v-if="exceeded" style="font-size: 12px;color: red">
-                                                        {{exceeded}}</p>
-                                                    <div style="text-align: center">
-                                                        <a-button type="primary" @click="addtopaid">Checkout</a-button>
-                                                    </div>
-
-
-                                                </div>
-                                                <div v-else>
-                                                    <div style="text-align: center" v-if="conditions">
-                                                        <paystack
-                                                                :amount="topay"
-                                                                :email="email"
-                                                                :paystackkey="paystackkey"
-                                                                :currency="currency"
-                                                                :reference="reference"
-                                                                :callback="callback"
-                                                                :close="close"
-                                                                :embed="false"
-                                                        >
-                                                            <i class="fas fa-money-bill-alt"></i>
-                                                            Make Payment
-                                                        </paystack>
-                                                    </div>
-                                                    <div style="text-align: center" v-else>
-                                                        <a-button type="primary" disabled>Checkout</a-button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                        <a-button type="primary">Picked Candidates</a-button>
-                                    </a-popover>
                                 </div>
 
 
-                            </a-col>
+                            </a-modal>
 
                         </a-row>
                         <hide-at breakpoint="mediumAndBelow">
                         <span>
                             <a-row :gutter="16" style="margin-bottom: 1rem">
-                                <a-col span="20" style="margin-bottom: 1rem">
+                                <a-col span="22" style="margin-bottom: 1rem">
                                     <a-alert v-if="currentUserProfile.user.is_staff" :message="adminmodewarning"
                                              type="warning" closeText="Close Now"/>
+
 
                                 </a-col>
                                  <a-col span="2">
@@ -473,14 +442,15 @@
 
                                                                             </div>
                                                                             <div v-else>
-                                                                                <div v-if="record.carted">
-                                                                                    --
-                                                                                </div>
 
-                                                                                <a-button-group v-else>
-                                                                                    <a-button
-                                                                                            @click="pickrejectClick(record.action,record.profile,true,record.name)"
-                                                                                            type="primary">pick
+                                                                                <a-button-group>
+                                                                                    <a-button v-if="job.verified"
+                                                                                              @click="pickrejectAdmin(record.action,record.profile,true,record.name)"
+                                                                                              type="primary">pick
+                                                                                    </a-button>
+                                                                                    <a-button v-else
+                                                                                              @click="activatejob()"
+                                                                                              type="primary">pick
                                                                                     </a-button>
                                                                                     <a-button
                                                                                             @click="onReject(record.action,record.stage,record.profile)"
@@ -622,16 +592,33 @@
 
                                                                                 </div>
                                                                             </div>
-                                                                            <div v-else>
-                                                                                <div>
-                                                                                    <a-button :size="small"
-                                                                                              @click="pickrecommedationClick(job.id,record.profile,2)"
-                                                                                              type="primary">pick
-                                                                                    </a-button>
+                                                                            <div v-else-if="job.published">
+                                                                                <div v-if="job.verified">
+                                                                                    <div>
+                                                                                        <a-button :size="small"
+                                                                                                  @click="pickrecommedationAdmin(job.id,record.profile,2)"
+                                                                                                  type="primary">pick
+                                                                                        </a-button>
 
 
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div v-else-if="job.verified === false">
+                                                                                    <div>
+                                                                                        <a-button :size="small"
+                                                                                                  @click="activatejob()"
+
+                                                                                                  type="primary">pick
+                                                                                        </a-button>
+
+
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <div v-else>
+                                                                                ---
+                                                                            </div>
+
 
                                                                         </template>
                                                                     </a-table-column>
@@ -886,20 +873,34 @@
                                                                     </a-tooltip>
                                                                 </div>
                                                                 <template slot-scope="text,record">
-                                                        <span v-if="record.test_stage " style="margin-left: 20%">
-                                                            <span v-if="record.test_stage === 'complete'">
-                                                                <a @click="navigateTo({name:'report',params:{candidateId: record.profile,projectId:record.project}})">
+                                                                    <span v-if="record.test_stage">
+                                                                        <span v-if="record.report">
+
+                                                                <div v-if="record.report.report_ready">
+
+                                                                    <a @click="navigateTo({name:'report',params:{candidateId: record.profile,projectId:record.project,reportId:record.report.id}})">
                                                                     report
                                                                 </a>
-                                                            </span>
-                                                            <span v-else>
-                                                                {{record.test_stage}}
-                                                            </span>
+                                                                </div>
 
-                                                        </span>
+
+                                                                        <span v-else>
+
+
+                                                                <span v-if="record.test_stage === 'complete'">
+                                                                    report generating
+                                                                </span>
+                                                                <span v-else>
+                                                                    {{record.test_stage}}
+                                                                </span>
+
+                                                            </span>
+                                                                    </span>
+                                                                    </span>
                                                                     <span v-else style="margin-left: 20%">
-                                                            --
-                                                        </span>
+                                                                        --
+                                                                    </span>
+
                                                                 </template>
 
                                                             </a-table-column>
@@ -1422,56 +1423,130 @@
                                                     </a-form-item>
 
                                                 </a-col>
-                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                       :md="{span: 12, offset: 0 }"
-                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                    <a-form-item label="Contract type">
-                                                        <a-select
+                                            </a-row>
+                                            <!------commission entry added for staff access------>
+                                            <a-row :gutter="16">
+                                                <div v-if="currentUserProfile.user.is_staff">
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                                                        <a-form-item label="Contract type">
+                                                            <a-select
 
-                                                                placeholder="Select a option and change input text above"
-                                                                v-model="job.engagement_type"
-                                                        >
-                                                            <a-select-option value="Full-time">
-                                                                Full-time
-                                                            </a-select-option>
-                                                            <a-select-option value="Part-time">
-                                                                Part-time
-                                                            </a-select-option>
-                                                            <a-select-option value="Contract">
-                                                                Contract
-                                                            </a-select-option>
-                                                            <a-select-option value="Remote">
-                                                                Remote
-                                                            </a-select-option>
-                                                            <a-select-option value="Freelance">
-                                                                Freelance
-                                                            </a-select-option>
+                                                                    placeholder="Select a option and change input text above"
+                                                                    v-model="job.engagement_type"
+                                                            >
+                                                                <a-select-option value="Full-time">
+                                                                    Full-time
+                                                                </a-select-option>
+                                                                <a-select-option value="Part-time">
+                                                                    Part-time
+                                                                </a-select-option>
+                                                                <a-select-option value="Contract">
+                                                                    Contract
+                                                                </a-select-option>
+                                                                <a-select-option value="Remote">
+                                                                    Remote
+                                                                </a-select-option>
+                                                                <a-select-option value="Freelance">
+                                                                    Freelance
+                                                                </a-select-option>
 
-                                                        </a-select>
-                                                    </a-form-item>
+                                                            </a-select>
+                                                        </a-form-item>
 
-                                                </a-col>
-                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                       :md="{span: 12, offset: 0 }"
-                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                    <a-form-item>
-                                                        <span>Location : {{job.location}}</span>
-                                                        <country-select v-model="job.location"
-                                                                        class="ant-input"
-                                                        />
-                                                    </a-form-item>
+                                                    </a-col>
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                                                        <a-form-item>
+                                                            <span>Location : {{job.location}}</span>
+                                                            <country-select v-model="job.location"
+                                                                            class="ant-input"
+                                                            />
+                                                        </a-form-item>
 
-                                                </a-col>
-                                                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                                                       :md="{span: 12, offset: 0 }"
-                                                       :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                                    <a-form-item label="Salary range ">
-                                                        <a-input v-model="job.remuneration">
+                                                    </a-col>
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                                                        <a-form-item label="Salary range ">
+                                                            <a-input v-model="job.remuneration">
 
-                                                        </a-input>
-                                                    </a-form-item>
+                                                            </a-input>
+                                                        </a-form-item>
 
-                                                </a-col>
+                                                    </a-col>
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                                                        <a-form-item label="Commission ">
+                                                            <a-input v-model="job.commission">
+
+                                                            </a-input>
+                                                        </a-form-item>
+
+                                                    </a-col>
+                                                </div>
+                                                <div v-else>
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                        <a-form-item label="Contract type">
+                                                            <a-select
+
+                                                                    placeholder="Select a option and change input text above"
+                                                                    v-model="job.engagement_type"
+                                                            >
+                                                                <a-select-option value="Full-time">
+                                                                    Full-time
+                                                                </a-select-option>
+                                                                <a-select-option value="Part-time">
+                                                                    Part-time
+                                                                </a-select-option>
+                                                                <a-select-option value="Contract">
+                                                                    Contract
+                                                                </a-select-option>
+                                                                <a-select-option value="Remote">
+                                                                    Remote
+                                                                </a-select-option>
+                                                                <a-select-option value="Freelance">
+                                                                    Freelance
+                                                                </a-select-option>
+
+                                                            </a-select>
+                                                        </a-form-item>
+
+                                                    </a-col>
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                        <a-form-item>
+                                                            <span>Location : {{job.location}}</span>
+                                                            <country-select v-model="job.location"
+                                                                            class="ant-input"
+                                                            />
+                                                        </a-form-item>
+
+                                                    </a-col>
+                                                    <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                                                           :md="{span: 12, offset: 0 }"
+                                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+                                                        <a-form-item label="Salary range ">
+                                                            <a-input v-model="job.remuneration">
+
+                                                            </a-input>
+                                                        </a-form-item>
+
+                                                    </a-col>
+
+
+                                                </div>
+
+
+                                            </a-row>
+                                            <a-row>
+
                                                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                                        :md="{span: 24, offset: 0 }"
                                                        :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
@@ -1525,6 +1600,9 @@
 
                                                     </a-form-item>
                                                 </a-col>
+                                            </a-row>
+                                            <a-row>
+
                                                 <a-col :span="24">
                                                     <a-form-item
                                                             label="Job description "
@@ -1718,22 +1796,26 @@
                                                                     </a-button-group>
 
                                                                 </div>
-                                                                <div v-else>
-                                                                    <div v-if="item.carted">
-                                                                        --
-                                                                    </div>
 
-                                                                    <a-button-group size="small" v-else>
-                                                                        <a-button
-                                                                                @click="pickrejectClick(item.action,item.profile,true,item.name)"
-                                                                                type="primary">pick
+                                                                <div v-else>
+                                                                    <a-button-group size="small">
+                                                                        <a-button v-if="job.verified"
+                                                                                  @click="pickrejectAdmin(item.action,item.profile,true,item.name)"
+                                                                                  type="primary">pick
+                                                                        </a-button>
+                                                                        <a-button v-else
+                                                                                  @click="activatejob()"
+                                                                                  type="primary">pick
                                                                         </a-button>
                                                                         <a-button
-                                                                                @click="pickrejectClick(item.action,item.profile,false,item.name)">
+                                                                                @click="onReject(item.action,item.stage,item.profile)"
+                                                                        >
                                                                             reject
                                                                         </a-button>
 
                                                                     </a-button-group>
+
+
                                                                 </div>
 
                                                             </a-col>
@@ -1779,23 +1861,40 @@
                                                                 <div v-if="currentUserProfile.user.is_staff">
                                                                     <div style="margin-left: 5%">
                                                                         <a-button :size="small"
-                                                                                  @click="pickrecommedationAdmin(job.id,record.profile,2)"
+                                                                                  @click="pickrecommedationAdmin(job.id,item.profile,2)"
                                                                                   type="primary">pick
                                                                         </a-button>
 
 
+                                                                    </div>
+                                                                </div>
+                                                                <div v-else-if="job.published">
+                                                                    <div v-if="job.verified">
+                                                                        <div>
+                                                                            <a-button :size="small"
+                                                                                      @click="pickrecommedationAdmin(job.id,item.profile,2)"
+                                                                                      type="primary">pick
+                                                                            </a-button>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div v-else-if="job.verified === false">
+                                                                        <div>
+                                                                            <a-button :size="small"
+                                                                                      @click="activatejob()"
+
+                                                                                      type="primary">pick
+                                                                            </a-button>
+
+
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div v-else>
-                                                                    <div style="margin-left: 5%">
-                                                                        <a-button :size="small"
-                                                                                  @click="pickrecommedationClick(job.id,record.profile,2)"
-                                                                                  type="primary">pick
-                                                                        </a-button>
-
-
-                                                                    </div>
+                                                                    ---
                                                                 </div>
+
 
                                                             </a-col>
                                                         </a-row>
@@ -1831,21 +1930,34 @@
                                                                 </a-tag>
                                                             </a-col>
                                                             <a-col span="8">
-                                                                <span v-if="item.test_stage "
-                                                                >
-                                                            <span v-if="item.test_stage === 'complete'">
-                                                                <a @click="navigateTo({name:'report',params:{candidateId: item.profile,projectId:item.project}})">
+
+                                                                <span v-if="item.test_stage">
+                                                                        <span v-if="item.report">
+
+                                                                <div v-if="item.report.report_ready">
+
+                                                                    <a @click="navigateTo({name:'report',params:{candidateId: item.profile,projectId:item.project,reportId:item.report.id}})">
                                                                     report
                                                                 </a>
-                                                            </span>
-                                                            <span v-else>
-                                                                {{item.test_stage}}
-                                                            </span>
+                                                                </div>
 
-                                                        </span>
+
+                                                                        <span v-else>
+
+
+                                                                <span v-if="item.test_stage === 'complete'">
+                                                                    report generating
+                                                                </span>
                                                                 <span v-else>
-                                                            --
-                                                        </span>
+                                                                    {{item.test_stage}}
+                                                                </span>
+
+                                                            </span>
+                                                                    </span>
+                                                                    </span>
+                                                                <span v-else style="margin-left: 20%">
+                                                                        --
+                                                                    </span>
                                                                 <br>
                                                                 <router-link v-if="item.project"
                                                                              style="text-decoration: none"
@@ -3021,7 +3133,9 @@
                 rejectioninstance: '',
                 rejectionprofile: '',
                 stagekey: '',
-                rejectsubmit: false
+                rejectsubmit: false,
+                jobverification: '',
+                activatejobmodal: false
 
 
             }
@@ -3061,6 +3175,7 @@
                 // current job
                 this.job = (await Marketplace.specificjob(jobId, auth)).data
                 this.adminmodewarning = 'Admin mode this job is posted by' + ' ' + this.job.company + '.Dont move candidates if you not assigned as their account manager'
+                this.jobverification = 'Hello to activate the tracking system  and move candidates around.\n Click on the Make Payment button belwo.This is set to enable you to pay the commission discussed with you by your account manger.\n Commission amount:' + ' ' + this.job.commission
                 this.deadlineformated = moment(this.job.deadline).format("YYYY-MM-DD")
                 this.deadline = this.job.deadline
                 // used as part of system recommendation of candidates
@@ -3365,6 +3480,9 @@
             topay() {
                 return this.amount * 100
             },
+            topaycommission() {
+                return this.job.commission * 100
+            },
 
         },
         methods: {
@@ -3508,6 +3626,28 @@
                     this.job.deadline = this.deadline
                     this.updated = true
                     Marketplace.updatejob(this.job.id, this.job, auth)
+                        .then()
+
+
+                } catch
+                    (error) {
+                    this.error = error.response.data.error
+
+                }
+
+
+            }
+            ,
+            //  accepts terms for job verify new methodolgy
+            Verifyterms: async function () {
+
+                try {
+                    const auth = {
+                        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                    }
+                    this.job.terms = true
+                    Marketplace.updatejob(this.job.id, {terms: true}, auth)
                         .then()
 
 
@@ -4388,9 +4528,10 @@
                         let offerstatus = this.applicants[j].offerstatus
                         let offerletter = this.applicants[j].offerletter
                         let carted = this.applicants[j].carted
+                        let created = moment(this.applicants[j].created).format("YYYY-MM-DD HH:mm")
                         let onepickeddev = new Applicant(
                             id, name, stage, tags, user_id, selected, pk, test_stage, project, projectname, status, start,
-                            end, color, report, offerstatus, offerletter, carted
+                            end, color, report, offerstatus, offerletter, carted, created
                         );
 
                         this.applicantprofile.push(onepickeddev)
@@ -4872,6 +5013,32 @@
 
             }
             ,
+            callbackjobverified: function (response) {
+                if (response.status === 'success') {
+                    try {
+                        const auth = {
+                            headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                        }
+                        this.job.verified = true
+                        this.job.transaction_id = response.trxref,
+
+                            Marketplace.updatejob(this.job.id, this.job, auth)
+                                .then()
+
+
+                    } catch
+                        (error) {
+                        this.error = error.response.data.error
+
+                    }
+
+
+                }
+
+
+            }
+            ,
             close: function () {
                 console.log("Payment closed")
             }
@@ -4905,6 +5072,9 @@
                 this.editnotemodal = false
                 this.addnotemodal = false
 
+            },
+            activatejob() {
+                this.activatejobmodal = true
             }
 
 

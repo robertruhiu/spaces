@@ -88,7 +88,6 @@
 
                                 </a-row>
                                 <a-row :gutter="16">
-
                                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                                            :md="{span: 12, offset: 0 }"
                                            :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
@@ -131,11 +130,29 @@
 
 
                                 </a-row>
+                                <a-row>
+
+                                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                           :md="{span: 12, offset: 0 }"
+                                           :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
+                                        <VuePhoneNumberInput name="number" v-model="currentUserProfile.phone_number"
+                                                             default-country-code="GH"
+                                                             @update="onUpdate"/>
+                                        <div v-for="error in errorlist" v-bind:key="error">
+                                            <div v-if="error === 'number'" style="color: red">
+                                                * phone number required
+                                            </div>
+                                        </div>
+
+                                    </a-col>
+
+
+                                </a-row>
 
 
                             </a-form>
                         </div>
-                        <div if v-if="current1 === 1">
+                        <div v-if="current1 === 1">
                             <a-row :gutter="16">
                                 <a-col :span="24">
 
@@ -169,13 +186,14 @@
                             <span v-else>
                                 <span style="margin-right: 1%">
                             <a-button
-                                v-if="current1>0"
-                                style="margin-left: 8px"
-                                @click="prev1"
-                        >
+                                    v-if="current1>0"
+                                    style="margin-left: 8px"
+                                    @click="prev1"
+                            >
                             Previous
                         </a-button>
-                        </span>
+                                    </span>
+
                                 <span>
                                     <a-button
                                             v-if="current1 < steps1.length - 1"
@@ -183,17 +201,19 @@
                                     Next
                                 </a-button>
                                 </span>
-                                <a-button
-                                v-if="current1 == steps1.length - 1"
-                                type="primary"
-                                @click="onCompleteRecruiter">
+                                    <span>
+                                        <a-button
+                                                v-if="current1 == steps1.length - 1"
+                                                type="primary"
+                                                @click="onCompleteRecruiter">
                                     Done
                                 </a-button>
+                                    </span>
+
+
+
                             </span>
                         </span>
-
-
-
 
 
                     </div>
@@ -210,9 +230,13 @@
 
 
     import UsersService from '@/services/UsersService'
+    import VuePhoneNumberInput from 'vue-phone-number-input';
+    import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+
 
     export default {
         name: "recruitersteps",
+        components: {VuePhoneNumberInput},
         data() {
             return {
                 loading: false,
@@ -225,11 +249,11 @@
                 recommendationtags: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql',
                     'Html', 'Css', 'bootstrap', 'React', 'Java',
                     'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
-                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#','C','Swift','Nodejs',
-                    'Typescript','Firebase','Xamarin','Spark','.Net','Redis','Sqlite','Rails', 'Meteor', 'AI', 'Cybersecurity',
+                    'Angular', 'Ios', 'flutter', 'Ionic', 'C#', 'C', 'Swift', 'Nodejs',
+                    'Typescript', 'Firebase', 'Xamarin', 'Spark', '.Net', 'Redis', 'Sqlite', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
                     'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala',
                     'Nativescript ',
-                    'Android', 'Website', 'Mobile','DevOps','MongoDb'],
+                    'Android', 'Website', 'Mobile', 'DevOps', 'MongoDb'],
                 selectedTags: [],
 
                 current1: 0,
@@ -243,7 +267,9 @@
 
                 recruiterstep1: this.$form.createForm(this),
                 doneloading: false,
-                errorlist: []
+                errorlist: [],
+                formattednumber: null,
+                number: 'null'
 
 
             }
@@ -273,6 +299,11 @@
         },
 
         methods: {
+            onUpdate(payload) {
+                this.results = payload
+                this.currentUserProfile.phone_number = this.results.formattedNumber
+
+            },
 
             stepsaves1() {
                 const auth = {
@@ -282,6 +313,7 @@
                 this.loading = true
 
                 this.currentUserProfile.user = this.$store.state.user.pk
+                this.currentUserProfile.phone_number = this.results.formattedNumber
 
 
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -308,6 +340,7 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.loading = true
                 this.currentUserProfile.stage = 'complete'
                 this.currentUserProfile.user_type = 'recruiter'
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
@@ -325,6 +358,7 @@
                             this.$router.push({
                                 name: 'recruiter'
                             })
+                            this.loading = false
 
                         }
 
@@ -400,6 +434,10 @@
                     }
                     if (this.currentUserProfile.country === null || this.currentUserProfile.country === '') {
                         this.errorlist.push('country')
+
+                    }
+                    if (this.currentUserProfile.phone_number === null || this.currentUserProfile.phone_number === '') {
+                        this.errorlist.push('number')
 
                     }
                     if (this.errorlist.length === 0) {

@@ -20,6 +20,7 @@
                 <router-link to="/login" class="ant-btn ant-btn-primary" style="margin-bottom: 0" v-else>Post a job for
                     free
                 </router-link>
+<!--                <router-link to="/clientdashboard" class="ant-menu-item" style="margin-bottom: 0">Client dashboard</router-link>-->
 
                 <router-link to="/prices" class="ant-menu-item" style="margin-bottom: 0">Pricing</router-link>
                 <router-link to="/bridgesHome" class="ant-menu-item" style="margin-bottom: 0">Skill Bridging program

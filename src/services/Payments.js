@@ -13,10 +13,5 @@ export default {
     cartitemadd(cart_id,developers, auth){
       return Api().patch(`cart/cartupdate/${cart_id}`,developers, auth)
     },
-    cartitems(cart_id, auth){
-      return Api().get(`cart/developer_order_list/${cart_id}`, auth)
-    },
-    cartitemdelete(cart_item_id, auth){
-      return Api().delete(`cart/developer_order_update/${cart_item_id}`, auth)
-    },
+
 }

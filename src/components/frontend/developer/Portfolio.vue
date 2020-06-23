@@ -12,8 +12,22 @@
                         <div class="profile" style="padding-bottom: 2%">
                             <a-row>
 
+
                                 <a-col :span="24">
-                                    <p>About</p>
+                                    <a-row>
+                                        <a-col :span="16">
+                                            <p style="">About</p>
+                                        </a-col>
+                                        <a-col :span="8">
+                                            <span @click="$router.push('developerprofile')"> <a-button size="small"
+                                                                                                       type="primary"
+                                                                                                       icon="edit">
+                                    Edit profile
+                                </a-button></span>
+                                        </a-col>
+                                    </a-row>
+
+
                                     <p>{{currentUserProfile.about}}</p>
                                 </a-col>
                             </a-row>
@@ -55,6 +69,14 @@
 
                             </span>
                                 </a-col>
+                                <a-col :span="6">
+                                <span>
+                                    <a-icon type="phone"/> :
+                                    {{currentUserProfile.phone_number}}
+
+
+                            </span>
+                                </a-col>
 
 
                             </a-row>
@@ -84,6 +106,21 @@
                             </span>
                                 </a-col>
 
+
+                            </a-row>
+                            <a-row>
+                                <a-col :span="24" style="margin-top: 1rem">
+                                    <a-alert
+                                            message="If possible please try formatting your cv in the
+                                            format provided in the link below"
+                                            banner
+                                            closable
+                                    />
+                                    <p style="padding-top: 2%"><a
+                                            href="https://res.cloudinary.com/dfy4gylof/raw/upload/v1592833369/Great_Resume_Template_with_tips_1.docx"
+                                            target='_blank'> Cv format</a></p>
+
+                                </a-col>
                             </a-row>
                         </div>
                         <show-at breakpoint="mediumAndBelow">
@@ -524,7 +561,7 @@
                         title="New portfolio project"
                         v-model="createproject"
                         style="top: 1rem;"
-                        @ok="handleOk"
+
                 >
                     <template slot="footer">
 
@@ -1120,7 +1157,7 @@
                 availability: [],
                 cv: '',
                 updatexperience: false,
-                dataload: false
+                dataload: false,
 
 
             }
@@ -1368,6 +1405,8 @@
                             )
                             .catch()
 
+                    } else {
+                        console.log('error')
                     }
                 })
 

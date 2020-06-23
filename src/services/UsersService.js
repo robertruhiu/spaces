@@ -20,9 +20,6 @@ export default {
     retrieveuser(user_id, auth) {
         return Api().get(`getuser/${user_id} `, auth)
     },
-    talentuser(id) {
-        return Api().get(`gettalent/${id} `)
-    },
     experience(candidate_id, auth) {
         return Api().get(`getexperience/${candidate_id} `, auth)
     },
