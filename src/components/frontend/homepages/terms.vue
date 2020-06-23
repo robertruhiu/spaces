@@ -238,7 +238,7 @@
                         <h2>Refund & Replacement</h2>
                         <p>If the candidate resigns or is fired in the first month of employment, we will offer a full
                             refund
-                            of the success fee paid or a replacement depending on the company's preference and the
+                            of the commission fee paid or a replacement depending on the company's preference and the
                             candidate’s
                             reasons for leaving. The replacement will be done at no charge.If the candidate resigns
                             within the

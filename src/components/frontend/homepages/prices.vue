@@ -15,7 +15,7 @@
                             <a-col span="24">
                                 <div style="text-align:center;padding: 5%;">
                                     <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
-                                        Fulltime hire </p>
+                                        Full-time hire </p>
                                 </div>
                                 <a-progress :percent="100" strokeColor="#0868AC" :showInfo="false"/>
 
@@ -27,10 +27,11 @@
                                         employees to work with you for more than a year (remotely or on-site).</p>
 
                                     <div style="">
-                                        <p>Billing: One-time payment of a Commission Fee. The Commission Fee starts from
+                                        <p>Recruiter Billing: One-time payment of a Commission Fee. The Commission Fee
+                                            starts from
                                             12% of
                                             the candidate's annual gross salary based on the role you are hiring for,
-                                            see our see our
+                                            see our
                                             <router-link to="terms">Terms</router-link>
                                             for more details.
                                         </p>
@@ -100,13 +101,14 @@
                                         <img src="@/assets/images/innovation.svg" style="width: 60%" alt="">
                                         <p style="font-weight: bold">This plan is for you if you need employees to work
                                             on a short term contract (less than a year)</p>
-                                        <p>Billing: the commission fee will be calculated on a prorata basis depending
+                                        <p>Recruiter Billing: the commission fee will be calculated on a prorata basis
+                                            depending
                                             on the number of
                                             months that the candidate will work for you. The Commission fee is only paid
                                             once.
                                         </p>
-                                        <p>Enjoy all fulltime hire perks</p>
-                                        <p>Lets Grow with you.</p>
+                                        <p>Enjoy all fulltime hire perks.</p>
+                                        <p> Let's grow with you.</p>
 
 
                                     </div>
@@ -184,8 +186,9 @@
 <style scoped>
     .managecard {
         border: 1px solid #1876d21c;
-        min-height: 65vh;
+        min-height: 79vh;
         box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+
 
     }
 
