@@ -257,13 +257,13 @@
                                             v-model="job.years_experience"
                                     >
 
-                                        <a-select-option value="0-3">
+                                        <a-select-option value="0-1">
                                             0-1
                                         </a-select-option>
-                                        <a-select-option value="3-5">
+                                        <a-select-option value="1-3">
                                             1-3
                                         </a-select-option>
-                                        <a-select-option value="5-above">
+                                        <a-select-option value="3-above">
                                             3-above
                                         </a-select-option>
 
@@ -885,7 +885,6 @@
                     description: null,
                     commission: null,
                     years_experience: null,
-                    dev_experience: 'Mid-Level'
                 },
 
                 inputVisible: false,

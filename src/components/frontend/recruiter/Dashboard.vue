@@ -241,13 +241,13 @@
                                                     v-model="job.years_experience"
                                             >
 
-                                                <a-select-option value="0-3">
+                                                <a-select-option value="0-1">
                                                     0-1
                                                 </a-select-option>
-                                                <a-select-option value="3-5">
+                                                <a-select-option value="1-3">
                                                     1-3
                                                 </a-select-option>
-                                                <a-select-option value="5-above">
+                                                <a-select-option value="3-above">
                                                     3-above
                                                 </a-select-option>
 
@@ -574,13 +574,13 @@
                                                     v-model="job.years_experience"
                                             >
 
-                                                <a-select-option value="0-3">
+                                                <a-select-option value="0-1">
                                                     0-1
                                                 </a-select-option>
-                                                <a-select-option value="3-5">
+                                                <a-select-option value="1-3">
                                                     1-3
                                                 </a-select-option>
-                                                <a-select-option value="5-above">
+                                                <a-select-option value="3-above">
                                                     3-above
                                                 </a-select-option>
 
@@ -884,7 +884,7 @@
                     description: null,
                     commission: null,
                     years_experience: null,
-                    dev_experience: 'Mid-Level'
+
 
                 },
                 inputVisible: false,
@@ -949,7 +949,9 @@
             },
             commission() {
                 let amount = 0
-                if (this.job.years_experience === '0-1' || this.job.years_experience === '1-3') {
+                if (this.job.years_experience === '0-1') {
+                    amount = 0.12 * (((this.max + this.min) / 2) * 12)
+                } else if (this.job.years_experience === '1-3') {
                     amount = 0.12 * (((this.max + this.min) / 2) * 12)
                 } else {
                     amount = 0.15 * (((this.max + this.min) / 2) * 12)
@@ -1282,6 +1284,7 @@
 
                     })
                     .catch(error => {
+                        console.log(error)
                         this.visible = false
                         this.$router.push({
                             name: 'recruiter'
