@@ -844,6 +844,7 @@
             </a-form>
 
 
+
         </a-modal>
     </a-layout-sider>
 
@@ -937,7 +938,9 @@
             },
             commission() {
                 let amount = 0
-                if (this.job.years_experience === '0-1' || this.job.years_experience === '1-3') {
+                if (this.job.years_experience === '0-1') {
+                    amount = 0.12 * (((this.max + this.min) / 2) * 12)
+                } else if (this.job.years_experience === '1-3') {
                     amount = 0.12 * (((this.max + this.min) / 2) * 12)
                 } else {
                     amount = 0.15 * (((this.max + this.min) / 2) * 12)
@@ -1108,6 +1111,8 @@
                     headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                this.job.commission = this.commission
+                this.job.remuneration = this.renumeration
 
                 Marketplace.createjob(this.job, auth)
                     .then(resp => {
