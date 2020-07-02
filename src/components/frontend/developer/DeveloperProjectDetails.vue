@@ -24,6 +24,7 @@
 
                         <div style="border:1px solid #e8e8e8;padding: 2%;margin-top: 2%;">
 
+
                             <h4><strong>Project name:</strong> {{project.name}}</h4>
                             <p>{{project.description}}</p>
 
@@ -85,6 +86,9 @@
 
 
                                 </ol>
+                            </div>
+                            <div>
+                                <p><strong>Use this Framework to build project :</strong> {{application.framework}}</p>
                             </div>
 
 
