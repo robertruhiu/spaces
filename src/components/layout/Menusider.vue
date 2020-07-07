@@ -22,26 +22,32 @@
                 </router-link>
 
 
-
       </a-menu-item>
         <a-menu-item key="6">
             <router-link to="/prices">
 
-                    <span>Pricing</span>
-                </router-link>
+                <span>Pricing</span>
+            </router-link>
 
-      </a-menu-item>
+        </a-menu-item>
+        <a-menu-item key="12">
+            <a href="https://youtu.be/nmH8uD32IqA" target="_blank">
+
+                Demo
+            </a>
+
+        </a-menu-item>
         <a-menu-item key="7">
             <router-link to="/talent">
 
-                    <span>Talent pool</span>
-                </router-link>
+                <span>Talent pool</span>
+            </router-link>
 
-      </a-menu-item>
+        </a-menu-item>
         <a-menu-item key="8">
             <router-link to="/jobs">
 
-                    <span>Job board </span>
+                <span>Job board </span>
                 </router-link>
 
       </a-menu-item>

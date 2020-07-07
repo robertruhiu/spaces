@@ -59,6 +59,12 @@
                                                           ghost>Get hired
                                                 </a-button>
                                             </router-link>
+                                            <a href="https://youtu.be/nmH8uD32IqA" target="_blank">
+                                                <a-button type="primary"
+                                                          style="margin-left: 1rem;height: 2.6rem;width: 8rem"
+                                                          ghost>Demo
+                                                </a-button>
+                                            </a>
 
 
                                         </div>

@@ -3,8 +3,16 @@
         <hide-at breakpoint="mediumAndBelow">
             <a-affix :offsetBottom="this.bottom">
                 <div>
+                    <span v-if="isHidden === false" style="align-content: end">
+                        <span v-on:click="isHidden = true">
+                            <a-button type="primary" size="small">
+                                        <a-icon type="close"/>
+                                    </a-button>
+                            </span>
+                    </span>
 
-                    <a-row style="">
+
+                    <a-row style="" v-if="isHidden === false">
 
 
                         <a-col span="12" class="customborderimage">
@@ -14,6 +22,7 @@
 
                         </a-col>
                         <a-col span="4" style="background-color: white;padding: 2%;height: 11rem;" class="customborder">
+
 
 
                             <div v-if="$store.state.isUserLoggedIn">
@@ -55,6 +64,7 @@
 
 
                         </a-col>
+
                     </a-row>
                 </div>
 
@@ -63,9 +73,19 @@
         </hide-at>
         <show-at breakpoint="mediumAndBelow">
             <a-affix :offsetBottom="this.bottom">
-                <div style="background-color: #3854c6; padding: 31px;min-height: 10rem;padding-top: 3rem">
+                <span v-if="isHidden === false" style="align-content: end">
+                        <span v-on:click="isHidden = true">
+                            <a-button type="primary" size="small">
+                                        <a-icon type="close"/>
+                                    </a-button>
+                            </span>
+                    </span>
+                <div style="background-color: #3854c6; padding: 31px;min-height: 10rem;padding-top: 3rem"
+                     v-if="isHidden === false">
+
                     <div style="color: white">
-                        <a-row :gutter="16">
+
+                        <a-row :gutter="16" v-if="isHidden === false">
                             <a-col :xs="{span: 8, offset: 0 }" :sm="{span: 8, offset: 0 }"
                                    :md="{span: 8, offset: 0 }"
                                    :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
@@ -141,7 +161,8 @@
                 loading: false,
                 bottom: 10,
                 currentUserProfile: null,
-                remote: false
+                remote: false,
+                isHidden: false,
             };
         },
         components: {
@@ -188,6 +209,9 @@
                 }
 
                 this.loading = false
+            },
+            closebanner() {
+                console.log('am closed')
             }
 
 

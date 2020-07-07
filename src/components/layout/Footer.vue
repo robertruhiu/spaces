@@ -66,6 +66,14 @@
                                 <a class="text-muted" href="https://twitter.com/Codeln_spaces" target="_blank">
                                     <a-icon type="twitter"/>
                                 </a>
+                                <a class="text-muted" href="https://instagram.com/codeln_spaces?igshid=wfibiwjbqe9e"
+                                   target="_blank">
+                                    <a-icon type="instagram"/>
+                                </a>
+                                <a class="text-muted" href="https://www.youtube.com/channel/UCJc8rd10wkhX2c1Htg4aF0Q"
+                                   target="_blank">
+                                    <a-icon type="youtube"/>
+                                </a>
                                 <a class="text-muted" href="https://medium.com/codeln" target="_blank">
                                     <a-icon type="medium"/>
                                 </a>
