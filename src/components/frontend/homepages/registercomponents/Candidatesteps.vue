@@ -213,9 +213,11 @@
 
                                     >
 
-                                        <VuePhoneNumberInput name="number" v-model="currentUserProfile.phone_number"
+
+                                        <VuePhoneNumberInput name="number" v-model="phone"
                                                              default-country-code="GH"
-                                                             @update="onUpdate"/>
+                                                             @update="onUpdates"/>
+
                                         <div v-for="error in step1errors" v-bind:key="error">
                                             <div v-if="error === 'number'" style="color: red">
                                                 * phone number required
@@ -456,6 +458,7 @@
 </template>
 
 <script>
+    import Vue from 'vue'
 
 
     import UsersService from '@/services/UsersService'
@@ -466,11 +469,14 @@
     import axios from 'axios'
     import Experience from "./experience";
     import Portfolio from "./portfolio";
+    import VueTelInput from 'vue-tel-input'
+
+    Vue.use(VueTelInput)
 
 
     export default {
         name: "Candidatesteps",
-        components: {Portfolio, Experience, VuePhoneNumberInput,},
+        components: {Portfolio, Experience, VuePhoneNumberInput, VueTelInput, 'vue-tel-input': VueTelInput},
         data() {
             return {
                 loading: false,
@@ -536,7 +542,8 @@
                 github: '',
                 linkedin: '',
                 formattednumber: null,
-                number: 'null'
+                number: 'null',
+                phone: ''
 
             }
         },
@@ -554,21 +561,12 @@
 
                 } else {
                     this.currentUserProfile = Profile
+                    this.github = this.currentUserProfile.github_repo
+                    this.linkedin = this.currentUserProfile.linkedin_url
 
 
-                    if (this.currentUserProfile.github_repo.includes('https')) {
-                        this.github = this.currentUserProfile.github_repo.slice(8)
-
-                    } else if (this.currentUserProfile.github_repo.includes('http')) {
-                        this.github = this.currentUserProfile.github_repo.slice(7)
-                    }
-
-
-                    if (this.currentUserProfile.linkedin_url.includes('https')) {
-                        this.linkedin = this.currentUserProfile.linkedin_url.slice(8)
-
-                    } else if (this.currentUserProfile.linkedin_url.includes('http')) {
-                        this.linkedin = this.currentUserProfile.linkedin_url.slice(7)
+                    if (this.currentUserProfile.phone_number) {
+                        this.phone = this.currentUserProfile.phone_number
                     }
 
 
@@ -661,7 +659,7 @@
 
         },
         methods: {
-            onUpdate(payload) {
+            onUpdates(payload) {
                 this.results = payload
                 this.currentUserProfile.phone_number = this.results.formattedNumber
 

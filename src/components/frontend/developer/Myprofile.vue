@@ -20,8 +20,9 @@
                                                 :label-col="{ span: 24 }"
                                                 :wrapper-col="{ span:  24}"
                                         >
+
                                             <a-input name="github"
-                                                     v-model="currentUserProfile.github_repo"
+                                                     v-model="github"
 
                                             />
                                             <div v-for="error in step1errors" v-bind:key="error">
@@ -44,7 +45,7 @@
                                                 :wrapper-col="{ span:  24}"
                                         >
                                             <a-input
-                                                    v-model="currentUserProfile.linkedin_url" name="linkedin"
+                                                    v-model="linkedin" name="linkedin"
 
                                             />
                                             <div v-for="error in step1errors" v-bind:key="error">
@@ -119,7 +120,7 @@
 
                                     <a-col :span="24" style="margin-bottom: 1rem">
 
-                                        <VuePhoneNumberInput name="number" v-model="currentUserProfile.phone_number"
+                                        <VuePhoneNumberInput name="number" v-model="phone"
                                                              default-country-code="GH"
                                                              @update="onUpdate"/>
                                         <div v-for="error in step1errors" v-bind:key="error">
@@ -327,6 +328,7 @@
     import 'vue-phone-number-input/dist/vue-phone-number-input.css';
     import Vue from 'vue'
 
+
     Vue.use(cloudinary)
 
 
@@ -356,6 +358,7 @@
                 formattednumber: null,
                 number: 'null',
                 step1errors: [],
+                phone: '',
 
 
             }
@@ -371,20 +374,14 @@
             }
             if (this.$store.state.user.pk) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                if (this.currentUserProfile.github_repo.includes('https')) {
-                    this.github = this.currentUserProfile.github_repo.slice(8)
+                this.github = this.currentUserProfile.github_repo
+                this.linkedin = this.currentUserProfile.linkedin_url
 
-                } else if (this.currentUserProfile.github_repo.includes('http')) {
-                    this.github = this.currentUserProfile.github_repo.slice(7)
+                if (this.currentUserProfile.phone_number) {
+                    this.phone = this.currentUserProfile.phone_number
                 }
 
 
-                if (this.currentUserProfile.linkedin_url.includes('https')) {
-                    this.linkedin = this.currentUserProfile.linkedin_url.slice(8)
-
-                } else if (this.currentUserProfile.linkedin_url.includes('http')) {
-                    this.linkedin = this.currentUserProfile.linkedin_url.slice(7)
-                }
                 if (this.currentUserProfile.skills) {
                     if (this.currentUserProfile.skills.length >= 0) {
                         let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
@@ -422,8 +419,13 @@
                 blacklist[0] = this.$store.state.user.first_name
                 blacklist[1] = this.$store.state.user.last_name
                 blacklist[2] = this.$store.state.user.email
-                blacklist[3] = this.github
-                blacklist[4] = this.linkedin
+                if (this.github.length > 0) {
+                    blacklist[3] = this.github
+                }
+                if (this.linkedin.length > 0) {
+                    blacklist[4] = this.linkedin
+
+                }
 
 
                 let first = false
@@ -502,11 +504,11 @@
                 this.currentUserProfile.user = this.$store.state.user.pk
                 if (this.error_watcher.length === 0) {
                     this.step1errors = []
-                    if (this.currentUserProfile.github_repo === null || this.currentUserProfile.github_repo === '') {
+                    if (this.github === null || this.github === '') {
                         this.step1errors.push('github')
 
                     }
-                    if (this.currentUserProfile.linkedin_url === null || this.currentUserProfile.linkedin_url === '') {
+                    if (this.linkedin === null || this.linkedin === '') {
                         this.step1errors.push('linkedin')
 
                     }
@@ -526,6 +528,8 @@
                     if (this.step1errors.length === 0) {
                         this.loading = true
                         this.currentUserProfile.phone_number = this.results.formattedNumber
+                        this.currentUserProfile.linkedin_url = this.linkedin
+                        this.currentUserProfile.github_repo = this.github
 
                         UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                             .then(resp => {
