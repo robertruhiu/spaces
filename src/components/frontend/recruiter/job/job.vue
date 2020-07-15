@@ -616,7 +616,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div v-else>
-                                                                                ---
+                                                                                awaiting publishing
                                                                             </div>
 
 
@@ -930,7 +930,7 @@
 
 
                                                                             <a-menu-item
-                                                                                    @click="onReject(record.action,record.profile,4)"
+                                                                                    @click="onReject(record.action,record.stage,record.profile,4)"
                                                                             >
                                                                                 <a-icon
                                                                                         type="close"/>
@@ -2001,7 +2001,7 @@
                                                                         </a-menu-item>
 
                                                                         <a-menu-item
-                                                                                @click="handleTestMenuClick(item.action,item.profile,4)">
+                                                                                @click="handleTestMenuClick(item.action,item.stage,item.profile,4)">
                                                                             <a-icon
                                                                                     type="close"/>
                                                                             reject candidate
@@ -2749,6 +2749,7 @@
 
 
                         </template>
+
                         <a-checkbox-group @change="onPickReason">
                             <a-row>
                                 <div v-for="reason in reasonslist" v-bind:key="reason">
@@ -3863,7 +3864,7 @@
 
                 }
                 this.waiting = true
-                this.rejectsubmit = true
+
                 let self = this;
                 if (id === 1) {
                     for (let i = 0; i < this.interviewstage.length; i++) {
@@ -3940,7 +3941,7 @@
                     }
 
                 }
-                this.rejectsubmit = false
+
                 this.rejectionmodal = false
 
 
@@ -4054,6 +4055,7 @@
 
                 }
                 this.waiting = true
+                this.rejectsubmit = true
                 let self = this;
                 if (key) {
                     for (let i = 0; i < this.newapplicant.length; i++) {
@@ -4124,6 +4126,8 @@
                         }
                     }
                 }
+                this.rejectionmodal = false
+                this.rejectsubmit = false
 
 
             }
