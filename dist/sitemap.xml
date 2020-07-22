@@ -1,9 +1,27 @@
-<?xml version='1.0' encoding='UTF-8'?><urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
-    <url><loc>https://www.codeln.com/</loc></url>
-    <url><loc>https://www.codeln.com/bridgesHome</loc></url>
-    <url><loc>https://www.codeln.com/icon/django-2</loc></url>
-    <url><loc>https://www.codeln.com/jobs</loc></url>
-    <url><loc>https://www.codeln.com/prices</loc></url>
-    <url><loc>https://www.codeln.com/privacy</loc></url>
-    <url><loc>https://www.codeln.com/talent</loc></url>
-    <url><loc>https://www.codeln.com/terms</loc></url></urlset>
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+    <url>
+        <loc>https://www.codeln.com/</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/bridgesHome</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/icon/django-2</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/jobs</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/prices</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/privacy</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/talent</loc>
+    </url>
+    <url>
+        <loc>https://www.codeln.com/terms</loc>
+    </url>
+</urlset>
