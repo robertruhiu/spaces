@@ -415,26 +415,32 @@
                 return bio
             },
             flags() {
-                let blacklist = []
-                blacklist[0] = this.$store.state.user.first_name
-                blacklist[1] = this.$store.state.user.last_name
-                blacklist[2] = this.$store.state.user.email
+              let blacklist = []
+              blacklist[0] = this.$store.state.user.first_name
+              blacklist[1] = this.$store.state.user.last_name
+              blacklist[2] = this.$store.state.user.email
+
+              if (this.github) {
                 if (this.github.length > 0) {
-                    blacklist[3] = this.github
+                  blacklist[3] = this.github
                 }
+
+              }
+              if (this.linkedin) {
                 if (this.linkedin.length > 0) {
-                    blacklist[4] = this.linkedin
+                  blacklist[4] = this.linkedin
 
                 }
+              }
 
 
-                let first = false
-                let last = false
-                let email = false
-                let github = false
-                let linkedin = false
-                if (this.currentUserProfile.about) {
-                    if (this.currentUserProfile.about.includes(blacklist[0])) {
+              let first = false
+              let last = false
+              let email = false
+              let github = false
+              let linkedin = false
+              if (this.currentUserProfile.about) {
+                if (this.currentUserProfile.about.includes(blacklist[0])) {
                         first = true
                     }
                     if (this.currentUserProfile.about.includes(blacklist[1])) {
