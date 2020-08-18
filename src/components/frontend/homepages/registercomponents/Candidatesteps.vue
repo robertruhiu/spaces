@@ -556,32 +556,26 @@
             if (this.$store.state.user) {
                 let Profile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
 
-                if (Profile.gender === null) {
-                    this.currentUserProfile = {}
-
-                } else {
-                    this.currentUserProfile = Profile
-                    this.github = this.currentUserProfile.github_repo
-                    this.linkedin = this.currentUserProfile.linkedin_url
+              this.currentUserProfile = Profile
+              this.github = this.currentUserProfile.github_repo
+              this.linkedin = this.currentUserProfile.linkedin_url
 
 
-                    if (this.currentUserProfile.phone_number) {
-                        this.phone = this.currentUserProfile.phone_number
-                    }
+              if (this.currentUserProfile.phone_number) {
+                this.phone = this.currentUserProfile.phone_number
+              }
 
 
-                    this.cv = this.currentUserProfile.file
-                    if (this.currentUserProfile.skills) {
+              this.cv = this.currentUserProfile.file
+              if (this.currentUserProfile.skills) {
 
-                        let temptaglist = this.currentUserProfile.skills;
+                let temptaglist = this.currentUserProfile.skills;
 
-                        let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
+                let array = temptaglist.replace(/'/g, '').replace(/ /g, '').split(',');
 
-                        this.tags = array
-                    }
-                    this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
-
-                }
+                this.tags = array
+              }
+              this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
             }
 
 

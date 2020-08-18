@@ -283,14 +283,7 @@
 
             if (this.$store.state.user) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                // if (Profile.company === null) {
-                //     this.currentUserProfile = {}
-                //
-                // } else {
-                //     this.currentUserProfile = Profile
-                //
-                //
-                // }
+
 
 
             }
