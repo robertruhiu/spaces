@@ -28,5 +28,20 @@ export default {
     updaterandomquiz(randomquizid, questions, auth) {
         return Api().patch(`updaterandquiz/${randomquizid} `, questions, auth)
     },
+    deletequizanswer(candidate,quiz,auth){
+        return Api().get(`deletequizanswer/${candidate}/${quiz}`, auth)
+
+    },
+    deleterquizrandom(candidate,quiz,auth){
+        return Api().get(`deleterquizrandom/${candidate}/${quiz}`, auth)
+    },
+    deletequiztaken(candidate,quiz,auth){
+        return Api().get(`deletequiztaken/${candidate}/${quiz}`, auth)
+
+    }
+
+
+
+
 
 }
