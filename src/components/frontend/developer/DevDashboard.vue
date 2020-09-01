@@ -254,7 +254,7 @@
             placement="right"
             :closable="false"
             :visible="visible"
-            :width="600"
+
             :after-visible-change="afterVisibleChange"
             @close="onClose"
         >
