@@ -1,392 +1,453 @@
 <template>
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh;">
-        <CandidateSider/>
-        <a-layout>
+  <a-layout id="components-layout-demo-side" style="min-height: 100vh;">
+    <CandidateSider/>
+    <a-layout>
 
-            <a-layout-content style="background-color: white">
-                <DevHeader/>
-                <div :style="{ padding: '5px', background: '#fff',marginTop:'0' }">
-                    <a-row style="margin-bottom: 2%">
-                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                               :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
+      <a-layout-content style="background-color: white">
+        <DevHeader/>
+        <div :style="{ padding: '5px', background: '#fff',marginTop:'0' }">
+          <a-row style="margin-bottom: 2%">
+            <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                   :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
 
-                            <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
-                                What would you like to do today?
-                            </h3>
+              <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
+                What would you like to do today?
+              </h3>
 
-                        </a-col>
-                        <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                               :lg="{span: 4, offset: 0 }" :xl="{span:4, offset: 0 }">
-                            <a-switch defaultChecked @change='Available' v-model="currentUserProfile.available"/>
-                            <a-tooltip>
-                                <template slot='title'>
-                                    Your profile will be published on the talent pool
-                                </template>
-                                Make profile public
-                            </a-tooltip>
+            </a-col>
+            <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
+                   :lg="{span: 4, offset: 0 }" :xl="{span:4, offset: 0 }">
+              <a-switch defaultChecked @change='Available' v-model="currentUserProfile.available"/>
+              <a-tooltip>
+                <template slot='title'>
+                  Your profile will be published on the talent pool
+                </template>
+                Make profile public
+              </a-tooltip>
 
-                        </a-col>
+            </a-col>
 
-                    </a-row>
-                    <a-row :gutter="16" style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
+          </a-row>
+          <a-row :gutter="16" style="padding-right: 2rem;padding-left: 1.5rem;padding-bottom: 1.5rem;">
 
 
-                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                               :md="{span: 10, offset: 2 }"
-                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                   :md="{span: 10, offset: 2 }"
+                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                            <a-row class="ant-card actioncards">
-                                <router-link to="/assessment" style="color: black">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/check1.svg">
-                                        </div>
+              <a-row class="ant-card actioncards">
+                <router-link to="/assessment" style="color: black">
+                  <a-col span="24">
+                    <div style="text-align: center">
+                      <img class="poolavatar" src="../../../assets/images/check1.svg">
+                    </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title " style="font-weight: bold">Get Verified</p>
-                                        <p style="margin: 0;">Put your skills to the test</p>
+                  </a-col>
+                  <a-col span="24" style="text-align: center">
+                    <p class="ant-card-head-title " style="font-weight: bold">Get Verified</p>
+                    <p style="margin: 0;">Put your skills to the test</p>
 
 
-                                    </a-col>
-                                </router-link>
+                  </a-col>
+                </router-link>
 
 
-                            </a-row>
+              </a-row>
 
-                        </a-col>
+            </a-col>
 
 
-                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                               :md="{span: 10, offset: 2 }"
-                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                   :md="{span: 10, offset: 2 }"
+                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                            <a-row class="ant-card actioncards">
-                                <router-link to="/manageapplications" style="color: black">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/resume.svg">
-                                        </div>
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">Manage applications</p>
-                                        <p style="margin: 0;">View and manage current jobs</p>
+              <a-row class="ant-card actioncards">
+                <router-link to="/manageapplications" style="color: black">
+                  <a-col span="24">
+                    <div style="text-align: center">
+                      <img class="poolavatar" src="../../../assets/images/resume.svg">
+                    </div>
+                  </a-col>
+                  <a-col span="24" style="text-align: center">
+                    <p class="ant-card-head-title" style="font-weight: bold">Manage applications</p>
+                    <p style="margin: 0;">View and manage current jobs</p>
 
 
-                                    </a-col>
-                                </router-link>
+                  </a-col>
+                </router-link>
 
 
-                            </a-row>
+              </a-row>
 
-                        </a-col>
+            </a-col>
 
 
-                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                               :md="{span: 10, offset: 2 }"
-                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                   :md="{span: 10, offset: 2 }"
+                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                            <a-row class="ant-card actioncards">
-                                <router-link to="/jobs" style="color: black">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/board.svg">
-                                        </div>
+              <a-row class="ant-card actioncards">
+                <router-link to="/jobs" style="color: black">
+                  <a-col span="24">
+                    <div style="text-align: center">
+                      <img class="poolavatar" src="../../../assets/images/board.svg">
+                    </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">Job board</p>
-                                        <p style="margin: 0;">View and apply for jobs</p>
+                  </a-col>
+                  <a-col span="24" style="text-align: center">
+                    <p class="ant-card-head-title" style="font-weight: bold">Job board</p>
+                    <p style="margin: 0;">View and apply for jobs</p>
 
 
-                                    </a-col>
-                                </router-link>
+                  </a-col>
+                </router-link>
 
 
-                            </a-row>
+              </a-row>
 
-                        </a-col>
+            </a-col>
 
 
-                        <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                               :md="{span: 10, offset: 2 }"
-                               :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                   :md="{span: 10, offset: 2 }"
+                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                            <a-row class="ant-card actioncards">
-                                <router-link to="/portfolio" style="color:black">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/curriculum.svg">
-                                        </div>
+              <a-row class="ant-card actioncards">
+                <router-link to="/portfolio" style="color:black">
+                  <a-col span="24">
+                    <div style="text-align: center">
+                      <img class="poolavatar" src="../../../assets/images/curriculum.svg">
+                    </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold">My portfolio</p>
-                                        <p style="margin: 0;">Make your profile more appealing</p>
+                  </a-col>
+                  <a-col span="24" style="text-align: center">
+                    <p class="ant-card-head-title" style="font-weight: bold">My portfolio</p>
+                    <p style="margin: 0;">Make your profile more appealing</p>
 
 
-                                    </a-col>
-                                </router-link>
+                  </a-col>
+                </router-link>
 
 
-                            </a-row>
+              </a-row>
 
-                        </a-col>
-                        <div v-if="loading">
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }"
-                            >
+            </a-col>
+            <div v-if="loading">
+              <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                     :md="{span: 10, offset: 2 }"
+                     :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }"
+              >
 
-                                <a-row class="ant-card actioncards">
+                <a-row class="ant-card actioncards">
 
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/csa.svg">
-                                        </div>
+                  <a-col span="24">
+                    <div style="text-align: center">
+                      <img class="poolavatar" src="../../../assets/images/csa.svg">
+                    </div>
 
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p class="ant-card-head-title" style="font-weight: bold;color: gainsboro">
-                                            Developer skill
-                                            bridging</p>
-                                        <p style="margin: 0;color: gainsboro">Play n learn with coding activities</p>
+                  </a-col>
+                  <a-col span="24" style="text-align: center">
+                    <p class="ant-card-head-title" style="font-weight: bold;color: gainsboro">
+                      Developer skill
+                      bridging</p>
+                    <p style="margin: 0;color: gainsboro">Play n learn with coding activities</p>
 
 
-                                    </a-col>
+                  </a-col>
 
 
-                                </a-row>
+                </a-row>
 
-                            </a-col>
+              </a-col>
 
-                        </div>
-                        <div v-else>
-                            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }"
-                                   v-if="currentUserProfile.csa">
+            </div>
+            <div v-else>
+              <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                     :md="{span: 10, offset: 2 }"
+                     :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }"
+                     v-if="currentUserProfile.csa">
 
-                                <a-row class="ant-card actioncards">
-                                    <router-link to="/bridgesdashboard" style="color: black">
-                                        <a-col span="24">
-                                            <div style="text-align: center">
-                                                <img class="poolavatar" src="../../../assets/images/csa.svg">
-                                            </div>
+                <a-row class="ant-card actioncards">
+                  <router-link to="/bridgesdashboard" style="color: black">
+                    <a-col span="24">
+                      <div style="text-align: center">
+                        <img class="poolavatar" src="../../../assets/images/csa.svg">
+                      </div>
 
-                                        </a-col>
-                                        <a-col span="24" style="text-align: center">
-                                            <p class="ant-card-head-title" style="font-weight: bold">Developer skill
-                                                bridging</p>
-                                            <p style="margin: 0;">Play n learn with coding activities</p>
+                    </a-col>
+                    <a-col span="24" style="text-align: center">
+                      <p class="ant-card-head-title" style="font-weight: bold">Developer skill
+                        bridging</p>
+                      <p style="margin: 0;">Play n learn with coding activities</p>
 
 
-                                        </a-col>
-                                    </router-link>
+                    </a-col>
+                  </router-link>
 
 
-                                </a-row>
+                </a-row>
 
-                            </a-col>
+              </a-col>
 
 
-                            <a @click="JoinCSA" v-else>
-                                <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
-                                       :md="{span: 10, offset: 2 }"
-                                       :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+              <a @click="JoinCSA" v-else>
+                <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                       :md="{span: 10, offset: 2 }"
+                       :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
-                                    <a-row class="ant-card actioncards">
-                                        <a-col span="24">
-                                            <div style="text-align: center">
-                                                <img class="poolavatar" src="../../../assets/images/csa.svg">
-                                            </div>
+                  <a-row class="ant-card actioncards">
+                    <a-col span="24">
+                      <div style="text-align: center">
+                        <img class="poolavatar" src="../../../assets/images/csa.svg">
+                      </div>
 
-                                        </a-col>
-                                        <a-col span="24" style="text-align: center">
-                                            <p class="ant-card-head-title" style="font-weight: bold;color: black">Join
-                                                the
-                                                Developer
-                                                skill bridging </p>
-                                            <p style="margin: 0;color: black">Play n learn with coding activities</p>
+                    </a-col>
+                    <a-col span="24" style="text-align: center">
+                      <p class="ant-card-head-title" style="font-weight: bold;color: black">Join
+                        the
+                        Developer
+                        skill bridging </p>
+                      <p style="margin: 0;color: black">Play n learn with coding activities</p>
 
 
-                                        </a-col>
+                    </a-col>
 
 
-                                    </a-row>
+                  </a-row>
 
-                                </a-col>
-                            </a>
-                        </div>
+                </a-col>
+              </a>
+            </div>
+            <a-col class="boxes" :xs="{span: 24, offset: 1 }" :sm="{span: 10, offset: 2 }"
+                   :md="{span: 10, offset: 2 }"
+                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
 
+              <a-row class="ant-card actioncards">
+                <a @click="showDrawer" style="color: black">
+                  <a-col span="24">
+                    <div style="text-align: center">
+                      <img class="poolavatar" src="../../../assets/images/faq.svg">
+                    </div>
 
-                    </a-row>
+                  </a-col>
+                  <a-col span="24" style="text-align: center">
+                    <p class="ant-card-head-title" style="font-weight: bold">Faq</p>
+                    <p style="margin: 0;">Get your questions answered</p>
 
 
 
-                </div>
+                  </a-col>
+                </a>
 
 
-            </a-layout-content>
-            <Banner/>
+              </a-row>
 
+            </a-col>
 
-        </a-layout>
+
+          </a-row>
+
+
+        </div>
+        <a-drawer
+            title="Faqs"
+            placement="right"
+            :closable="false"
+            :visible="visible"
+            :width="600"
+            :after-visible-change="afterVisibleChange"
+            @close="onClose"
+        >
+          <div>
+            <a-collapse default-active-key="1" :bordered="false">
+              <a-collapse-panel key="1" header="What is remote Codeln">
+                <p>Remote Codeln is feature to enable you to get project contracts and work on them remotely</p>
+              </a-collapse-panel>
+              <a-collapse-panel key="2" header="Does Codeln charge me upon employment" :disabled="false">
+                <p>No. All payment is done by the employee.We charge them a 12% of your annual salary.Note this should not affect your salary .
+                  Rather it is our service fee model</p>
+              </a-collapse-panel>
+              <a-collapse-panel key="3" header="Project build protection">
+                <p>All projects assigned to verify your skills are owned by Codeln.We only provide the client a demo of your work and report on your perfomance</p>
+              </a-collapse-panel>
+              <a-collapse-panel key="4" header="How do i report issues">
+                <p>Issues or questions can be asked via the chat app located on the bottom right</p>
+              </a-collapse-panel>
+            </a-collapse>
+          </div>
+        </a-drawer>
+
+
+      </a-layout-content>
+      <Banner/>
+
+
     </a-layout>
+  </a-layout>
 </template>
 
 <script>
 
-    import UsersService from '@/services/UsersService';
-    import Marketplace from '@/services/Marketplace'
-    import ACol from "ant-design-vue/es/grid/Col";
-    import ARow from "ant-design-vue/es/grid/Row";
-    import CandidateSider from "../../layout/CandidateSider";
-    import DevHeader from "../../layout/DevHeader";
-    import Banner from '@/components/layout/banner.vue'
+import UsersService from '@/services/UsersService';
+import Marketplace from '@/services/Marketplace'
+import ACol from "ant-design-vue/es/grid/Col";
+import ARow from "ant-design-vue/es/grid/Row";
+import CandidateSider from "../../layout/CandidateSider";
+import DevHeader from "../../layout/DevHeader";
+import Banner from '@/components/layout/banner.vue'
 
-    export default {
-        name: "DevDashboard",
-        data() {
-            return {
-                currentUserProfile: {},
-                myjobs: [],
-                loading: false,
-
-
-            }
-        },
-        components: {
-            ARow,
-            ACol,
-            DevHeader,
-            CandidateSider,
-            Banner
-        },
-        async mounted() {
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-            }
-
-            if (this.$store.state.user.pk) {
-                this.loading = true
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                this.loading = false
-                this.myjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
-
-            }
+export default {
+  name: "DevDashboard",
+  data() {
+    return {
+      currentUserProfile: {},
+      myjobs: [],
+      loading: false,
+      visible:false
 
 
-        },
-
-
-        methods: {
-            navigateTo(route) {
-                this.$router.push(route)
-            },
-            Available() {
-
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-
-
-                UsersService.updatepatch(this.$store.state.user.pk, {available: this.currentUserProfile.available}, auth)
-                    .then(resp => {
-
-                        return resp
-
-
-                    })
-                    .catch(error => {
-
-                        return error
-
-
-                    });
-
-
-            },
-            JoinCSA() {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-
-
-                UsersService.updatepatch(this.$store.state.user.pk, {csa: true}, auth)
-                    .then(resp => {
-
-                        this.$router.push({
-                            name: 'bridgesdashboard'
-                        })
-
-
-                    })
-                    .catch(error => {
-
-                        return error
-
-
-                    });
-
-
-            }
-
-        },
     }
+  },
+  components: {
+    ARow,
+    ACol,
+    DevHeader,
+    CandidateSider,
+    Banner
+  },
+  async mounted() {
+    const auth = {
+      headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+    }
+
+    if (this.$store.state.user.pk) {
+      this.loading = true
+      this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+      this.loading = false
+      this.myjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
+
+    }
+
+
+  },
+
+
+  methods: {
+    afterVisibleChange(val) {
+      console.log('visible', val);
+    },
+    showDrawer() {
+      this.visible = true;
+    },
+    onClose() {
+      this.visible = false;
+    },
+    navigateTo(route) {
+      this.$router.push(route)
+    },
+    Available() {
+
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+
+
+      UsersService.updatepatch(this.$store.state.user.pk, {available: this.currentUserProfile.available}, auth)
+          .then(resp => {
+
+            return resp
+
+
+          })
+          .catch(error => {
+
+            return error
+
+
+          });
+
+
+    },
+    JoinCSA() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+
+
+      UsersService.updatepatch(this.$store.state.user.pk, {csa: true}, auth)
+          .then(resp => {
+
+            this.$router.push({
+              name: 'bridgesdashboard'
+            })
+
+
+          })
+          .catch(error => {
+
+            return error
+
+
+          });
+
+
+    }
+
+  },
+}
 </script>
 
 <style scoped>
-    #components-layout-demo-side .logo {
-        height: 32px;
-        background: rgba(255, 255, 255, .2);
-        margin: 16px;
-    }
+#components-layout-demo-side .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, .2);
+  margin: 16px;
+}
 
-    .me {
-        width: 70px;
-        height: 70px;
-        color: blue;
-    }
+.me {
+  width: 70px;
+  height: 70px;
+  color: blue;
+}
 
-    .me:hover {
-        fill: red;
-    }
+.me:hover {
+  fill: red;
+}
 
-    .boxes {
-        margin-bottom: 1rem;
-        padding-left: 0;
-        padding-right: 0;
-
-
-    }
-
-    .poolavatar {
-        width: 30%;
-        margin-top: 0.5rem;
-    }
-
-    .talentcard {
-        margin-bottom: 1rem;
-    }
-
-    .center {
-        margin: auto;
-        width: 60%;
+.boxes {
+  margin-bottom: 1rem;
+  padding-left: 0;
+  padding-right: 0;
 
 
-    }
+}
 
-    .actioncards {
-        width: 16rem;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        padding: 0.89rem;
-        border-radius: 0;
-        height: 100%;
+.poolavatar {
+  width: 30%;
+  margin-top: 0.5rem;
+}
 
-    }
+.talentcard {
+  margin-bottom: 1rem;
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+
+
+}
+
+.actioncards {
+  width: 16rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 0.89rem;
+  border-radius: 0;
+  height: 100%;
+
+}
 
 </style>

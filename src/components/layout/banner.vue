@@ -22,45 +22,18 @@
 
                         </a-col>
                         <a-col span="4" style="background-color: white;padding: 2%;height: 11rem;" class="customborder">
+                          <p>Do you have a project and are looking for developers to build it for you?Get started on remote codeln</p>
+                          <a href="https://remote.codeln.com/" target="_blank">
+                            <a-button type="primary" >
+                              Visit
+                              <a-icon type="right"/>
+                            </a-button>
+                          </a>
 
 
 
-                            <div v-if="$store.state.isUserLoggedIn">
-
-                                <div v-if="currentUserProfile.remote_entry">
-                                    <p v-if="currentUserProfile.remote_entry"
-                                       style="font-size: 1rem;font-weight: bold">
-                                        Verification ongoing for your profile </p>
-
-                                </div>
-                                <div v-else>
-                                    <p style="font-size: 1rem;font-weight: bold">Begin your verification today to
-                                        join
-                                        the
-                                        program </p>
-                                    <div v-if="loading">
-                                        <a-spin/>
-                                    </div>
-
-                                    <a-button type="primary" @click="Joinremote" v-else>Join
-                                        <a-icon type="right"/>
-                                    </a-button>
-
-                                </div>
 
 
-                            </div>
-                            <div v-else>
-                                <p style="font-size: 1rem;font-weight: bold">Begin your verification today to join the
-                                    program </p>
-                                <router-link to="/login">
-                                    <a-button type="primary">Join
-                                        <a-icon type="right"/>
-                                    </a-button>
-                                </router-link>
-
-
-                            </div>
 
 
                         </a-col>
@@ -97,40 +70,13 @@
                                 <div>
 
                                     <p>The fastest way to secure remote gigs and projects</p>
-                                    <div v-if="$store.state.isUserLoggedIn">
-                                        <div v-if="currentUserProfile.remote_entry">
-                                            <p v-if="currentUserProfile.remote_entry">
-                                                Verification ongoing for your profile </p>
 
-                                        </div>
-                                        <div v-else>
+                                  <a href="https://remote.codeln.com/" target="_blank">
+                                    <a-button type="primary" >Visit
+                                      <a-icon type="right"/>
+                                    </a-button>
+                                  </a>
 
-                                            <p>Begin your verification today to join
-                                                the
-                                                program </p>
-                                            <div v-if="loading">
-                                                <a-spin/>
-                                            </div>
-
-                                            <a-button type="primary" @click="Joinremote" v-else>Join
-                                                <a-icon type="right"/>
-                                            </a-button>
-
-
-                                        </div>
-
-                                    </div>
-                                    <div v-else>
-                                        <p>Begin your verification today to join the
-                                            program </p>
-                                        <router-link to="/login">
-                                            <a-button type="primary">Join
-                                                <a-icon type="right"/>
-                                            </a-button>
-                                        </router-link>
-
-
-                                    </div>
                                 </div>
 
                             </a-col>
