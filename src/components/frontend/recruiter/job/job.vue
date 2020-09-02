@@ -1350,6 +1350,7 @@
 
                                 </span>
                                     <div style="padding-left: 4%;padding-right: 4%;padding-bottom: 4%">
+
                                         <a-form :form="form"
                                                 @submit="handleSubmit">
                                             <a-row :gutter="16">
@@ -1401,25 +1402,22 @@
                                                        :md="{span: 12, offset: 0 }"
                                                        :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                     <a-form-item label="Experience">
-                                                        <a-select
+                                                      <a-select
+                                                          placeholder="Select a option"
+                                                          v-model="job.years_experience"
+                                                      >
 
-                                                                placeholder="Select a option and change input text above"
-                                                                v-model="job.dev_experience"
-                                                        >
-                                                            <a-select-option value="Entry">
-                                                                Entry
-                                                            </a-select-option>
-                                                            <a-select-option value="Junior">
-                                                                Junior
-                                                            </a-select-option>
-                                                            <a-select-option value="Mid-Level">
-                                                                Mid-Level
-                                                            </a-select-option>
-                                                            <a-select-option value="Senior">
-                                                                Senior
-                                                            </a-select-option>
+                                                        <a-select-option value="0-1">
+                                                          0-1
+                                                        </a-select-option>
+                                                        <a-select-option value="1-3">
+                                                          1-3
+                                                        </a-select-option>
+                                                        <a-select-option value="3-above">
+                                                          3-above
+                                                        </a-select-option>
 
-                                                        </a-select>
+                                                      </a-select>
                                                     </a-form-item>
 
                                                 </a-col>
@@ -2182,25 +2180,22 @@
                                                                :md="{span: 12, offset: 0 }"
                                                                :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
                                                             <a-form-item label="Experience">
-                                                                <a-select
+                                                              <a-select
+                                                                  placeholder="Select a option"
+                                                                  v-model="job.years_experience"
+                                                              >
 
-                                                                        placeholder="Select a option and change input text above"
-                                                                        v-model="job.dev_experience"
-                                                                >
-                                                                    <a-select-option value="Entry">
-                                                                        Entry
-                                                                    </a-select-option>
-                                                                    <a-select-option value="Junior">
-                                                                        Junior
-                                                                    </a-select-option>
-                                                                    <a-select-option value="Mid-Level">
-                                                                        Mid-Level
-                                                                    </a-select-option>
-                                                                    <a-select-option value="Senior">
-                                                                        Senior
-                                                                    </a-select-option>
+                                                                <a-select-option value="0-1">
+                                                                  0-1
+                                                                </a-select-option>
+                                                                <a-select-option value="1-3">
+                                                                  1-3
+                                                                </a-select-option>
+                                                                <a-select-option value="3-above">
+                                                                  3-above
+                                                                </a-select-option>
 
-                                                                </a-select>
+                                                              </a-select>
                                                             </a-form-item>
 
                                                         </a-col>
