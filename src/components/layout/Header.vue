@@ -21,6 +21,9 @@
                     free
                 </router-link>
 <!--                <router-link to="/clientdashboard" class="ant-menu-item" style="margin-bottom: 0">Client dashboard</router-link>-->
+              <a href="https://remote.codeln.com/" target="_blank" class="ant-menu-item" style="margin-bottom: 0">
+                Remote.Codeln
+              </a>
 
                 <router-link to="/prices" class="ant-menu-item" style="margin-bottom: 0">Pricing</router-link>
                 <router-link to="/bridgesHome" class="ant-menu-item" style="margin-bottom: 0">Skill Bridging program
@@ -49,9 +52,7 @@
                              v-if="!$store.state.isUserLoggedIn">
                     Login
                 </router-link>
-                <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
-                             v-if="!$store.state.isUserLoggedIn">Sign up
-                </router-link>
+
 
 
                 <a>
