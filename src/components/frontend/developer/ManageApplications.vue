@@ -382,19 +382,19 @@
 
                             <a-button v-if="stage==='new' || stage === 'active' || stage === 'pending'" key="submit"
                                       type="primary" :loading="loading" @click="Withdrawapplication(key,type)">
-                                Submit
+                                Yes
                             </a-button>
                             <a-button v-else-if="stage === 'test'" key="submit" type="primary" :loading="loading"
                                       @click="Withdrawapplicationtest(key,type)">
-                                Submit
+                              Yes
                             </a-button>
                             <a-button v-else-if="stage === 'interview'" key="submit" type="primary" :loading="loading"
                                       @click="Withdrawapplicationinterview(key,type)">
-                                Submit
+                              Yes
                             </a-button>
                             <a-button v-else-if="stage === 'offer'" key="submit" type="primary" :loading="loading"
                                       @click="Withdrawapplicationoffer(key,type)">
-                                Submit
+                              Yes
                             </a-button>
                         </template>
                         <p>Are you sure you want to withdraw your application</p>
