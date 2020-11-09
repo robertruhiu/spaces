@@ -895,31 +895,9 @@ export default {
   async mounted() {
 
 
-    this.devs = (await UsersService.sliceddevs()).data
-
-    this.loading = false
-
-    for (let i = 0; i < this.devs.length; i++) {
-      let skill_list = []
-      if (this.devs[i].skills) {
-        skill_list = this.devs[i].skills.split(',').slice(0, 4);
-      }
 
 
-      let id = this.devs[i].user.id
-      let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
-      let skills = skill_list
-      let about = this.devs[i].about
-      let location = this.devs[i].country
-      let availabilty = this.devs[i].availabilty
-      let onedev = new Developer(
-          id, name, skills, about, location, availabilty
-      )
 
-
-      this.listData.push(onedev)
-
-    }
 
 
   },
@@ -927,7 +905,39 @@ export default {
     navigateTo(route) {
       this.$router.push(route)
     },
+    getUsers: function() {
+      UsersService.sliceddevs().then(resp=>{
+        this.devs = resp.data
+        this.loading = false
+
+        for (let i = 0; i < this.devs.length; i++) {
+          let skill_list = []
+          if (this.devs[i].skills) {
+            skill_list = this.devs[i].skills.split(',').slice(0, 4);
+          }
+
+
+          let id = this.devs[i].user.id
+          let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
+          let skills = skill_list
+          let about = this.devs[i].about
+          let location = this.devs[i].country
+          let availabilty = this.devs[i].availabilty
+          let onedev = new Developer(
+              id, name, skills, about, location, availabilty
+          )
+
+
+          this.listData.push(onedev)
+
+        }
+      })
+
+    }
   },
+  created: function() {
+    this.getUsers();
+  }
 
 
 }
