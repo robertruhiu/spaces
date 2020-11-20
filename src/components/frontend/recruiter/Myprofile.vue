@@ -152,8 +152,8 @@
 
 <script>
     import UsersService from '@/services/UsersService'
-    import Pageheader from '@/components/layout/Pageheader'
-    import RecruiterSider from "../../layout/RecruiterSider";
+    import Pageheader from '@/components/frontend/recruiter/layout/Pageheader'
+    import RecruiterSider from "./layout/RecruiterSider";
     import ACol from "ant-design-vue/es/grid/Col";
     import VuePhoneNumberInput from 'vue-phone-number-input';
     import 'vue-phone-number-input/dist/vue-phone-number-input.css';
@@ -185,12 +185,9 @@
         },
         async mounted() {
 
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
             if (this.$store.state.user.pk) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
 
                 if (this.currentUserProfile.skills.length >= 0) {
                     let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');

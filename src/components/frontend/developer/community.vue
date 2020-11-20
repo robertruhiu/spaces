@@ -24,7 +24,7 @@
 
 <script>
 
-    import CandidateSider from "../../layout/CandidateSider";
+    import CandidateSider from "./layout/CandidateSider";
 
     export default {
         name: "community",

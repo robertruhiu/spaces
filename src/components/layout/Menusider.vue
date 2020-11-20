@@ -110,7 +110,7 @@
 </template>
 
 <script>
-    import UsersService from '@/services/UsersService'
+
     export default {
         name: "Menusider",
         data() {
@@ -124,12 +124,9 @@
         },
         async mounted() {
 
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
             if (this.$store.state.user && this.$store.state.user.pk) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
             }
 
 
@@ -137,12 +134,20 @@
         methods: {
 
             logout() {
-                this.$store.dispatch('setToken', null);
-                this.$store.dispatch('setUser', null)
-                this.$store.dispatch('setisLoggedIn', false)
-                this.$store.dispatch('setUsertype', null)
-                this.$store.dispatch('setUser_id', null)
-                this.$store.dispatch('setNext',null)
+              this.$store.dispatch('setToken', null);
+              this.$store.dispatch('setUser', null)
+              this.$store.dispatch('setisLoggedIn', false)
+              this.$store.dispatch('setUsertype', null)
+              this.$store.dispatch('setUser_id', null)
+              this.$store.dispatch('setNext', null)
+              this.$store.dispatch('setCart', null)
+              this.$store.dispatch('setPicked', null)
+              this.$store.dispatch('setLanguage', null)
+              this.$store.dispatch('setCountry', null)
+              this.$store.dispatch('setManaged',false)
+              this.$store.dispatch('setRecommend', null)
+              this.$store.dispatch('setlazyloader', null)
+              this.$store.dispatch('setuser_object', null)
 
                 this.$router.push({
                     name: 'home'

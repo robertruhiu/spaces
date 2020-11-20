@@ -334,9 +334,9 @@
 
 
     import UsersService from '@/services/UsersService'
-    import RecruiterSider from "../../../layout/RecruiterSider";
+    import RecruiterSider from "../layout/RecruiterSider";
     import Marketplace from '@/services/Marketplace'
-    import CandidateHeader from "../../../layout/CandidateHeader";
+    import CandidateHeader from "@/components/frontend/developer/layout/CandidateHeader";
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import Projectsservice from '@/services/Projects'

@@ -12,6 +12,7 @@ export default new Vuex.Store({
         user_id: null,
         token: null,
         user: null,
+        user_object:null,
         isUserLoggedIn: false,
         usertype: null,
         next: null,
@@ -23,6 +24,9 @@ export default new Vuex.Store({
         cart_ids: [],
         managed: false,
         recommended: [],
+        lazyloader:null,
+        lazypage:null,
+
 
     },
     mutations: {
@@ -33,6 +37,15 @@ export default new Vuex.Store({
         },
         setUser(state, user) {
             state.user = user
+        },
+        setuser_object(state, user_object) {
+            state.user_object = user_object
+        },
+        setlazyloader(state, lazyloader) {
+            state.lazyloader = lazyloader
+        },
+        setlazypage(state, lazypage) {
+            state.lazypage = lazypage
         },
         setCandidate(state, candidate) {
             state.candidate = candidate
@@ -123,8 +136,17 @@ export default new Vuex.Store({
         setisLoggedIn({commit}, isAuthenticated) {
             commit('setisLoggedIn', isAuthenticated)
         },
+        setlazyloader({commit}, lazyloader) {
+            commit('setlazyloader', lazyloader)
+        },
+        setlazypage({commit}, lazypage) {
+            commit('setlazypage', lazypage)
+        },
         setUser({commit}, user) {
             commit('setUser', user)
+        },
+        setuser_object({commit}, user_object) {
+            commit('setuser_object', user_object)
         },
 
         setCandidate({commit}, candidate) {

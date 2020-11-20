@@ -31,6 +31,9 @@ export default {
     applicants(job_id, auth) {
         return Api().get(`marketplace/jobapplicants/${job_id}`, auth)
     },
+    applicantsadmin( auth) {
+        return Api().get(`marketplace/allapplicantsadmin`, auth)
+    },
     specificjob(job_id, auth) {
         return Api().get(`marketplace/specificjob/${job_id}`, auth)
     },

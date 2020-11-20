@@ -93,8 +93,8 @@
         }
     }
 
-    import CandidateSider from "../../../layout/CandidateSider";
-    import DevHeader from "../../../layout/DevHeader";
+    import CandidateSider from "../layout/CandidateSider";
+    import DevHeader from "../layout/DevHeader";
     import QuizService from '@/services/QuizService';
 
 

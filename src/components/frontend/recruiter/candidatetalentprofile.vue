@@ -1,1300 +1,571 @@
 <template>
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
-        <pageheader></pageheader>
+  <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
+    <pageheader></pageheader>
 
 
-        <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
-            <a-layout-content style="margin-top: 3%">
+    <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
+      <a-layout-content style="margin-top: 3%">
 
 
-                <a-row style="padding: 1% 1%">
-                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
-                           :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style=" ">
-                        <div class="profile" style="padding-bottom: 2%;margin: 3%">
-                            <a-avatar class="poolavatar" shape="square"
-                                      style="">
-                                {{currentUserProfile.user.first_name[0].toUpperCase() }}
-                                {{currentUserProfile.user.last_name[0].toUpperCase()}}
-                                <span style="font-size: 1rem" v-if="currentUserProfile.verified_skills"><a-icon
-                                        type="check-circle"/></span>
+        <a-row style="padding: 1% 1%">
+          <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                 :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }" style=" ">
+            <div class="profile" style="padding-bottom: 2%;margin: 3%">
+              <a-avatar class="poolavatar" shape="square"
+                        style="">
+                {{ currentUserProfile.user.first_name[0].toUpperCase() }}
+                {{ currentUserProfile.user.last_name[0].toUpperCase() }}
+                <span style="font-size: 1rem" v-if="currentUserProfile.verified_skills"><a-icon
+                    type="check-circle"/></span>
 
-                            </a-avatar>
-                            <div style="padding: 4%">
-                                <p>About</p>
-                                <p>{{currentUserProfile.about}}</p>
+              </a-avatar>
+              <div style="padding: 4%">
+                <p>About</p>
+                <p>{{ currentUserProfile.about }}</p>
 
-                                <br>
+                <br>
 
-                                <p v-if="verified_skills.length>0">
-                                    Verified skills:
-                                    <span style="" v-for="skill in verified_skills"
-                                          v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                </p>
-                                <p v-if="skilltags.length>0">
-                                    Skill tags:
-                                    <span style="" v-for="skill in skilltags"
-                                          v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;margin-bottom: 1rem;">{{skill}}</a-tag>
+                <p v-if="verified_skills.length>0">
+                  Verified skills:
+                  <span style="" v-for="skill in verified_skills"
+                        v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
 
                                             </span>
-
-                                </p>
-                                <p>Experience :
-                                    <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                        {{currentUserProfile.years}} years
-                                    </a-tag>
-                                </p>
-                                <p>
-
-                                    Availability :
-
-                                    <span style="" v-for="tag in availabiltytags"
-                                          v-bind:key="tag.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;margin-bottom: 1rem;">{{tag}}</a-tag>
+                </p>
+                <p v-if="skilltags.length>0">
+                  Skill tags:
+                  <span style="" v-for="skill in skilltags"
+                        v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD"
+                                                       style="color:#007BFF;margin-bottom: 1rem;">{{ skill }}</a-tag>
 
                                             </span>
 
+                </p>
+                <p>Experience :
+                  <a-tag color="#F0F6FD" style="color:#007BFF;">
+                    {{ currentUserProfile.years }} years
+                  </a-tag>
+                </p>
+                <p>
 
-                                </p>
-                                <p>
-                                    Min monthly salary expectation :
-                                    <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                        ${{currentUserProfile.salary}} /month
-                                    </a-tag>
-                                </p>
+                  Availability :
 
-                                <p>Location :
-                                    <a-tag color="#F0F6FD" style="color:#007BFF;">
-                                        {{currentUserProfile.country}}
-                                    </a-tag>
+                  <span style="" v-for="tag in availabiltytags"
+                        v-bind:key="tag.id">
+                                                <a-tag color="#F0F6FD"
+                                                       style="color:#007BFF;margin-bottom: 1rem;">{{ tag }}</a-tag>
 
-                                </p>
-
-                            </div>
-
-
-                        </div>
+                                            </span>
 
 
-                    </a-col>
+                </p>
+                <p>
+                  Min monthly salary expectation :
+                  <a-tag color="#F0F6FD" style="color:#007BFF;">
+                    ${{ currentUserProfile.salary }} /month
+                  </a-tag>
+                </p>
 
-                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
-                           :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }" style=" ">
-                        <div>
-                            <hide-at breakpoint="mediumAndBelow">
-                                <div class="bio">
-                                    <div v-if="candidatedata" style="text-align: center">
-                                        <a-spin/>
-                                    </div>
-                                    <div v-else>
-                                        <a-tabs defaultActiveKey="1">
-                                            <a-tab-pane key="1" v-if="takenquizzes.length >0">
+                <p>Location :
+                  <a-tag color="#F0F6FD" style="color:#007BFF;">
+                    {{ currentUserProfile.country }}
+                  </a-tag>
+
+                </p>
+
+              </div>
+
+
+            </div>
+
+
+          </a-col>
+
+          <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
+                 :lg="{span: 14, offset: 0 }" :xl="{span: 14, offset: 0 }" style=" ">
+            <div>
+              <hide-at breakpoint="mediumAndBelow">
+                <div class="bio">
+                  <div v-if="candidatedata" style="text-align: center">
+                    <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+                    <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+                  </div>
+                  <div v-else>
+                    <a-tabs >
+
+                      <a-tab-pane key="1" v-if="takenquizzes.length >0">
                                     <span slot="tab">
                                         <a-icon type="codepen"/>
                                         Skills
                                     </span>
-                                                <p>Quizzes taken by Candidate</p>
-                                                <div v-if="quizload">
-                                                    <div style="text-align: center;">
-                                                        <a-spin/>
-                                                    </div>
-                                                </div>
-                                                <div v-else>
-                                                    <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
-                                                        {{takenquiz.quiz.subject.name}}:
-                                                        <a-progress :percent="takenquiz.score"/>
-                                                    </div>
-                                                </div>
+                        <p>Quizzes taken by Candidate</p>
+
+                        <div>
+                          <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                            {{ takenquiz.quiz.subject.name }}:
+                            <a-progress :percent="takenquiz.score"/>
+                          </div>
+                        </div>
 
 
-                                            </a-tab-pane>
+                      </a-tab-pane>
 
-                                            <a-tab-pane key="2" forceRender v-if="portfolio.length >0">
+                      <a-tab-pane key="2"  v-if="portfolio.length >0">
                                     <span slot="tab">
                                         <a-icon type="solution"/>
                                         Projects portfolio
                                     </span>
-                                                <div style="padding:0 2%">
-                                                    <div v-if="portfolioload">
-                                                        <div style="text-align: center;">
-                                                            <a-spin/>
-                                                        </div>
-                                                    </div>
-                                                    <div v-else>
-                                                        <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
-                                                             v-for="item in portfolio" v-bind:key="item.id">
-                                                            <p style="font-weight: 700">{{item.title}}</p>
-                                                            <p>
-                                                                Tools used:
-                                                                <a-tag v-for="tag in item.tags" color="blue"
-                                                                       :key="tag">
-                                                                    {{tag}}
-                                                                </a-tag>
+                        <div style="padding:0 2%">
 
-                                                            </p>
-                                                            <p>{{item.description}}
-                                                            </p>
-                                                            <span v-if="item.demo">
+                          <div>
+                            <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                                 v-for="item in portfolio" v-bind:key="item.id">
+                              <p style="font-weight: 700">{{ item.title }}</p>
+                              <p>
+                                Tools used:
+                                <a-tag v-for="tag in item.tags" color="blue"
+                                       :key="tag">
+                                  {{ tag }}
+                                </a-tag>
+
+                              </p>
+                              <p>{{ item.description }}
+                              </p>
+                              <span v-if="item.demo">
                                                                 <a :href=" item.demo" target="_blank">view project</a>
                                                             </span>
 
-                                                        </div>
-                                                    </div>
+                            </div>
+                          </div>
 
 
-                                                </div>
+                        </div>
 
 
-                                            </a-tab-pane>
+                      </a-tab-pane>
 
-                                            <a-tab-pane key="3" forceRender v-if="experiences.length>0">
+                      <a-tab-pane key="3"  v-if="experiences.length>0">
                                     <span slot="tab">
                                         <a-icon type="hourglass"/>
                                         Work experience
                                     </span>
-                                                <div style="padding:2%">
-                                                    <div v-if="experienceload">
-                                                        <div style="text-align: center;">
-                                                            <a-spin/>
-                                                        </div>
-                                                    </div>
-                                                    <div v-else>
-                                                        <a-timeline>
-                                                            <a-timeline-item v-for="item in experiences"
-                                                                             v-bind:key="item.id">
-                                                                <p style="font-weight: 700">{{item.title}}</p>
-                                                                <p><span><a-icon type="bank"/>  {{item.company}} <a-icon
-                                                                        type="environment"/>  {{item.location}} <a-icon
-                                                                        type="hourglass"/>  {{item.duration}}months</span>
-                                                                </p>
-                                                                <p>
-                                                                    Technologies used:
-                                                                    <a-tag v-for="tag in item.tags" color="blue"
-                                                                           :key="tag">
-                                                                        {{tag}}
-                                                                    </a-tag>
+                        <div style="padding:2%">
 
-                                                                </p>
+                          <div >
+                            <a-timeline>
+                              <a-timeline-item v-for="item in experiences"
+                                               v-bind:key="item.id">
+                                <p style="font-weight: 700">{{ item.title }}</p>
+                                <p><span><a-icon type="bank"/>  {{ item.company }} <a-icon
+                                    type="environment"/>  {{ item.location }} <a-icon
+                                    type="hourglass"/>  {{ item.duration }}months</span>
+                                </p>
+                                <p>
+                                  Technologies used:
+                                  <a-tag v-for="tag in item.tags" color="blue"
+                                         :key="tag">
+                                    {{ tag }}
+                                  </a-tag>
+
+                                </p>
 
 
-                                                                <p>{{item.description}}</p>
+                                <p>{{ item.description }}</p>
 
-                                                            </a-timeline-item>
+                              </a-timeline-item>
 
-                                                        </a-timeline>
-                                                    </div>
-
-
-                                                </div>
-
-                                            </a-tab-pane>
-
-                                        </a-tabs>
-                                    </div>
+                            </a-timeline>
+                          </div>
 
 
-                                </div>
-                            </hide-at>
                         </div>
 
+                      </a-tab-pane>
 
-                        <div style="margin-bottom: 1rem;padding:2%" v-if="takenquizzes.length>0">
-                            <show-at breakpoint="mediumAndBelow">
-                                <div class="bio">
-                                    <p style="padding-top: 2%"><strong>Quizzes taken by Candidate</strong></p>
-                                    <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
-                                        {{takenquiz.quiz.subject.name}}:
-                                        <a-progress :percent="takenquiz.score"/>
-                                    </div>
-                                </div>
+                    </a-tabs>
+                  </div>
 
 
-                            </show-at>
-                        </div>
-                        <div style="margin-bottom: 1rem;padding:2%" v-if="portfolio.length>0">
-                            <show-at breakpoint="mediumAndBelow">
-                                <div class="bio">
+                </div>
+              </hide-at>
+            </div>
 
-                                    <p style="padding-top: 2%"><strong>Projects portfolio</strong></p>
-                                    <div>
 
-                                        <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
-                                             v-for="item in portfolio" v-bind:key="item.id">
-                                            <p style="font-weight: 700">{{item.title}}</p>
-                                            <p>
-                                                Tools used:
-                                                <a-tag v-for="tag in item.tags" color="blue"
-                                                       :key="tag">
-                                                    {{tag}}
-                                                </a-tag>
+            <div style="margin-bottom: 1rem;padding:2%" v-if="takenquizzes.length>0">
+              <show-at breakpoint="mediumAndBelow">
+                <div class="bio">
+                  <p style="padding-top: 2%"><strong>Quizzes taken by Candidate</strong></p>
+                  <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                    {{ takenquiz.quiz.subject.name }}:
+                    <a-progress :percent="takenquiz.score"/>
+                  </div>
+                </div>
 
-                                            </p>
-                                            <p>{{item.description}}
-                                            </p>
-                                            <span v-if="item.demo">
+
+              </show-at>
+            </div>
+            <div style="margin-bottom: 1rem;padding:2%" v-if="portfolio.length>0">
+              <show-at breakpoint="mediumAndBelow">
+                <div class="bio">
+
+                  <p style="padding-top: 2%"><strong>Projects portfolio</strong></p>
+                  <div>
+
+                    <div style="border-bottom: 1px solid #e8e8e8;padding-bottom: 2%;padding-top: 2%"
+                         v-for="item in portfolio" v-bind:key="item.id">
+                      <p style="font-weight: 700">{{ item.title }}</p>
+                      <p>
+                        Tools used:
+                        <a-tag v-for="tag in item.tags" color="blue"
+                               :key="tag">
+                          {{ tag }}
+                        </a-tag>
+
+                      </p>
+                      <p>{{ item.description }}
+                      </p>
+                      <span v-if="item.demo">
                                                 <a :href=" item.demo" target="_blank">view project</a>
                                             </span>
 
 
-                                        </div>
+                    </div>
 
 
-                                    </div>
-                                </div>
+                  </div>
+                </div>
 
 
-                            </show-at>
-                        </div>
+              </show-at>
+            </div>
 
-                        <div style="margin-bottom: 1rem;padding:2%" v-if="experiences.length>0">
-                            <show-at breakpoint="mediumAndBelow">
-                                <div class="bio">
+            <div style="margin-bottom: 1rem;padding:2%" v-if="experiences.length>0">
+              <show-at breakpoint="mediumAndBelow">
+                <div class="bio">
 
 
-                                    <p style="padding-top: 2%"><strong>Work experience</strong></p>
-                                    <div>
-                                        <a-timeline>
-                                            <a-timeline-item v-for="item in experiences" v-bind:key="item.id">
-                                                <p style="font-weight: 700">{{item.title}}</p>
-                                                <p><span><a-icon type="bank"/>  {{item.company}} <a-icon
-                                                        type="environment"/>  {{item.location}} <a-icon
-                                                        type="hourglass"/>  {{item.duration}}months</span>
-                                                </p>
-                                                <p>
-                                                    Technologies used:
-                                                    <a-tag v-for="tag in item.tags" color="blue"
-                                                           :key="tag">
-                                                        {{tag}}
-                                                    </a-tag>
-
-                                                </p>
-
-
-                                                <p>{{item.description}}</p>
-
-                                            </a-timeline-item>
-
-                                        </a-timeline>
-
+                  <p style="padding-top: 2%"><strong>Work experience</strong></p>
+                  <div>
+                    <a-timeline>
+                      <a-timeline-item v-for="item in experiences" v-bind:key="item.id">
+                        <p style="font-weight: 700">{{ item.title }}</p>
+                        <p><span><a-icon type="bank"/>  {{ item.company }} <a-icon
+                            type="environment"/>  {{ item.location }} <a-icon
+                            type="hourglass"/>  {{ item.duration }}months</span>
+                        </p>
+                        <p>
+                          Technologies used:
+                          <a-tag v-for="tag in item.tags" color="blue"
+                                 :key="tag">
+                            {{ tag }}
+                          </a-tag>
 
-                                    </div>
-                                </div>
+                        </p>
 
-                            </show-at>
-                        </div>
-
-
-                    </a-col>
-                    <hide-at breakpoint="mediumAndBelow">
-                        <div v-if="this.$store.state.usertype === 'recruiter'">
 
+                        <p>{{ item.description }}</p>
 
-                            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                   :md="{span: 24, offset: 0 }"
-                                   :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+                      </a-timeline-item>
 
-
-                                <!--                                <div v-if="dataload" style="text-align: center">-->
-                                <!--                                    <a-spin/>-->
-                                <!--                                </div>-->
-                                <!--                                <div v-else>-->
-                                <!--                                    <div v-if="this.$store.state.cart.length>0" class="profile"-->
-                                <!--                                         style="overflow-y:scroll; height:17rem;">-->
-                                <!--                                        <div style="padding: 7%">-->
-                                <!--                                            <p>Picked Candidates</p>-->
-                                <!--                                            <p>-->
-                                <!--                                                <a-icon type="check-circle" theme="twoTone"/>-->
-                                <!--                                                indicates verified candidate-->
-                                <!--                                            </p>-->
-                                <!--                                            <div v-for="profile in this.$store.state.cart" v-bind:key="profile"-->
-                                <!--                                                 style="border-bottom: 1px solid #e8e8e8;padding-top: 1rem">-->
-                                <!--                                                <p>{{profile.name}} <span v-if="profile.verified"><a-icon-->
-                                <!--                                                        type="check-circle" theme="twoTone"/></span>-->
+                    </a-timeline>
 
-                                <!--                                                    <span style="float: right">-->
-                                <!--                                                        <a @click="$store.commit('remove',profile.id);">-->
-                                <!--                                                        <a @click="remove(profile.id)"><a-icon-->
-                                <!--                                                                type="close-circle" theme="twoTone"/></a>-->
-                                <!--                                                        </a></span>-->
-                                <!--                                                </p>-->
 
-                                <!--                                            </div>-->
-                                <!--                                            <span v-if="paidbundleexists === false">-->
-                                <!--                                            <p style="padding-top: 1rem">Total:${{amount}}</p>-->
-                                <!--                                        </span>-->
-                                <!--                                            <div style="text-align: center" v-if="waiting">-->
-                                <!--                                                <a-spin/>-->
+                  </div>
+                </div>
 
-                                <!--                                            </div>-->
-                                <!--                                            <p style="font-size: 12px" v-if="conditions === false">-->
+              </show-at>
+            </div>
 
-                                <!--                                                <a-checkbox @change="Check" v-model="conditions"></a-checkbox>-->
-                                <!--                                                <a @click="TermsModal"> I agree to the terms and conditions</a>-->
-                                <!--                                            </p>-->
-                                <!--                                            <p style="font-size: 12px">-->
-                                <!--                                                <router-link to="/prices">Bundle prices</router-link>-->
-                                <!--                                            </p>-->
 
+          </a-col>
 
-                                <!--                                            <div v-if="paidbundleexists">-->
-                                <!--                                                <p style="font-size: 12px">-->
-                                <!--                                                    existing bundle. bundle limit-->
-                                <!--                                                    {{paiddevs.length}}/{{bundlelimit}}-->
-                                <!--                                                </p>-->
-                                <!--                                                <p v-if="exceeded" style="font-size: 12px;color: red">{{exceeded}}</p>-->
-                                <!--                                                <div style="text-align: center">-->
-
-                                <!--                                                    <a-button type="primary" @click="addtopaid">Checkout</a-button>-->
-
-                                <!--                                                </div>-->
-
-
-                                <!--                                            </div>-->
-                                <!--                                            <div v-else>-->
-                                <!--                                                <div style="text-align: center" v-if="conditions">-->
 
-                                <!--                                                    <paystack-->
-                                <!--                                                            :amount="topay"-->
-                                <!--                                                            :email="email"-->
-                                <!--                                                            :paystackkey="paystackkey"-->
-                                <!--                                                            :currency="currency"-->
-                                <!--                                                            :reference="reference"-->
-                                <!--                                                            :callback="callback"-->
-                                <!--                                                            :close="close"-->
-                                <!--                                                            :embed="false"-->
-                                <!--                                                    >-->
-                                <!--                                                        <i class="fas fa-money-bill-alt"></i>-->
-                                <!--                                                        Make Payment-->
-                                <!--                                                    </paystack>-->
-                                <!--                                                </div>-->
-                                <!--                                                <div style="text-align: center" v-else>-->
-                                <!--                                                    <a-button type="primary" disabled>Checkout</a-button>-->
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
+        </a-row>
 
 
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
+      </a-layout-content>
 
-                                <!--                                    <div v-if="this.$store.state.removed === true">-->
-
-                                <!--                                        <div class="profile">-->
-                                <!--                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
-                                <!--                                                <div style="text-align: center">-->
-                                <!--                                                    <img src="../../../assets/images/profile.png"-->
-                                <!--                                                         style="width: 50%;padding-bottom: 2rem">-->
-                                <!--                                                </div>-->
 
-
-                                <!--                                                <p style="text-align: center;">I like this profile</p>-->
-                                <!--                                                <div style="text-align: center">-->
-
-                                <!--                                                    <div v-if="paidprofile === false">-->
-                                <!--                                                        <div v-if="addcart">-->
-                                <!--                                                            <div style="text-align: center;">-->
-                                <!--                                                                <a-spin/>-->
-                                <!--                                                            </div>-->
-                                <!--                                                        </div>-->
-                                <!--                                                        <div v-else>-->
-                                <!--                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,-->
-                                <!--                                                            name:currentUserProfile.user.first_name,verified:verified})">-->
-
-
-                                <!--                                                                <a-button type="primary"-->
-                                <!--                                                                          @click="pickcandidate(currentUserProfile.id)">-->
-                                <!--                                                                    Pick candidate-->
-                                <!--                                                                </a-button>-->
-
-                                <!--                                                            </a>-->
-
-                                <!--                                                        </div>-->
-
-
-                                <!--                                                    </div>-->
-
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                    <div v-if="managecandidate === false">-->
-
-                                <!--                                        <div class="profile">-->
-                                <!--                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
-                                <!--                                                <div style="text-align: center">-->
-                                <!--                                                    <img src="../../../assets/images/profile.png"-->
-                                <!--                                                         style="width: 50%;padding-bottom: 2rem">-->
-                                <!--                                                </div>-->
-
-
-                                <!--                                                <p style="text-align: center;">I like this profile</p>-->
-                                <!--                                                <div style="text-align: center">-->
-
-                                <!--                                                    <div v-if="paidprofile === false">-->
-                                <!--                                                        <div v-if="addcart">-->
-                                <!--                                                            <div style="text-align: center;">-->
-                                <!--                                                                <a-spin/>-->
-                                <!--                                                            </div>-->
-                                <!--                                                        </div>-->
-                                <!--                                                        <div v-else>-->
-                                <!--                                                            <a @click="$store.commit('add',{id: currentUserProfile.id,-->
-                                <!--                                                            name:currentUserProfile.user.first_name,verified:verified})">-->
-
-
-                                <!--                                                                <a-button type="primary"-->
-                                <!--                                                                          @click="pickcandidate(currentUserProfile.id)">-->
-                                <!--                                                                    Pick candidate-->
-                                <!--                                                                </a-button>-->
-
-                                <!--                                                            </a>-->
-
-                                <!--                                                        </div>-->
-
-
-                                <!--                                                    </div>-->
-
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-
-                                <!--                                    <div v-for="dev in pickeddevpaid" :key="dev">-->
-                                <!--                                        <div v-if="dev.id === currentUserProfile.id">-->
-                                <!--                                            <div class="profile">-->
-                                <!--                                                <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
-                                <!--                                                    <div style="text-align: center">-->
-                                <!--                                                        <img src="../../../assets/images/profile.png"-->
-                                <!--                                                             style="width: 50%;padding-bottom: 2rem">-->
-                                <!--                                                    </div>-->
-
-
-                                <!--                                                    <p style="text-align: center;">I like this profile</p>-->
-                                <!--                                                    <div style="text-align: center">-->
-                                <!--                                                        <div>-->
-
-
-                                <!--                                                            <a-button-->
-                                <!--                                                                    style="margin-left: 1rem;"-->
-                                <!--                                                                    type="primary"-->
-                                <!--                                                                    @click="navigateTo({name:'mycandidates'})">-->
-                                <!--                                                                manage candidate-->
-                                <!--                                                            </a-button>-->
-
-
-                                <!--                                                        </div>-->
-
-
-                                <!--                                                    </div>-->
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-
-                                <!--                                    </div>-->
-                                <!--                                    <div v-if="this.$store.state.managed">-->
-                                <!--                                        <div class="profile">-->
-                                <!--                                            <div style="padding: 4%;margin: 3%;padding-bottom: 7%">-->
-                                <!--                                                <div style="text-align: center">-->
-                                <!--                                                    <img src="../../../assets/images/profile.png"-->
-                                <!--                                                         style="width: 50%;padding-bottom: 2rem">-->
-                                <!--                                                </div>-->
-
-
-                                <!--                                                <p style="text-align: center;">I like this profile</p>-->
-                                <!--                                                <div style="text-align: center">-->
-                                <!--                                                    <div>-->
-
-
-                                <!--                                                        <a-button-->
-                                <!--                                                                style="margin-left: 1rem;"-->
-                                <!--                                                                type="primary"-->
-                                <!--                                                                @click="navigateTo({name:'mycandidates'})">-->
-                                <!--                                                            manage candidate-->
-                                <!--                                                        </a-button>-->
-
-
-                                <!--                                                    </div>-->
-
-
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-
-
-                            </a-col>
-                        </div>
-                    </hide-at>
-
-
-                </a-row>
-                <!-----terms and conditions modal----->
-                <a-modal
-                        title="Terms and Conditions"
-                        v-model="terms"
-
-                >
-                    <template slot="footer">
-
-                        <a-button v-if="conditions === false" type="primary" @click="Agree">
-                            I Agree
-                        </a-button>
-                        <a-button v-else type="danger" @click="Agree">
-                            I Disagree
-                        </a-button>
-                    </template>
-                    <tc/>
-                </a-modal>
-
-
-            </a-layout-content>
-
-
-        </a-layout>
     </a-layout>
+  </a-layout>
 </template>
 
 
 <script>
-    //experience structure on table
+//experience structure on table
 
 
-    class Experience {
-        constructor(id, title, description, company, location, duration, tech_used) {
-            this.key = id;
-            this.title = title;
-            this.description = description;
-            this.company = company;
-            this.duration = duration;
-            this.tags = tech_used;
-            this.location = location;
+class Experience {
+  constructor(id, title, description, company, location, duration, tech_used) {
+    this.key = id;
+    this.title = title;
+    this.description = description;
+    this.company = company;
+    this.duration = duration;
+    this.tags = tech_used;
+    this.location = location;
 
-        }
-    }
+  }
+}
 
-    class Portfolio {
-        constructor(id, title, description, demo, tech_used) {
-            this.key = id;
-            this.title = title;
-            this.description = description;
-            this.demo = demo;
-            this.tags = tech_used;
+class Portfolio {
+  constructor(id, title, description, demo, tech_used) {
+    this.key = id;
+    this.title = title;
+    this.description = description;
+    this.demo = demo;
+    this.tags = tech_used;
 
 
-        }
-    }
+  }
+}
 
-    class Cart {
-        constructor(id, name, verified) {
-            this.id = id;
-            this.name = name;
-            this.verified = verified;
 
+import UsersService from '@/services/UsersService'
 
-        }
-    }
 
-    import UsersService from '@/services/UsersService'
+import Pageheader from '@/components/layout/Header.vue'
+import QuizService from '@/services/QuizService';
+import {hideAt, showAt} from 'vue-breakpoints'
 
 
-    import paystack from 'vue-paystack';
-    import Pageheader from '@/components/layout/Header.vue'
-    import ARow from "ant-design-vue/es/grid/Row";
-    import ACol from "ant-design-vue/es/grid/Col";
-    import MarketPlaceService from '@/services/Marketplace'
-    import QuizService from '@/services/QuizService';
-    import Payments from '@/services/Payments';
-    import {hideAt, showAt} from 'vue-breakpoints'
-    import Rave from "@/components/frontend/recruiter/cart/Rave";
-    import tc from '@/components/frontend/homepages/tc'
+export default {
+  name: 'candidatetalentprofile',
+  data() {
 
+    return {
+      currentUserProfile: {},
+      skilltags: [],
+      verified_skills: [],
+      experienceslist: null,
+      experiences: [],
+      portoliolist: null,
+      portfolio: [],
+      takenquizzes: [],
+      candidatedata: false,
+      availabiltytags: [],
+      verified: false,
 
-    export default {
-        name: 'candidatetalentprofile',
-        data() {
-
-            return {
-                currentUserProfile: {},
-                skilltags: [],
-                verified_skills: [],
-                visible: false,
-                inputVisible: false,
-                inputValue: '',
-                experienceslist: null,
-                experiences: [],
-                portoliolist: null,
-                portfolio: [],
-                picked: false,
-                pickeddevs: [],
-                takenquizzes: [],
-                cart: [],
-                cart_items: [],
-                mycart: null,
-                carts: [],
-                devs: [],
-                pickedprofiles: [],
-                //paystck config
-                // paystackkey: "pk_test_b152b53265c577aaee13f4e6ed09bca1768fbbb2", //paystack public key
-                paystackkey: "pk_live_33025d4840017202a65e05c8ba2d2e907aae7cf9", //paystack public key
-                email: "", // Customer email
-                // amount: 363000,// in kobo
-                amount: 0,
-                mount: 100,
-                paystack_amount: 0,
-                currency: "USD",
-                pickeddevpaid: [],
-                paidprofile: false,
-                paiddevs: [],
-                paidbundleexists: false,
-                bundlelimit: 0,
-                addcart: false,
-                portfolioload: true,
-                experienceload: true,
-                quizload: true,
-                managecandidate: false,
-                waiting: false,
-                dataload: false,
-                candidatedata: false,
-                terms: false,
-                conditions: false,
-                availabiltytags: [],
-                exceeded: '',
-                verified: false,
-                statecartlist: [],
-                pickeddevsids: null,
-                paidfor: []
-
-            }
-        },
-        components: {
-            ACol,
-            ARow,
-            Pageheader,
-            showAt, hideAt,
-            Rave,
-            tc,
-            paystack
-        },
-        async mounted() {
-
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-            }
-
-            if (this.$store.state.user.pk) {
-                this.customer_firstname = this.$store.state.user.first_name
-                this.customer_lastname = this.$store.state.user.last_name
-                this.email = this.$store.state.user.email
-                let dev_id = this.$route.params.candidateProfileID
-
-
-                this.currentUserProfile = (await UsersService.currentuser(this.$route.params.candidateProfileID, auth)).data
-
-                if (this.currentUserProfile.skills) {
-                    this.skilltags = this.currentUserProfile.skills.split(',');
-                }
-                if (this.currentUserProfile.availabilty) {
-                    this.availabiltytags = this.currentUserProfile.availabilty.split(',');
-                }
-
-                if (this.currentUserProfile.verified_skills) {
-                    this.verified = true
-                    this.verified_skills = this.currentUserProfile.verified_skills.split(',');
-                }
-                this.candidatedata = true
-                QuizService.taken(this.currentUserProfile.id, auth)
-                    .then(resp => {
-
-                        this.quizload = false
-
-                        this.takenquizzes = resp.data
-
-
-                    })
-                    .catch(error => {
-                        return error
-                    })
-
-
-                UsersService.portfolio(this.currentUserProfile.id, auth)
-                    .then(resp => {
-                        this.portfolioload = false
-
-                        this.portfoliolist = resp.data
-
-
-                        for (let i = 0; i < this.portfoliolist.length; i++) {
-                            let id = this.portfoliolist[i]
-                            let title = this.portfoliolist[i].title
-                            let description = this.portfoliolist[i].description
-                            let demo = null
-                            if (this.portfoliolist[i].demo_link.includes('github.com') === false) {
-                                demo = this.portfoliolist[i].demo_link
-
-                            }
-
-                            let tech_used = []
-                            if (this.portfoliolist[i].tech_tags) {
-                                tech_used = this.portfoliolist[i].tech_tags.split(',');
-
-                            }
-
-                            let one_portfolio = new Portfolio(
-                                id, title, description, demo, tech_used
-                            );
-                            this.portfolio.push(one_portfolio)
-
-
-                        }
-
-
-                    })
-                    .catch(error => {
-                        return error
-                    })
-
-                UsersService.experience(this.currentUserProfile.id, auth)
-                    .then(resp => {
-
-                        this.experienceload = false
-
-                        this.experienceslist = resp.data
-
-                        for (let i = 0; i < this.experienceslist.length; i++) {
-                            let id = this.experienceslist[i]
-                            let title = this.experienceslist[i].title
-                            let description = this.experienceslist[i].description
-                            let company = this.experienceslist[i].company
-                            let location = this.experienceslist[i].location
-                            let duration = this.experienceslist[i].duration
-
-                            let tech_used = []
-                            if (this.portfoliolist[i].tech_tags) {
-                                tech_used = this.experienceslist[i].tech_tags.split(',');
-
-                            }
-
-                            let one_experience = new Experience(
-                                id, title, description, company, location, duration, tech_used
-                            );
-                            this.experiences.push(one_experience)
-                            this.candidatedata = false
-
-
-                        }
-                        this.candidatedata = false
-
-
-                    })
-                    .catch(error => {
-                        return error
-                    })
-                this.candidatedata = false
-
-
-                if (this.$store.state.usertype === 'recruiter') {
-                    this.dataload = true
-                    this.carts = (await Payments.cartlist(this.$store.state.user.pk, auth)).data;
-
-
-                    if (this.carts.length > 0) {
-                        this.mycart = this.carts[0]
-                        this.conditions = this.mycart.conditions
-                        if (this.mycart.devspending) {
-                            this.pickeddevs = this.mycart.devspending.split(',');
-
-                        }
-                        if (this.mycart.devspaid) {
-                            this.paiddevs = this.mycart.devspaid.split(',');
-                        }
-
-                        if (this.mycart.amount) {
-                            this.paidbundleexists = true
-                            if (this.mycart.amount === 100) {
-                                this.bundlelimit = 4
-                            } else if (this.mycart.amount === 200) {
-                                this.bundlelimit = 10
-                            } else if (400 <= this.mycart.amount > 200) {
-                                this.bundlelimit = 20
-                            }
-                        }
-                        if (this.paiddevs.length > this.bundlelimit) {
-                            this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
-
-                        }
-
-
-                    } else {
-
-                        this.mycart = (await Payments.cartcreate({user: this.$store.state.user.pk}, auth)).data;
-                    }
-
-
-                    this.devs = (await UsersService.devs()).data;
-
-
-                    if (this.pickeddevs.length > 0) {
-                        for (let j = 0; j < this.pickeddevs.length; j++) {
-
-                            for (let i = 0; i < this.devs.length; i++) {
-
-
-                                if (this.devs[i].id === Number(this.pickeddevs[j])) {
-
-                                    let id = this.devs[i].id
-                                    let name = this.devs[i].user.first_name
-                                    let verified = false
-                                    if (this.devs[i].verified_skills) {
-                                        verified = true
-
-                                    }
-
-                                    let one_profile = new Cart(
-                                        id, name, verified
-                                    );
-                                    this.pickedprofiles.push(one_profile)
-
-
-                                }
-                                if (this.$route.params.candidateProfileID === Number(this.pickeddevs[j])) {
-                                    console.log(this.pickeddevs[j])
-                                    this.managecandidate = true
-                                }
-
-                            }
-
-                        }
-
-
-                    }
-
-                    this.$store.dispatch('setCandidate', this.currentUserProfile)
-                    this.$store.dispatch('setPicked', this.pickeddevs)
-                    this.$store.dispatch('setCart', this.pickedprofiles)
-
-                    this.dataload = false
-
-
-                    let p = false
-                    this.pickeddevs.forEach(function (dev) {
-
-                        if (Number(dev) === dev_id) {
-                            p = true
-
-                        }
-
-
-                    })
-                    this.picked = p
-                    if (this.pickeddevs.length <= 4) {
-                        this.amount = 100
-
-                    } else if (this.pickeddevs.length <= 10) {
-                        this.amount = 200
-
-                    } else {
-                        this.amount = 500
-
-                    }
-                    MarketPlaceService.mydevelopers(this.$store.state.user.pk, auth)
-                        .then(resp => {
-
-                                if (resp.data.length !== 0) {
-
-
-                                    for (let i = 0; i < resp.data.length; i++) {
-                                        this.pickeddevpaid.push(resp.data[i].developer)
-
-
-                                    }
-
-                                    for (let i = 0; i < this.pickeddevpaid.length; i++) {
-                                        if (this.currentUserProfile.id === this.pickeddevpaid[i].id) {
-                                            this.paidprofile = true
-                                            this.managecandidate = true
-
-                                        }
-                                    }
-
-                                }
-
-
-                            }
-                        )
-                        .catch();
-
-
-                }
-
-
-            }
-
-
-        },
-
-        computed: {
-            reference() {
-                let text = "";
-                let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                for (let i = 0; i < 10; i++)
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-                return text;
-            },
-            topay() {
-                return this.amount * 100
-            }
-
-
-        },
-        methods: {
-            navigateTo(route) {
-                this.$router.push(route)
-            },
-            async pickcandidate() {
-                this.addcart = true
-
-
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-                };
-                let cartdata = (await Payments.cartget(this.mycart.id, auth)).data
-                if (cartdata.devspending.length > 0) {
-                    this.pickeddevs = cartdata.devspending.split(',')
-                } else {
-                    this.pickeddevs = []
-                }
-
-
-                this.pickeddevs.push(this.currentUserProfile.id.toString())
-
-                let developers = this.pickeddevs.join(',')
-
-
-                Payments.cartitemadd(this.mycart.id, {devspending: developers}, auth)
-                    .then(resp => {
-                        this.addcart = false
-                        this.managecandidate = true
-
-
-                    })
-                    .catch(error => {
-                        this.addcart = false
-                        this.picked = false
-                        return error
-
-                    });
-
-
-            },
-
-
-            logout() {
-                this.$store.dispatch('setToken', null);
-                this.$store.dispatch('setUser', null)
-                this.$store.dispatch('setisLoggedIn', false)
-                this.$store.dispatch('setUsertype', null)
-                this.$store.dispatch('setUser_id', null)
-                this.$router.push({
-                    name: 'home'
-                })
-            },
-            async refresh() {
-
-
-                for (let i = 0; i < this.devs.length; i++) {
-                    if (this.pickeddevs.length > 0) {
-                        for (let j = 0; j < this.pickeddevs.length; j++) {
-
-                            if (this.devs[i].id === Number(this.pickeddevs[j])) {
-                                let id = this.devs[i].id
-                                let name = this.devs[i].user.first_name
-                                let verified = false
-                                if (this.devs[i].verified_skills) {
-                                    verified = true
-                                }
-
-                                let one_profile = new Cart(
-                                    id, name, verified
-                                );
-                                this.pickedprofiles.push(one_profile)
-
-                            }
-
-                        }
-
-                    }
-
-
-                }
-                if (this.pickeddevs.length <= 4) {
-                    this.amount = 100
-                } else if (this.pickeddevs.length <= 10) {
-                    this.amount = 200
-                } else {
-                    this.amount = 500
-                }
-                let pickedlist = []
-                for (let i = 0; i < this.$store.state.cart.length; i++) {
-                    pickedlist.push(this.$store.state.cart[i].id)
-                }
-                this.managecandidate = pickedlist.includes(this.currentUserProfile.id);
-                this.waiting = false
-
-            },
-
-            async remove(dev_id) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-                };
-                let cartdata = (await Payments.cartget(this.mycart.id, auth)).data
-                if (cartdata.devspending.length > 0) {
-                    this.pickeddevs = cartdata.devspending.split(',')
-                } else {
-                    this.pickeddevs = []
-                }
-                let ids = []
-                for (let i = 0; i < this.pickeddevs.length; i++) {
-                    ids.push(Number(this.pickeddevs[i]))
-                }
-
-                var index = ids.indexOf(dev_id);
-                if (index > -1) {
-                    ids.splice(index, 1);
-                }
-
-
-                Payments.cartitemadd(this.mycart.id, {devspending: ids.join(',')}, auth)
-                    .then(resp => {
-
-
-                    })
-                    .catch(error => {
-                        return error
-                    });
-
-
-            },
-            async addtopaid() {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-                }
-                let cartdata = (await Payments.cartget(this.mycart.id, auth)).data
-                this.paiddevs = this.paiddevs.concat(cartdata.devspending.split(','));
-                if (this.paiddevs.length > this.bundlelimit) {
-                    this.exceeded = 'you have exceeded your current bundle limit.remove some picked candidates'
-
-                } else {
-                    this.pickeddevs = []
-                    let developerspaid = this.paiddevs.join(',')
-                    let developerspending = this.pickeddevs.join(',')
-
-                    if (this.bundlelimit === this.paiddevs.length) {
-                        Payments.cartitemadd(this.mycart.id, {
-                            devspending: developerspending,
-                            devspaid: developerspaid,
-                            checked_out: true
-
-                        }, auth)
-                            .then(resp => {
-                                this.$store.commit('manage')
-                                return resp
-                            })
-
-                    } else {
-                        Payments.cartitemadd(this.mycart.id, {
-                            devspending: developerspending,
-                            devspaid: developerspaid,
-
-                        }, auth)
-                            .then(resp => {
-                                this.$store.commit('manage')
-                                return resp
-                            })
-                    }
-
-
-                    this.pickeddevs = []
-                    for (let j = 0; j < this.paiddevs.length; j++) {
-                        let picked_developer = {
-                            owner: this.$store.state.user.pk,
-                            developer: this.paiddevs[j],
-                            paid: true,
-                            stage: 'active'
-                        }
-
-                        MarketPlaceService.pickdeveloper(picked_developer, auth)
-                            .then(resp => {
-                                    this.$router.push({
-                                        name: 'mycandidates'
-                                    })
-
-
-                                    return resp
-                                }
-                            )
-                            .catch(error => {
-                                return error
-
-
-                            });
-
-                    }
-
-                }
-
-
-            },
-
-            callback: function (response) {
-                let self = this
-                if (response.status === 'success') {
-                    const auth = {
-                        headers: {Authorization: 'JWT ' + this.$store.state.token}
-                    }
-                    this.paiddevs = this.paiddevs.concat(this.pickeddevs);
-                    this.pickeddevs = []
-                    let developerspaid = this.paiddevs.join(',')
-                    let developerspending = this.pickeddevs.join(',')
-
-                    Payments.cartitemadd(this.mycart.id, {
-                        devspending: developerspending,
-                        devspaid: developerspaid,
-                        amount: this.amount,
-                        transaction_id: response.trxref,
-                        type: 'talent',
-                        conditions: true
-                    }, auth)
-                        .then(resp => {
-                            this.$store.commit('manage')
-                            return resp
-                        })
-
-
-                    this.pickeddevs = []
-                    for (let j = 0; j < this.pickedprofiles.length; j++) {
-                        let picked_developer = {
-                            owner: this.$store.state.user.pk,
-                            developer: this.pickedprofiles[j].id,
-                            paid: true,
-                            stage: 'active'
-                        }
-
-                        MarketPlaceService.pickdeveloper(picked_developer, auth)
-                            .then(resp => {
-
-
-                                    return resp
-                                }
-                            )
-                            .catch(error => {
-                                return error
-
-
-                            });
-
-                    }
-
-
-                    if (this.amount === 100) {
-                        let bundlelimit = 4
-                        if (this.paiddevs === bundlelimit) {
-                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
-                                .then()
-                                .catch();
-                        }
-
-                    } else if (this.amount === 200) {
-                        let bundlelimit = 10
-                        if (this.paiddevs === bundlelimit) {
-                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
-                                .then()
-                                .catch();
-                        }
-                    } else if (500 <= this.amount > 200) {
-                        let bundlelimit = 33
-                        if (this.paiddevs === bundlelimit) {
-                            Payments.cartitemadd(this.mycart.id, {checked_out: true}, auth)
-                                .then()
-                                .catch();
-                        }
-                    }
-
-
-                    this.$router.push({
-                        name: 'mycandidates'
-                    })
-                }
-
-
-            },
-            close: function () {
-                console.log("Payment closed")
-            },
-            TermsModal() {
-                this.terms = true
-            },
-            Agree() {
-                if (this.conditions === true) {
-                    this.conditions = false
-                } else {
-                    this.conditions = true
-                }
-
-                this.terms = false
-            },
-            Check(e) {
-                this.conditions = e.target.checked
-            }
-
-
-        }
-        ,
 
     }
+  },
+  components: {
+    Pageheader,
+    showAt, hideAt,
+
+  },
+  async mounted() {
+    this.candidatedata = true
+    this.fetchDevprofile()
+
+
+
+
+  },
+
+
+  methods: {
+    navigateTo(route) {
+      this.$router.push(route)
+    },
+    fetchDevprofile(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+
+      if (this.$store.state.user.pk) {
+        UsersService.currentuser(this.$route.params.candidateProfileID, auth)
+        .then(resp=>{
+          this.currentUserProfile = resp.data
+        })
+
+        if (this.currentUserProfile.skills) {
+          this.skilltags = this.currentUserProfile.skills.split(',');
+        }
+        if (this.currentUserProfile.availabilty) {
+          this.availabiltytags = this.currentUserProfile.availabilty.split(',');
+        }
+
+        if (this.currentUserProfile.verified_skills) {
+          this.verified = true
+          this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+        }
+
+        this.fetchWorkExperience()
+
+
+
+
+
+
+      }
+    },
+    fetchQuizzes() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      QuizService.taken(this.$route.params.candidateProfileID, auth)
+          .then(resp => {
+
+            this.takenquizzes = resp.data
+
+            if(this.takenquizzes){
+              this.candidatedata = false
+            }else {
+              this.candidatedata = false
+            }
+
+
+          })
+          .catch(error => {
+            return error
+          })
+
+    },
+    fetchWorkExperience() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      UsersService.experience(this.$route.params.candidateProfileID, auth)
+          .then(resp => {
+
+
+
+            this.experienceslist = resp.data
+
+            for (let i = 0; i < this.experienceslist.length; i++) {
+              let id = this.experienceslist[i]
+              let title = this.experienceslist[i].title
+              let description = this.experienceslist[i].description
+              let company = this.experienceslist[i].company
+              let location = this.experienceslist[i].location
+              let duration = this.experienceslist[i].duration
+
+              let tech_used = []
+              if (this.experienceslist[i].tech_tags) {
+                tech_used = this.experienceslist[i].tech_tags.split(',');
+
+              }
+
+              let one_experience = new Experience(
+                  id, title, description, company, location, duration, tech_used
+              );
+              this.experiences.push(one_experience)
+
+
+
+            }
+            this.fetchPortfolio()
+
+
+
+          })
+          .catch(error => {
+            this.fetchPortfolio()
+            return error
+          })
+
+
+    },
+    fetchPortfolio() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      UsersService.portfolio(this.$route.params.candidateProfileID, auth)
+          .then(resp => {
+
+
+            this.portfoliolist = resp.data
+
+
+            for (let i = 0; i < this.portfoliolist.length; i++) {
+              let id = this.portfoliolist[i]
+              let title = this.portfoliolist[i].title
+              let description = this.portfoliolist[i].description
+              let demo = null
+              if (this.portfoliolist[i].demo_link.includes('github.com') === false) {
+                demo = this.portfoliolist[i].demo_link
+
+              }
+
+              let tech_used = []
+              if (this.portfoliolist[i].tech_tags) {
+                tech_used = this.portfoliolist[i].tech_tags.split(',');
+
+              }
+
+              let one_portfolio = new Portfolio(
+                  id, title, description, demo, tech_used
+              );
+              this.portfolio.push(one_portfolio)
+
+
+
+            }
+            this.fetchQuizzes()
+
+
+
+          })
+          .catch(error => {
+            return error
+          })
+
+
+    },
+    logout() {
+      this.$store.dispatch('setToken', null);
+      this.$store.dispatch('setUser', null)
+      this.$store.dispatch('setisLoggedIn', false)
+      this.$store.dispatch('setUsertype', null)
+      this.$store.dispatch('setUser_id', null)
+      this.$router.push({
+        name: 'home'
+      })
+    },
+  }
+  ,
+
+}
 
 </script>
 
 <style scoped>
-    .bio {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background-color: white;
-        min-height: 50vh;
-        margin-right: 1%;
-        margin-left: 1%;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 1%;
-        margin-top: 0.2%;
-        padding-bottom: 5%;
-    }
+.bio {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+  min-height: 50vh;
+  margin-right: 1%;
+  margin-left: 1%;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 1%;
+  margin-top: 0.2%;
+  padding-bottom: 5%;
+}
 
-    .actions {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background-color: white;
-        min-height: 30vh;
+.profile {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+  margin: 1%;
 
-        padding: 4%;
-    }
+}
 
-    .profile {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background-color: white;
-        margin: 1%;
-
-    }
-
-    .poolavatar {
-        width: 100%;
-        height: 8rem;
-        line-height: 124px;
-        font-size: 30px;
-        background-color: #0679FB;
-        border-radius: 0;
+.poolavatar {
+  width: 100%;
+  height: 8rem;
+  line-height: 124px;
+  font-size: 30px;
+  background-color: #0679FB;
+  border-radius: 0;
 
 
-    }
+}
 
 </style>

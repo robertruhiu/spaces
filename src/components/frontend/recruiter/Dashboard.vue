@@ -84,7 +84,7 @@
                         </hide-at>
 
 
-                        <router-link to="managejobs" v-if="jobs.length>0">
+                        <router-link to="managejobs">
                             <a-col class="boxes  " :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
                                    :md="{span: 10, offset: 2 }"
                                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
@@ -108,28 +108,7 @@
                             </a-col>
                         </router-link>
 
-                        <router-link to="mycandidates" v-if="mycandidates.length >0">
 
-                            <a-col class="boxes " :xs="{span: 24, offset: 2 }" :sm="{span: 10, offset: 2 }"
-                                   :md="{span: 10, offset: 2 }"
-                                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0  }">
-                                <a-row class="ant-card actioncards v-step-2">
-                                    <a-col span="24">
-                                        <div style="text-align: center">
-                                            <img class="poolavatar" src="../../../assets/images/statistics.svg">
-                                        </div>
-                                    </a-col>
-                                    <a-col span="24" style="text-align: center">
-                                        <p>Manage Candidates</p>
-                                        <p style="margin: 0;">Manage picked from talent</p>
-
-
-                                    </a-col>
-
-
-                                </a-row>
-                            </a-col>
-                        </router-link>
 
                         <router-link to="talent">
                             <a-col class="boxes " :xs="{span: 24, offset: 2  }" :sm="{span: 10, offset: 2 }"
@@ -170,7 +149,7 @@
                     <a-steps :current="current">
                         <a-step v-for="item in job_steps" :key="item.title" :title="item.title"/>
                     </a-steps>
-                    <a-form :form="form">
+                    <a-form>
                         <div class="steps-content">
                             <div v-if="current === 0">
                                 <a-row :gutter="32">
@@ -355,7 +334,7 @@
                                                            placeholder="Applications deadline"
                                                            format="YYYY-MM-DD HH:mm:ss"
                                                            :disabledDate="disabledDate"
-                                                           :disabledTime="disabledDateTime"
+
                                                            :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
                                             />
                                             <span v-for="error in errorlist" v-bind:key="error">
@@ -503,7 +482,7 @@
                     <a-steps :current="current">
                         <a-step v-for="item in job_steps" :key="item.title" :title="item.title"/>
                     </a-steps>
-                    <a-form :form="form">
+                    <a-form >
                         <div class="steps-content">
                             <div v-if="current === 0">
                                 <a-row :gutter="32">
@@ -694,7 +673,6 @@
                                                            placeholder="Applications deadline"
                                                            format="YYYY-MM-DD HH:mm:ss"
                                                            :disabledDate="disabledDate"
-                                                           :disabledTime="disabledDateTime"
                                                            :showTime="{ defaultValue: moment('00:00:00', 'HH:mm:ss') }"
                                             />
                                             <span v-for="error in errorlist" v-bind:key="error">
@@ -841,16 +819,12 @@
 <script>
 
 
-    import UsersService from '@/services/UsersService'
     import Marketplace from '@/services/Marketplace'
-    import ACol from "ant-design-vue/es/grid/Col";
-    import ARow from "ant-design-vue/es/grid/Row";
-    import Pageheader from '@/components/layout/Pageheader'
-    import RecruiterSider from "../../layout/RecruiterSider";
+    import Pageheader from '@/components/frontend/recruiter/layout/Pageheader'
+    import RecruiterSider from "@/components/frontend/recruiter/layout/RecruiterSider";
     import moment from 'moment';
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'
     import {showAt, hideAt} from 'vue-breakpoints'
-    import mde from 'simplemde'
     import VueSimplemde from 'vue-simplemde'
     import 'simplemde/dist/simplemde.min.css';
     import markdown from 'vue-markdown'
@@ -900,7 +874,7 @@
                     'Android', 'figma', 'photoshop', 'adobexd', 'UI/UX', 'DevOps'],
 
                 selectedTags: [],
-                loading: true,
+                loading: false,
                 errorlist: [],
                 errorlist1: [],
                 current: 0,
@@ -927,12 +901,11 @@
 
         },
         components: {
-            ARow,
-            ACol,
+
             Pageheader,
             RecruiterSider,
             showAt, hideAt,
-            mde, VueSimplemde, markdown
+            VueSimplemde, markdown
 
 
         },
@@ -963,161 +936,12 @@
         async mounted() {
 
 
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
-            let viewport_width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
             if (this.$store.state.user.pk) {
 
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                this.jobs = (await Marketplace.myjobssliced(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
 
-                this.mycandidates = (await Marketplace.mydeveloperssimple(this.$store.state.user.pk, auth)).data
-                if (viewport_width >= 1128) {
-                    if (this.mycandidates.length > 0 && this.jobs.length > 0) {
-                        this.steps.push(
-                            {
-                                target: '.v-step-0',  // We're using document.querySelector() under the hood
-                                content: 'A form enabling you to post a job on the platform'
-                            },
-                            {
-                                target: '.v-step-1',
-                                content: 'Access your list of jobs you previously placed'
-                            },
-                            {
-                                target: '.v-step-2',
-                                content: 'Manage picked candidates from the talent pool'
-                            },
-                            {
-                                target: '[data-v-step="2"]',
-                                content: 'Our talent pool a list of profiles from which you can pick from',
-
-                            }
-                        )
-
-                    } else {
-                        if (this.jobs.length > 0) {
-                            this.steps.push(
-                                {
-                                    target: '.v-step-0',  // We're using document.querySelector() under the hood
-                                    content: 'A form enabling you to post a job on the platform'
-                                },
-                                {
-                                    target: '.v-step-1',
-                                    content: 'Access your list of jobs you previously placed'
-                                },
-                                {
-                                    target: '[data-v-step="2"]',
-                                    content: 'Our talent pool a list of profiles from which you can pick from',
-
-                                })
-                        } else if (this.mycandidates.length > 0) {
-                            this.steps.push(
-                                {
-                                    target: '.v-step-0',  // We're using document.querySelector() under the hood
-                                    content: 'A form enabling you to post a job on the platform'
-                                },
-                                {
-                                    target: '.v-step-2',
-                                    content: 'Manage picked candidates from the talent pool'
-                                },
-                                {
-                                    target: '[data-v-step="2"]',
-                                    content: 'Our talent pool a list of profiles from which you can pick from',
-
-                                })
-
-                        } else {
-                            this.steps.push(
-                                {
-                                    target: '.v-step-0',  // We're using document.querySelector() under the hood
-                                    content: 'A form enabling you to post a job on the platform'
-                                },
-                                {
-                                    target: '[data-v-step="2"]',
-                                    content: 'Our talent pool a list of profiles from which you can pick from',
-
-                                })
-                        }
-
-                    }
-
-                } else {
-                    if (this.mycandidates.length > 0 && this.jobs.length > 0) {
-                        this.steps.push(
-                            {
-                                target: '.v-step-3',  // We're using document.querySelector() under the hood
-                                content: 'A form enabling you to post a job on the platform'
-                            },
-                            {
-                                target: '.v-step-1',
-                                content: 'Access your list of jobs you previously placed'
-                            },
-                            {
-                                target: '.v-step-2',
-                                content: 'Manage picked candidates from the talent pool'
-                            },
-                            {
-                                target: '[data-v-step="2"]',
-                                content: 'Our talent pool a list of profiles from which you can pick from',
-
-                            }
-                        )
-
-                    } else {
-                        if (this.jobs.length > 0) {
-                            this.steps.push(
-                                {
-                                    target: '.v-step-3',  // We're using document.querySelector() under the hood
-                                    content: 'A form enabling you to post a job on the platform'
-                                },
-                                {
-                                    target: '.v-step-1',
-                                    content: 'Access your list of jobs you previously placed'
-                                },
-                                {
-                                    target: '[data-v-step="2"]',
-                                    content: 'Our talent pool a list of profiles from which you can pick from',
-
-                                })
-                        } else if (this.mycandidates.length > 0) {
-                            this.steps.push(
-                                {
-                                    target: '.v-step-3',  // We're using document.querySelector() under the hood
-                                    content: 'A form enabling you to post a job on the platform'
-                                },
-                                {
-                                    target: '.v-step-2',
-                                    content: 'Manage picked candidates from the talent pool'
-                                },
-                                {
-                                    target: '[data-v-step="2"]',
-                                    content: 'Our talent pool a list of profiles from which you can pick from',
-
-                                })
-
-                        } else {
-                            this.steps.push(
-                                {
-                                    target: '.v-step-3',  // We're using document.querySelector() under the hood
-                                    content: 'A form enabling you to post a job on the platform'
-                                },
-                                {
-                                    target: '[data-v-step="2"]',
-                                    content: 'Our talent pool a list of profiles from which you can pick from',
-
-                                })
-                        }
-
-
-                    }
-
-                }
-
-
-                this.loading = false
 
             }
 

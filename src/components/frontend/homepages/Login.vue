@@ -172,21 +172,20 @@
                                     .then(response => {
                                         this.$store.dispatch('setUsertype', response.data.user_type)
                                         this.$store.dispatch('setUser_id', response.data.user)
+                                        this.$store.dispatch('setuser_object', response.data)
                                         if (response.data.csa) {
                                             this.$store.dispatch('setCsa', true)
                                         }
 
                                         if (response.data.stage === 'complete') {
                                             if (this.$store.state.usertype === 'developer') {
-                                                this.$router.push({
-                                                    name: 'developer'
-                                                })
+                                              this.$router.push(this.$route.query.redirect || 'developer')
+
 
 
                                             } else {
-                                                 this.$router.push({
-                                                        name: 'recruiter'
-                                                    })
+                                              this.$router.push(this.$route.query.redirect || 'recruiter')
+
 
 
 

@@ -59,7 +59,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message
+    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message,Pagination,BackTop
 
 
 } from 'ant-design-vue';
@@ -107,6 +107,8 @@ Vue.use(notification)
 Vue.use(Collapse)
 Vue.use(Empty)
 Vue.use(message)
+Vue.use(Pagination)
+Vue.use(BackTop)
 import * as Sentry from "@sentry/browser";
 import { Vue as VueIntegration } from "@sentry/integrations";
 import { Integrations } from "@sentry/tracing";

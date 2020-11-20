@@ -247,8 +247,8 @@
 
 <script>
     import Projects from '@/services/Projects'
-    import CandidateSider from "../../layout/CandidateSider";
-    import DevHeader from "../../layout/DevHeader";
+    import CandidateSider from "./layout/CandidateSider";
+    import DevHeader from "./layout/DevHeader";
     import moment from 'moment';
     import {showAt, hideAt} from 'vue-breakpoints'
     import VeeValidate from 'vee-validate';

@@ -2980,8 +2980,8 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     import Marketplace from '@/services/Marketplace'
-    import Jobheader from '@/components/layout/Jobheader'
-    import RecruiterSider from "../../../layout/RecruiterSider";
+    import Jobheader from '@/components/frontend/recruiter/job/layout/Jobheader'
+    import RecruiterSider from "../layout/RecruiterSider";
     import Projectsservice from '@/services/Projects'
     import '../../../../assets/css/vuecal.css'
     import Rave from "@/components/frontend/recruiter/cart/Rave";
@@ -3159,7 +3159,7 @@
             };
             if (this.$store.state.user.pk) {
                 this.waiting = true
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
                 this.customer_firstname = this.$store.state.user.first_name
                 this.customer_lastname = this.$store.state.user.last_name
                 this.email = this.$store.state.user.email

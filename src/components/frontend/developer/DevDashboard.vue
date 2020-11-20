@@ -254,8 +254,6 @@
             placement="right"
             :closable="false"
             :visible="visible"
-
-            :after-visible-change="afterVisibleChange"
             @close="onClose"
         >
           <div>
@@ -289,11 +287,8 @@
 <script>
 
 import UsersService from '@/services/UsersService';
-import Marketplace from '@/services/Marketplace'
-import ACol from "ant-design-vue/es/grid/Col";
-import ARow from "ant-design-vue/es/grid/Row";
-import CandidateSider from "../../layout/CandidateSider";
-import DevHeader from "../../layout/DevHeader";
+import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
+import DevHeader from "@/components/frontend/developer/layout/DevHeader";
 import Banner from '@/components/layout/banner.vue'
 
 export default {
@@ -301,7 +296,6 @@ export default {
   data() {
     return {
       currentUserProfile: {},
-      myjobs: [],
       loading: false,
       visible:false
 
@@ -309,23 +303,18 @@ export default {
     }
   },
   components: {
-    ARow,
-    ACol,
     DevHeader,
     CandidateSider,
     Banner
   },
   async mounted() {
-    const auth = {
-      headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-    }
 
     if (this.$store.state.user.pk) {
       this.loading = true
-      this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+      this.currentUserProfile = this.$store.state.user_object
       this.loading = false
-      this.myjobs = (await Marketplace.candidatejobs(this.$store.state.user.pk, auth)).data
+
 
     }
 
@@ -334,9 +323,7 @@ export default {
 
 
   methods: {
-    afterVisibleChange(val) {
-      console.log('visible', val);
-    },
+
     showDrawer() {
       this.visible = true;
     },
@@ -378,7 +365,7 @@ export default {
 
 
       UsersService.updatepatch(this.$store.state.user.pk, {csa: true}, auth)
-          .then(resp => {
+          .then(() => {
 
             this.$router.push({
               name: 'bridgesdashboard'

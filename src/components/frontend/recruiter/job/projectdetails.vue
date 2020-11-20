@@ -76,11 +76,11 @@
 <script>
 
 
-    import RecruiterSider from "../../../layout/RecruiterSider";
+    import RecruiterSider from "../layout/RecruiterSider";
     import Projectsservice from '@/services/Projects'
     import Marketplace from '@/services/Marketplace'
     import ACol from "ant-design-vue/es/grid/Col";
-    import Jobheader from '@/components/layout/Jobheader'
+    import Jobheader from '@/components/frontend/recruiter/job/layout/Jobheader'
     import UsersService from '@/services/UsersService'
 
     export default {

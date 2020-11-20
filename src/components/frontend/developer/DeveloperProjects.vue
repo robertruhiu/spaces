@@ -269,10 +269,10 @@
 </template>
 
 <script>
-    import DevHeader from "../../layout/DevHeader";
+    import DevHeader from "./layout/DevHeader";
     import UsersService from '@/services/UsersService'
     import Projects from '@/services/Projects'
-    import CandidateSider from "../../layout/CandidateSider";
+    import CandidateSider from "./layout/CandidateSider";
     import ACol from "ant-design-vue/es/grid/Col";
     import {showAt, hideAt} from 'vue-breakpoints'
 
@@ -305,7 +305,7 @@
             };
             this.loading = true
             if (this.$store.state.user.pk) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
                 this.frameworkchoices = (await Projects.getverified(auth)).data
                 this.projectlist = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
                 this.loading = false

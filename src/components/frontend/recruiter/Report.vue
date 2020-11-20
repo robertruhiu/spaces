@@ -209,8 +209,8 @@
         },
     ]
     import UsersService from '@/services/UsersService'
-    import RecruiterSider from "../../layout/RecruiterSider";
-    import CandidateHeader from "../../layout/ReportHeader";
+    import RecruiterSider from "./layout/RecruiterSider";
+    import CandidateHeader from "@/components/frontend/recruiter/job/layout/ReportHeader";
     import Projectsservice from '@/services/Projects'
     import Marketplace from '@/services/Marketplace'
 

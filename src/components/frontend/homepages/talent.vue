@@ -1,551 +1,279 @@
 <template>
-    <a-layout :style="{background:'#fff'}">
-        <pageheader></pageheader>
-        <a-layout-content :style="{ padding: '0 0px' }">
-            <div>
-                <a-row style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem "
-                       gutter="8">
-                    <hide-at breakpoint="mediumAndBelow">
-                        <a-col span="4">
-                            <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
-                        </a-col>
-                    </hide-at>
-                    <div v-if="currentUserProfile.user.is_staff">
-                        <a-col :xs="{span: 16, offset: 2 }" :sm="{span: 16, offset: 2 }" :md="{span: 16, offset: 2 }"
-                               :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
-
-                            <div style="padding-top: 2rem;" class='center'>
-
-                                <a-auto-complete
-                                        :dataSource="dataSource"
-                                        style="width: 100%;z-index: 0"
-                                        placeholder="Search skills like react,javascript,vue python"
-                                        :filterOption="filterOption"
-                                        v-model="search"
+  <a-layout :style="{background:'#fff'}">
+    <pageheader></pageheader>
+    <a-layout-content :style="{ padding: '0 0px' }">
+      <div>
+        <a-row
+            style="background-color:#004ec7;position: fixed;width: 100%;z-index: 1;margin-top: 4rem;padding-bottom: 1rem "
+            :gutter='gutter'>
+          <hide-at breakpoint="mediumAndBelow">
+            <a-col span="4">
+              <h3 style="color: white;font-size: 1.5rem;padding-left: 4rem;padding-top: 1rem;">Talent</h3>
+            </a-col>
+          </hide-at>
 
 
-                                >
+        </a-row>
+      </div>
 
-                                    <a-input>
-                                        <a-icon slot="suffix" type="search" class="certain-category-icon"/>
-                                    </a-input>
-                                </a-auto-complete>
-
-
-                            </div>
-                        </a-col>
-                        <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
-                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
-
-                            <div style="padding-top: 2rem;" class='center'>
+      <div style="margin-top: 10rem">
+        <a-row>
 
 
-                                <country-select
-                                        name="location"
-
-                                        class="ant-input"
-                                        v-model="country"
-                                />
+          <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
+                 :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
 
 
-                            </div>
-                        </a-col>
-                        <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
-                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+            <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
 
-                            <div style="padding-top: 2rem;" class='center'>
-
-
-                                <a-select
-                                        placeholder="Select a person"
-                                        optionFilterProp="children"
-                                        style="width: 200px"
-                                        v-model="gender"
-                                >
-                                    <a-select-option value="male">
-                                        male
-                                    </a-select-option>
-                                    <a-select-option value="female">
-                                        female
-                                    </a-select-option>
-                                </a-select>
-
-
-                            </div>
-                        </a-col>
-
-                    </div>
-                    <div v-else>
-                        <a-col :xs="{span: 16, offset: 2 }" :sm="{span: 16, offset: 2 }" :md="{span: 16, offset: 2 }"
-                               :lg="{span: 16, offset: 0 }" :xl="{span: 16, offset: 0 }">
-
-                            <div style="padding-top: 2rem;" class='center'>
-
-                                <a-auto-complete
-                                        :dataSource="dataSource"
-                                        style="width: 100%;z-index: 0"
-                                        placeholder="Search skills like react,javascript,vue python"
-                                        :filterOption="filterOption"
-                                        v-model="search"
-
-
-                                >
-
-                                    <a-input>
-                                        <a-icon slot="suffix" type="search" class="certain-category-icon"/>
-                                    </a-input>
-                                </a-auto-complete>
-
-
-                            </div>
-                        </a-col>
-                        <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0 }" :md="{span: 6, offset: 0 }"
-                               :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
-
-                            <div style="padding-top: 2rem;" class='center'>
-
-
-                                <country-select
-                                        name="location"
-
-                                        class="ant-input"
-                                        v-model="country"
-                                />
-
-
-                            </div>
-                        </a-col>
-                    </div>
-
-
-                </a-row>
+              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
             </div>
 
-            <div style="margin-top: 10rem">
-                <a-row>
+            <div v-else>
 
 
-                    <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
-                           :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
+              <a-pagination v-model="current" :pageSize="100" :total="count"  @change="SilentLoader" />
+              <div v-for="dev in all" v-bind:key="dev.id">
+                <a-card :bordered="false" style="margin-bottom: 1rem;width: 100%" class="lightshadow"
+                >
 
-                        <a-alert
-                                message="If you have a posted  job you can attach picked candidates to it.You can do this on manage candidates page"
-                                type="info" closeText="Close Now"/>
+                  <a-row :gutter="16">
+                    <a-col :xs="{span: 6, offset: 0 }" :sm="{span: 6, offset: 0}" :md="{span: 6, offset: 0 }"
+                           :lg="{span: 4, offset: 0 }" :xl="{span: 4, offset: 0 }">
+                      <div style="display: flex;">
+                        <div style="margin: 0 auto">
+
+                          <p style="text-align: center">
+                            <a-avatar :size="64" shape="square" style="color: white; backgroundColor: #0679FB">
+                              {{ dev.user.first_name[0] }} {{ dev.user.last_name[0] }}
+                            </a-avatar>
+                          </p>
+
+                          <p>
+                            <a-button type="primary" size="small"
+                                      @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: dev.user.id}})">
+                              view profile
+                            </a-button>
+                          </p>
 
 
-                        <div v-if="loading" class="loading" style="text-align: center;min-height:40vh ">
-                            <a-spin size="large"/>
                         </div>
-                        <div v-else>
-                            <a-list style="padding-bottom: 2rem"
-                                    itemLayout="vertical"
-                                    size="large"
-                                    :pagination="pagination"
-                                    :dataSource="filteredList"
-                            >
 
-                                <a-list-item
-                                        slot="renderItem" slot-scope="item" key="item.title">
-
-
-                                    <show-at breakpoint="mediumAndBelow">
-                                        <div style="padding: 2%">
-
-
-                                            <a-row class="lightshadow" style="height: 13rem;padding: 3%">
-
-                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                                       :md="{span: 24, offset: 0 }"
-                                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
-                                                       style="padding: 2%">
-                                                    <span>
-                                                                <a-avatar class="poolavatar1"
-                                                                >
-                                                                    {{item.name}}
-                                                                </a-avatar>
-                                                                <span style="margin-left: 1rem">Bio</span>
-                                                            </span>
-                                                    <p>{{item.about | truncate(100)}}<a
-                                                            @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                        more</a>
-                                                    </p>
-
-                                                    <p>
-                                                        Skills :
-                                                        <span style="" v-for="skill in  item.skills.slice(0,3)"
-                                                              v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                                    </p>
-
-                                                    <div style="margin-bottom: 1%;text-align: center">
-                                                        <a-button type="primary" ghost
-                                                                  @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">
-                                                            View Profile
-                                                        </a-button>
-                                                    </div>
-
-
-                                                </a-col>
-
-
-                                            </a-row>
-                                        </div>
-
-
-                                    </show-at>
-
-
-                                    <hide-at breakpoint="mediumAndBelow">
-
-
-                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                            <a-col span="4"
-                                                   style="background-color:#0679FB;height: 100% ">
-                                                <a-avatar class="poolavatar"
-                                                >
-                                                    {{item.name}}
-                                                    <span style="font-size: 1rem" v-if="item.verified"><a-icon
-                                                            type="check-circle"/></span>
-
-                                                </a-avatar>
-                                            </a-col>
-                                            <a-col span="15" style="padding: 2%">
-                                                <p>Bio</p>
-
-                                                <p>{{item.about | truncate(100)}}<a
-                                                        @click="navigateTo({name:'candidatetalentprofile',params:{candidateProfileID: item.id}})">read
-                                                    more</a>
-                                                </p>
-
-                                                <p>
-                                                    Skills :
-                                                    <span style="" v-for="skill in item.skills"
-                                                          v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                                </p>
-
-
-                                            </a-col>
-                                            <a-col span="5">
-                                                <div style="padding-top: 1rem;">
-
-                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                        <a-icon type="environment"/>
-                                                        {{item.location}}
-                                                    </a-tag>
-
-
-                                                    <span style="" v-for="available in item.availabilty"
-                                                          v-bind:key="available.id">
-                                                <a-tag color="#F7E7F5" style="color:#B82EA4;">{{available}}</a-tag>
-
-                                            </span>
-
-
-                                                </div>
-                                                <div style="margin-top: 2rem">
-                                                    <a-button type="primary" ghost>
-                                                        <router-link style="text-decoration: none"
-                                                                     :to="{name:'candidatetalentprofile',params:{candidateProfileID: item.id}}"
-                                                                     target='_blank'>
-                                                            View Profile
-                                                        </router-link>
-                                                    </a-button>
-                                                </div>
-
-
-                                            </a-col>
-
-
-                                        </a-row>
-
-
-                                    </hide-at>
-
-
-                                </a-list-item>
-                            </a-list>
-                        </div>
+                      </div>
 
 
                     </a-col>
+                    <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 18, offset: 0}" :md="{span: 18, offset: 0 }"
+                           :lg="{span: 18, offset: 0 }" :xl="{span: 18, offset: 0 }">
+                      <p>{{ dev.about }}
+
+                      </p>
+                      <div v-if="dev.skills" style="margin-bottom: 1rem">
+                        <p>Skilled in</p>
+
+                        <span v-for="skill in dev.skills.split(',')" v-bind:key="skill.id">
+                            <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
+                          </span>
+                      </div>
+                      <div>
+                        <p>Located:
+                          <a-tag color="#F0F6FD" style='color: #007BFF'>
+                            <a-icon type="environment"/>
+                            {{ dev.country }}
+                          </a-tag>
+                        </p>
+                        <div v-if="dev.availabilty">
 
 
-                </a-row>
+                          <p>
+                            Availabilty :
+
+                            <span style="" v-for="available in dev.availabilty.split(',')"
+                                  v-bind:key="available.id">
+                              <a-tag color="#F7E7F5" style="color:#B82EA4;">{{ available }}</a-tag>
+
+                            </span>
+
+
+                          </p>
+                        </div>
+
+
+                      </div>
+
+                    </a-col>
+                  </a-row>
+
+
+                </a-card>
+
+              </div>
+
+
+              <div id="components-back-top-demo-custom">
+                <a-back-top>
+                  <div class="ant-back-top-inner">
+                    UP
+                  </div>
+                </a-back-top>
+              </div>
 
 
             </div>
 
 
-        </a-layout-content>
+          </a-col>
 
-    </a-layout>
+
+        </a-row>
+
+
+      </div>
+
+
+    </a-layout-content>
+
+  </a-layout>
 
 
 </template>
 <script>
 
-    class Developer {
-        constructor(id, name, skills, about, location, availabilty, verified, gender) {
-            this.id = id;
-            this.name = name;
-            this.skills = skills;
-            this.about = about;
-            this.location = location;
-            this.availabilty = availabilty
-            this.verified = verified
-            this.gender = gender
-        }
+
+//experience structure on table
+
+
+import Pageheader from '@/components/layout/Header.vue'
+import UsersService from '@/services/UsersService';
+import {hideAt} from 'vue-breakpoints'
+import axios from 'axios'
+import Vue from 'vue'
+
+var VueTruncate = require('vue-truncate-filter')
+Vue.use(VueTruncate)
+
+
+export default {
+  name: 'talent',
+  data() {
+    return {
+      visible: false,
+      devs: null,
+      tags: [],
+      loading: false,
+      listData: [],
+      pagination: {
+        pageSize: 100,
+      },
+      gutter: 8,
+      current: 1,
+      count: 0,
+      all: null
+
+
     }
+  },
+  components: {
 
-    //experience structure on table
+    Pageheader,
+    hideAt,
 
+  },
 
-    import "../../../assets/css/styles.css";
-    import Pageheader from '@/components/layout/Header.vue'
-    import ARow from "ant-design-vue/es/grid/Row";
-    import ACol from "ant-design-vue/es/grid/Col";
-    import UsersService from '@/services/UsersService';
-    import {showAt, hideAt} from 'vue-breakpoints'
-
-    import Vue from 'vue'
-
-    var VueTruncate = require('vue-truncate-filter')
-    Vue.use(VueTruncate)
+  async mounted() {
+    this.loading = true
 
 
-    const plainOptions = ['Fulltime', 'Contract', 'Remote', 'Parttime']
-    const defaultCheckedList = ['Fulltime', 'Contract', 'Remote', 'Parttime']
-    const plainOptions1 = ['1 year', '2 years', '3 years', '4 years above']
-    const defaultCheckedList1 = ['1 year', '2 years', '3 years', '4 years above']
-    export default {
-        name: 'talent',
-        data() {
-            return {
-                visible: false,
-                devs: null,
-                alldevs: null,
-                search: '',
-                country: '',
-                profile: {},
-                checkedList: defaultCheckedList,
-                indeterminate: true,
-                checkAll: false,
-                plainOptions,
-                checkedList1: defaultCheckedList1,
-                indeterminate1: true,
-                checkAll1: false,
-                mydevs: null,
-                tags: [],
-                loading: true,
-                dataSource: ['Django', 'Javascript', 'Python', 'Php', 'Postgres', 'Sql', 'Html', 'Css', 'bootstrap', 'React', 'Java',
-                    'React Native', 'Redux', 'Flask ', 'Go', 'Expressjs', 'Vuejs',
-                    'Angular', 'Ios', 'flutter', 'Ionic', 'Rails', 'Meteor', 'AI', 'Cybersecurity',
-                    'Blockchain', 'Arduino', 'Spring', 'Bitcoin', 'Kotlin', 'Scala', 'Nativescript ',
-                    'Android', 'Website', 'Mobile', 'Laravel'],
+    this.fetchdevs()
 
 
-                plainOptions1,
+  },
 
-                pStyle: {
-                    fontSize: '16px',
-                    color: 'rgba(0,0,0,0.85)',
-                    lineHeight: '24px',
-                    display: 'block',
-                    marginBottom: '16px',
-                },
-                pStyle2: {
-                    marginBottom: '24px'
-                },
-                listData: [],
-                pagination: {
-                    onChange: (page) => {
-                        return page
-                    },
-                    pageSize: 20,
-                },
-                actions: [
-                    {type: 'star-o', text: '156'},
-                    {type: 'like-o', text: '156'},
-                    {type: 'message', text: '2'},
-                ],
-                talentorder: [],
-                ordered_list: [],
-                currentUserProfile: {},
-                gender: '',
 
-            }
-        },
-        components: {
-            ACol,
-            ARow,
-            Pageheader,
-            showAt, hideAt,
+  methods: {
+    fetchdevs() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-        },
+      }
+      UsersService.devs(auth)
+          .then(resp => {
 
-        async mounted() {
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
+            this.count = resp.data.count
+            this.all = resp.data.results
 
-            }
-            this.devs = (await UsersService.devs(auth)).data;
-            this.talentorder = (await UsersService.talentorder()).data
-            this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
             this.loading = false
-            for (let i = 0; i < this.devs.length; i++) {
-
-                let skill_list = []
-                if (this.devs[i].skills) {
-                    skill_list = this.devs[i].skills.split(',').slice(0, 4)
-                }
 
 
-                let id = this.devs[i].user.id
-                let name = this.devs[i].user.first_name[0].toUpperCase() + this.devs[i].user.last_name[0].toUpperCase()
-                let skills = skill_list
-                let about = this.devs[i].about
-                let location = this.devs[i].country
-                let availabilty = []
-                if (this.devs[i].availabilty) {
-                    availabilty = this.devs[i].availabilty.split(',').slice(0, 2)
-                }
-                let verified = false
-                if (this.devs[i].verified_skills) {
-                    verified = true
-                }
-                let gender = null
-                if (this.devs[i].gender) {
-                    gender = this.devs[i].gender
-
-                }
-                let onedev = new Developer(
-                    id, name, skills, about, location, availabilty, verified, gender
-                )
+          })
 
 
-                this.listData.push(onedev)
+    },
+    navigateTo(route) {
+      this.$router.push(route)
+    },
 
+
+    SilentLoader(current) {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      this.loading = true
+      this.current = current
+      let url = process.env.VUE_APP_PAGINATOR + this.current
+      axios
+          .get(url, auth)
+          .then(response => {
+            if(response.data.results){
+              this.all = response.data.results
+              this.loading= false
+            }else {
+              this.current = 1
+              this.loading= false
             }
 
 
-        },
+
+          })
 
 
-        methods: {
-            navigateTo(route) {
-                this.$router.push(route)
-            },
-            filterOption(input, option) {
-                return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            },
-            onClose() {
-                this.visible = false
-            },
-            onChange(checkedList) {
-                this.indeterminate = !!checkedList.length && (checkedList.length < plainOptions.length)
-                this.checkAll = checkedList.length === plainOptions.length
-            },
-            onCheckAllChange(e) {
-                Object.assign(this, {
-                    checkedList: e.target.checked ? plainOptions : [],
-                    indeterminate: false,
-                    checkAll: e.target.checked,
-                })
-            },
-            onChange1(checkedList1) {
-                this.indeterminate1 = !!checkedList1.length && (checkedList1.length < plainOptions1.length)
-                this.checkAll1 = checkedList1.length === plainOptions1.length
-            },
-            onCheckAllChange1(e) {
-                Object.assign(this, {
-                    checkedList1: e.target.checked ? plainOptions1 : [],
-                    indeterminate1: false,
-                    checkAll1: e.target.checked,
-                })
-            },
-
-        },
-        computed: {
-            orderedlist() {
-                let list = []
-                for (let i = 0; i < this.listData.length; i++) {
-                    let index = this.talentorder.indexOf(this.listData[i].id);
-                    list[index] = this.listData[i]
-                }
-                return list
-            },
-
-            filteredList() {
-                return this.orderedlist.filter(dev => {
-
-
-                    if (this.country && this.search && this.gender) {
-
-                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
-                            && dev.location.toLowerCase().includes(this.country.toLowerCase())
-                            && dev.gender.toLowerCase().includes(this.gender.toLowerCase())
-
-                    } else if (this.country && this.search) {
-                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
-                            && dev.location.toLowerCase().includes(this.country.toLowerCase())
-
-
-                    } else if (this.search && this.gender) {
-                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
-                            && dev.gender.toLowerCase().includes(this.gender.toLowerCase())
-
-
-                    } else if (this.country && this.gender) {
-                        return dev.location.toLowerCase().includes(this.country.toLowerCase())
-                            && dev.gender.toLowerCase().includes(this.gender.toLowerCase())
-
-
-                    } else if (this.country) {
-                        return dev.location.toLowerCase().includes(this.country.toLowerCase())
-
-
-                    } else if (this.gender) {
-                        return dev.gender.toLowerCase().includes(this.gender.toLowerCase())
-
-
-                    } else {
-                        return dev.skills.toString().toLowerCase().includes(this.search.toLowerCase())
-                    }
-
-
-                })
-            }
-
-        }
     }
+
+
+  },
+
+}
 
 
 </script>
 
 <style scoped>
-    .poolavatar {
-        width: 80px;
-        height: 80px;
-        line-height: 80px;
-        font-size: 30px;
-        background-color: #0679FB;
-        margin: 25% 25%;
-    }
 
-    .lightshadow {
-        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
-        border: 1px solid rgba(0, 0, 0, .125);
-    }
 
-    .poolavatar1 {
-        background-color: #0679FB;
+.lightshadow {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px;
+  margin-bottom: 1rem;
 
-    }
 
+}
+
+
+#components-back-top-demo-custom .ant-back-top {
+  bottom: 100px;
+}
+
+#components-back-top-demo-custom .ant-back-top-inner {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  background-color: #1088e9;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+}
 
 </style>

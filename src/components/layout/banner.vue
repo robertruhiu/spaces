@@ -96,7 +96,7 @@
 
 <script>
     import {hideAt, showAt} from 'vue-breakpoints'
-    import UsersService from '@/services/UsersService'
+
 
 
     export default {
@@ -106,7 +106,6 @@
             return {
                 loading: false,
                 bottom: 10,
-                currentUserProfile: null,
                 remote: false,
                 isHidden: false,
             };
@@ -115,47 +114,9 @@
             hideAt, showAt
         },
         async mounted() {
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
-            if (this.$store.state.isUserLoggedIn) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-            }
         },
         methods: {
-
-            Joinremote() {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                this.loading = true
-                if (this.currentUserProfile.user_type === 'developer') {
-                    this.currentUserProfile.remote_entry = true
-                    UsersService.updatepatch(this.$store.state.user.pk, {remote_entry: true}, auth)
-                        .then(resp => {
-                            this.currentUserProfile = resp.data
-                            this.$notification.open({
-                                message: 'Welcome to Remote Codeln',
-                                description:
-                                    'Thank you for joining our new program.Codeln representatives will go through your profile and may contact you to help ascertain your skills.',
-
-                            });
-                        })
-
-                } else {
-                    this.$notification.open({
-                        message: 'Remote Codeln',
-                        description:
-                            'Only available for developers.',
-
-                    });
-
-                }
-
-                this.loading = false
-            },
             closebanner() {
                 console.log('am closed')
             }
@@ -166,11 +127,6 @@
 </script>
 
 <style scoped>
-    .imagecenter {
-
-
-    }
-
     a {
         color: #ffffff;
     }
@@ -178,16 +134,6 @@
     .icons-list >>> .anticon {
         margin-right: 6px;
         font-size: 24px;
-    }
-
-    .actioncards {
-        background-color: white;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-        border-radius: 0;
-        height: 100%;
-
-
     }
 
     .customborder {

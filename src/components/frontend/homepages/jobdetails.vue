@@ -1,23 +1,25 @@
 <template>
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
-        <pageheader></pageheader>
+  <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
+    <pageheader></pageheader>
 
 
-        <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
+    <a-layout :style="{backgroundColor:'#F8FAFB',marginTop: '1rem' }">
 
 
-            <a-layout-content style="margin-top: 5rem">
+      <a-layout-content style="margin-top: 5rem">
 
-                <a-row>
-                    <a-col :xs="{span: 20, offset: 2 }" :sm="{span: 20, offset: 2 }" :md="{span: 20, offset: 2 }"
-                           :lg="{span: 14, offset: 6 }" :xl="{span: 14, offset: 6 }" class="jobdetails">
-                        <div v-if="dataload" style="text-align: center">
-                            <a-spin/>
-                        </div>
-                        <div v-else>
-                            <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
+        <a-row>
+          <a-col :xs="{span: 20, offset: 2 }" :sm="{span: 20, offset: 2 }" :md="{span: 20, offset: 2 }"
+                 :lg="{span: 14, offset: 6 }" :xl="{span: 14, offset: 6 }" class="jobdetails">
+
+
+            <div v-if="dataload" style="text-align: center">
+              <a-spin/>
+            </div>
+            <div v-else>
+              <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
-                                <span style="font-weight: 700;font-size: large">{{job.title}}</span>
+                                <span style="font-weight: 700;font-size: large">{{ job.title }}</span>
                                 <span v-if="this.$store.state.isUserLoggedIn">
 
                                     <span style="float: right"
@@ -48,7 +50,13 @@
                                     >Manage Job application</a-button>
 
                                 </span>
+                                  <span  v-if="currentUserProfile.user_type ==='developer' && currentUserProfile.stage !== 'complete'  ">
+                                    <a-button type="primary"
+                                              @click="navigateTo({name:'register'})">Registration incomplete click to continue</a-button>
+
+                                  </span>
                                 </span>
+
 
                                 <span v-else style="float: right">
                                         <a-button type="primary"
@@ -59,249 +67,290 @@
 
                             </span>
 
-                            </div>
-                            <div>
+              </div>
+              <div>
                                 <span v-if="this.$store.state.isUserLoggedIn">
                                     <a-alert v-if="currentUserProfile.user_type ==='developer' && applied "
                                              message="Job application successful" type="success" closeText="Close Now"/>
                                 </span>
-                                <span> Job tag :
+                <span> Job tag :
                                     <a-tag color="#F0F6FD" style='color: #007BFF'>
                                         <a-icon type="tags"/>
-                                        {{job.tag}}
+                                        {{ job.tag }}
                                     </a-tag>
                                 </span>
 
-                                <p>
+                <p>
 
-                                    Country : {{country}} <span
-                                        v-if="job.city">| City : {{job.city}}</span>
+                  Country : {{ country }} <span
+                    v-if="job.city">| City : {{ job.city }}</span>
 
 
-                                </p>
-                                <p>Contract type: {{job.engagement_type}}</p>
-                                <p>Monthly renumeration * : {{job.remuneration}}</p>
+                </p>
+                <p>Contract type: {{ job.engagement_type }}</p>
+                <p>Monthly renumeration * : {{ job.remuneration }}</p>
 
-                                <p>
-                                    Skills looking for :
-                                    <span style="" v-for="skill in skills" v-bind:key="skill">
-                                    <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+                <p>
+                  Skills looking for :
+                  <span style="" v-for="skill in skills" v-bind:key="skill">
+                                    <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
                                 </span>
-                                </p>
-                                <p>Application Deadline : {{deadline}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: 700">Job Details</p>
-                                <markdown>{{job.description}}</markdown>
+                </p>
+                <p>Application Deadline : {{ deadline }}</p>
+              </div>
+              <div>
+                <p style="font-weight: 700">Job Details</p>
+                <markdown>{{ job.description }}</markdown>
 
-                            </div>
-                        </div>
+              </div>
+            </div>
 
-                    </a-col>
+          </a-col>
 
-                </a-row>
-                <a-modal
-                        title="Please fill your Profile"
-                        v-model="fillprofile"
-                        style="top: 20px;"
+        </a-row>
+        <a-modal
+            title="Please fill your Profile"
+            v-model="fillprofile"
+            style="top: 20px;"
 
-                >
-                    <template slot="footer">
+        >
+          <template slot="footer">
 
-                        <a-button key="submit" type="primary" @click="$router.push('/portfolio')">
-                            Edit Profile
-                        </a-button>
-                    </template>
-                    <div>
-                        <p>Hello your profile is not complete.To enable us to easily analyse your fitness for the
-                            job,satisy the following below</p>
-                        <p v-for="item in error" v-bind:key="item">
-                            <span style="color: #ff0000">* {{item}}</span>
-                        </p>
+            <a-button key="submit" type="primary" @click="$router.push('/portfolio')">
+              Edit Profile
+            </a-button>
+          </template>
+          <div>
+            <p>Hello your profile is not complete.To enable us to easily analyse your fitness for the
+              job,satisy the following below</p>
+            <p v-for="item in error" v-bind:key="item">
+              <span style="color: #ff0000">* {{ item }}</span>
+            </p>
 
-                        Click on Edit profile button to complete your profile.
-
-
-                    </div>
+            Click on Edit profile button to complete your profile.
 
 
-                </a-modal>
+          </div>
 
 
-            </a-layout-content>
-        </a-layout>
+        </a-modal>
+
+
+      </a-layout-content>
     </a-layout>
+  </a-layout>
 
 </template>
 
 <script>
 
-    import UsersService from '@/services/UsersService'
-    import Pageheader from '@/components/layout/Header.vue'
-    import ARow from "ant-design-vue/es/grid/Row";
-    import ACol from "ant-design-vue/es/grid/Col";
-    import MarketPlaceService from '@/services/Marketplace'
-    import moment from 'moment';
-    import markdown from 'vue-markdown'
+import UsersService from '@/services/UsersService'
+import Pageheader from '@/components/layout/Header.vue'
+import ARow from "ant-design-vue/es/grid/Row";
+import ACol from "ant-design-vue/es/grid/Col";
+import MarketPlaceService from '@/services/Marketplace'
+import moment from 'moment';
+import markdown from 'vue-markdown'
 
-    const countries = require("@/store/countries")
+const countries = require("@/store/countries")
 
-    export default {
-        name: "jobdetails",
-        data() {
-            return {
-                job: {},
-                skills: null,
-                currentUserProfile: {},
-                applied: false,
-                myjobs: [],
-                dataload: false,
-                deadline: '',
-                save: false,
-                country: '',
-                portfolio: 0,
-                experiences: 0,
-                error: [],
-                fillprofile: false
-
-
-            }
-        },
-        components: {
-            ACol,
-            ARow,
-            Pageheader,
-            markdown
-        },
-        async mounted() {
-            moment
-
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-            }
-
-            this.dataload = true
+export default {
+  name: "jobdetails",
+  data() {
+    return {
+      job: {},
+      skills: null,
+      currentUserProfile: {},
+      applied: false,
+      myjobs: [],
+      dataload: false,
+      deadline: '',
+      save: false,
+      country: '',
+      portfolio: 0,
+      experiences: 0,
+      error: [],
+      fillprofile: false
 
 
-            if (this.$store.state.isUserLoggedIn) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-                this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId)).data
-                this.skills = this.job.tech_stack.split(',');
-                this.myjobs = (await MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)).data
-                this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
-                for (const [key, value] of Object.entries(countries)) {
-                    if (key === this.job.location) {
-                        this.country = value
-                    }
-                }
+    }
+  },
+  components: {
+    ACol,
+    ARow,
+    Pageheader,
+    markdown
+  },
+  async mounted() {
+    moment
 
 
-                if (this.myjobs.length > 0) {
-                    for (let i = 0; i < this.myjobs.length; i++) {
-                        if (this.myjobs[i].job.id === this.job.id) {
-                            this.applied = true
-                        }
-                    }
-                } else {
-                    this.applied = false
-                }
-                if (this.currentUserProfile.user_type === 'developer') {
-                    this.portfoliolist = (await UsersService.portfolio(this.$store.state.user.pk, auth)).data
-                    this.experienceslist = (await UsersService.experience(this.$store.state.user.pk, auth)).data
-                    this.portfolio = this.portfoliolist.length
-                    this.experiences = this.experienceslist.length
-
-                    if (this.currentUserProfile.phone_number === '' || this.currentUserProfile.phone_number === null) {
-                        this.error.push('phone number required')
-                    }
-                    if (this.currentUserProfile.file === '' || this.currentUserProfile.file === null) {
-                        this.error.push('cv required')
-                    }
-                    if (this.experiences.length <= 0) {
-                        this.error.push('at least one work experience')
-                    }
-                    if (this.portfolio.length <= 0) {
-                        this.error.push('at least one personal project')
-                    }
-                }
-
-            } else {
-                this.job = (await MarketPlaceService.jobdetails(this.$route.params.jobId)).data
-
-                this.skills = this.job.tech_stack.split(',');
-                this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
-                for (const [key, value] of Object.entries(countries)) {
-                    if (key === this.job.location) {
-                        this.country = value
-                    }
-                }
+    this.dataload = true
+    this.fetchData()
 
 
-            }
+  },
 
+  methods: {
+    moment,
+    fetchData() {
 
-            this.dataload = false
-
-
-        },
-
-        methods: {
-            navigateTo(route) {
-                this.$router.push(route)
-            },
-            Fillprofile() {
-                this.fillprofile = true
-            },
-
-
-            ApplyJob(job, dev) {
-                const auth = {
-                    headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-                }
-                this.save = true
-                MarketPlaceService.applyjob(
-                    {
-                        job: job,
-                        candidate: dev,
-                        recruiter: this.job.posted_by,
-                        stage: 'new',
-                        selected: false,
-                        type: 'applied'
-
-                    },
-                    auth
-                )
-                    .then(resp => {
-                            this.save = false
-                            this.applied = true
-
-
-                            MarketPlaceService.newapplicationemail(resp.data.id, auth)
-                                .then()
-                                .catch()
-
-                        }
-                    )
-                    .catch(error => {
-                        return error
-
-
-                    });
-
-
-            }
+      if (this.$store.state.isUserLoggedIn) {
+        const auth = {
+          headers: {Authorization: 'JWT ' + this.$store.state.token}
 
         }
+        UsersService.currentuser(this.$store.state.user.pk, auth)
+            .then(resp => {
+              this.currentUserProfile = resp.data
+            })
+        MarketPlaceService.jobdetails(this.$route.params.jobId)
+            .then(resp => {
+              this.job = resp.data
+
+              MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)
+                  .then(resp => {
+                    this.myjobs = resp.data
+                    this.dataload = false
+                    if (this.myjobs && this.job) {
+                      this.myjobs.forEach(job => {
+                        if(job.job.id === this.job.id){
+                          this.applied = true
+                        }
+
+
+
+                      })
+
+                    }
+
+
+                    this.Applicationvalidators()
+                  })
+            })
+
+        this.skills = this.job.tech_stack.split(',');
+
+
+        this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+        for (const [key, value] of Object.entries(countries)) {
+          if (key === this.job.location) {
+            this.country = value
+          }
+        }
+
+
+      } else {
+
+        MarketPlaceService.jobdetails(this.$route.params.jobId)
+            .then(resp => {
+              this.job = resp.data
+              this.dataload = false
+            })
+
+        this.skills = this.job.tech_stack.split(',');
+        this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+        for (const [key, value] of Object.entries(countries)) {
+          if (key === this.job.location) {
+            this.country = value
+          }
+        }
+
+
+      }
+
+    },
+    Applicationvalidators() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      if (this.currentUserProfile.user_type === 'developer') {
+        UsersService.portfolio(this.$store.state.user.pk, auth)
+            .then(resp => {
+              this.portfoliolist = resp.data
+              this.portfolio = this.portfoliolist.length
+            })
+        UsersService.portfolio(this.$store.state.user.pk, auth)
+            .then(resp => {
+              this.experienceslist = resp.data
+              this.experiences = this.experienceslist.length
+            })
+
+
+
+
+        if (this.currentUserProfile.phone_number === '' || this.currentUserProfile.phone_number === null) {
+          this.error.push('phone number required')
+        }
+        if (this.currentUserProfile.file === '' || this.currentUserProfile.file === null) {
+          this.error.push('cv required')
+        }
+        if (this.experiences.length <= 0) {
+          this.error.push('at least one work experience')
+        }
+        if (this.portfolio.length <= 0) {
+          this.error.push('at least one personal project')
+        }
+      }
+
+    },
+
+    navigateTo(route) {
+      this.$router.push(route)
+    },
+    Fillprofile() {
+      this.fillprofile = true
+    },
+
+
+    ApplyJob(job, dev) {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      this.save = true
+      MarketPlaceService.applyjob(
+          {
+            job: job,
+            candidate: dev,
+            recruiter: this.job.posted_by,
+            stage: 'new',
+            selected: false,
+            type: 'applied'
+
+          },
+          auth
+      )
+          .then(resp => {
+                this.save = false
+                this.applied = true
+
+
+                MarketPlaceService.newapplicationemail(resp.data.id, auth)
+                    .then()
+                    .catch()
+
+              }
+          )
+          .catch(error => {
+            return error
+
+
+          });
+
+
     }
+
+  }
+}
 </script>
 
 <style scoped>
-    .jobdetails {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background-color: white;
-        padding: 2%;
+.jobdetails {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+  padding: 2%;
 
-    }
+}
 </style>

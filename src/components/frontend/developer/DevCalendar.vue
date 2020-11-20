@@ -61,7 +61,7 @@
 
         }
     }
-    import CandidateSider from "../../layout/CandidateSider";
+    import CandidateSider from "./layout/CandidateSider";
     import VueCal from 'vue-cal'
     import '../../../assets/css/vuecal.css'
 

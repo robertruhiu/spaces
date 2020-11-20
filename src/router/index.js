@@ -50,7 +50,7 @@ const Paths = () => import('@/components/frontend/bridges/paths');
 const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
 const Feedback = () => import('@/components/frontend/recruiter/Feedback');
-const ClientDashboard = () => import('@/components/frontend/remote/client/clientdashboard');
+
 Vue.use(Router);
 
 let router = new Router({
@@ -453,12 +453,7 @@ let router = new Router({
             }
 
         },
-        {
-            path: '/clientdashboard',
-            name: 'clientdashboard',
-            component: ClientDashboard,
 
-        },
     ],
     scrollBehavior(to, from, savedPosition) {
         return new Promise((resolve, reject) => {

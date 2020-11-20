@@ -776,8 +776,8 @@
 </template>
 
 <script>
-    import CandidateSider from "../../layout/CandidateSider";
-    import ResourceHeader from "../../layout/resourceheader";
+    import CandidateSider from "../developer/layout/CandidateSider";
+    import ResourceHeader from "@/components/frontend/bridges/layout/resourceheader";
     import QuizService from '@/services/QuizService';
     import UsersService from '@/services/UsersService'
     import VeeValidate from 'vee-validate';

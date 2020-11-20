@@ -281,8 +281,8 @@
 
     var VueTruncate = require('vue-truncate-filter')
     Vue.use(VueTruncate)
-    import CandidateSider from "../../layout/CandidateSider";
-    import BridgeHomeHeader from "../../layout/bridgehomeheader";
+    import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
+    import BridgeHomeHeader from "@/components/frontend/bridges/layout/bridgehomeheader";
     import {showAt, hideAt} from 'vue-breakpoints'
 
     export default {

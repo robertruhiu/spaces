@@ -8,7 +8,6 @@
       <Pageheader/>
 
 
-
       <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }">
         <a-row style="margin-bottom: 1rem">
 
@@ -21,107 +20,61 @@
 
 
         </a-row>
+
+
+
         <div v-if="loading" class="loading" style="text-align: center;">
-          <a-spin/>
+          <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
+
+
+            <a-col :xs="{span: 24 }" :sm="{span: 17 }" :md="{span: 16 }"
+                   :lg="{span: 16 }" :xl="{span: 16 }">
+
+              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+            </a-col>
+          </a-row>
         </div>
         <div v-else>
           <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
-            <a-col :xs="{span: 24 }" :sm="{span: 7 }" :md="{span: 5 }"
-                   :lg="{span: 5 }" :xl="{span: 5 }" style="margin-bottom: 1rem">
 
-              <a-card title="Jobs Overview"
-                      style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-
-                <p><span>Total Applicants: </span>
-
-
-                  <span style="float: right">
-                                            <a-tag color="#9FC6F2"
-                                                   style="color:white;border-radius: 50%">{{allapplicants}} </a-tag>
-
-                                        </span>
-
-                </p>
-                <p><span>Testing Stage: </span><span style="float: right">
-                                        <a-tag color="#92DDDD"
-                                               style="color:white;border-radius: 50%">{{testingstage}}</a-tag>
-                                        </span>
-                </p>
-                <p><span>Interview Stage: </span><span style="float: right">
-                                        <a-tag color="#DA92D0"
-                                               style="color:white;border-radius: 50%">{{interviewstage}}</a-tag>
-                                        </span>
-                </p>
-
-
-              </a-card>
-
-
-            </a-col>
-            <a-col :xs="{span: 24 }" :sm="{span: 17 }" :md="{span: 16 }"
+            <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
                    :lg="{span: 16 }" :xl="{span: 16 }">
-              <a-row v-for="job in myjobs" v-bind:key="job.id">
 
-                <a-col :span="24">
-                  <a-card style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                    <h3 style="font-weight: bold">{{job.title}}</h3>
+
+
+              <a-list item-layout="horizontal"  :data-source="jobs"
+                      :pagination="pagination"
+                      style="margin-bottom: 1rem">
+                <div slot="footer"><b>Your ideal developer is one click away </b></div>
+                <a-list-item slot="renderItem" slot-scope="item">
+                  <a-card
+                      style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width: 100%">
+                    <h3 style="font-weight: bold">{{ item.title }}</h3>
                     <a-row>
-                      <a-col span="16">
-                        <span v-if="currentUserProfile.user.is_staff">posted by : {{job.posted_by}} </span>
+                      <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 14 }"
+                             :lg="{span: 16 }" :xl="{span: 16 }">
+                        <span v-if="currentUserProfile.user.is_staff">posted by : {{ item.company }} </span>
                       </a-col>
-                      <a-col span="8">
-                        <span>posted on : {{job.published}}</span>
+                      <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 8 }"
+                             :lg="{span: 8 }" :xl="{span: 8 }">
+                        <span>posted on : {{ item.created | moment }}</span>
                       </a-col>
                     </a-row>
 
 
                     <p>
-                                              <span style="" v-for="skill in job.skills" v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
+                      <span style="" v-for="skill in item.tech_stack.split(',')" v-bind:key="skill.id">
+                        <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
+                      </span>
                     </p>
 
-                    <p>
-                      <a-alert style="color:#1976D2;border: 0 "
-                               message="Applicant Tracker"
-                               type="info"/>
-                    </p>
 
-                    <p>
-                      <a-row>
-                        <a-col :span="8">
-                                                            <span>
-                                                                Applicants
-                                                                <a-tag color="#9fc6f2"
-                                                                       style="color:white;border-radius: 50%">{{job.applicants}}</a-tag>
-                                                            </span>
-
-
-                        </a-col>
-                        <a-col :span="8">
-                                            <span>
-                                                Testing Stage
-
-                                            <a-tag color="#92DDDD"
-                                                   style="color:white;border-radius: 50%">{{job.test}}</a-tag>
-                                            </span>
-
-                        </a-col>
-                        <a-col :span="8">
-                                            <span>
-                                                  Interview Stage
-                                            <a-tag color="#DA92D0" style="color:white;border-radius: 50%">{{job.interview}}</a-tag>
-                                            </span>
-
-                        </a-col>
-                      </a-row>
-
-                    </p>
                     <div style="text-align: center">
 
-                      <a-button style="width: 60%"
-                                @click="navigateTo({name:'job',params:{jobId: job.id}})"
+                      <a-button style="width: 50%"
+                                @click="navigateTo({name:'job',params:{jobId: item.id}})"
                                 type="primary" block>Manage Job
                       </a-button>
 
@@ -129,15 +82,23 @@
 
 
                   </a-card>
+                </a-list-item>
+              </a-list>
 
-                </a-col>
 
 
-              </a-row>
 
             </a-col>
           </a-row>
         </div>
+      </div>
+      <div id="components-back-top-demo-custom">
+        <a-back-top>
+          <div class="ant-back-top-inner">
+            UP
+          </div>
+        </a-back-top>
+
       </div>
 
 
@@ -149,28 +110,15 @@
 
 
 <script>
-class Job {
-  constructor(id, title, skills, applicants, test, interview, posted_by, tag, published) {
-    this.id = id;
-    this.title = title;
-    this.skills = skills;
-    this.applicants = applicants;
-    this.test = test;
-    this.interview = interview
-    this.posted_by = posted_by
-    this.tag = tag
-    this.published = published
-
-  }
-}
 
 
-import UsersService from '@/services/UsersService'
+
+
+
 import Marketplace from '@/services/Marketplace'
-import ACol from "ant-design-vue/es/grid/Col";
-import ARow from "ant-design-vue/es/grid/Row";
-import RecruiterSider from "../../../layout/RecruiterSider";
-import Pageheader from '@/components/layout/Pageheader'
+
+import RecruiterSider from "../layout/RecruiterSider";
+import Pageheader from '@/components/frontend/recruiter/layout/Pageheader'
 import moment from 'moment';
 
 export default {
@@ -179,114 +127,86 @@ export default {
     return {
       currentUserProfile: null,
       jobs: null,
-      myjobs: [],
-      applicants: null,
-      loading: true,
-      myapplicants: [],
-      allapplicants: 0,
-      testingstage: 0,
-      interviewstage: 0,
-      total: 0,
-      top: 200
+      loading:false,
+      pagination: {
+        position:'top',
+        pageSize: 20,
+      },
+
+      current:1
 
 
     }
   },
   components: {
-    ARow,
-    ACol,
     RecruiterSider,
     Pageheader
 
 
   },
   async mounted() {
-    moment
 
-    const auth = {
-      headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-    }
-
-    function dec2hex(dec) {
-      return ('0' + dec.toString(16)).substr(-2)
-    }
-
-    // generateId :: Integer -> String
-    function generateId(len) {
-      var arr = new Uint8Array((len || 40) / 2)
-      window.crypto.getRandomValues(arr)
-      return Array.from(arr, dec2hex).join('')
-    }
-
+    this.loading = true
 
     if (this.$store.state.user.pk) {
-      this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-      this.jobs = (await Marketplace.myjobs(this.$store.state.user.pk, auth)).data
-      this.loading = false
-
-
-      for (let i = 0; i < this.jobs.length; i++) {
-        this.applicants = (await Marketplace.applicants(this.jobs[i].id, auth)).data
-        let test = 0;
-        let interview = 0;
-        this.allapplicants = this.allapplicants + this.applicants.length
-        for (let j = 0; j < this.applicants.length; j++) {
-          if (this.applicants[j].stage === 'test') {
-            test++
-            this.testingstage = this.testingstage + 1
-
-          } else if (this.applicants[j].stage === 'interview') {
-            interview++
-            this.interviewstage = this.interviewstage + 1
-
-          }
-
-        }
-        let skill_list = this.jobs[i].tech_stack.split(',');
-
-        let id = this.jobs[i].id
-        let title = this.jobs[i].title
-        let skills = skill_list
-        let posted_by = this.jobs[i].company
-
-        let published = moment(this.jobs[i].created).format("YYYY-MM-DD")
-        let applicants = this.applicants.length
-        let tag = ''
-        if (this.jobs[i].tag === null || this.jobs[i].tag === '') {
-          if (this.currentUserProfile.user.is_staff) {
-            let generatedtag = generateId(6)
-            this.jobs[i].tag = generatedtag
-            tag = generatedtag
-
-            Marketplace.updatejob(id, this.jobs[i], auth)
-                .then(resp => {
-                  tag = resp.data.tag
-                })
-
-          } else {
-            tag = ''
-          }
-
-        } else {
-          tag = this.jobs[i].tag
-        }
-
-        let onejob = new Job(
-            id, title, skills, applicants, test, interview, posted_by, tag, published
-        )
-
-
-        this.myjobs.push(onejob)
-
-
-      }
+      this.currentUserProfile = this.$store.state.user_object
+      this.fetchjobs()
 
     }
 
 
   },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    }
+  },
+
   methods: {
+    moment,
+    fetchjobs() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+
+      Marketplace.myjobs(this.$store.state.user.pk, auth)
+          .then(resp => {
+            this.jobs = resp.data
+            this.loading =false
+            this.jobs.forEach(job=>{
+              this.createjobtag(job)
+            })
+
+          })
+
+    },
+
+    createjobtag(job) {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+
+      function dec2hex(dec) {
+        return ('0' + dec.toString(16)).substr(-2)
+      }
+
+      function generateId(len) {
+        var arr = new Uint8Array((len || 40) / 2)
+        window.crypto.getRandomValues(arr)
+        return Array.from(arr, dec2hex).join('')
+      }
+
+      if (job.tag === null || job.tag === '') {
+        if (this.currentUserProfile.user.is_staff) {
+          job.tag = generateId(6)
+          Marketplace.updatejob(job.id, job, auth)
+
+        }
+      }
+    },
+
     logout() {
       this.$store.dispatch('setToken', null);
       this.$store.dispatch('setUser', null)
@@ -297,6 +217,7 @@ export default {
         name: 'home'
       })
     },
+
     navigateTo(route) {
       this.$router.push(route)
     }
@@ -307,62 +228,19 @@ export default {
 </script>
 
 <style scoped>
-#components-layout-demo-side .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, .2);
-  margin: 16px;
+
+#components-back-top-demo-custom .ant-back-top {
+  bottom: 100px;
 }
-
-.me {
-  width: 70px;
-  height: 70px;
-  color: blue;
+#components-back-top-demo-custom .ant-back-top-inner {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  background-color: #1088e9;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
 }
-
-.me:hover {
-  fill: red;
-}
-
-.boxes {
-
-  padding-left: 0;
-  padding-right: 0;
-
-
-}
-
-.poolavatar {
-  width: 80%;
-  margin-top: 0.5rem;
-}
-
-.talentcard {
-  margin-bottom: 1rem;
-}
-
-.center {
-  margin: auto;
-  width: 60%;
-
-
-}
-
-.actioncards {
-  width: 16rem;
-  border-radius: 3%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 1rem;
-}
-
-.events {
-  width: 11rem;
-  height: 5rem;
-  margin-top: 0.5rem;
-  border-radius: 0;
-  background-color: #0064ff;
-  border: 0;
-  color: white;
-}
-
 
 </style>

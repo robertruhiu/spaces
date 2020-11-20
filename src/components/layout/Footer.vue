@@ -94,12 +94,12 @@
 
 <script>
 
-    import ACol from "ant-design-vue/es/grid/Col";
-    import {showAt, hideAt} from 'vue-breakpoints'
+
+    import { hideAt} from 'vue-breakpoints'
 
     export default {
         name: "Footer",
-        components: {ACol, hideAt},
+        components: { hideAt},
         data() {
             return {
                 top: 10,

@@ -52,7 +52,10 @@
                     <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4 }"
                            :lg="{span: 16, offset: 4 }" :xl="{span: 16, offset: 4 }">
                         <div v-if="loading" class="loading" style="text-align: center;min-height: 40vh">
-                            <a-spin size="large"/>
+                          <a-skeleton active />
+                          <a-skeleton active />
+                          <a-skeleton active />
+                          <a-skeleton active />
                         </div>
 
                         <div v-else>
@@ -235,7 +238,6 @@
     import moment from 'moment';
 
     var VueTruncate = require('vue-truncate-filter')
-    import UsersService from '@/services/UsersService'
     import Vue from 'vue'
 
     Vue.use(VueTruncate)
@@ -302,54 +304,57 @@
         },
         async mounted() {
 
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
             if (this.$store.state.user) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
 
 
             }
-
-            this.jobs = (await Marketplace.alljobs()).data
-            // this.jobs = (await Marketplace.alljobsfiltered()).data
-            this.loading = false
-
-            for (let i = 0; i < this.jobs.length; i++) {
-
-                let skill_list = this.jobs[i].tech_stack.split(',').slice(0, 2);
-
-                let id = this.jobs[i].id
-                let skills = skill_list
-                let title = this.jobs[i].title
-                let deadline = this.jobs[i].deadline
-                let location =''
-                for (const [key, value] of Object.entries(countries)) {
-                    if(key === this.jobs[i].location){
-                        location = value
-                    }
-                }
+            this.fetchjobs()
 
 
-                let contract = this.jobs[i].engagement_type
-                let description = this.jobs[i].description
-                let company = this.jobs[i].company
-                let tag = this.jobs[i].tag
-
-
-                let onejob = new Job(id, title, deadline, location, contract, skills, description, company,tag)
-
-
-                this.listData.push(onejob)
-
-
-            }
 
 
         },
 
         methods: {
+          fetchjobs(){
+            Marketplace.alljobs()
+            .then(resp=>{
+              this.jobs = resp.data
+              this.ComputeJobStructure()
+            })
+          },
+          ComputeJobStructure(){
+            this.jobs.forEach(job=>{
+              let skill_list = job.tech_stack.split(',').slice(0, 2);
+
+              let id = job.id
+              let skills = skill_list
+              let title = job.title
+              let deadline = job.deadline
+              let location =''
+              for (const [key, value] of Object.entries(countries)) {
+                if(key === job.location){
+                  location = value
+                }
+              }
+
+
+              let contract = job.engagement_type
+              let description = job.description
+              let company = job.company
+              let tag = job.tag
+
+
+              let onejob = new Job(id, title, deadline, location, contract, skills, description, company,tag)
+
+
+              this.listData.push(onejob)
+            })
+            this.loading = false
+
+          },
             moment,
             navigateTo(route) {
                 this.$router.push(route)

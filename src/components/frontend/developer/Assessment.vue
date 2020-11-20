@@ -71,8 +71,8 @@
 
 
     import UsersService from '@/services/UsersService'
-    import CandidateSider from "../../layout/CandidateSider";
-    import DevHeader from "../../layout/DevHeader";
+    import CandidateSider from "./layout/CandidateSider";
+    import DevHeader from "./layout/DevHeader";
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
 
@@ -100,7 +100,7 @@
             }
 
             if (this.$store.state.user.pk) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data;
+                this.currentUserProfile = this.$store.state.user_object
 
             }
 

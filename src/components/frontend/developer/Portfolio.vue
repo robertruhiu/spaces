@@ -1106,8 +1106,8 @@ class Portfolio {
   }
 }
 
-import CandidateSider from "../../layout/CandidateSider";
-import PortfolioHeader from "../../layout/PortfolioHeader";
+import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
+import PortfolioHeader from "@/components/frontend/developer/layout/PortfolioHeader";
 import UsersService from '@/services/UsersService'
 import QuizService from '@/services/QuizService';
 import Projects from '@/services/Projects'
@@ -1178,8 +1178,8 @@ export default {
 
     }
     this.dataload = true
-    this.currentUser = (await UsersService.retrieveuser(this.$store.state.user.pk, auth)).data
-    this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+    this.currentUser = this.$store.state.user_object.user
+    this.currentUserProfile = this.$store.state.user_object
     if (this.currentUserProfile.skills) {
       this.skills = this.currentUserProfile.skills.split(',');
     }

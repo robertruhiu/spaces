@@ -1211,12 +1211,12 @@
         }
     }
 
-    import UsersService from '@/services/UsersService'
+
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     import MarketPlaceService from '@/services/Marketplace'
-    import RecruiterSider from "../../../layout/RecruiterSider";
-    import MycandidatesHeader from '@/components/layout/MaincandidatesHeader'
+    import RecruiterSider from "../layout/RecruiterSider";
+    import MycandidatesHeader from '@/components/frontend/recruiter/candidates/layout/MaincandidatesHeader'
     import Projectsservice from '@/services/Projects'
     import moment from 'moment';
 

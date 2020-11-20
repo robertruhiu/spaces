@@ -81,7 +81,7 @@
 <script>
     import {showAt, hideAt} from 'vue-breakpoints'
     import Menusider from '@/components/layout/Menusider'
-    import UsersService from '@/services/UsersService'
+
 
     export default {
         name: "Header",
@@ -98,13 +98,10 @@
             }
         },
         async mounted() {
-            const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-            }
 
             if (this.$store.state.user) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
 
 
             }
@@ -126,6 +123,8 @@
                 this.$store.dispatch('setCountry', null)
                 this.$store.dispatch('setManaged',false)
                 this.$store.dispatch('setRecommend', null)
+                this.$store.dispatch('setlazyloader', null)
+                this.$store.dispatch('setuser_object', null)
 
 
                 this.$router.push({

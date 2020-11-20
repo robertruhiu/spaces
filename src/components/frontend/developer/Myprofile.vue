@@ -319,9 +319,9 @@
 <script>
 
 
-    import CandidateSider from "../../layout/CandidateSider";
+    import CandidateSider from "./layout/CandidateSider";
     import UsersService from '@/services/UsersService'
-    import DevHeader from "../../layout/DevHeader";
+    import DevHeader from "./layout/DevHeader";
     import axios from 'axios'
     import cloudinary from 'cloudinary-core'
     import VuePhoneNumberInput from 'vue-phone-number-input';
@@ -373,7 +373,7 @@
 
             }
             if (this.$store.state.user.pk) {
-                this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
+                this.currentUserProfile = this.$store.state.user_object
                 this.github = this.currentUserProfile.github_repo
                 this.linkedin = this.currentUserProfile.linkedin_url
 

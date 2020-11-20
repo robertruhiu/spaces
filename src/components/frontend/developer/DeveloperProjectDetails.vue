@@ -110,8 +110,8 @@
 
 
     import Projects from '@/services/Projects'
-    import CandidateSider from "../../layout/CandidateSider";
-    import DevHeader from "../../layout/DevHeader";
+    import CandidateSider from "./layout/CandidateSider";
+    import DevHeader from "./layout/DevHeader";
     import Marketplace from '@/services/Marketplace'
     import moment from 'moment';
     import {showAt, hideAt} from 'vue-breakpoints'

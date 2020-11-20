@@ -103,8 +103,8 @@
 </template>
 
 <script>
-    import CandidateSider from "../../layout/CandidateSider";
-    import BridgeHomeHeader from "../../layout/bridgehomeheader";
+    import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
+    import BridgeHomeHeader from "@/components/frontend/bridges/layout/bridgehomeheader";
 
 
     export default {

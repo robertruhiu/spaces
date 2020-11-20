@@ -90,7 +90,7 @@
         }
     }
 
-    import RecruiterSider from '@/components/layout/RecruiterSider';
+    import RecruiterSider from '@/components/frontend/recruiter/layout/RecruiterSider';
     import Projectsservice from '@/services/Projects'
     import ACol from "ant-design-vue/es/grid/Col";
     import Marketplace from '@/services/Marketplace'

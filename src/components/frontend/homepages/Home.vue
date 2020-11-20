@@ -184,7 +184,7 @@
               </div>
 
 
-              <a-row :gutter="32" style="padding: 3%">
+              <a-row  style="padding: 3%">
                 <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
                        :md="{span: 8, offset: 0 }"
                        :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }"
@@ -260,8 +260,11 @@
                   </div>
 
 
-                  <div v-if="loading" class="loading" style="text-align: center;margin-top: 25%;">
-                    <a-spin size="large"/>
+                  <div v-if="loading" class="loading" style="text-align: center;">
+                    <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+                    <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+                    <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
+                    <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
                   </div>
 
                   <div v-else>
@@ -438,7 +441,7 @@
             <h2 class="headers" style="text-align: center">Why Hire with Codeln? </h2>
 
 
-            <a-row :gutter="16" :style="{padding:'3%'}">
+            <a-row :gutter="gutter16" :style="{padding:'3%'}">
               <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 8, offset: 0 }"
                      :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
                 <img class="imagecenter" src="../../../assets/images/props/hire_icon.png"/>
@@ -521,7 +524,7 @@
           <show-at breakpoint="mediumAndBelow">
             <div style="background-color: #3854c6; padding: 31px;min-height: 10rem;padding-top: 3rem">
               <div style="color: white">
-                <a-row :gutter="16">
+                <a-row :gutter="gutter16">
                   <a-col :xs="{span: 8, offset: 0 }" :sm="{span: 8, offset: 0 }"
                          :md="{span: 8, offset: 0 }"
                          :lg="{span: 12, offset: 0 }" :xl="{span: 12, offset: 0 }">
@@ -559,95 +562,11 @@
             <h2 class="headers" style="text-align: center">
               Trusted By
             </h2>
-            <!--            <hide-at breakpoint="mediumAndBelow">-->
-            <!--              <a-row :gutter="16" :style="{padding:'3%'}">-->
-            <!--                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">-->
 
-            <!--                  <img class="imagecenter" style="width: 70%;margin-top: 1rem"-->
-            <!--                       src="../../../assets/images/props/b_mest.png"-->
-            <!--                  />-->
-
-
-            <!--                </a-col>-->
-            <!--                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"-->
-            <!--                       style="padding-left: 0;padding-right: 0">-->
-            <!--                  <img style="width: 30%" class="imagecenter"-->
-            <!--                       src="../../../assets/images/props/b_7a.png"-->
-            <!--                  />-->
-            <!--                </a-col>-->
-            <!--                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }">-->
-
-            <!--                  <img class="imagecenter wsi" style="width: 25%;"-->
-            <!--                       src="../../../assets/images/wsi.png"-->
-            <!--                  />-->
-
-
-            <!--                </a-col>-->
-            <!--                <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"-->
-            <!--                       style="padding-left: 0;padding-right: 0">-->
-            <!--                  <img class="imagecenter" style="width: 40%;margin-top: 1rem"-->
-            <!--                       src="../../../assets/images/props/b_enpact.png"-->
-            <!--                  />-->
-            <!--                </a-col>-->
-
-            <!--              </a-row>-->
-            <!--            </hide-at>-->
-
-            <!--            <show-at breakpoint="mediumAndBelow">-->
-            <!--              <a-row :gutter="16" :style="{padding:'1%'}">-->
-            <!--                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"-->
-            <!--                       style="margin-bottom: 1rem">-->
-
-            <!--                  <img class="imagecenter" style="width: 70%;margin-top: 1rem"-->
-            <!--                       src="../../../assets/images/props/b_mest.png"-->
-            <!--                  />-->
-
-
-            <!--                </a-col>-->
-            <!--                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"-->
-            <!--                       style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">-->
-            <!--                  <img style="width: 30%" class="imagecenter"-->
-            <!--                       src="../../../assets/images/props/b_7a.png"-->
-            <!--                  />-->
-            <!--                </a-col>-->
-            <!--                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"-->
-            <!--                       style="margin-bottom: 1rem">-->
-
-            <!--                  <img class="imagecenter wsi" style="width: 25%;"-->
-            <!--                       src="../../../assets/images/wsi.png"-->
-            <!--                  />-->
-
-
-            <!--                </a-col>-->
-            <!--                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"-->
-            <!--                       :md="{span: 6, offset: 0 }"-->
-            <!--                       :lg="{span: 6, offset: 0 }" :xl="{span: 6, offset: 0 }"-->
-            <!--                       style="padding-left: 0;padding-right: 0;margin-bottom: 1rem">-->
-            <!--                  <img class="imagecenter" style="width: 40%;margin-top: 1rem"-->
-            <!--                       src="../../../assets/images/props/b_enpact.png"-->
-            <!--                  />-->
-            <!--                </a-col>-->
-
-            <!--              </a-row>-->
-            <!--            </show-at>-->
             <div style="padding:4% 5% 2% 5%">
-              <carousel perPage="1">
+              <carousel :perPage="perPage">
                 <slide>
-                  <a-row gutter="16">
+                  <a-row :gutter="gutter16">
                     <a-col class="aligncenter" :xs="{span: 12, offset: 0  }" :sm="{span: 12, offset: 0 }"
                            :md="{span: 4, offset: 0 }"
                            :lg="{span: 4, offset: 0 }" :xl="{span: 4,offset: 0 }">
@@ -699,7 +618,7 @@
                   </a-row>
                 </slide>
                 <slide>
-                  <a-row gutter="16">
+                  <a-row :gutter="gutter16">
                     <a-col class="aligncenter" :xs="{span: 12, offset: 0  }" :sm="{span: 12, offset: 0 }"
                            :md="{span: 4, offset: 0 }"
                            :lg="{span: 4, offset: 0 }" :xl="{span: 4,offset: 0 }">
@@ -752,7 +671,7 @@
 
                 </slide>
                 <slide>
-                  <a-row gutter="16">
+                  <a-row :gutter="gutter16">
                     <a-col class="aligncenter" :xs="{span: 12, offset: 0  }" :sm="{span: 12, offset: 0 }"
                            :md="{span: 4, offset: 0 }"
                            :lg="{span: 4, offset: 0 }" :xl="{span: 4,offset: 0 }">
@@ -877,6 +796,9 @@ export default {
       bottom: 10,
       large: 'large',
       data,
+      gutter16:16,
+      perPage:1
+
 
 
     }
@@ -892,15 +814,7 @@ export default {
     Carousel,
     Slide
   },
-  async mounted() {
 
-
-
-
-
-
-
-  },
   methods: {
     navigateTo(route) {
       this.$router.push(route)
