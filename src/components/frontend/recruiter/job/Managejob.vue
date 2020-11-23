@@ -1,97 +1,168 @@
 <template>
-  <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#F8FAFB ">
+  <a-layout id="components-layout-demo-side" style="min-height: 100vh;background-color:#ffffff ">
 
     <RecruiterSider/>
 
 
     <a-layout-content>
       <Pageheader/>
+      <div style="padding:0.5% 2%;border-bottom: 1px solid #e8e8e8;margin-bottom: 1rem">
+        <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
+
+          <a-col :xs="{span: 18, offset: 2 }" :sm="{span: 18, offset: 2 }"
+                 :md="{span: 16, offset: 0 }"
+                 :lg="{span: 16, offset: 2 }" :xl="{span: 20,offset: 2 }">
+            <div class="hellocard">
+              <a-row>
+                <a-col span="18">
+                  <h1 style="font-size: 2.5rem;font-family: sofia_probold;margin-bottom: 0;color: black">Jobs</h1>
+                </a-col>
+                <a-col span="6" style="text-align: center">
+                  <div style="padding: 7% 0">
+
+                  </div>
 
 
-      <div :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }">
-        <a-row style="margin-bottom: 1rem">
+                </a-col>
+              </a-row>
 
-          <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                 :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0 }">
 
-            <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">Easily manage your posted jobs</h3>
+            </div>
+
 
           </a-col>
-
-
         </a-row>
 
 
+      </div>
+      <div style="padding:0 2%">
+        <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
 
-        <div v-if="loading" class="loading" style="text-align: center;">
-          <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
-
-
-            <a-col :xs="{span: 24 }" :sm="{span: 17 }" :md="{span: 16 }"
-                   :lg="{span: 16 }" :xl="{span: 16 }">
-
-              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
-              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
-              <a-skeleton active avatar :paragraph="{ rows: 4 }"/>
-            </a-col>
-          </a-row>
-        </div>
-        <div v-else>
-          <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
-
-            <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
-                   :lg="{span: 16 }" :xl="{span: 16 }">
+          <a-col :xs="{span: 18, offset: 2 }" :sm="{span: 18, offset: 2 }"
+                 :md="{span: 16, offset: 0 }"
+                 :lg="{span: 16, offset: 2 }" :xl="{span: 20,offset: 2 }">
+            <div v-if="loading" class="loading" style="text-align: center;">
+              <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
 
 
+                <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
+                       :lg="{span: 24 }" :xl="{span: 24 }">
 
-              <a-list item-layout="horizontal"  :data-source="jobs"
-                      :pagination="pagination"
-                      style="margin-bottom: 1rem">
-                <div slot="footer"><b>Your ideal developer is one click away </b></div>
-                <a-list-item slot="renderItem" slot-scope="item">
-                  <a-card
-                      style="margin-bottom: 1%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width: 100%">
-                    <h3 style="font-weight: bold">{{ item.title }}</h3>
+                  <a-skeleton active/>
+                  <a-skeleton active/>
+                  <a-skeleton active/>
+                </a-col>
+              </a-row>
+            </div>
+            <div v-else>
+              <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
+
+                <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
+                       :lg="{span: 24 }" :xl="{span: 24 }">
+                  <div class="hero" style="background-color: #FAFAFA">
                     <a-row>
-                      <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 14 }"
-                             :lg="{span: 16 }" :xl="{span: 16 }">
-                        <span v-if="currentUserProfile.user.is_staff">posted by : {{ item.company }} </span>
+                      <a-col span="4">
+                        <span style="font-weight: bold">Job title</span>
                       </a-col>
-                      <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 8 }"
-                             :lg="{span: 8 }" :xl="{span: 8 }">
-                        <span>posted on : {{ item.created | moment }}</span>
+                      <a-col span="4">
+                        <span>Date Created</span>
+
+                      </a-col>
+                      <a-col span="6">
+                        Skills
+
+
+                      </a-col>
+                      <a-col span="4">
+                        Company
+
+                      </a-col>
+                      <a-col span="2">
+                        Published
+
+                      </a-col>
+                      <a-col span="2">
+                        Job tag
+
+                      </a-col>
+                      <a-col span="2">
+                        Manage
+
                       </a-col>
                     </a-row>
 
 
-                    <p>
-                      <span style="" v-for="skill in item.tech_stack.split(',')" v-bind:key="skill.id">
-                        <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
-                      </span>
-                    </p>
+                  </div>
 
 
-                    <div style="text-align: center">
+                  <a-list item-layout="horizontal" :data-source="jobs"
+                          :pagination="pagination"
+                          style="margin-bottom: 1rem">
+                    <div slot="footer"><b>Your ideal developer is one click away </b></div>
+                    <a-list-item slot="renderItem" slot-scope="item">
 
-                      <a-button style="width: 50%"
-                                @click="navigateTo({name:'job',params:{jobId: item.id}})"
-                                type="primary" block>Manage Job
-                      </a-button>
+                      <div class="hero" style="width: 100%">
+                        <a-row>
+                          <a-col span="4">
+                            <span style="font-weight: bold">{{ item.title }}</span>
+                          </a-col>
+                          <a-col span="4">
+                            <span>{{ item.created | moment }}</span>
 
-                    </div>
+                          </a-col>
+                          <a-col span="6">
+                            <span style="" v-for="skill in item.tech_stack.split(',')" v-bind:key="skill.id">
+                              <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
+                            </span>
+
+                          </a-col>
+                          <a-col span="4">
+                            {{ item.company }}
+
+                          </a-col>
+                          <a-col span="2">
+                            <a-tag v-if="item.published" color="green">
+                              {{ item.published }}
+                            </a-tag>
+                            <a-tag color="orange" v-else>
+                              {{ item.published }}
+                            </a-tag>
 
 
-                  </a-card>
-                </a-list-item>
-              </a-list>
+                          </a-col>
+                          <a-col span="2">
+                            <a-tag  color="blue">
+                              {{ item.tag }}
+                            </a-tag>
 
 
 
+                          </a-col>
+                          <a-col span="2">
+                            <a-button :size="small"
+                                      @click="navigateTo({name:'job',params:{jobId: item.id}})"
 
-            </a-col>
-          </a-row>
-        </div>
+                                      type="primary" block>Manage Job
+                            </a-button>
+
+                          </a-col>
+                        </a-row>
+
+
+                      </div>
+                    </a-list-item>
+                  </a-list>
+
+
+                </a-col>
+              </a-row>
+            </div>
+
+          </a-col>
+        </a-row>
       </div>
+
+
       <div id="components-back-top-demo-custom">
         <a-back-top>
           <div class="ant-back-top-inner">
@@ -112,9 +183,6 @@
 <script>
 
 
-
-
-
 import Marketplace from '@/services/Marketplace'
 
 import RecruiterSider from "../layout/RecruiterSider";
@@ -127,13 +195,13 @@ export default {
     return {
       currentUserProfile: null,
       jobs: null,
-      loading:false,
+      loading: false,
       pagination: {
-        position:'top',
+
         pageSize: 20,
       },
 
-      current:1
+      current: 1
 
 
     }
@@ -158,7 +226,7 @@ export default {
   },
   filters: {
     moment: function (date) {
-      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+      return moment(date).format('MMMM Do YYYY');
     }
   },
 
@@ -173,8 +241,8 @@ export default {
       Marketplace.myjobs(this.$store.state.user.pk, auth)
           .then(resp => {
             this.jobs = resp.data
-            this.loading =false
-            this.jobs.forEach(job=>{
+            this.loading = false
+            this.jobs.forEach(job => {
               this.createjobtag(job)
             })
 
@@ -232,6 +300,7 @@ export default {
 #components-back-top-demo-custom .ant-back-top {
   bottom: 100px;
 }
+
 #components-back-top-demo-custom .ant-back-top-inner {
   height: 40px;
   width: 40px;
@@ -241,6 +310,21 @@ export default {
   color: #fff;
   text-align: center;
   font-size: 20px;
+}
+
+.hellocard {
+
+
+  background: white;
+  border-radius: 0;
+  margin-bottom: 1rem;
+
+
+}
+
+.hero {
+  padding: 1%;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 }
 
 </style>
