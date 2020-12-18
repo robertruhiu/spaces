@@ -26,10 +26,34 @@ export default new Vuex.Store({
         recommended: [],
         lazyloader:null,
         lazypage:null,
+        applicants:[],
+        leads:[],
+        interview:[],
+        test:[],
+        rejected:[],
+        job_id:''
 
 
     },
     mutations: {
+        setjob_id(state, job_id) {
+            state.job_id = job_id
+        },
+        setapplicants(state, applicants) {
+            state.applicants = applicants
+        },
+        setleads(state, leads) {
+            state.leads = leads
+        },
+        setinterview(state, interview) {
+            state.interview = interview
+        },
+        settest(state, test) {
+            state.test = test
+        },
+        setrejected(state, rejected) {
+            state.rejected = rejected
+        },
         setToken(state, token) {
             state.token = token
             state.isUserLoggedIn = !!(token)
@@ -175,6 +199,24 @@ export default new Vuex.Store({
         },
         setRecommend({commit}, recommended) {
             commit('setRecommend', recommended)
+        },
+        setapplicants({commit}, applicants) {
+            commit('setapplicants', applicants)
+        },
+        setleads({commit}, leads) {
+            commit('setleads', leads)
+        },
+        setinterview({commit}, interview) {
+            commit('setinterview', interview)
+        },
+        settest({commit}, test) {
+            commit('settest', test)
+        },
+        setrejected({commit}, rejected) {
+            commit('setrejected', rejected)
+        },
+        setjob_id({commit}, job_id) {
+            commit('setjob_id', job_id)
         },
 
 

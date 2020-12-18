@@ -1,0 +1,251 @@
+<template>
+  <div>
+    <span :hidden="dashboard" class="lenacard" style="z-index:3">
+
+        <a-card hoverable class="topcard " :bordered="false"
+                style="width:15rem;">
+           <a-avatar :size="64" :src="lenaimage" />
+
+
+          <h3 style="color: white;font-family: sofia_probold">Hello. I am lena</h3>
+          <h4 style="color: white;font-family: sofia_problack">Welcome to Codeln</h4>
+
+
+
+
+
+        </a-card>
+        <a-card hoverable class="dashboardassist " :bordered="false"
+                style="width:15rem;">
+
+          <div v-if="$route.name === 'recruiter'">
+            <p>Welcome to your dashboard</p>
+            <p>From here you can easily post a job,browse our talent or manage your recent jobs</p>
+            <p style="font-family: sofia_probold">Quick links</p>
+          <p><router-link to="/CreateJob"> <a>I want to post a job</a></router-link></p>
+          <p><router-link to="/managejobs"> <a>Manage posted jobs</a></router-link></p>
+          <p><router-link to="/talent"> <a>View talent</a></router-link></p>
+
+
+          </div>
+          <div v-else-if="$route.name === 'managejobs'">
+            <p>Here are your most recent jobs </p>
+
+          </div>
+          <div v-else-if="$route.name === 'CreateJob'">
+            <p>Welcome to the job creation portal</p>
+            <p>We hope you will be able to express what you want using the form</p>
+            <p>We will save your progress for each step for you to continue next time if unable to fill at one go</p>
+            <p>The form  contains mandatory details that we find important to ensure a successful recruitment drive</p>
+          </div>
+          <div v-else-if="$route.name === 'job'">
+            
+            <p>Welcome to your applicants tracker</p>
+            <p><strong>Leads :</strong> Showcases an overview of where each of your active applicants are staged .ie testing or interview or awaiting assignment</p>
+            <p><strong>New Applicants:</strong> These are new applicants for your job u can opt to accept the application to turn it into a lead or reject the application</p>
+            <p><strong>Testing skills:</strong> Its for those candidates who you want to ascertain their skills. you get to assign a project to them and recieve a demo and a performance report</p>
+            <p><strong>Interview:</strong> These are the candidates you feel comfortable with and want to meet and talk</p>
+            <p><strong>create/edit notes:</strong>These enable you to write reminder or interesting aspects about the candidate</p>
+
+          </div>
+          <div v-else-if="$route.name === 'home'">
+            
+            <p>We coordinate and execute every step of the recruitment
+               process  including Candidate Attraction and Advertising,
+               verifying skills, Short Listing and Interview Coordination</p>
+               <p >Here are some quick links for you</p>
+               
+                 <p><router-link to="/CreateJob"> <a>I want to post a job</a></router-link></p>
+                           <p><router-link to="/managejobs"> <a>Manage posted jobs</a></router-link></p>
+                                     <p><router-link to="/talent"> <a>Curious about our talent -view our talent pool</a></router-link></p>      
+                                     <p><router-link to="/jobs"> <a>Looking for a job : view job board</a></router-link></p>                              
+               
+               
+            
+
+          </div>
+
+
+
+
+
+        </a-card>
+    </span>
+
+
+
+    <a-avatar :size="64" @click="viewDashboard" style="z-index:4" class="lena heartbeat" :src="lenaimage"/>
+  </div>
+
+</template>
+
+<script>
+import lenaimage from '@/assets/images/ground.png'
+
+export default {
+  name: "lena",
+  data() {
+
+    return {
+      lenaimage: lenaimage,
+      dashboard: true,
+      currentroute:''
+    }
+  },
+  mounted() {
+    this.currentroute = this.$route.name
+  },
+
+  methods: {
+    viewDashboard() {
+      this.dashboard = !this.dashboard;
+
+    }
+  },
+
+  watch: {
+    currentroute: function () {
+
+      if(this.currentroute === 'job'){
+        this.dashboard = false
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.lena {
+  background-color: #ffffff;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  position: fixed;
+  bottom: 2%;
+  right: 6rem;
+  border: 1px solid #e8e8e8;
+}
+.lenacard{
+ 
+  position: fixed;
+  bottom: 3rem;
+  right: 2%;
+
+
+}
+.heartbeat {
+  -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+  animation: heartbeat 1.5s ease-in-out infinite both;
+}
+.dashboardassist{
+  background-color: #ffffff;
+  height: 30rem;
+  overflow-y: scroll;
+
+}
+.topcard{
+color: white;
+  background-color: #007BFF;
+  height: 10rem;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1890ff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #91d5ff;
+}
+/* ----------------------------------------------
+ * Generated by Animista on 2020-12-8 11:8:24
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info.
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation heartbeat
+ * ----------------------------------------
+ */
+@-webkit-keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+    transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+    transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+}
+@keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+    transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+    transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+  }
+}
+
+</style>

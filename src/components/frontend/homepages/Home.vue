@@ -728,9 +728,11 @@
 
 
           </div>
+          
 
         </a-layout-content>
-        <Banner/>
+        <lena/>
+        
         <Footer/>
       </a-layout>
 
@@ -769,7 +771,7 @@ class Developer {
 
   }
 }
-
+import lena from '@/components/frontend/recruiter/lena/lena'
 import Pageheader from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import ARow from "ant-design-vue/es/grid/Row";
@@ -812,7 +814,8 @@ export default {
     Footer,
     Banner,
     Carousel,
-    Slide
+    Slide,
+    lena
   },
 
   methods: {

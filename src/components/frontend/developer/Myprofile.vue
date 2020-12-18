@@ -7,6 +7,7 @@
                 <DevHeader/>
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',marginTop:'1rem',
                 marginLeft: '1%',marginRight:'1%' }">
+                
                     <a-form :form="form">
                         <a-row :gutter="16">
                             <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
@@ -121,7 +122,7 @@
                                     <a-col :span="24" style="margin-bottom: 1rem">
 
                                         <VuePhoneNumberInput name="number" v-model="phone"
-                                                             default-country-code="GH"
+                                                             :default-country-code="countrycode"
                                                              @update="onUpdate"/>
                                         <div v-for="error in step1errors" v-bind:key="error">
                                             <div v-if="error === 'number'" style="color: red">
@@ -327,6 +328,7 @@
     import VuePhoneNumberInput from 'vue-phone-number-input';
     import 'vue-phone-number-input/dist/vue-phone-number-input.css';
     import Vue from 'vue'
+    let telephones = require("@/store/telephone")
 
 
     Vue.use(cloudinary)
@@ -359,6 +361,7 @@
                 number: 'null',
                 step1errors: [],
                 phone: '',
+                countrycode:''
 
 
             }
@@ -378,7 +381,24 @@
                 this.linkedin = this.currentUserProfile.linkedin_url
 
                 if (this.currentUserProfile.phone_number) {
-                    this.phone = this.currentUserProfile.phone_number
+                    
+                
+                    if(this.currentUserProfile.phone_number.charAt(0)=== '+'){
+                        this.phone = this.currentUserProfile.phone_number
+                         telephones.forEach(telephone => {
+                            
+                            if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
+                                this.countrycode = telephone.code
+
+                            }else if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
+                                this.countrycode = telephone.code
+                            }
+    
+                            
+                        });
+                        
+                        
+                    }
                 }
 
 

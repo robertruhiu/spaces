@@ -59,12 +59,13 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message,Pagination,BackTop
+    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message,Pagination,BackTop,Breadcrumb,Popconfirm,Rate,LocaleProvider
 
 
 } from 'ant-design-vue';
 
 Vue.prototype.$notification = notification;
+Vue.use(Breadcrumb)
 Vue.use(VueFormWizard)
 Vue.use(Alert);
 Vue.use(Avatar);
@@ -109,6 +110,10 @@ Vue.use(Empty)
 Vue.use(message)
 Vue.use(Pagination)
 Vue.use(BackTop)
+Vue.use(Popconfirm)
+Vue.use(Rate)
+Vue.use(LocaleProvider)
+Vue.prototype.$message = message;
 import * as Sentry from "@sentry/browser";
 import { Vue as VueIntegration } from "@sentry/integrations";
 import { Integrations } from "@sentry/tracing";

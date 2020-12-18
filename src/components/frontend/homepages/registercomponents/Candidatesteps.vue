@@ -215,7 +215,7 @@
 
 
                                         <VuePhoneNumberInput name="number" v-model="phone"
-                                                             default-country-code="GH"
+                                                             :default-country-code="countrycode"
                                                              @update="onUpdates"/>
 
                                         <div v-for="error in step1errors" v-bind:key="error">
@@ -470,6 +470,7 @@
     import Experience from "./experience";
     import Portfolio from "./portfolio";
     import VueTelInput from 'vue-tel-input'
+    let telephones = require("@/store/telephone")
 
     Vue.use(VueTelInput)
 
@@ -543,7 +544,8 @@
                 linkedin: '',
                 formattednumber: null,
                 number: 'null',
-                phone: ''
+                phone: '',
+                countrycode:''
 
             }
         },
@@ -562,7 +564,23 @@
 
 
               if (this.currentUserProfile.phone_number) {
-                this.phone = this.currentUserProfile.phone_number
+                
+                if(this.currentUserProfile.phone_number.charAt(0)=== '+'){
+                    this.phone = this.currentUserProfile.phone_number
+                         telephones.forEach(telephone => {
+                            
+                            if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
+                                this.countrycode = telephone.code
+
+                            }else if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
+                                this.countrycode = telephone.code
+                            }
+    
+                            
+                        });
+                        
+                        
+                    }
               }
 
 

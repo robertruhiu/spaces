@@ -8,6 +8,7 @@
 
             <a-layout-content>
                 <Pageheader/>
+               
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',
                 marginLeft: '1%',marginRight:'1%',marginTop:'1rem' }">
                     <a-form :form="form">
@@ -88,8 +89,8 @@
                                     </a-col>
                                     <a-col :span="24" style="margin-bottom: 1rem">
 
-                                        <VuePhoneNumberInput name="number" v-model="currentUserProfile.phone_number"
-                                                             default-country-code="GH"
+                                        <VuePhoneNumberInput name="number" v-model="phone"
+                                                             :default-country-code="countrycode"
                                                              @update="onUpdate"/>
 
 
@@ -157,6 +158,7 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import VuePhoneNumberInput from 'vue-phone-number-input';
     import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+    let telephones = require("@/store/telephone")
 
     export default {
         name: "Myprofile",
@@ -172,7 +174,9 @@
                 selectedTags: [],
                 loading: false,
                 formattednumber: null,
-                number: 'null'
+                number: 'null',
+                phone: '',
+                countrycode:''
 
 
             }
@@ -195,6 +199,27 @@
                         this.selectedTags.push(tags[i])
                     }
 
+
+                }
+                if (this.currentUserProfile.phone_number) {
+                    
+                
+                    if(this.currentUserProfile.phone_number.charAt(0)=== '+'){
+                        this.phone = this.currentUserProfile.phone_number
+                         telephones.forEach(telephone => {
+                            
+                            if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
+                                this.countrycode = telephone.code
+
+                            }else if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
+                                this.countrycode = telephone.code
+                            }
+    
+                            
+                        });
+                        
+                        
+                    }
                 }
             }
 

@@ -4,49 +4,49 @@
     <RecruiterSider/>
 
 
-    <a-layout-content>
-      <Pageheader/>
-      <div style="padding:0.5% 2%;border-bottom: 1px solid #e8e8e8;margin-bottom: 1rem">
-        <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
+    <a-layout-content :style="{   background: '#FAFBFF', minHeight: '280px', }">
+      <a-card class="hellocard" :bordered="false">
 
-          <a-col :xs="{span: 18, offset: 2 }" :sm="{span: 18, offset: 2 }"
-                 :md="{span: 16, offset: 0 }"
-                 :lg="{span: 16, offset: 2 }" :xl="{span: 20,offset: 2 }">
-            <div class="hellocard">
-              <a-row>
-                <a-col span="18">
-                  <h1 style="font-size: 2.5rem;font-family: sofia_probold;margin-bottom: 0;color: black">Jobs</h1>
-                </a-col>
-                <a-col span="6" style="text-align: center">
-                  <div style="padding: 7% 0">
+        <a-row style="color: white">
+          <a-col span="12">
+            <a-breadcrumb>
+              <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a></a-breadcrumb-item>
+              <a-breadcrumb-item style="color: white">Manage Jobs</a-breadcrumb-item>
 
-                  </div>
-
-
-                </a-col>
-              </a-row>
-
-
-            </div>
-
-
+            </a-breadcrumb>
+            <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                Jobs</span>
           </a-col>
+
+            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                   :md="{span: 12, offset: 0 }"
+                   :lg="{span: 8, offset: 0 }" :xl="{span: 6,offset: 0 }">
+              <a-button
+                        type="primary"  @click="navigateTo({name:'CreateJob'})">
+                <a-icon type="plus" />
+                Create a new Job
+              </a-button>
+
+
+            </a-col>
+
         </a-row>
 
 
-      </div>
-      <div style="padding:0 2%">
+      </a-card>
+
+      <div style="">
         <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
 
-          <a-col :xs="{span: 18, offset: 2 }" :sm="{span: 18, offset: 2 }"
-                 :md="{span: 16, offset: 0 }"
-                 :lg="{span: 16, offset: 2 }" :xl="{span: 20,offset: 2 }">
+          <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                 :md="{span: 24, offset: 0 }"
+                 :lg="{span: 24 }" :xl="{span: 20 }">
             <div v-if="loading" class="loading" style="text-align: center;">
               <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
 
 
                 <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
-                       :lg="{span: 24 }" :xl="{span: 24 }">
+                       :lg="{span: 24 }" :xl="{span: 20 }">
 
                   <a-skeleton active/>
                   <a-skeleton active/>
@@ -57,35 +57,43 @@
             <div v-else>
               <a-row :gutter="16" style="margin-left: 0;margin-right: 0">
 
+
                 <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
                        :lg="{span: 24 }" :xl="{span: 24 }">
+
+                  <a-input-search placeholder="search for a job" style="margin-bottom: 1rem" @search="onSearch" />
+                  <div style="margin-bottom: 1rem">
+                    Search parameters (you can also check only the tags you want your search to cover) :
+                    <a-checkable-tag v-model="checked1" @change="onSearch">
+                      Job title
+                    </a-checkable-tag>
+                    <a-checkable-tag v-model="checked2" @change="onSearch">
+                      skill
+                    </a-checkable-tag>
+
+                    <a-checkable-tag v-model="checked4" @change="onSearch">
+                      company
+                    </a-checkable-tag>
+                  </div>
+
                   <div class="hero" style="background-color: #FAFAFA">
                     <a-row>
-                      <a-col span="4">
+                      <a-col span="6">
                         <span style="font-weight: bold">Job title</span>
                       </a-col>
-                      <a-col span="4">
-                        <span>Date Created</span>
 
-                      </a-col>
                       <a-col span="6">
                         Skills
 
 
                       </a-col>
-                      <a-col span="4">
+                      <a-col span="6">
                         Company
 
                       </a-col>
-                      <a-col span="2">
-                        Published
 
-                      </a-col>
-                      <a-col span="2">
-                        Job tag
 
-                      </a-col>
-                      <a-col span="2">
+                      <a-col span="6">
                         Manage
 
                       </a-col>
@@ -95,54 +103,42 @@
                   </div>
 
 
-                  <a-list item-layout="horizontal" :data-source="jobs"
+                  <a-list item-layout="horizontal" :data-source="DataChoice"
                           :pagination="pagination"
                           style="margin-bottom: 1rem">
                     <div slot="footer"><b>Your ideal developer is one click away </b></div>
-                    <a-list-item slot="renderItem" slot-scope="item">
+                    <a-list-item slot="renderItem" slot-scope="item" >
 
                       <div class="hero" style="width: 100%">
                         <a-row>
-                          <a-col span="4">
+                          <a-col span="6">
                             <span style="font-weight: bold">{{ item.title }}</span>
                           </a-col>
-                          <a-col span="4">
-                            <span>{{ item.created | moment }}</span>
+
+                          <a-col span="6">
+                            <span v-if="item.tech_stack">
+                              <span style="" v-for="skill in item.tech_stack.split(',')" v-bind:key="skill.id">
+                              <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
+                            </span>
+                            </span>
+
 
                           </a-col>
                           <a-col span="6">
-                            <span style="" v-for="skill in item.tech_stack.split(',')" v-bind:key="skill.id">
-                              <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
-                            </span>
-
-                          </a-col>
-                          <a-col span="4">
                             {{ item.company }}
 
                           </a-col>
-                          <a-col span="2">
-                            <a-tag v-if="item.published" color="green">
-                              {{ item.published }}
-                            </a-tag>
-                            <a-tag color="orange" v-else>
-                              {{ item.published }}
-                            </a-tag>
 
-
-                          </a-col>
-                          <a-col span="2">
-                            <a-tag  color="blue">
-                              {{ item.tag }}
-                            </a-tag>
-
-
-
-                          </a-col>
-                          <a-col span="2">
-                            <a-button :size="small"
+                          <a-col span="6">
+                            <a-button size="small" v-if="item.verified"
                                       @click="navigateTo({name:'job',params:{jobId: item.id}})"
 
-                                      type="primary" block>Manage Job
+                                      type="primary" >Manage Job
+                            </a-button>
+                            <a-button size="small" v-else
+                                      @click="navigateTo({name:'CreateJob',params:{jobId: item.id}})"
+
+                                      type="primary" >Edit Job
                             </a-button>
 
                           </a-col>
@@ -161,6 +157,7 @@
           </a-col>
         </a-row>
       </div>
+      <lena/>
 
 
       <div id="components-back-top-demo-custom">
@@ -184,9 +181,8 @@
 
 
 import Marketplace from '@/services/Marketplace'
-
+import lena from '@/components/frontend/recruiter/lena/lena'
 import RecruiterSider from "../layout/RecruiterSider";
-import Pageheader from '@/components/frontend/recruiter/layout/Pageheader'
 import moment from 'moment';
 
 export default {
@@ -200,15 +196,18 @@ export default {
 
         pageSize: 20,
       },
-
-      current: 1
+      current: 1,
+      checked1: true,
+      checked2: true,
+      checked4: true,
+      filterdata:[],
+      searchterm:''
 
 
     }
   },
   components: {
-    RecruiterSider,
-    Pageheader
+    RecruiterSider,lena
 
 
   },
@@ -223,6 +222,18 @@ export default {
     }
 
 
+  },
+  computed:{
+    DataChoice(){
+      let data =[]
+      if(this.filterdata.length>0){
+        data = this.filterdata
+      }else {
+        data = this.jobs
+
+      }
+      return data
+    }
   },
   filters: {
     moment: function (date) {
@@ -288,6 +299,66 @@ export default {
 
     navigateTo(route) {
       this.$router.push(route)
+    },
+    onSearch(value){
+      this.searchterm = value
+      this.filterdata =[]
+      let checkedtags =[]
+      if(this.checked1){
+        checkedtags.push('title')
+      }
+      if(this.checked2){
+        checkedtags.push('skill')
+      }
+      if(this.checked4){
+        checkedtags.push('company')
+      }
+
+
+      this.jobs.forEach(job=>{
+
+        let unsetdata =[]
+        if(checkedtags.includes('title')){
+
+          if(job.title.toLowerCase().includes(this.searchterm.toLowerCase())){
+
+            unsetdata.push(job)
+          }
+        }
+        if(checkedtags.includes('skill')){
+          if(job.tech_stack){
+            if(job.tech_stack.toLowerCase().includes(this.searchterm.toLowerCase())){
+
+              unsetdata.push(job)
+            }
+          }
+
+
+        }
+
+
+        if(checkedtags.includes('company')){
+          if(job.company.toLowerCase().includes(this.searchterm.toLowerCase())){
+
+            unsetdata.push(job)
+          }
+
+        }
+
+
+        if(unsetdata.length>0){
+          let uniq = [...new Set(unsetdata)];
+          this.filterdata.push(uniq[0])
+        }
+
+
+
+
+      })
+      if(this.filterdata.length===0){
+        this.$message.error('no result found try another search');
+      }
+
     }
 
   },
@@ -313,18 +384,20 @@ export default {
 }
 
 .hellocard {
-
-
-  background: white;
+  height: 8rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background: #004EC7;
   border-radius: 0;
   margin-bottom: 1rem;
-
+  color:white;
 
 }
+
 
 .hero {
   padding: 1%;
   box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background-color: white;
 }
 
 </style>

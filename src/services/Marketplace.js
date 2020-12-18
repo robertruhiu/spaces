@@ -74,6 +74,9 @@ export default {
     unpublishjob(job_id,Currentjob, auth) {
         return Api().patch(`marketplace/unpublishjob/${job_id} `, Currentjob,auth)
     },
+    incompletejob(user_id, auth) {
+        return Api().get(`marketplace/incompletejob/${user_id} `,auth)
+    },
     createjob(currentJob, auth) {
         return Api().post(`marketplace/createjob`, currentJob, auth)
     },

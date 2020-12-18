@@ -50,7 +50,7 @@ const Paths = () => import('@/components/frontend/bridges/paths');
 const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
 const Feedback = () => import('@/components/frontend/recruiter/Feedback');
-
+const CreateJob = () => import('@/components/frontend/recruiter/Create');
 Vue.use(Router);
 
 let router = new Router({
@@ -87,6 +87,14 @@ let router = new Router({
             path: '/developer',
             name: 'developer',
             component: DeveloperDashboard,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/CreateJob/:jobId?',
+            name: 'CreateJob',
+            component: CreateJob,
             meta: {
                 requiresAuth: true
             }
@@ -237,7 +245,7 @@ let router = new Router({
             }
         },
         {
-            path: '/pickedprojectdetails/:projectId/:jobId/:candidateId/:applicationId',
+            path: '/pickedprojectdetails/:applicationId',
             name: 'pickedprojectdetails',
             component: Projectdetails,
             meta: {
@@ -285,7 +293,7 @@ let router = new Router({
             }
         },
         {
-            path: '/candidateprofile/:candidateId/:jobId/:applicationId',
+            path: '/candidateprofile/:applicationId',
             name: 'candidateprofile',
             component: CandidateProfile,
             meta: {

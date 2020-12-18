@@ -30,7 +30,7 @@
                                         <span v-else>
                                             <div v-if="error.length === 0 ">
                                                 <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
-                                                          @click="ApplyJob(job.id,currentUserProfile.id)">Apply</a-button>
+                                                          @click="ApplicationModal()">Apply</a-button>
                                             </div>
                                             <div v-else>
                                                 <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
@@ -135,6 +135,22 @@
 
         </a-modal>
 
+        <a-modal v-model="applyterms" title="Application placement" :footer=null>
+      <p><strong> Placement</strong></p>
+      <p>Final successful placement is upto the client.By applying its not an assurance of getting the job</p>
+      <p><strong> Communication</strong></p>
+      <p>All parties will be kept in the loop in terms of where the application stand.You can monitor this on you manage applications on your dashboard.
+        Note communication timeline is highly determined by the client so patience is key</p>
+      <p><strong>Skill Verification</strong></p>
+      <p>As per our objective as Codeln is to enable employment of skilled developers.Your skills may be called for test .That will be a Codeln owned project aligned to
+         client needs.We retain the code and only share a demo of your work and a performance report based on your code</p>
+      <p><strong>Data shared</strong></p>
+      <p>On registration you are requested to provide data such as your cv,github,linkedin profiles and other details. This data will be available
+         to our clients for review</p>
+      <p>By Applying i agree to be bound by the above</p>
+      <a-button type="primary" @click="ApplyJob">Apply</a-button>
+    </a-modal>
+
 
       </a-layout-content>
     </a-layout>
@@ -170,7 +186,8 @@ export default {
       portfolio: 0,
       experiences: 0,
       error: [],
-      fillprofile: false
+      fillprofile: false,
+      applyterms:false
 
 
     }
@@ -228,8 +245,11 @@ export default {
                     this.Applicationvalidators()
                   })
             })
+        if(this.job.tech_stack){
+          this.skills = this.job.tech_stack.split(',');
 
-        this.skills = this.job.tech_stack.split(',');
+        }
+        
 
 
         this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
@@ -303,12 +323,19 @@ export default {
       this.fillprofile = true
     },
 
+    ApplicationModal(){
+      this.applyterms = true
+    },
 
-    ApplyJob(job, dev) {
+
+    ApplyJob() {
+      let job = this.job.id
+      let dev = this.currentUserProfile.id
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
+      this.applyterms = false
       this.save = true
       MarketPlaceService.applyjob(
           {
