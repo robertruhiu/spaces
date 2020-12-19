@@ -396,6 +396,8 @@ export default {
     this.takenload = true
     this.workload = true
     this.portfolioload = true
+
+
     this.currentApplication()
   },
   methods: {
@@ -430,6 +432,14 @@ export default {
         if (this.currentUserProfile.verified_skills) {
           this.verified = true
           this.verified_skills = this.currentUserProfile.verified_skills.split(',');
+        }
+        if (this.currentUserProfile.file) {
+          if (this.currentUserProfile.file.includes("http")) {
+            this.cv = this.currentUserProfile.file
+          } else {
+            this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
+
+          }
         }
 
         this.fetchWorkExperience()
