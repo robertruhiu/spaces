@@ -125,7 +125,7 @@
 
                         <a-col span="3">
                           <a-dropdown-button >
-                            move to 
+                            move to
                             <a-menu slot="overlay" >
                               <a-menu-item  v-if="item.stage ==='test'" disabled> <a-icon type="codepen" />Testing skills </a-menu-item>
                               <a-menu-item key="1" v-else @click="Move(item,'test')"> <a-icon type="codepen" />Testing skills </a-menu-item>
@@ -208,6 +208,7 @@ name: "leads",
       applicants: null,
       loading: false,
       pagination: {
+        position:'both',
 
         pageSize: 20,
       },
@@ -238,18 +239,8 @@ name: "leads",
 
   mounted() {
     this.jobId = this.$store.state.route.params.jobId
-    if(this.$store.state.leads.length>0){
-      if(this.$store.state.leads[0].job === Number(this.jobId)){
-        this.leads = this.$store.state.leads
-        this.lazyloader()
-      }else {
-        this.fetchApplicants()
-      }
+    this.leads = this.$store.state.leads
 
-
-    }else {
-      this.fetchApplicants()
-    }
   },
   filters: {
     moment: function (date) {
@@ -260,63 +251,8 @@ name: "leads",
     navigateTo(route) {
       this.$router.push(route)
     },
-    lazyloader(){
-      const auth = {
-        headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-      };
 
-      Marketplace.specificjobapplicants(this.jobId, auth)
-          .then(resp => {
-            this.applicants = resp.data
-            if(this.applicants.length > (this.$store.state.applicants.length + this.$store.state.leads.length + this.$store.state.interview.length + this.$store.state.test.length + this.$store.state.rejected.length)){
-              this.leads =[]
-              this.newapplicants =[]
-              this.interviewapplicants =[]
-              this.testapplicants =[]
-              this.rejected =[]
-              this.ComputeNewApplicants()
-            }
-
-          })
-    },
-    fetchApplicants() {
-      const auth = {
-        headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-      };
-      this.loading = true
-      Marketplace.specificjobapplicants(this.jobId, auth)
-          .then(resp => {
-            this.applicants = resp.data
-            this.ComputeNewApplicants()
-          })
-    },
-    ComputeNewApplicants(){
-      this.applicants.forEach(applicant=>{
-        if(applicant.selected === true && applicant.stage !== 'rejected' ){
-          this.leads.push(applicant)
-        }
-        if(applicant.selected === false && applicant.stage !== 'rejected' ){
-          this.newapplicants.push(applicant)
-        }
-        if(applicant.stage === 'interview' && applicant.stage !== 'rejected' ){
-          this.interviewapplicants.push(applicant)
-        }
-        if (applicant.stage === 'test' && applicant.stage !== 'rejected') {
-          this.testapplicants.push(applicant)
-        }
-        if (applicant.stage === 'rejected') {
-          this.rejected.push(applicant)
-        }
-      })
-      this.loading = false
-      this.$store.dispatch('setleads', this.leads)
-      this.$store.dispatch('setapplicants', this.newapplicants)
-      this.$store.dispatch('setinterview', this.interviewapplicants)
-      this.$store.dispatch('settest', this.testapplicants)
-      this.$store.dispatch('setrejected', this.rejected)
-    },
     Move(item,stage){
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -360,8 +296,8 @@ name: "leads",
             this.testapplicants.splice(testindex, 1);
 
           }
-          
-          
+
+
           this.$store.dispatch('settest', this.testapplicants)
         }
         item.stage = 'interview'
@@ -403,9 +339,22 @@ name: "leads",
       this.rejectionmodal = true
 
 
+      let rejectionreasons = ''
+      let rejectionstatement =''
+      if(this.reasoncomment){
+        rejectionstatement = this.reasoncomment
+        profile.rejectioncomment =this.reasoncomment
+      }
+      if(this.reasonspicked){
+        rejectionreasons = this.reasonspicked.join(',')
+        profile.rejectionreason = this.reasonspicked.join(',')
+      }
+
       Marketplace.pickreject(profile.id, {
         stage: 'rejected',
         selected: false,
+        rejectioncomment:rejectionstatement,
+        rejectionreason:rejectionreasons
 
       }, auth)
           .then(()=>{
@@ -437,11 +386,11 @@ name: "leads",
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       };
-      
+
 
       Marketplace.pickreject(item.id, {
         relevance: item.relevance,
-        
+
 
       }, auth)
 

@@ -26,7 +26,7 @@
                      :lg="{span: 24 }" :xl="{span: 24 }">
                 <div class="hero" style="background-color: #FAFAFA">
                   <a-row>
-                    
+
                     <a-col span="4">
                       <span style="font-weight: bold">Candidate Name</span>
                     </a-col>
@@ -41,8 +41,12 @@
                       View profile
 
                     </a-col>
-                   
-                     
+                    <a-col span="6">
+                      Rejection reason(s)
+
+                    </a-col>
+
+
                   </a-row>
 
 
@@ -57,7 +61,7 @@
 
                     <div class="hero" style="width: 100%">
                       <a-row>
-                        
+
                         <a-col span="4">
                           <span style="font-weight: bold">{{ item.candidate.user.first_name}} {{ item.candidate.user.last_name}} </span>
                         </a-col>
@@ -86,8 +90,12 @@
                           </router-link>
 
                         </a-col>
-                        
-                        
+                        <a-col span="6">
+                          <span v-if="item.rejectioncomment">{{item.rejectioncomment}} ,</span><span v-if="item.rejectionreason">{{item.rejectionreason}}</span>
+
+                        </a-col>
+
+
                       </a-row>
 
 
@@ -102,7 +110,7 @@
 
         </a-col>
       </a-row>
-      
+
     </div>
   </div>
 </template>
@@ -116,16 +124,17 @@ name: "Rejected",
   data() {
     return {
       currentUserProfile: null,
-      applicants: null,
+
       loading: false,
       pagination: {
 
         pageSize: 20,
+        position:'both',
       },
       jobId: '',
       rejectedapplicants: [],
-      applicants:[]
-      
+
+
 
 
 
@@ -133,74 +142,20 @@ name: "Rejected",
   },
   components: {
 
-    
+
 
 
   },
   mounted() {
     this.jobId = this.$store.state.route.params.jobId
-    if(this.$store.state.rejected.length>0){
+    this.rejectedapplicants = this.$store.state.rejected
 
-      if(this.$store.state.rejected[0].job === Number(this.jobId)){
-        this.rejectedapplicants = this.$store.state.rejected
-        this.lazyloader()
-      }else {
-        this.fetchApplicants()
-      }
-
-
-    }else {
-
-      this.fetchApplicants()
-    }
   },
-  
+
   methods: {
-    lazyloader(){
-      const auth = {
-        headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-      };
 
-      Marketplace.specificjobapplicants(this.jobId, auth)
-          .then(resp => {
-            this.applicants = resp.data
-            let rejected =[]
-            this.applicants.forEach(applicant=>{
-                if(applicant.stage === 'rejected' ){
-                  rejected.push(applicant)
-                    }
-            })
-            if(rejected.length > this.$store.state.rejected.length){
-              this.rejectedapplicants =[]
-              this.ComputeNewApplicants()
-            }
 
-          })
-    },
-    fetchApplicants() {
-      const auth = {
-        headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-      };
-      this.loading = true
-      Marketplace.specificjobapplicants(this.jobId, auth)
-          .then(resp => {
-            this.applicants = resp.data
-            this.ComputeNewApplicants()
-          })
-    },
-    ComputeNewApplicants(){
-      this.applicants.forEach(applicant=>{
-        if(applicant.stage === 'rejected' ){
-          this.rejectedapplicants.push(applicant)
-        }
-      })
-      this.loading = false
-      this.$store.dispatch('setrejected', this.rejectedapplicants)
-    },
-   
-   
   }
 }
 </script>

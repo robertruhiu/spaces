@@ -175,7 +175,7 @@ export default {
   data() {
     return {
       job: {},
-      skills: null,
+      skills: [],
       currentUserProfile: {},
       applied: false,
       myjobs: [],
@@ -217,10 +217,8 @@ export default {
           headers: {Authorization: 'JWT ' + this.$store.state.token}
 
         }
-        UsersService.currentuser(this.$store.state.user.pk, auth)
-            .then(resp => {
-              this.currentUserProfile = resp.data
-            })
+        this.currentUserProfile = this.$store.state.user_object
+
         MarketPlaceService.jobdetails(this.$route.params.jobId)
             .then(resp => {
               this.job = resp.data
@@ -240,16 +238,17 @@ export default {
                       })
 
                     }
+                    if(this.job.tech_stack){
+                      this.skills = this.job.tech_stack.split(',');
+
+                    }
 
 
                     this.Applicationvalidators()
                   })
             })
-        if(this.job.tech_stack){
-          this.skills = this.job.tech_stack.split(',');
 
-        }
-        
+
 
 
         this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")

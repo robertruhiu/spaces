@@ -148,7 +148,7 @@
                             <a-icon type="book" />Interview
                             <a-menu slot="overlay" @click="rejectionmodalOpen(item)">
                               <a-menu-item key="1">
-                                <a-icon type="user"/>
+                                <a-icon type="close"/>
                                 reject
                               </a-menu-item>
 
@@ -257,6 +257,7 @@ export default {
       loading: false,
       pagination: {
         pageSize: 20,
+        position:'both',
       },
       jobId: '',
       testapplicants: [],
@@ -275,18 +276,8 @@ export default {
   },
   mounted() {
     this.jobId = this.$store.state.route.params.jobId
-    if (this.$store.state.test.length > 0) {
-      if(this.$store.state.test[0].job === Number(this.jobId)){
-        this.testapplicants = this.$store.state.test
-       
-      }else {
-        this.fetchApplicants()
-      }
+    this.testapplicants = this.$store.state.test
 
-
-    } else {
-      this.fetchApplicants()
-    }
   },
   filters: {
     moment: function (date) {
@@ -297,29 +288,7 @@ export default {
     navigateTo(route) {
       this.$router.push(route)
     },
-   
-    fetchApplicants() {
-      const auth = {
-        headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-      };
-      this.loading = true
-      Marketplace.specificjobapplicants(this.jobId, auth)
-          .then(resp => {
-            this.applicants = resp.data
-            this.ComputeNewApplicants()
-          })
-    },
-    ComputeNewApplicants() {
-      this.applicants.forEach(applicant => {
-        if (applicant.stage === 'test' && applicant.stage !== 'rejected') {
-          this.testapplicants.push(applicant)
-        }
-      })
-      this.loading = false
-      this.$store.dispatch('settest', this.testapplicants)
-
-    },
 
     showModal(candidate, application_id) {
       this.visible = true
@@ -364,10 +333,22 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       };
+      let rejectionreasons = ''
+      let rejectionstatement =''
+      if(this.reasoncomment){
+        rejectionstatement = this.reasoncomment
+        profile.rejectioncomment =this.reasoncomment
+      }
+      if(this.reasonspicked){
+        rejectionreasons = this.reasonspicked.join(',')
+        profile.rejectionreason = this.reasonspicked.join(',')
+      }
 
       Marketplace.pickreject(profile.id, {
         stage: 'rejected',
         selected: false,
+        rejectioncomment:rejectionstatement,
+        rejectionreason:rejectionreasons
 
       }, auth)
       .then(()=>{

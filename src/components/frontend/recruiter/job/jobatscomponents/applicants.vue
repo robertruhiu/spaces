@@ -167,7 +167,7 @@ export default {
       applicants: null,
       loading: false,
       pagination: {
-
+        position:'both',
         pageSize: 20,
       },
       jobId: '',
@@ -178,6 +178,10 @@ export default {
       reasoncomment: '',
       rejectionmodal:false,
       applicationactive: {},
+      leads:[],
+      interviewapplicants:[],
+      rejected:[],
+      testapplicants:[],
 
 
     }
@@ -186,15 +190,19 @@ export default {
     this.jobId = this.$store.state.route.params.jobId
 
     if(this.$store.state.applicants.length>0){
-      if(this.$store.state.applicants[0].job === Number(this.jobId)){
+      if( this.$store.state.applicants[0].job === Number(this.jobId)){
         this.newapplicants = this.$store.state.applicants
-        
+
+        this.lazyloader()
+
       }else {
+
         this.fetchApplicants()
       }
 
 
     }else {
+
       this.fetchApplicants()
     }
 
@@ -206,7 +214,29 @@ export default {
     }
   },
   methods: {
-    
+    lazyloader(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      };
+
+
+      Marketplace.specificjobapplicants(this.jobId, auth)
+          .then(resp => {
+            this.applicants = resp.data
+            if(this.applicants.length >= (this.$store.state.applicants.length + this.$store.state.leads.length + this.$store.state.interview.length + this.$store.state.test.length + this.$store.state.rejected.length) || this.applicants.length <= (this.$store.state.applicants.length + this.$store.state.leads.length + this.$store.state.interview.length + this.$store.state.test.length + this.$store.state.rejected.length)){
+              this.leads =[]
+              this.newapplicants =[]
+              this.interviewapplicants =[]
+              this.testapplicants =[]
+              this.rejected =[]
+
+              this.ComputeNewApplicants()
+            }
+
+          })
+    },
+
     fetchApplicants() {
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -221,13 +251,30 @@ export default {
     },
     ComputeNewApplicants(){
       this.applicants.forEach(applicant=>{
+        if(applicant.selected === true && applicant.stage !== 'rejected' ){
+          this.leads.push(applicant)
+        }
         if(applicant.selected === false && applicant.stage !== 'rejected' ){
           this.newapplicants.push(applicant)
         }
+        if(applicant.stage === 'interview' && applicant.stage !== 'rejected' ){
+          this.interviewapplicants.push(applicant)
+        }
+        if (applicant.stage === 'test' && applicant.stage !== 'rejected') {
+          this.testapplicants.push(applicant)
+        }
+        if (applicant.stage === 'rejected') {
+          this.rejected.push(applicant)
+        }
       })
       this.loading = false
+      this.$store.dispatch('setleads', this.leads)
       this.$store.dispatch('setapplicants', this.newapplicants)
+      this.$store.dispatch('setinterview', this.interviewapplicants)
+      this.$store.dispatch('settest', this.testapplicants)
+      this.$store.dispatch('setrejected', this.rejected)
     },
+
     Accept(profile){
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
@@ -260,9 +307,22 @@ export default {
 
       };
 
+      let rejectionreasons = ''
+      let rejectionstatement =''
+      if(this.reasoncomment){
+        rejectionstatement = this.reasoncomment
+        profile.rejectioncomment =this.reasoncomment
+      }
+      if(this.reasonspicked){
+        rejectionreasons = this.reasonspicked.join(',')
+        profile.rejectionreason = this.reasonspicked.join(',')
+      }
+
       Marketplace.pickreject(profile.id, {
         stage: 'rejected',
         selected: false,
+        rejectioncomment:rejectionstatement,
+        rejectionreason:rejectionreasons
 
       }, auth)
       .then(()=>{

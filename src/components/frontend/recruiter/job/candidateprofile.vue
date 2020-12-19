@@ -51,8 +51,7 @@
               </a-row>
 
 
-              <div style="margin-top: 0.5rem" v-if="application.stage === 'active' ||application.stage === 'test'|| application.stage === 'interview' ||
-                             application.stage === 'offer'  ">
+              <div style="margin-top: 0.5rem" >
                 <a-row>
                   <a-col :span="12" class="spacer">
                     <a-icon type="mail"/>

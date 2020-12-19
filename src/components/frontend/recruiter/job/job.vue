@@ -21,6 +21,7 @@
               </a-breadcrumb>
               <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
                 {{ job.title }}</span>
+              <div v-if="$store.state.user_object.user.is_staff">Email of job owner : {{owner.user.email}}</div>
 
 
             </a-col>
@@ -59,29 +60,33 @@
 
             </a-col>
 
+
           </a-row>
 
 
         </a-card>
-        
+
         <a-row>
+
+
           <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
                  :lg="{span: 24 }" :xl="{span: 24 }">
             <div style="padding: 1%;">
               <a-tabs type="card" animated :size="large">
+
                 <a-tab-pane key="1">
-                  <span slot="tab">
-                    <a-icon type="funnel-plot" />
-                    Leads
-                  </span>
-                  <Leads/>
-                </a-tab-pane>
-                <a-tab-pane key="2">
                   <span slot="tab">
                     <a-icon type="usergroup-add" />
                     New Applicants
                   </span>
                   <Applicants/>
+                </a-tab-pane>
+                <a-tab-pane key="2">
+                  <span slot="tab">
+                    <a-icon type="funnel-plot" />
+                    Leads
+                  </span>
+                  <Leads/>
                 </a-tab-pane>
                 <a-tab-pane key="4">
                   <span slot="tab">
@@ -126,7 +131,7 @@
             </div>
           </a-col>
         </a-row>
-        
+
         <!-- <show-at :breakpoints="{ small: 900}" breakpoint="small">
           <Mobilebase v-bind:job="job"/>
         </show-at> -->
@@ -156,6 +161,7 @@ import EditJob from "@/components/frontend/recruiter/job/jobatscomponents/EditJo
 import Smallsider from "@/components/frontend/recruiter/layout/Smallsider";
 import Rejected from "@/components/frontend/recruiter/job/jobatscomponents/rejected"
 import Mobilebase from '@/components/frontend/recruiter/job/jobatscomponents/mobilecomponents/Mobilebase';
+import User from "@/services/UsersService";
 export default {
   name: "job",
   components: {
@@ -170,7 +176,8 @@ export default {
     return {
       job: {},
       joburl: '',
-      published: false
+      published: false,
+      owner:{}
 
 
     }
@@ -199,7 +206,19 @@ export default {
             this.job = resp.data
             this.joburl = `https://www.codeln.com/jobdetails/${this.job.id}`
             this.published = this.job.published
+            this.fetchOwner()
           })
+
+    },
+    fetchOwner(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      };
+      User.currentuser(this.job.posted_by, auth)
+      .then(resp=>{
+        this.owner = resp.data
+      })
 
     },
     publishUnpublish() {
@@ -218,7 +237,7 @@ export default {
                 .then()
 
             }
-            
+
           })
 
     },

@@ -120,7 +120,7 @@
 
                             <a-menu slot="overlay" >
                               <a-menu-item  @click="Move(item)" key="1"> <a-icon type="codepen" />Testing skills </a-menu-item>
-                              <a-menu-item  @click="rejectionmodalOpen(item)" key="2"> <a-icon type="user" />reject </a-menu-item>
+                              <a-menu-item  @click="rejectionmodalOpen(item)" key="2"> <a-icon type="close" />reject </a-menu-item>
 
                             </a-menu>
                           </a-dropdown-button>
@@ -226,6 +226,7 @@ name: "Interview",
       pagination: {
 
         pageSize: 20,
+        position:'both',
       },
       jobId: '',
       interviewapplicants: [],
@@ -252,20 +253,8 @@ name: "Interview",
   },
   mounted() {
     this.jobId = this.$store.state.route.params.jobId
-    if(this.$store.state.interview.length>0){
+    this.interviewapplicants = this.$store.state.interview
 
-      if(this.$store.state.interview[0].job === Number(this.jobId)){
-        this.interviewapplicants = this.$store.state.interview
-        
-      }else {
-        this.fetchApplicants()
-      }
-
-
-    }else {
-
-      this.fetchApplicants()
-    }
   },
   filters: {
     moment: function (date) {
@@ -273,28 +262,8 @@ name: "Interview",
     }
   },
   methods: {
-    
-    fetchApplicants() {
-      const auth = {
-        headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-      };
-      this.loading = true
-      Marketplace.specificjobapplicants(this.jobId, auth)
-          .then(resp => {
-            this.applicants = resp.data
-            this.ComputeNewApplicants()
-          })
-    },
-    ComputeNewApplicants(){
-      this.applicants.forEach(applicant=>{
-        if(applicant.stage === 'interview' && applicant.stage !== 'rejected' ){
-          this.interviewapplicants.push(applicant)
-        }
-      })
-      this.loading = false
-      this.$store.dispatch('setinterview', this.interviewapplicants)
-    },
+
     OpenNotes(application){
       this.notesmodal = true
       this.applicationactive =application
@@ -346,9 +315,22 @@ name: "Interview",
 
       };
 
+      let rejectionreasons = ''
+      let rejectionstatement =''
+      if(this.reasoncomment){
+        rejectionstatement = this.reasoncomment
+        profile.rejectioncomment =this.reasoncomment
+      }
+      if(this.reasonspicked){
+        rejectionreasons = this.reasonspicked.join(',')
+        profile.rejectionreason = this.reasonspicked.join(',')
+      }
+
       Marketplace.pickreject(profile.id, {
         stage: 'rejected',
         selected: false,
+        rejectioncomment:rejectionstatement,
+        rejectionreason:rejectionreasons
 
       }, auth)
       .then(()=>{

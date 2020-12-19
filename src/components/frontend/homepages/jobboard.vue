@@ -87,7 +87,7 @@
                                                     more</a>
                                                 </p>
 
-                                                <p>
+                                                <p v-if="item.skills">
                                                     Skills looking for :
                                                     <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>

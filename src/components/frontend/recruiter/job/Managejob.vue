@@ -113,6 +113,9 @@
                         <a-row>
                           <a-col span="6">
                             <span style="font-weight: bold">{{ item.title }}</span>
+                            <a-tag color="green" v-if="item.published">
+                              published
+                            </a-tag>
                           </a-col>
 
                           <a-col span="6">
