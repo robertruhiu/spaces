@@ -137,11 +137,11 @@
 
         </a-form-item>
         <a-form-item
-            label="Project Description"
+            label="Project Description(max 400)"
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
-          <a-textarea placeholder="About the project" rows="4"
+          <a-textarea placeholder="About the project" rows="4" maxLength=400
                       v-model="projectdescription"
                       v-validate.disable="'required'" name="project_description"/>
           <span style="color: #f5222d;" v-show="errors.has('project_description')"
@@ -256,7 +256,8 @@
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
-          <a-textarea placeholder="About the project" rows="4"
+
+          <a-textarea placeholder="About the project" rows="4" maxLength=400
                       v-model="currentproject.description"
                       v-validate.disable="'required'" name="project_description"/>
           <span style="color: #f5222d;" v-show="errors.has('project_description')"
@@ -363,6 +364,7 @@ export default {
     },
     CreateProject() {
       this.createproject = true
+      this.projecttags = []
     },
 
     EditProject(project) {
@@ -395,6 +397,11 @@ export default {
                     this.createproject = false
                     this.myprojects = []
                     this.projects = []
+                    this.projecttitle = ''
+                    this.projectdescription = ''
+                    this.projectrepo = ''
+                    this.projectdemo = ''
+                    this.projecttech = ''
                     this.FetchPortfolio()
 
                   }
@@ -455,7 +462,6 @@ export default {
 
               }
           )
-
 
 
     },

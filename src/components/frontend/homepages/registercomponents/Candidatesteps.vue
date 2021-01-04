@@ -298,7 +298,7 @@
 
 
                                         <a-textarea name="bio"
-                                                    maxlength="300"
+                                                    maxLength=300
                                                     v-model="currentUserProfile.about"
                                                     placeholder="Tell us something about yourself"
                                                     :rows="4"/>
@@ -564,22 +564,22 @@
 
 
               if (this.currentUserProfile.phone_number) {
-                
+
                 if(this.currentUserProfile.phone_number.charAt(0)=== '+'){
                     this.phone = this.currentUserProfile.phone_number
                          telephones.forEach(telephone => {
-                            
+
                             if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
                                 this.countrycode = telephone.code
 
                             }else if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
                                 this.countrycode = telephone.code
                             }
-    
-                            
+
+
                         });
-                        
-                        
+
+
                     }
               }
 
