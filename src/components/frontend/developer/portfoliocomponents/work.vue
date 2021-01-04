@@ -176,7 +176,7 @@
         >
           <a-textarea
               placeholder="A description of your role and responsibilites(400 char max)"
-              rows="4"
+              rows="4" maxLength=400
               v-model="experiencedescription"
               v-validate.disable="'required'"
               name="experience_description"
@@ -323,7 +323,7 @@
         >
           <a-textarea
               placeholder="A description of your role and responsibilites(400 char max)"
-              rows="4"
+              rows="4" maxLength=400
               v-model="currentexperience.description"
               v-validate.disable="'required'"
               name="experience_description"
@@ -438,6 +438,7 @@ export default {
     },
     CreateExperience() {
       this.createexperience = true
+      this.experiencetags = []
     },
 
     EditExperience(experience) {
@@ -471,6 +472,12 @@ export default {
                     this.createexperience = false
                     this.experienceslist = []
                     this.experiences = []
+                    this.experiencetitle = ''
+                    this.experiencedescription = ''
+                    this.experiencecompany = ''
+                    this.experiencetech = ''
+                    this.experiencelocation = ''
+                    this.experienceduration = ''
                     this.FetchExperience()
 
 
