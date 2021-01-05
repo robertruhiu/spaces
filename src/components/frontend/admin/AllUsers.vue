@@ -89,14 +89,7 @@
                           email
 
                         </a-col>
-                        <a-col span="2">
-                          user type
 
-                        </a-col>
-                        <a-col span="4">
-                          stage
-
-                        </a-col>
 
 
 
@@ -119,31 +112,18 @@
 
                             </a-col>
                             <a-col span="4">
-                              <span style="font-weight: bold">{{ item.user.first_name }} {{item.user.last_name}}</span>
+                              <span style="font-weight: bold">{{ item.first_name }} {{item.last_name}}</span>
 
                             </a-col>
 
                             <a-col span="6">
                             <span >
-                              <span style="font-weight: bold">{{ item.user.email }}</span>
+                              <span style="font-weight: bold">{{ item.email }}</span>
                             </span>
 
 
                             </a-col>
-                            <a-col span="2">
-                            <span >
-                              <span style="font-weight: bold">{{ item.user_type }}</span>
-                            </span>
 
-
-                            </a-col>
-                            <a-col span="4">
-                            <span >
-                              <span style="font-weight: bold">{{ item.stage }}</span>
-                            </span>
-
-
-                            </a-col>
 
 
 
@@ -266,11 +246,12 @@ export default {
 
       };
       this.loading = true
-      UsersService.allprofiles(auth)
+      UsersService.allusers(auth)
           .then(resp => {
             this.AllUsers = resp.data
+            this.loading = false
           })
-      this.loading = false
+
 
     },
 
@@ -305,14 +286,14 @@ export default {
         let unsetdata = []
         if (checkedtags.includes('name')) {
 
-          if (user.user.first_name.toLowerCase().includes(this.searchterm.toLowerCase()) || user.user.last_name.toLowerCase().includes(this.searchterm.toLowerCase())) {
+          if (user.first_name.toLowerCase().includes(this.searchterm.toLowerCase()) || user.last_name.toLowerCase().includes(this.searchterm.toLowerCase())) {
 
             unsetdata.push(user)
           }
         }
         if (checkedtags.includes('email')) {
 
-          if (user.user.email.toLowerCase().includes(this.searchterm.toLowerCase())) {
+          if (user.email.toLowerCase().includes(this.searchterm.toLowerCase())) {
 
             unsetdata.push(user)
           }

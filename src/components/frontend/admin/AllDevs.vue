@@ -265,8 +265,9 @@ name: "AllDevs",
       UsersService.alldevs(auth)
           .then(resp => {
             this.AllUsers = resp.data
+            this.loading = false
           })
-      this.loading = false
+
     },
 
     logout() {

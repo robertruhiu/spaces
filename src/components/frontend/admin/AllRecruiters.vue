@@ -252,8 +252,9 @@ name: "AllRecruiters",
       UsersService.allrecruiters(auth)
           .then(resp => {
             this.AllUsers = resp.data
+            this.loading = false
           })
-      this.loading = false
+
     },
 
     logout() {
