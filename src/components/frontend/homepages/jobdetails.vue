@@ -23,19 +23,13 @@
                                 <span v-if="this.$store.state.isUserLoggedIn">
 
                                     <span style="float: right"
-                                          v-if="currentUserProfile.user_type ==='developer' && applied === false  ">
+                                          v-if="currentUserProfile.user_type ==='developer' && applied === false  && currentUserProfile.stage === 'complete' ">
                                     <div v-if="save">
                                         <a-spin/>
                                     </div>
                                         <span v-else>
-                                            <div v-if="error.length === 0 ">
-                                                <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
-                                                          @click="ApplicationModal()">Apply</a-button>
-                                            </div>
-                                            <div v-else>
-                                                <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
-                                                          @click="Fillprofile()">Apply</a-button>
-                                            </div>
+                                            <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
+                                                      @click="ApplicationModal()">Apply</a-button>
 
 
                                         </span>
@@ -50,7 +44,8 @@
                                     >Manage Job application</a-button>
 
                                 </span>
-                                  <span  v-if="currentUserProfile.user_type ==='developer' && currentUserProfile.stage !== 'complete'  ">
+                                  <span style="float: right"
+                                      v-if="currentUserProfile.user_type ==='developer' && currentUserProfile.stage !== 'complete'  ">
                                     <a-button type="primary"
                                               @click="navigateTo({name:'register'})">Registration incomplete click to continue</a-button>
 
@@ -121,6 +116,7 @@
             </a-button>
           </template>
           <div>
+
             <p>Hello your profile is not complete.To enable us to easily analyse your fitness for the
               job,satisy the following below</p>
             <p v-for="item in error" v-bind:key="item">
@@ -136,20 +132,24 @@
         </a-modal>
 
         <a-modal v-model="applyterms" title="Application placement" :footer=null>
-      <p><strong> Placement</strong></p>
-      <p>Final successful placement is upto the client.By applying its not an assurance of getting the job</p>
-      <p><strong> Communication</strong></p>
-      <p>All parties will be kept in the loop in terms of where the application stand.You can monitor this on you manage applications on your dashboard.
-        Note communication timeline is highly determined by the client so patience is key</p>
-      <p><strong>Skill Verification</strong></p>
-      <p>As per our objective as Codeln is to enable employment of skilled developers.Your skills may be called for test .That will be a Codeln owned project aligned to
-         client needs.We retain the code and only share a demo of your work and a performance report based on your code</p>
-      <p><strong>Data shared</strong></p>
-      <p>On registration you are requested to provide data such as your cv,github,linkedin profiles and other details. This data will be available
-         to our clients for review</p>
-      <p>By Applying i agree to be bound by the above</p>
-      <a-button type="primary" @click="ApplyJob">Apply</a-button>
-    </a-modal>
+          <p><strong> Placement</strong></p>
+          <p>Final successful placement is upto the client.By applying its not an assurance of getting the job</p>
+          <p><strong> Communication</strong></p>
+          <p>All parties will be kept in the loop in terms of where the application stand.You can monitor this on you
+            manage applications on your dashboard.
+            Note communication timeline is highly determined by the client so patience is key</p>
+          <p><strong>Skill Verification</strong></p>
+          <p>As per our objective as Codeln is to enable employment of skilled developers.Your skills may be called for
+            test .That will be a Codeln owned project aligned to
+            client needs.We retain the code and only share a demo of your work and a performance report based on your
+            code</p>
+          <p><strong>Data shared</strong></p>
+          <p>On registration you are requested to provide data such as your cv,github,linkedin profiles and other
+            details. This data will be available
+            to our clients for review</p>
+          <p>By Applying i agree to be bound by the above</p>
+          <a-button type="primary" @click="ApplyJob">Apply</a-button>
+        </a-modal>
 
 
       </a-layout-content>
@@ -187,7 +187,9 @@ export default {
       experiences: 0,
       error: [],
       fillprofile: false,
-      applyterms:false
+      applyterms: false,
+      experienceslist: [],
+      portfoliolist: []
 
 
     }
@@ -229,16 +231,15 @@ export default {
                     this.dataload = false
                     if (this.myjobs && this.job) {
                       this.myjobs.forEach(job => {
-                        if(job.job.id === this.job.id){
+                        if (job.job.id === this.job.id) {
                           this.applied = true
                         }
-
 
 
                       })
 
                     }
-                    if(this.job.tech_stack){
+                    if (this.job.tech_stack) {
                       this.skills = this.job.tech_stack.split(',');
 
                     }
@@ -247,8 +248,6 @@ export default {
                     this.Applicationvalidators()
                   })
             })
-
-
 
 
         this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
@@ -288,29 +287,27 @@ export default {
         UsersService.portfolio(this.$store.state.user.pk, auth)
             .then(resp => {
               this.portfoliolist = resp.data
-              this.portfolio = this.portfoliolist.length
+
             })
-        UsersService.portfolio(this.$store.state.user.pk, auth)
+        UsersService.experience(this.$store.state.user.pk, auth)
             .then(resp => {
               this.experienceslist = resp.data
-              this.experiences = this.experienceslist.length
+
+
             })
 
 
-
-
-        if (this.currentUserProfile.phone_number === '' || this.currentUserProfile.phone_number === null) {
-          this.error.push('phone number required')
-        }
         if (this.currentUserProfile.file === '' || this.currentUserProfile.file === null) {
           this.error.push('cv required')
         }
-        if (this.experiences.length <= 0) {
+        if (this.experienceslist.length === 0) {
           this.error.push('at least one work experience')
         }
-        if (this.portfolio.length <= 0) {
+
+        if (this.portfoliolist) {
           this.error.push('at least one personal project')
         }
+
       }
 
     },
@@ -322,7 +319,7 @@ export default {
       this.fillprofile = true
     },
 
-    ApplicationModal(){
+    ApplicationModal() {
       this.applyterms = true
     },
 

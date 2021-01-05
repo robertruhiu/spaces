@@ -725,6 +725,8 @@
                 this.doneloading = true
                 this.currentUserProfile.stage = 'complete'
                 this.currentUserProfile.user_type = 'developer'
+              this.$store.state.user_object.user_type ='developer'
+              this.$store.state.user_object.stage = 'complete'
                 UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
                     .then(resp => {
                         if (this.currentUserProfile.user_type === 'developer') {

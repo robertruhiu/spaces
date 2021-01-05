@@ -31,7 +31,7 @@
                       <span style="font-weight: bold">Candidate Name</span>
                     </a-col>
 
-                    <a-col span="8">
+                    <a-col span="4">
                       Skills
 
 
@@ -43,6 +43,10 @@
                     </a-col>
                     <a-col span="6">
                       Rejection reason(s)
+
+                    </a-col>
+                    <a-col span="4">
+                     Action
 
                     </a-col>
 
@@ -66,7 +70,7 @@
                           <span style="font-weight: bold">{{ item.candidate.user.first_name}} {{ item.candidate.user.last_name}} </span>
                         </a-col>
 
-                        <a-col span="8">
+                        <a-col span="4">
                           <span v-if="item.candidate.skills">
                             <span style="" v-for="skill in item.candidate.skills.split(',').slice(0, 5)" v-bind:key="skill.id">
                               <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
@@ -75,8 +79,6 @@
 
 
                         </a-col>
-
-
 
                         <a-col span="4">
                           <router-link
@@ -92,6 +94,17 @@
                         </a-col>
                         <a-col span="6">
                           <span v-if="item.rejectioncomment">{{item.rejectioncomment}} ,</span><span v-if="item.rejectionreason">{{item.rejectionreason}}</span>
+
+                        </a-col>
+                        <a-col span="4">
+                          <a-dropdown-button @click="Reinstate(item)">
+                            Reinstate application
+                            <a-menu slot="overlay" @click="Delete(item)">
+                              <a-menu-item key="1"> <a-icon type="close" />delete </a-menu-item>
+
+                            </a-menu>
+                          </a-dropdown-button>
+
 
                         </a-col>
 
@@ -153,6 +166,36 @@ name: "Rejected",
   },
 
   methods: {
+    Reinstate(profile){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      };
+      profile.stage = 'active'
+      profile.selected ='true'
+      this.$store.state.leads.push(profile)
+      const index = this.rejectedapplicants.indexOf(profile);
+      if (index > -1) {
+        this.rejectedapplicants.splice(index, 1);
+      }
+      this.$store.dispatch('setrejected', this.rejectedapplicants)
+      Marketplace.pickreject(profile.id, {
+        stage: 'active',
+        selected: true,
+      }, auth)
+    },
+    Delete(profile){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      };
+      const index = this.rejectedapplicants.indexOf(profile);
+      if (index > -1) {
+        this.rejectedapplicants.splice(index, 1);
+      }
+      this.$store.dispatch('setrejected', this.rejectedapplicants)
+      Marketplace.deletejobapplication(profile.id,  auth)
+    }
 
 
 

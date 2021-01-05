@@ -125,6 +125,9 @@
                 <a-button slot="tabBarExtraContent" @click="publishUnpublish" v-if="published">
                   Unpublish job
                 </a-button>
+<!--                <a-button slot="tabBarExtraContent" @click="ChangeOwner" v-if=" $store.state.user_object.user.is_staff">-->
+<!--                  Change owner-->
+<!--                </a-button>-->
 
 
               </a-tabs>

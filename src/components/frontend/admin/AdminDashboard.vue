@@ -10,7 +10,7 @@
         <a-card class="hellocard" :bordered="false">
             <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{Greeting}}
                 {{$store.state.user_object.user.first_name | capitalize}}</span>
-          <p style="font-family: sofia_proregular;font-size: 1.2rem;line-height: 1rem;color: white">What would you like to do today?</p>
+          <p style="font-family: sofia_proregular;font-size: 1.2rem;line-height: 1rem;color: white">Welcome to the admin resources</p>
 
         </a-card>
 
@@ -24,18 +24,18 @@
                    :md="{span: 12, offset: 0 }"
                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
               <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
-                <router-link to="/CreateJob">
+                <router-link to="/AllUsers">
                   <div style="color: black">
 
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
+                          <img class="poolavatar" src="../../../assets/images/connections.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
-                        <p>Post a Job</p>
-                        <p style="margin: 0;">Get devs for your vacancy</p>
+                        <p>All Users</p>
+
 
 
                       </a-col>
@@ -53,18 +53,18 @@
                    :md="{span: 12, offset: 0 }"
                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
               <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
-                <router-link to="managejobs">
+                <router-link to="/AllDevs">
                   <div style="color: black">
 
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/cv.svg">
+                          <img class="poolavatar" src="../../../assets/images/programmer.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
-                        <p>Manage Jobs</p>
-                        <p style="margin: 0;">Manage job applications</p>
+                        <p>All Devs</p>
+
 
 
                       </a-col>
@@ -83,18 +83,18 @@
                    :md="{span: 12, offset: 0 }"
                    :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
               <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
-                <router-link to="/talent">
+                <router-link to="/AllRecruiter">
                   <div style="color: black">
 
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/star.svg">
+                          <img class="poolavatar" src="../../../assets/images/interview.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
-                        <p>Browse the Talent Pool</p>
-                        <p style="margin: 0;">View more devs from pool</p>
+                        <p>All Recruiters</p>
+
 
 
                       </a-col>
@@ -109,36 +109,7 @@
               </a-card>
 
             </a-col>
-            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }" v-if="$store.state.user_object.user.is_staff"
-                   :md="{span: 12, offset: 0 }"
-                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
-              <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
-                <router-link to="/AdminDashboard">
-                  <div style="color: black">
 
-                    <a-row>
-                      <a-col span="24">
-                        <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/admin.svg">
-                        </div>
-                      </a-col>
-                      <a-col span="24" style="text-align: center">
-                        <p>Admin</p>
-                        <p style="margin: 0;">Adminstrative resources</p>
-
-
-                      </a-col>
-
-
-                    </a-row>
-
-                  </div>
-                </router-link>
-
-
-              </a-card>
-
-            </a-col>
 
 
 
@@ -170,14 +141,14 @@ import 'simplemde/dist/simplemde.min.css';
 
 
 
-import lena from '@/components/frontend/recruiter/lena/lena'
+
 
 
 
 
 
 export default {
-  name: 'index',
+  name: 'AdminDashboard',
   data() {
 
     return {
@@ -198,7 +169,7 @@ export default {
 
   },
   components: {
-    RecruiterSider,lena
+    RecruiterSider
 
 
   },
@@ -237,7 +208,6 @@ export default {
     if (this.$store.state.user.pk) {
 
       this.currentUserProfile = this.$store.state.user_object
-      this.openNotification()
 
 
     }
@@ -257,15 +227,7 @@ export default {
     onBreakpoint(broken) {
       return broken;
     },
-    openNotification() {
 
-      this.$notification.open({
-        message: 'Lena',
-        description:
-            'To get tips on the page you are on click on the lena icon to show them.',
-
-    });
-    },
 
     logout() {
       this.$store.dispatch('setToken', null);

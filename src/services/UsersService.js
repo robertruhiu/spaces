@@ -8,11 +8,20 @@ export default {
     devs(auth) {
         return Api().get('qualified', auth)
     },
+    alldevs(auth) {
+        return Api().get('alldevs', auth)
+    },
+    allrecruiters(auth) {
+        return Api().get('allrecruiters', auth)
+    },
     sliceddevs() {
         return Api().get('userssliced')
     },
     allusers() {
         return Api().get('allusers')
+    },
+    allprofiles(auth) {
+        return Api().get('allprofiles', auth)
     },
     currentuser(user_id, auth) {
         return Api().get(`getprofile/${user_id} `, auth)
@@ -59,6 +68,9 @@ export default {
 
     update(user_id, currentUserProfile, auth) {
         return Api().put(`updater/${user_id} `, currentUserProfile, auth)
+    },
+    simpleprofileget(user_id, currentUserProfile, auth) {
+        return Api().get(`updater/${user_id} `, currentUserProfile, auth)
     },
     updatepatch(user_id, patchdata, auth) {
         return Api().patch(`updater/${user_id} `, patchdata, auth)

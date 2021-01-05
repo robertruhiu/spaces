@@ -1,10 +1,10 @@
 <template>
-  <div style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white">
+  <div style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: #F4F7FC;">
     <show-at breakpoint="mediumAndBelow">
       <KanbanSider/>
     </show-at>
     <hide-at breakpoint="mediumAndBelow">
-      <a-layout-sider v-model="collapsed" :trigger="null" collapsible style="box-shadow: 2px 0 6px rgba(0,21,41,.35);background-color: white;min-height: 100vh">
+      <a-layout-sider v-model="collapsed" :trigger="null" collapsible style="background-color: #F4F7FC;">
         <router-link to="/">
 
           <img v-bind:style="logo"
@@ -13,7 +13,7 @@
           >
 
         </router-link>
-        <a-menu  mode="inline" :default-selected-keys=key  style="font-family: sofia_proregular;border-right: hidden;">
+        <a-menu  mode="inline" :default-selected-keys=key  style="font-family: sofia_proregular;background-color: #F4F7FC;border-right: hidden">
           <a-menu-item key="1">
             <router-link to="/recruiter">
               <a-icon type="dashboard"/>

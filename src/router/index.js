@@ -51,6 +51,13 @@ const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
 const Feedback = () => import('@/components/frontend/recruiter/Feedback');
 const CreateJob = () => import('@/components/frontend/recruiter/Create');
+// admin resources
+const AdminDashboard = () => import('@/components/frontend/admin/AdminDashboard');
+const AllUsers = () => import('@/components/frontend/admin/AllUsers');
+const AllDevs = () => import('@/components/frontend/admin/AllDevs');
+const AllRecruiter = () => import('@/components/frontend/admin/AllRecruiters');
+const ViewEditProfile = () => import('@/components/frontend/admin/ViewEditProfile');
+
 Vue.use(Router);
 
 let router = new Router({
@@ -456,6 +463,51 @@ let router = new Router({
             path: '/feedback/:slug/',
             name: 'feedback',
             component: Feedback,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/AdminDashboard',
+            name: 'AdminDashboard',
+            component: AdminDashboard,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/AllUsers',
+            name: 'AllUsers',
+            component: AllUsers,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/AllDevs',
+            name: 'AllDevs',
+            component: AllDevs,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/AllRecruiter',
+            name: 'AllRecruiter',
+            component: AllRecruiter,
+            meta: {
+                requiresAuth: true
+            }
+
+        },
+        {
+            path: '/ViewEditProfile/:candidateId',
+            name: 'ViewEditProfile',
+            component: ViewEditProfile,
             meta: {
                 requiresAuth: true
             }

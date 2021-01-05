@@ -1,10 +1,41 @@
 <template>
-  <a-layout id="components-layout-demo-side" style="min-height: 100vh;">
-    <CandidateSider/>
-    <a-layout>
+  <a-layout id="components-layout-demo-side" style="min-height: 100vh">
 
-      <a-layout-content style="background-color: white">
-        <DevHeader/>
+    <RecruiterSider/>
+
+    <a-layout :style="{  background: '#FAFBFF', minHeight: '280px', }">
+
+
+      <a-layout-content>
+        <a-card class="hellocard" :bordered="false">
+          <a-row style="color: white">
+            <a-col span="12">
+              <a-breadcrumb>
+                <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a>
+                </a-breadcrumb-item>
+                <a-breadcrumb-item><a @click="$router.push('/AdminDashboard')" style="color: white">Admin board</a>
+                </a-breadcrumb-item>
+                <a-breadcrumb-item><a @click="$router.push('/AllDevs')" style="color: white">All Devs</a>
+                </a-breadcrumb-item>
+                <a-breadcrumb-item style="color: white">View edit profile</a-breadcrumb-item>
+
+
+              </a-breadcrumb>
+              <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                View edit profile</span>
+
+
+
+            </a-col>
+
+
+
+
+          </a-row>
+
+        </a-card>
+
+
         <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',marginTop:'1rem',
                 marginLeft: '1%',marginRight:'1%' }">
 
@@ -313,34 +344,35 @@
 
 
       </a-layout-content>
+
     </a-layout>
   </a-layout>
 </template>
 
 <script>
-
-
-import CandidateSider from "./layout/CandidateSider";
 import UsersService from '@/services/UsersService'
-import DevHeader from "./layout/DevHeader";
+import RecruiterSider from "@/components/frontend/recruiter/layout/RecruiterSider";
+import moment from "moment";
+
 import axios from 'axios'
 import cloudinary from 'cloudinary-core'
 import VuePhoneNumberInput from 'vue-phone-number-input';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import Vue from 'vue'
 
+
 let telephones = require("@/store/telephone")
 
 
 Vue.use(cloudinary)
 
-
 export default {
-  name: "Myprofile",
+name: "ViewEditProfile",
+
   components: {
-    DevHeader,
-    CandidateSider,
-    VuePhoneNumberInput
+    RecruiterSider,VuePhoneNumberInput
+
+
   },
   data() {
 
@@ -367,7 +399,12 @@ export default {
 
     }
   },
+  filters: {
 
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY');
+    }
+  },
 
   async mounted() {
 
@@ -377,55 +414,62 @@ export default {
 
     }
     if (this.$store.state.user.pk) {
-      this.currentUserProfile = this.$store.state.user_object
-      this.github = this.currentUserProfile.github_repo
-      this.linkedin = this.currentUserProfile.linkedin_url
+      UsersService.simpleprofileget(this.$store.state.route.params.candidateId, auth)
+      .then(resp=>{
+        this.currentUserProfile = resp.data
+        this.github = this.currentUserProfile.github_repo
+        this.linkedin = this.currentUserProfile.linkedin_url
 
-      if (this.currentUserProfile.phone_number) {
+        if (this.currentUserProfile.phone_number) {
 
 
-        if (this.currentUserProfile.phone_number.charAt(0) === '+') {
-          this.phone = this.currentUserProfile.phone_number
-          telephones.forEach(telephone => {
+          if (this.currentUserProfile.phone_number.charAt(0) === '+') {
+            this.phone = this.currentUserProfile.phone_number
+            telephones.forEach(telephone => {
 
-            if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
-              this.countrycode = telephone.code
+              if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
+                this.countrycode = telephone.code
 
-            } else if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
-              this.countrycode = telephone.code
+              } else if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
+                this.countrycode = telephone.code
+              }
+
+
+            });
+
+
+          }
+        }
+
+
+        if (this.currentUserProfile.skills) {
+          if (this.currentUserProfile.skills.length >= 0) {
+            let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
+            for (let i = 0; i < tags.length; i++) {
+              this.tags.push(tags[i])
             }
 
-
-          });
-
-
+          }
         }
-      }
+        this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
+        if (this.currentUserProfile.file) {
+          if (this.currentUserProfile.file.includes("http")) {
+            this.cv = this.currentUserProfile.file
+          } else {
+            this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
 
 
-      if (this.currentUserProfile.skills) {
-        if (this.currentUserProfile.skills.length >= 0) {
-          let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
-          for (let i = 0; i < tags.length; i++) {
-            this.tags.push(tags[i])
           }
 
         }
-      }
-      this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
+      })
 
 
-    }
-    if (this.currentUserProfile.file) {
-      if (this.currentUserProfile.file.includes("http")) {
-        this.cv = this.currentUserProfile.file
-      } else {
-        this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
 
 
-      }
 
     }
+
 
 
   },
@@ -437,9 +481,9 @@ export default {
     },
     flags() {
       let blacklist = []
-      blacklist[0] = this.$store.state.user.first_name
-      blacklist[1] = this.$store.state.user.last_name
-      blacklist[2] = this.$store.state.user.email
+      blacklist[0] = this.currentUserProfile.user.first_name
+      blacklist[1] = this.currentUserProfile.user.last_name
+      blacklist[2] = this.currentUserProfile.user.email
 
       if (this.github) {
         if (this.github.length > 0) {
@@ -528,7 +572,7 @@ export default {
 
       this.currentUserProfile.file = this.cv.slice(48)
 
-      this.currentUserProfile.user = this.$store.state.user.pk
+
       if (this.error_watcher.length === 0) {
         this.step1errors = []
         if (this.github === null || this.github === '') {
@@ -558,20 +602,11 @@ export default {
           this.currentUserProfile.linkedin_url = this.linkedin
           this.currentUserProfile.github_repo = this.github
 
-          UsersService.update(this.$store.state.user.pk, this.currentUserProfile, auth)
+          UsersService.update(this.currentUserProfile.id, this.currentUserProfile, auth)
               .then(resp => {
-                if (this.currentUserProfile.user_type === 'developer') {
+                this.loading = false
+                this.$message.info('Profile updated');
 
-                  this.$router.push({
-                    name: 'developer'
-                  })
-
-                } else {
-                  this.$router.push({
-                    name: 'recruiter'
-                  })
-
-                }
                 return resp
 
 
@@ -665,7 +700,7 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
-      UsersService.updatepatch(this.$store.state.user.pk, {file: this.cv.slice(48)}, auth)
+      UsersService.updatepatch(this.currentUserProfile.id, {file: this.cv.slice(48)}, auth)
           .then(resp => {
             this.currentUserProfile.file = this.cv
             this.uploading = false
@@ -715,7 +750,7 @@ export default {
       this.cv = res.data.secure_url
       this.uploading = false
       this.currentUserProfile.file = this.cv.slice(48)
-      UsersService.updatepatch(this.$store.state.user.pk, {file: this.cv.slice(48)}, auth)
+      UsersService.updatepatch(this.currentUserProfile.id, {file: this.cv.slice(48)}, auth)
           .then(resp => {
             this.currentUserProfile.file = this.cv
             this.uploading = false
@@ -740,38 +775,26 @@ export default {
     },
   }
 }
-
-
 </script>
 
 <style scoped>
-#dropbox {
-  border: 4px dashed #ccc;
-  padding-left: 8px;
+.hellocard {
+
+
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+
+  background: #004EC7;
+  border-radius: 0;
+  margin-bottom: 1rem;
+  color: white;
+
+
 }
 
-.my-form {
-  margin-top: 10px;
-}
 
-.gallery {
-  margin: 10px;
-}
-
-.gallery img {
-  margin-left: 16px;
-}
-
-.progress-bar {
-  width: 200px;
-  position: relative;
-  height: 8px;
-  margin-top: 4px;
-}
-
-.progress-bar .progress {
-  height: 8px;
-  background-color: #ff0000;
-  width: 0;
+.hero {
+  padding: 1%;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background-color: white;
 }
 </style>

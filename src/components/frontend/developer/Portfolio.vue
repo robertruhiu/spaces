@@ -64,7 +64,8 @@
                 <a-col :span="6">
                                 <span>
                                     <a-icon type="file-pdf"/> :
-                                    <a :href="cv" target='_blank'> Cv link</a>
+                                    <a :href="cv" target='_blank' v-if="cv"> Cv link</a>
+                                  <router-link v-else to="developerprofile">upload cv</router-link>
 
 
                             </span>
@@ -322,6 +323,8 @@ export default {
 
       }
 
+    }else {
+      this.cv = null
     }
 
   },
