@@ -277,7 +277,7 @@
 
 
       </a-layout-content>
-      <Banner/>
+
 
 
     </a-layout>
@@ -289,7 +289,7 @@
 import UsersService from '@/services/UsersService';
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
 import DevHeader from "@/components/frontend/developer/layout/DevHeader";
-import Banner from '@/components/layout/banner.vue'
+
 
 export default {
   name: "DevDashboard",
@@ -305,7 +305,7 @@ export default {
   components: {
     DevHeader,
     CandidateSider,
-    Banner
+
   },
   async mounted() {
 

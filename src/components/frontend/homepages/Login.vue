@@ -45,7 +45,8 @@
                                 </a-form-item>
                                 <a-form-item>
 
-                                    <a-input
+                                    <a-input-password
+                                        v-on:keyup.enter="login"
                                             v-model="password"
                                             placeholder="Password"
                                             style="z-index: 0"
@@ -58,7 +59,7 @@
                                                 type="lock"
                                                 style="color: rgba(0,0,0,.25)"
                                         />
-                                    </a-input>
+                                    </a-input-password>
                                     <div v-if="errors.has('password')" style="color: #f5222d;" class="ant-form-explain">
                                         {{
                                         errors.first('password') }}

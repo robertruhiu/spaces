@@ -65,17 +65,13 @@
                                 <a-form-item>
 
 
-                                    <a-input v-validate="'required|verify_password'" name="password"
+                                    <a-input-password v-validate="'required|verify_password'" name="password"
                                              type="password"
                                              v-model="password1"
                                              :class="{'is-danger': errors.has('password')}" placeholder="Password"
                                              ref="password">
-                                        <a-icon
-                                                slot="prefix"
-                                                type="lock"
-                                                style="color: rgba(0,0,0,.25)"
-                                        />
-                                    </a-input>
+
+                                    </a-input-password>
                                     <span style="color: #f5222d;" v-show="errors.has('password')"
                                           class="help is-danger">{{ errors.first('password') }}</span>
 
@@ -84,16 +80,12 @@
                                 <a-form-item>
 
 
-                                    <a-input v-model="password2" v-validate="'required|confirmed:password'"
+                                    <a-input-password v-model="password2" v-validate="'required|confirmed:password'"
                                              name="password_confirmation"
                                              type="password" :class="{'is-danger': errors.has('password_confirmation')}"
                                              placeholder="Password, Again" data-vv-as="password">
-                                        <a-icon
-                                                slot="prefix"
-                                                type="lock"
-                                                style="color: rgba(0,0,0,.25)"
-                                        />
-                                    </a-input>
+
+                                    </a-input-password>
                                     <span style="color: #f5222d;" v-show="errors.has('password_confirmation')"
                                           class="help is-danger">{{ errors.first('password_confirmation') }}</span>
                                 </a-form-item>
