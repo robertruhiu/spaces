@@ -601,6 +601,7 @@ name: "ViewEditProfile",
           this.currentUserProfile.phone_number = this.results.formattedNumber
           this.currentUserProfile.linkedin_url = this.linkedin
           this.currentUserProfile.github_repo = this.github
+          this.currentUserProfile.stage = 'complete'
 
           UsersService.update(this.currentUserProfile.id, this.currentUserProfile, auth)
               .then(resp => {
