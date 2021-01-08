@@ -49,4 +49,7 @@ export default {
     newselfverify(assessmentapplication_id,auth) {
         return Api().post(`newselfverify/${assessmentapplication_id}`, auth)
     },
+    bidstageprojects() {
+        return Api().get(`remote/v1/projects/all/`)
+    },
 }

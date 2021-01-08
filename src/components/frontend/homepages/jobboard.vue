@@ -59,60 +59,62 @@
                         </div>
 
                         <div v-else>
-                            <a-list
-                                    itemLayout="vertical"
-                                    size="large"
-                                    :pagination="pagination"
-                                    :dataSource="filteredList"
+                          <a-tabs default-active-key="1" @change="callback">
+                            <a-tab-pane key="1" tab="Jobs">
+                              <a-list
+                                  itemLayout="vertical"
+                                  size="large"
+                                  :pagination="pagination"
+                                  :dataSource="filteredList"
 
-                            >
+                              >
 
                                 <a-list-item
-                                        slot="renderItem" slot-scope="item" key="item.title">
+                                    slot="renderItem" slot-scope="item" key="item.title">
 
 
-                                    <hide-at breakpoint="mediumAndBelow">
+                                  <hide-at breakpoint="mediumAndBelow">
 
-                                        <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
-                                            <a-col span="4" style="background-color:#0679FB;height: 100% ">
-                                                <p class="jobtitle">{{item.title}}</p>
+                                    <a-row style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);height: 9rem">
+                                      <a-col span="4" style="background-color:#0679FB;height: 100% ">
+                                        <p class="jobtitle">{{item.title}}</p>
 
 
-                                            </a-col>
-                                            <a-col span="15" style="padding: 2%">
+                                      </a-col>
+                                      <a-col span="15" style="padding: 2%">
 
-                                                <p>Job Description</p>
-                                                <p>{{item.description | truncate(100)}}<a
-                                                        @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
-                                                    more</a>
-                                                </p>
+                                        <p>Job Description</p>
+                                        <p>{{item.description | truncate(100)}}<a
+                                            @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
+                                          more</a>
+                                        </p>
 
-                                                <p v-if="item.skills">
-                                                    Skills looking for :
-                                                    <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
+                                        <p v-if="item.skills">
+                                          Skills looking for :
+                                          <span style="" v-for="skill in item.skills" v-bind:key="skill.id">
                                                 <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
 
                                             </span>
-                                                </p>
+                                        </p>
 
 
-                                            </a-col>
-                                            <a-col span="5">
-                                                <div style="padding-top: 1rem;">
+                                      </a-col>
+                                      <a-col span="5">
+                                        <div style="padding-top: 1rem;">
 
-                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                        <a-icon type="environment"/>
-                                                        {{item.location}}
-                                                    </a-tag>
-                                                    <a-tag color="#F0F6FD" style='color: #007BFF'>
-                                                        <a-icon type="tags"/>
-                                                        {{item.tag}}
-                                                    </a-tag>
+                                          <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                            <a-icon type="environment"/>
+                                            {{item.location}}
+                                          </a-tag>
+                                          <a-tag color="#F0F6FD" style='color: #007BFF'>
+                                            <a-icon type="tags"/>
+                                            {{item.tag}}
+                                          </a-tag>
 
 
 
-                                                </div>
-                                                <div style="margin-top: 2rem">
+                                        </div>
+                                        <div style="margin-top: 2rem">
 
                                                         <span v-if="currentUserProfile">
                                                             <a-button type="primary" ghost
@@ -126,13 +128,13 @@
                                                         <router-link v-else to="/register">View details</router-link>
                                                                 </a-button>
                                                         </span>
-                                                    <span v-else>
+                                          <span v-else>
                                                         <a-button type="primary" ghost
-                                                                 >
+                                                        >
                                                             <router-link
-                                                                         style="text-decoration: none"
-                                                                         :to="{name:'jobdetails',params:{jobId: item.id}}"
-                                                                         target='_blank'>
+                                                                style="text-decoration: none"
+                                                                :to="{name:'jobdetails',params:{jobId: item.id}}"
+                                                                target='_blank'>
                                                             View details
                                                             </router-link>
                                                         </a-button>
@@ -141,61 +143,69 @@
                                                         </span>
 
 
-                                                </div>
-
-
-                                            </a-col>
-
-
-                                        </a-row>
-
-
-                                    </hide-at>
-
-                                    <show-at breakpoint="mediumAndBelow">
-                                        <div style="padding: 2%">
-
-                                        <a-row class="lightshadow" style="height: 13rem;padding: 3%">
-
-                                                <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
-                                                       :md="{span: 24, offset: 0 }"
-                                                       :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
-                                                       style="padding: 2%">
-                                                    <span><strong>{{item.title}} |  {{item.location}}</strong></span>
-                                                    <p>{{item.description | truncate(100)}}<a
-                                                            @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
-                                                        more</a>
-                                                    </p>
-
-                                                    <p>
-                                                        Skills :
-                                                        <span style="" v-for="skill in  item.skills.slice(0,3)"
-                                                              v-bind:key="skill.id">
-                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
-
-                                            </span>
-                                                    </p>
-
-                                                    <div style="margin-bottom: 1%;text-align: center">
-                                                        <a-button type="primary" ghost
-                                                                  @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">
-                                                            View details
-                                                        </a-button>
-                                                    </div>
-
-
-                                                </a-col>
-
-
-                                            </a-row>
                                         </div>
 
 
-                                    </show-at>
+                                      </a-col>
+
+
+                                    </a-row>
+
+
+                                  </hide-at>
+
+                                  <show-at breakpoint="mediumAndBelow">
+                                    <div style="padding: 2%">
+
+                                      <a-row class="lightshadow" style="height: 13rem;padding: 3%">
+
+                                        <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                                               :md="{span: 24, offset: 0 }"
+                                               :lg="{span: 15, offset: 0 }" :xl="{span: 15, offset: 0 }"
+                                               style="padding: 2%">
+                                          <span><strong>{{item.title}} |  {{item.location}}</strong></span>
+                                          <p>{{item.description | truncate(100)}}<a
+                                              @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">read
+                                            more</a>
+                                          </p>
+
+                                          <p>
+                                            Skills :
+                                            <span style="" v-for="skill in  item.skills.slice(0,3)"
+                                                  v-bind:key="skill.id">
+                                                <a-tag color="#F0F6FD" style="color:#007BFF;">{{skill}}</a-tag>
+
+                                            </span>
+                                          </p>
+
+                                          <div style="margin-bottom: 1%;text-align: center">
+                                            <a-button type="primary" ghost
+                                                      @click="navigateTo({name:'jobdetails',params:{jobId: item.id}})">
+                                              View details
+                                            </a-button>
+                                          </div>
+
+
+                                        </a-col>
+
+
+                                      </a-row>
+                                    </div>
+
+
+                                  </show-at>
 
 
                                 </a-list-item>
-                            </a-list>
+                              </a-list>
+                            </a-tab-pane>
+                            <a-tab-pane key="2" tab="Gigs" force-render>
+                              <RemoteJob/>
+
+                            </a-tab-pane>
+
+                          </a-tabs>
+
                         </div>
 
 
@@ -229,6 +239,7 @@
 
     import "../../../assets/css/styles.css";
     import Pageheader from '@/components/layout/Header.vue'
+    import RemoteJob from '@/components/frontend/homepages/Remotejobs'
     import Footer from '@/components/layout/Footer.vue'
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
@@ -300,7 +311,7 @@
             ARow,
             Pageheader,
             Footer,
-            showAt, hideAt,
+            showAt, hideAt,RemoteJob
         },
         async mounted() {
 

@@ -16,43 +16,64 @@
 
                     </a-row>
                     <a-row :gutter="16" style="padding-right: 2rem;padding-bottom: 1.5rem;">
+                      <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                             :md="{span: 12, offset: 0 }"
+                             :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+                        <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
+                          <router-link to="/quizlist">
+                            <div style="color: black">
 
-                            <a-col class="boxes" :xs="{span: 16, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-                                <a-row class="ant-card actioncards">
-                                    <router-link to="/quizlist" style="color: black">
-                                        <a-col span="24">
-                                            <div style="text-align: center">
-                                                <img class="poolavatar" src="../../../assets/images/quiz.svg">
-                                            </div>
-
-                                        </a-col>
-                                        <a-col span="24" style="text-align: center">
-                                            <p class="ant-card-head-title" style="font-weight: bold">Take a Quiz</p>
-                                            <p style="margin: 0;"> Jolt your memories on fundamentals</p>
-                                        </a-col>
-                                    </router-link>
-                                </a-row>
-                            </a-col>
+                              <a-row>
+                                <a-col span="24">
+                                  <div style="text-align: center">
+                                    <img class="poolavatar" src="@/assets/images/quiz.svg">
+                                  </div>
+                                </a-col>
+                                <a-col span="24" style="text-align: center">
+                                  <p>Take a Quiz</p>
+                                  <p style="margin: 0;">Jolt your memories on fundamentals</p>
 
 
-                        <a-col class="boxes" :xs="{span: 24, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
-                                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" >
-                                <a-row class="ant-card actioncards" >
-                                    <router-link to="/selectassesment" style="color: black">
-                                        <a-col span="24">
-                                            <div style="text-align: center">
-                                                <img class="poolavatar" src="../../../assets/images/code.svg">
-                                            </div>
+                                </a-col>
 
-                                        </a-col>
-                                        <a-col span="24" style="text-align: center">
-                                            <p class="ant-card-head-title" style="font-weight: bold">Build a Project</p>
-                                            <p style="margin: 0;">Build a real world project</p>
-                                        </a-col>
-                                    </router-link>
-                                </a-row>
-                            </a-col>
+                              </a-row>
+
+                            </div>
+                          </router-link>
+
+
+                        </a-card>
+
+                      </a-col>
+                      <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                             :md="{span: 12, offset: 0 }"
+                             :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+                        <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
+                          <router-link to="/selectassesment">
+                            <div style="color: black">
+
+                              <a-row>
+                                <a-col span="24">
+                                  <div style="text-align: center">
+                                    <img class="poolavatar" src="@/assets/images/code.svg">
+                                  </div>
+                                </a-col>
+                                <a-col span="24" style="text-align: center">
+                                  <p>Build a Project</p>
+                                  <p style="margin: 0;">Build a real world project</p>
+
+
+                                </a-col>
+
+                              </a-row>
+
+                            </div>
+                          </router-link>
+
+
+                        </a-card>
+
+                      </a-col>
 
 
                     </a-row>
@@ -168,6 +189,15 @@
 
 
     }
+    .cardshadow {
+
+      box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+
+      background: white;
+      border-radius: 0;
+      height: 13rem;
+    }
+
 
     .actioncards {
         width: 16rem;
