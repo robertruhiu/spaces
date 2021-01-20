@@ -5,6 +5,7 @@
         <a-card hoverable class="topcard " :bordered="false"
                 style="width:15rem;">
            <a-avatar :size="64" :src="lenaimage"/>
+          <span style="float: right"><a-icon @click="viewDashboard" type="close" /></span>
 
 
           <h3 style="color: white;font-family: sofia_probold">Hello. I am lena</h3>

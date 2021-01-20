@@ -283,7 +283,7 @@
                           </div>
                         </a-col>
                         <a-col span="24" >
-                          <p style="text-align: center">Work on paying projects on Remote Codeln</p>
+                          <p style="text-align: center">Access paid gigs on remote codeln</p>
                           <p v-if="currentUserProfile.remote_entry && !currentUserProfile.remote_verified" style="text-align: center">
                             <a-icon type="hourglass" spin theme="twoTone" /> profile under verification
                           </p>

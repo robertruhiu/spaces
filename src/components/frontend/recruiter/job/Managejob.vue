@@ -87,13 +87,17 @@
 
 
                       </a-col>
-                      <a-col span="6">
+                      <a-col span="4">
                         Company
+
+                      </a-col>
+                      <a-col span="4">
+                        Date posted
 
                       </a-col>
 
 
-                      <a-col span="6">
+                      <a-col span="4">
                         Manage
 
                       </a-col>
@@ -127,12 +131,16 @@
 
 
                           </a-col>
-                          <a-col span="6">
+                          <a-col span="4">
                             {{ item.company }}
 
                           </a-col>
+                          <a-col span="4">
+                            {{ item.created | moment}}
 
-                          <a-col span="6">
+                          </a-col>
+
+                          <a-col span="4">
                             <a-button size="small" v-if="item.verified"
                                       @click="navigateTo({name:'job',params:{jobId: item.id}})"
 
@@ -241,7 +249,8 @@ export default {
   filters: {
     moment: function (date) {
       return moment(date).format('MMMM Do YYYY');
-    }
+    },
+
   },
 
   methods: {

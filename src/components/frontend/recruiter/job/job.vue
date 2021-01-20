@@ -165,6 +165,7 @@ import Smallsider from "@/components/frontend/recruiter/layout/Smallsider";
 import Rejected from "@/components/frontend/recruiter/job/jobatscomponents/rejected"
 import Mobilebase from '@/components/frontend/recruiter/job/jobatscomponents/mobilecomponents/Mobilebase';
 import User from "@/services/UsersService";
+import moment from 'moment';
 export default {
   name: "job",
   components: {
@@ -185,6 +186,7 @@ export default {
 
     }
   },
+
   mounted() {
     this.fetchJob()
     this.jobId = this.$store.state.route.params.jobId
@@ -209,10 +211,18 @@ export default {
             this.job = resp.data
             this.joburl = `https://www.codeln.com/jobdetails/${this.job.id}`
             this.published = this.job.published
+
+            let currentdate = moment()
+            let deadline = moment(this.job.deadline)
+            let difference = deadline.diff(currentdate)
+            if(difference<0){
+              this.publishUnpublish()
+            }
             this.fetchOwner()
           })
 
     },
+
     fetchOwner(){
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
