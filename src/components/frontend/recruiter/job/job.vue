@@ -216,7 +216,7 @@ export default {
             let deadline = moment(this.job.deadline)
             let difference = deadline.diff(currentdate)
             if(difference<0){
-              this.publishUnpublish()
+              this.deadlinepassed()
             }
             this.fetchOwner()
           })
@@ -242,7 +242,7 @@ export default {
       this.published = !this.published
       const jobId = this.$store.state.route.params.jobId
       Marketplace.updatejob(jobId, {published: this.published}, auth)
-          .then(resp=>{
+          .then(()=>{
             if(this.published === true){
               Marketplace.recruiterpublished(jobId, auth)
                 .then()
@@ -252,6 +252,17 @@ export default {
             }
 
           })
+
+    },
+    deadlinepassed() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      };
+      this.published = false
+      const jobId = this.$store.state.route.params.jobId
+      Marketplace.updatejob(jobId, {published: this.published}, auth)
+          .then()
 
     },
     warning() {
