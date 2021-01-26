@@ -91,7 +91,7 @@
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
                                 </span>
                 </p>
-                <p>Application Deadline : {{ deadline }}</p>
+                <p>Application Deadline : {{ job.deadline | moment}}</p>
               </div>
               <div>
                 <p style="font-weight: 700">Job Details</p>
@@ -207,6 +207,12 @@ export default {
     this.dataload = true
     this.fetchData()
 
+
+  },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY');
+    },
 
   },
 
