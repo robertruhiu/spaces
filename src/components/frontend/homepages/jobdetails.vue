@@ -256,6 +256,7 @@ export default {
             })
 
 
+
         this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
         for (const [key, value] of Object.entries(countries)) {
           if (key === this.job.location) {
@@ -269,11 +270,12 @@ export default {
         MarketPlaceService.jobdetails(this.$route.params.jobId)
             .then(resp => {
               this.job = resp.data
+              this.skills = this.job.tech_stack.split(',');
+              this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
               this.dataload = false
             })
 
-        this.skills = this.job.tech_stack.split(',');
-        this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+
         for (const [key, value] of Object.entries(countries)) {
           if (key === this.job.location) {
             this.country = value
