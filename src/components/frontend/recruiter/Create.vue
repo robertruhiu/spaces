@@ -511,13 +511,9 @@ export default {
     },
     commission() {
       let amount = 0
-      if (this.job.years_experience === '0-1') {
-        amount = 0.12 * (((this.max + this.min) / 2) * 12)
-      } else if (this.job.years_experience === '1-3') {
-        amount = 0.12 * (((this.max + this.min) / 2) * 12)
-      } else {
-        amount = 0.15 * (((this.max + this.min) / 2) * 12)
-      }
+      let yearly = ((Number(this.max) + Number(this.min) )/2) *12
+      amount = 0.12 * yearly
+
       return amount
 
     }
@@ -551,8 +547,8 @@ export default {
             this.currencytype = this.job.remuneration.substring(0,3)
             let range = this.job.remuneration.slice(3)
             let renumationstring = range.split('-')
-            this.min = renumationstring[0]
-            this.max = renumationstring[1]
+            this.min = Number(renumationstring[0])
+            this.max = Number(renumationstring[1])
             this.job.deadline = resp.data.deadline
             if(this.job.tech_stack){
               this.selectedTags = this.job.tech_stack.split(',')
@@ -575,8 +571,8 @@ export default {
             this.currencytype = this.job.remuneration.substring(0,3)
             let range = this.job.remuneration.slice(3)
             let renumationstring = range.split('-')
-            this.min = renumationstring[0]
-            this.max = renumationstring[1]
+            this.min = Number(renumationstring[0])
+            this.max = Number(renumationstring[1])
             this.job.deadline = resp.data.deadline
             if(this.job.tech_stack){
               this.selectedTags = this.job.tech_stack.split(',')
@@ -732,7 +728,8 @@ export default {
                   num_devs_wanted:this.job.num_devs_wanted,
                   commission:this.commission,
                   remuneration:this.remuneration,
-                  city:this.job.city
+                  city:this.job.city,
+                  company:this.job.company
 
                 }, auth)
                 .then(resp => {
