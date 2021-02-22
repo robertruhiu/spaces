@@ -34,7 +34,7 @@
                       <span style="font-weight: bold">Country</span>
                     </a-col>
 
-                    <a-col span="8">
+                    <a-col span="6">
                       Skills
 
 
@@ -42,6 +42,10 @@
 
                     <a-col span="4">
                       View profile
+
+                    </a-col>
+                    <a-col span="4">
+                      Application date
 
                     </a-col>
                     <a-col span="2">
@@ -71,9 +75,9 @@
                         </a-col>
 
 
-                        <a-col span="8">
+                        <a-col span="6">
                           <span v-if="item.candidate.skills">
-                            <span style="" v-for="skill in item.candidate.skills.split(',').slice(0, 5)" v-bind:key="skill.id">
+                            <span style="" v-for="skill in item.candidate.skills.split(',').slice(0, 4)" v-bind:key="skill.id">
                               <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
                             </span>
                           </span>
@@ -94,6 +98,10 @@
                             </a-button>
                           </router-link>
 
+
+                        </a-col>
+                        <a-col span="4">
+                          {{item.created | moment}}
 
                         </a-col>
                         <a-col span="2">
@@ -186,6 +194,7 @@ export default {
 
     }
   },
+
   mounted() {
     this.jobId = this.$store.state.route.params.jobId
 

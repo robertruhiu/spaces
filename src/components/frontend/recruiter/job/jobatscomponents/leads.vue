@@ -44,19 +44,23 @@
 
 
                     </a-col>
-                    <a-col span="3">
+                    <a-col span="2">
                       View profile
 
                     </a-col>
-                    <a-col span="4">
-                      Application Relevance
+                    <a-col span="2">
+                      Application date
+
                     </a-col>
                     <a-col span="3">
+                      Application Relevance
+                    </a-col>
+                    <a-col span="2">
                       Notes
 
 
                     </a-col>
-                    <a-col span="3">
+                    <a-col span="4">
                       Move to
 
                     </a-col>
@@ -95,7 +99,7 @@
 
                         </a-col>
 
-                        <a-col span="3">
+                        <a-col span="2">
                           <router-link
                               style="text-decoration: none"
                               :to="{name:'candidateprofile',params:{applicationId: item.id}}"
@@ -109,13 +113,18 @@
 
 
                         </a-col>
+                        <a-col span="2">
+                          {{item.created | moment}}
 
-                        <a-col span="4">
+
+                        </a-col>
+
+                        <a-col span="3">
                           <a-rate v-model="item.relevance" @change="Relevance(item)" :tooltips="desc" />
 
 
                         </a-col>
-                        <a-col span="3">
+                        <a-col span="2">
                           <a @click="OpenNotes(item)">
                             create/edit notes
                           </a>
@@ -123,7 +132,7 @@
 
                         </a-col>
 
-                        <a-col span="3">
+                        <a-col span="4">
                           <a-dropdown-button >
                             move to
                             <a-menu slot="overlay" >
