@@ -512,7 +512,8 @@ export default {
     commission() {
       let amount = 0
       let yearly = ((Number(this.max) + Number(this.min) )/2) *12
-      amount = 0.12 * yearly
+      amount = Math.round(0.12 * yearly)
+
 
       return amount
 
