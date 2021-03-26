@@ -370,6 +370,7 @@
 import UsersService from '@/services/UsersService';
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
 import DevHeader from "@/components/frontend/developer/layout/DevHeader";
+import User from "@/services/UsersService";
 
 
 export default {
@@ -393,6 +394,14 @@ export default {
 
     if (this.$store.state.user.pk) {
       this.loading = true
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      User.currentuser(this.$store.state.user.pk, auth)
+          .then(response => {
+            this.$store.dispatch('setuser_object', response.data)
+          })
       this.currentUserProfile = this.$store.state.user_object
       this.loading = false
 

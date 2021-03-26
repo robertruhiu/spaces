@@ -287,23 +287,23 @@
             if (this.$store.state.user) {
                 this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
                 if (this.currentUserProfile.phone_number) {
-                    
-                
+
+
                     if(this.currentUserProfile.phone_number.charAt(0)=== '+'){
                         this.phone = this.currentUserProfile.phone_number
                          telephones.forEach(telephone => {
-                            
+
                             if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
                                 this.countrycode = telephone.code
 
                             }else if(this.currentUserProfile.phone_number.substring(0,4) === telephone.dial_code){
                                 this.countrycode = telephone.code
                             }
-    
-                            
+
+
                         });
-                        
-                        
+
+
                     }
                 }
 
@@ -368,12 +368,13 @@
                             })
 
                         } else {
+                          this.$router.push({
+                            name: 'recruiter'
+                          })
                             UsersService.newuser(this.$store.state.user.pk, auth)
                                 .then()
                                 .catch()
-                            this.$router.push({
-                                name: 'recruiter'
-                            })
+
                             this.loading = false
 
                         }

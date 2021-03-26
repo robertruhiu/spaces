@@ -167,7 +167,7 @@ import RecruiterSider from "@/components/frontend/recruiter/layout/RecruiterSide
 import moment from 'moment';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import 'simplemde/dist/simplemde.min.css';
-
+import User from '@/services/UsersService'
 
 
 import lena from '@/components/frontend/recruiter/lena/lena'
@@ -235,6 +235,15 @@ export default {
 
 
     if (this.$store.state.user.pk) {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      User.currentuser(this.$store.state.user.pk, auth)
+          .then(response => {
+            this.$store.dispatch('setuser_object', response.data)
+          })
+
 
       this.currentUserProfile = this.$store.state.user_object
       this.openNotification()
