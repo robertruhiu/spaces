@@ -17,8 +17,8 @@ export default {
     sliceddevs() {
         return Api().get('userssliced')
     },
-    allusers() {
-        return Api().get('allusers')
+    allusers(auth) {
+        return Api().get('allusers',auth)
     },
     allprofiles(auth) {
         return Api().get('allprofiles', auth)
