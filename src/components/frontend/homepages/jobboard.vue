@@ -61,7 +61,7 @@
                         <div v-else>
                           <a-tabs default-active-key="1" @change="callback">
                             <a-tab-pane key="1" tab="Jobs">
-                              <a-list
+                              <a-list v-if="filteredList.length > 0"
                                   itemLayout="vertical"
                                   size="large"
                                   :pagination="pagination"
@@ -198,6 +198,10 @@
 
                                 </a-list-item>
                               </a-list>
+                              <a-result status="404" title="" sub-title="Sorry, no new jobs
+       available at the moment." v-else>
+
+                              </a-result>
                             </a-tab-pane>
                             <a-tab-pane key="2" tab="Gigs" force-render>
                               <RemoteJob/>

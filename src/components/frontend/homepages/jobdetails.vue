@@ -28,7 +28,10 @@
                                         <a-spin/>
                                     </div>
                                         <span v-else>
-                                            <a-button v-if="this.$store.state.isUserLoggedIn" type="primary"
+                                          <a-button v-if="this.$store.state.isUserLoggedIn && cv === ''" type="primary"
+                                                    @click="UploadVcModal()">Apply</a-button>
+
+                                            <a-button v-if="this.$store.state.isUserLoggedIn && cv !==''" type="primary"
                                                       @click="ApplicationModal()">Apply</a-button>
 
 
@@ -45,7 +48,7 @@
 
                                 </span>
                                   <span style="float: right"
-                                      v-if="currentUserProfile.user_type ==='developer' && currentUserProfile.stage !== 'complete'  ">
+                                        v-if="currentUserProfile.user_type ==='developer' && currentUserProfile.stage !== 'complete'  ">
                                     <a-button type="primary"
                                               @click="navigateTo({name:'register'})">Registration incomplete click to continue</a-button>
 
@@ -91,7 +94,7 @@
                                     <a-tag color="#F0F6FD" style="color:#007BFF;">{{ skill }}</a-tag>
                                 </span>
                 </p>
-                <p>Application Deadline : {{ job.deadline | moment}}</p>
+                <p>Application Deadline : {{ job.deadline | moment }}</p>
               </div>
               <div>
                 <p style="font-weight: 700">Job Details</p>
@@ -150,6 +153,26 @@
           <p>By Applying i agree to be bound by the above</p>
           <a-button type="primary" @click="ApplyJob">Apply</a-button>
         </a-modal>
+        <a-modal v-model="cvupload" title="CV missing" :footer=null>
+          <div v-if="cv">
+            <a :href="cv" target="_blank">cv link</a>
+          </div>
+
+          <div v-else>
+            <div v-if="uploading">
+              <span>Uploading file <a-spin/></span>
+
+            </div>
+            <div v-else>
+              Upload cv
+              <input style="margin-top: 1rem" accept="application/pdf" type="file"
+                     @change="handleUpload">
+            </div>
+
+
+
+          </div>
+        </a-modal>
 
 
       </a-layout-content>
@@ -167,6 +190,7 @@ import ACol from "ant-design-vue/es/grid/Col";
 import MarketPlaceService from '@/services/Marketplace'
 import moment from 'moment';
 import markdown from 'vue-markdown'
+import axios from "axios";
 
 const countries = require("@/store/countries")
 
@@ -189,7 +213,10 @@ export default {
       fillprofile: false,
       applyterms: false,
       experienceslist: [],
-      portfoliolist: []
+      portfoliolist: [],
+      cvupload: false,
+      cv: '',
+      uploading:false
 
 
     }
@@ -202,6 +229,9 @@ export default {
   },
   async mounted() {
     moment
+    if (this.$store.state.user_object.file) {
+      this.cv = this.$store.state.user_object.file
+    }
 
 
     this.dataload = true
@@ -254,7 +284,6 @@ export default {
                     this.Applicationvalidators()
                   })
             })
-
 
 
         this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
@@ -330,6 +359,9 @@ export default {
     ApplicationModal() {
       this.applyterms = true
     },
+    UploadVcModal() {
+      this.cvupload = true
+    },
 
 
     ApplyJob() {
@@ -371,7 +403,48 @@ export default {
           });
 
 
-    }
+    },
+    async handleUpload(e) {
+      this.uploading = true
+      const cloudName = process.env.VUE_APP_CLOUD;
+      const unsignedUploadPreset = 'ml_default';
+
+
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', unsignedUploadPreset);
+      let CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${cloudName}/raw/upload`
+
+      // Send to cloudianry
+      const res = await axios.post(
+          CLOUDINARY_URL,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+
+          }
+      );
+      this.cv = res.data.secure_url
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      UsersService.updatepatch(this.$store.state.user.pk, {file:this.cv.slice(48)}, auth)
+      .then(()=>{
+        this.$store.state.user_object.file = this.cv.slice(48)
+        this.$message.success('cv succesfully uploaded');
+        this.cvupload = false
+        this.applyterms = true
+      })
+
+
+
+
+
+    },
 
   }
 }

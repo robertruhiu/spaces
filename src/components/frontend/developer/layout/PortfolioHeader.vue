@@ -23,7 +23,7 @@
                                    :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }" >
                 <span style="color: white;font-size: 1rem;font-weight:bold">
                    {{this.$store.state.user.first_name | capitalize}} {{this.$store.state.user.last_name | capitalize}} </span>
-                <p style="color: white;font-size: 0.9rem;font-weight: bold;line-height: 3px"> <strong>My Rank:</strong> 300/2500</p>
+
 
 
             </a-col>

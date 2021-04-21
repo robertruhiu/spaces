@@ -795,7 +795,7 @@ export default {
 
               })
               .catch(() => {
-
+                this.loading = false
                 this.visible = false
 
 
@@ -803,6 +803,7 @@ export default {
 
 
         }
+        this.loading = false
 
 
       }

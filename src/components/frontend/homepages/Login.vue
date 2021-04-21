@@ -171,6 +171,7 @@
 
                                 }
                                 User.currentuser(this.$store.state.user.pk, auth)
+
                                     .then(response => {
                                         this.$store.dispatch('setUsertype', response.data.user_type)
                                         this.$store.dispatch('setUser_id', response.data.user)

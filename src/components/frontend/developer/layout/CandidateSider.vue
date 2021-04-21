@@ -73,7 +73,7 @@
 
             </a-menu-item>
             <a-menu-item key="13">
-                <router-link to="/community">
+                <router-link disabled to="/community">
                     <a-icon type="message" />
                     <span>Community chat</span>
                 </router-link>

@@ -31,7 +31,8 @@ export default new Vuex.Store({
         interview:[],
         test:[],
         rejected:[],
-        job_id:''
+        job_id:'',
+        registrationstep:0
 
 
     },
@@ -150,12 +151,18 @@ export default new Vuex.Store({
 
 
         },
+        setRegistrationStep(state, registrationstep) {
+            state.registrationstep = registrationstep
+        },
 
 
     },
     actions: {
         setToken({commit}, token) {
             commit('setToken', token)
+        },
+        setRegistrationStep({commit}, step) {
+            commit('setRegistrationStep', step)
         },
         setisLoggedIn({commit}, isAuthenticated) {
             commit('setisLoggedIn', isAuthenticated)

@@ -1,5 +1,5 @@
 <template>
-<div style="overflow-y: scroll;padding: 1%">
+<div style="overflow-y: scroll;padding: 1%;height: 70vh;">
   <a-form :form="form"
           @submit="handleSubmit">
     <a-row :gutter="16">

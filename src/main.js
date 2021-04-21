@@ -59,7 +59,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
-    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message,Pagination,BackTop,Breadcrumb,Popconfirm,Rate,LocaleProvider,Result
+    Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message,Pagination,BackTop,Breadcrumb,Popconfirm,Rate,LocaleProvider,Result,Space
 
 
 } from 'ant-design-vue';
@@ -114,6 +114,7 @@ Vue.use(BackTop)
 Vue.use(Popconfirm)
 Vue.use(Rate)
 Vue.use(LocaleProvider)
+Vue.use(Space)
 Vue.prototype.$message = message;
 import * as Sentry from "@sentry/browser";
 import { Vue as VueIntegration } from "@sentry/integrations";

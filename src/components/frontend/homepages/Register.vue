@@ -209,6 +209,7 @@
 
     import Vue from 'vue'
     import Recruitersteps from "./registercomponents/recruitersteps";
+    import User from "@/services/UsersService";
 
 
     Vue.use(VeeValidate);
@@ -272,12 +273,31 @@
 
                                 this.$store.dispatch('setToken', resp.data.token)
                                 this.$store.dispatch('setUser', resp.data.user)
+                              const auth = {
+                                headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+                              }
+                              User.currentuser(this.$store.state.user.pk, auth)
+
+                                  .then(response => {
+
+                                    this.$store.dispatch('setUser_id', response.data.user)
+                                    this.$store.dispatch('setuser_object', response.data)
+
+
+                                  })
+                                  .catch(error => {
+                                    this.loading = false
+                                    return error
+
+
+                                  });
 
                                 this.loading = false
 
 
                             })
-                            .catch(error => {
+                            .catch(() => {
                                 this.loading = false
 
                                 this.error = 'user already exists'
