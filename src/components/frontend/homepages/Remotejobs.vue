@@ -56,6 +56,11 @@
                                 </span>
 
                         </span>
+                      <span v-else>
+                        <a-button type="primary" size="small"
+                                  @click="navigateTo({name:'login'})">Login to apply</a-button>
+
+                      </span>
 
                     </a-space>
 
@@ -240,6 +245,9 @@ name: "Remotejobs",
 
           });
 
+    },
+    navigateTo(route) {
+      this.$router.push(route)
     },
 
 
