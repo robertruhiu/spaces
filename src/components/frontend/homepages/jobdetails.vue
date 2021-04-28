@@ -14,7 +14,9 @@
 
 
             <div v-if="dataload" style="text-align: center">
-              <a-spin/>
+              <a-skeleton active />
+              <a-skeleton active />
+              <a-skeleton active />
             </div>
             <div v-else>
               <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
