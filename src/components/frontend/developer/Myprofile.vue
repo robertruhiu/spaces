@@ -8,7 +8,7 @@
         <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',maxWidth:'72rem',marginTop:'1rem',
                 marginLeft: '1%',marginRight:'1%' }">
 
-          <a-form :form="form">
+          <a-form>
             <a-row :gutter="16">
               <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
                      :md="{span: 12, offset: 0 }"
@@ -65,19 +65,27 @@
 
                   <a-col :span="24">
                     <a-form-item
-
+                        label="Country"
                         :label-col="{ span: 24 }"
                         :wrapper-col="{ span:  24}"
                     >
-                      <span slot="label">Country : {{ currentUserProfile.country }}</span>
-                      <country-select v-model="currentUserProfile.country"
-                                      class="ant-input" name="location"
-                      />
-                      <div v-for="error in step1errors" v-bind:key="error">
-                        <div v-if="error === 'location'" style="color: red">
-                          required
-                        </div>
-                      </div>
+
+
+                      <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
+
+                                option-filter-prop="children"
+                                v-model="currentcountry" @change="handleChange" :filter-option="filterOption">
+
+                        <a-select-option v-for="country in countrieslist"
+                                         v-bind:key="country">
+
+                          {{ country }}
+                        </a-select-option>
+
+
+                      </a-select>
+
+                      <span style="color: #f5222d;">{{ errors.first('location') }}</span>
                     </a-form-item>
 
                   </a-col>
@@ -330,7 +338,7 @@ import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import Vue from 'vue'
 
 let telephones = require("@/store/telephone")
-
+let countries = require("@/store/location.json")
 
 Vue.use(cloudinary)
 
@@ -362,7 +370,9 @@ export default {
       number: 'null',
       step1errors: [],
       phone: '',
-      countrycode: ''
+      countrycode: '',
+      countrieslist: null,
+      currentcountry: '',
 
 
     }
@@ -376,54 +386,65 @@ export default {
       headers: {Authorization: 'JWT ' + this.$store.state.token}
 
     }
+    this.countrieslist = countries
     if (this.$store.state.user.pk) {
-      this.currentUserProfile = this.$store.state.user_object
-      this.github = this.currentUserProfile.github_repo
-      this.linkedin = this.currentUserProfile.linkedin_url
+      UsersService.currentuser(this.$store.state.user.pk, auth)
+          .then(resp => {
+            this.currentUserProfile = resp.data
+            this.currentUserProfile = this.$store.state.user_object
+            this.github = this.currentUserProfile.github_repo
+            this.linkedin = this.currentUserProfile.linkedin_url
+            if (this.currentUserProfile.file) {
+              if (this.currentUserProfile.file.includes("http")) {
+                this.cv = this.currentUserProfile.file
+              } else {
+                this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
 
-      if (this.currentUserProfile.phone_number) {
+
+              }
+
+            }
+            if (this.currentUserProfile.phone_number) {
 
 
-        if (this.currentUserProfile.phone_number.charAt(0) === '+') {
-          this.phone = this.currentUserProfile.phone_number
-          telephones.forEach(telephone => {
+              if (this.currentUserProfile.phone_number.charAt(0) === '+') {
+                this.phone = this.currentUserProfile.phone_number
+                telephones.forEach(telephone => {
 
-            if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
-              this.countrycode = telephone.code
+                  if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
+                    this.countrycode = telephone.code
 
-            } else if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
-              this.countrycode = telephone.code
+                  } else if (this.currentUserProfile.phone_number.substring(0, 4) === telephone.dial_code) {
+                    this.countrycode = telephone.code
+                  }
+
+
+                });
+
+
+              }
+            }
+            for (const key in this.countrieslist) {
+              if (this.currentUserProfile.country === key) {
+                this.currentcountry = this.countrieslist[key]
+
+              }
+
             }
 
 
-          });
+            if (this.currentUserProfile.skills) {
+              if (this.currentUserProfile.skills.length >= 0) {
+                let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
+                for (let i = 0; i < tags.length; i++) {
+                  this.tags.push(tags[i])
+                }
 
+              }
+            }
+            this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
+          })
 
-        }
-      }
-
-
-      if (this.currentUserProfile.skills) {
-        if (this.currentUserProfile.skills.length >= 0) {
-          let tags = this.currentUserProfile.skills.replace(/'/g, '').replace(/ /g, '').split(',');
-          for (let i = 0; i < tags.length; i++) {
-            this.tags.push(tags[i])
-          }
-
-        }
-      }
-      this.availabiltytags = this.currentUserProfile.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');
-
-
-    }
-    if (this.currentUserProfile.file) {
-      if (this.currentUserProfile.file.includes("http")) {
-        this.cv = this.currentUserProfile.file
-      } else {
-        this.cv = `https://res.cloudinary.com/dwtvwjhn3/${this.currentUserProfile.file} `
-
-
-      }
 
     }
 
@@ -434,6 +455,9 @@ export default {
       let bio = this.currentUserProfile.about
 
       return bio
+    },
+    CurrentCountry() {
+      return ''
     },
     flags() {
       let blacklist = []
@@ -734,9 +758,24 @@ export default {
 
 
     },
-    Availabiltytags(value) {
-      console.log(`selected ${value}`);
+    Availabiltytags() {
+
       this.currentUserProfile.availabilty = this.availabiltytags.join(", ")
+    },
+    handleChangeCountry(value) {
+      for (const key in this.countrieslist) {
+        if (value === this.countrieslist[key]) {
+          this.$store.state.user_object.country = key
+
+        }
+
+      }
+
+    },
+    filterOption(input, option) {
+      return (
+          option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      );
     },
   }
 }
