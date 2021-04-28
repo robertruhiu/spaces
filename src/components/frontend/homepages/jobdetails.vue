@@ -255,7 +255,7 @@ export default {
     moment,
     fetchData() {
 
-      if (this.$store.state.user_object) {
+      if (this.$store.state.isUserLoggedIn) {
         const auth = {
           headers: {Authorization: 'JWT ' + this.$store.state.token}
 
