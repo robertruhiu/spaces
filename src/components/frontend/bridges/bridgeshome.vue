@@ -153,6 +153,7 @@
         data() {
             return {
                 top: 65,
+              large:'large'
 
             }
         },

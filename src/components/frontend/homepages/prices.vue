@@ -3,10 +3,10 @@
 
     <Pageheader/>
     <a-layout-content :style="{ padding: '0 0px', marginTop: '4rem' }">
-      <a-locale-provider :locale="zhCN">
+
 
       <div :style="{ background: '#fff', minHeight: '60vh',padding:'0 2%' }">
-        
+
         <a-row :gutter="16" style="padding: 3%">
 
 
@@ -24,7 +24,7 @@
               </a-col>
               <a-col span="24">
                 <div style="padding: 5%">
-                  
+
 
                   <p style="text-align: center;font-weight: bold">This plan is for you if you need
                     employees to work with you for more than a year (remotely or on-site).</p>
@@ -77,7 +77,7 @@
 
 
                   </div>
-                  
+
 
                 </div>
 
@@ -128,11 +128,11 @@
 
 
         </a-row>
-        
+
 
 
       </div>
-      </a-locale-provider>
+
       <!--            &lt;!&ndash;-&#45;&#45;clients&#45;&#45;&ndash;&gt;-->
       <!--            <div :style="{ background: '#fff', padding: '31px', minHeight: '60vh' }">-->
       <!--                <div style="background-color: #ffffff;">-->
@@ -160,11 +160,11 @@
 
 import Pageheader from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import UsersService from '@/services/UsersService';
-import zhCN from 'ant-design-vue/es/locale-provider/zh_CN'
 
 
-import Vue from 'vue'
+
+
+
 
 
 export default {
@@ -179,16 +179,14 @@ export default {
   data() {
     return {
       devs: null,
-      zhCN,
+
 
 
     }
   },
   async mounted() {
-    const auth = {
-      headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-    }
+
 
 
   },
@@ -196,7 +194,7 @@ export default {
   methods: {
     onUpdate(payload) {
       this.results = payload
-      console.log(this.results.formattedNumber)
+
     },
 
 

@@ -20,7 +20,7 @@
               <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
                                 <span style="font-weight: 700;font-size: large">{{ job.title }}</span>
-                                <span v-if="this.$store.state.isUserLoggedIn">
+                                <span v-if="currentUserProfile">
 
                                     <span style="float: right"
                                           v-if="currentUserProfile.user_type ==='developer' && applied === false  && currentUserProfile.stage === 'complete' ">
@@ -28,10 +28,10 @@
                                         <a-spin/>
                                     </div>
                                         <span v-else>
-                                          <a-button v-if="this.$store.state.isUserLoggedIn && cv === ''" type="primary"
+                                          <a-button v-if="currentUserProfile && cv === ''" type="primary"
                                                     @click="UploadVcModal()">Apply</a-button>
 
-                                            <a-button v-if="this.$store.state.isUserLoggedIn && cv !==''" type="primary"
+                                            <a-button v-if="currentUserProfile && cv !==''" type="primary"
                                                       @click="ApplicationModal()">Apply</a-button>
 
 
@@ -229,9 +229,13 @@ export default {
   },
   async mounted() {
     moment
-    if (this.$store.state.user_object.file) {
-      this.cv = this.$store.state.user_object.file
+    if(this.$store.state.user_object){
+      if (this.$store.state.user_object.file) {
+        this.cv = this.$store.state.user_object.file
+      }
     }
+
+
 
 
     this.dataload = true

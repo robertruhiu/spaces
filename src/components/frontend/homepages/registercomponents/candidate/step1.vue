@@ -280,10 +280,6 @@ export default {
 
   async mounted() {
     this.countrieslist = countries
-
-
-
-
     if (this.$store.state.user_object) {
       this.currentUserProfile = this.$store.state.user_object
       this.availabiltytags = this.$store.state.user_object.availabilty.replace(/'/g, '').replace(/ /g, '').split(',');

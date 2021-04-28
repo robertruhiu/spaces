@@ -59,26 +59,26 @@
 
       </a-menu-item>
 
-        <a-menu-item key="1" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage ==='complete' ">
+        <a-menu-item key="1" v-if="currentUserProfile && currentUserProfile.user_type ==='recruiter' && currentUserProfile.stage ==='complete' ">
         <router-link to="/recruiter">
 
                     <span>My account</span>
                 </router-link>
       </a-menu-item>
 
-        <a-menu-item key="6" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='recruiter' && currentUserProfile.stage !=='complete' ">
+        <a-menu-item key="6" v-if="currentUserProfile && currentUserProfile.user_type ==='recruiter' && currentUserProfile.stage !=='complete' ">
             <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
                              >My account
                 </router-link>
         </a-menu-item>
 
-        <a-menu-item key="2" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'">
+        <a-menu-item key="2" v-if="currentUserProfile && currentUserProfile.user_type ==='developer' && currentUserProfile.stage ==='complete'">
         <router-link to="/developer">
 
                     <span>My account</span>
                 </router-link>
       </a-menu-item>
-        <a-menu-item key="7" v-if="$store.state.isUserLoggedIn && $store.state.usertype ==='developer'&& currentUserProfile.stage !=='complete'">
+        <a-menu-item key="7" v-if="currentUserProfile && currentUserProfile.user_type ==='developer'&& currentUserProfile.stage !=='complete'">
             <router-link to="/register" class="ant-menu-item" style="margin-bottom: 0"
                              >My account
                 </router-link>
@@ -125,7 +125,7 @@
         async mounted() {
 
 
-            if (this.$store.state.user && this.$store.state.user.pk) {
+            if (this.$store.state.user_object) {
                 this.currentUserProfile = this.$store.state.user_object
             }
 

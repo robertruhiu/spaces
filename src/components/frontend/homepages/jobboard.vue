@@ -59,7 +59,7 @@
                         </div>
 
                         <div v-else>
-                          <a-tabs default-active-key="1" @change="callback">
+                          <a-tabs default-active-key="1">
                             <a-tab-pane key="1" tab="Jobs">
                               <a-list v-if="filteredList.length > 0"
                                   itemLayout="vertical"

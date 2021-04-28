@@ -201,7 +201,7 @@
     import CandidateSteps from '@/components/frontend/homepages/registercomponents/Candidatesteps'
     import Footer from '@/components/layout/Footer.vue'
     import AuthService from '@/services/AuthService'
-    import UsersService from '@/services/UsersService'
+
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
     import 'vue-form-wizard/dist/vue-form-wizard.min.css'

@@ -78,6 +78,9 @@ export default new Vuex.Store({
         setAuthenticated(state, isAuthenticated) {
             state.isUserLoggedIn = isAuthenticated
         },
+        setisLoggedIn(state, isAuthenticated) {
+            state.isUserLoggedIn = isAuthenticated
+        },
         setUsertype(state, usertype) {
             state.usertype = usertype
         },
