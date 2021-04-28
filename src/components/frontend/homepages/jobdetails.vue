@@ -14,14 +14,15 @@
 
 
             <div v-if="dataload" style="text-align: center">
-              <a-skeleton active />
-              <a-skeleton active />
-              <a-skeleton active />
+              <a-skeleton active/>
+              <a-skeleton active/>
+              <a-skeleton active/>
             </div>
             <div v-else>
               <div style="border-bottom: 1px solid #e8e8e8;margin-bottom: 1%;padding-bottom: 3%;">
                             <span>
                                 <span style="font-weight: 700;font-size: large">{{ job.title }}</span>
+
                                 <span v-if="currentUserProfile">
 
                                     <span style="float: right"
@@ -56,6 +57,7 @@
 
                                   </span>
                                 </span>
+
 
 
                                 <span v-else style="float: right">
@@ -172,7 +174,6 @@
             </div>
 
 
-
           </div>
         </a-modal>
 
@@ -202,7 +203,7 @@ export default {
     return {
       job: {},
       skills: [],
-      currentUserProfile: {},
+      currentUserProfile: null,
       applied: false,
       myjobs: [],
       dataload: false,
@@ -218,7 +219,7 @@ export default {
       portfoliolist: [],
       cvupload: false,
       cv: '',
-      uploading:false
+      uploading: false
 
 
     }
@@ -231,13 +232,11 @@ export default {
   },
   async mounted() {
     moment
-    if(this.$store.state.user_object){
+    if (this.$store.state.user_object) {
       if (this.$store.state.user_object.file) {
         this.cv = this.$store.state.user_object.file
       }
     }
-
-
 
 
     this.dataload = true
@@ -256,7 +255,7 @@ export default {
     moment,
     fetchData() {
 
-      if (this.$store.state.isUserLoggedIn) {
+      if (this.$store.state.user_object) {
         const auth = {
           headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -391,14 +390,10 @@ export default {
           },
           auth
       )
-          .then(resp => {
+          .then(() => {
                 this.save = false
                 this.applied = true
 
-
-                MarketPlaceService.newapplicationemail(resp.data.id, auth)
-                    .then()
-                    .catch()
 
               }
           )
@@ -438,16 +433,13 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
-      UsersService.updatepatch(this.$store.state.user.pk, {file:this.cv.slice(48)}, auth)
-      .then(()=>{
-        this.$store.state.user_object.file = this.cv.slice(48)
-        this.$message.success('cv succesfully uploaded');
-        this.cvupload = false
-        this.applyterms = true
-      })
-
-
-
+      UsersService.updatepatch(this.$store.state.user.pk, {file: this.cv.slice(48)}, auth)
+          .then(() => {
+            this.$store.state.user_object.file = this.cv.slice(48)
+            this.$message.success('cv succesfully uploaded');
+            this.cvupload = false
+            this.applyterms = true
+          })
 
 
     },
