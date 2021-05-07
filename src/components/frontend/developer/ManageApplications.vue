@@ -600,9 +600,7 @@ export default {
           selected: false,
         }, auth)
             .then(resp => {
-                  Marketplace.acceptreject(application, auth)
-                      .then()
-                      .catch()
+
                   for (let i = 0; i < this.active.length; i++) {
                     if (this.active[i].key === application) {
                       this.active[i].stage = 'rejected'
@@ -671,9 +669,7 @@ export default {
 
                     }
                   }
-                  Marketplace.acceptreject(application, auth)
-                      .then()
-                      .catch()
+
 
                   return resp
 
