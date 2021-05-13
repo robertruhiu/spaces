@@ -72,7 +72,7 @@ export default {
       }, {
 
         title: 'Welcome to Codeln',
-        icon:'user',
+
 
 
       },
