@@ -51,13 +51,15 @@ const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
 const Feedback = () => import('@/components/frontend/recruiter/Feedback');
 const CreateJob = () => import('@/components/frontend/recruiter/Create');
+
 // admin resources
 const AdminDashboard = () => import('@/components/frontend/admin/AdminDashboard');
 const AllUsers = () => import('@/components/frontend/admin/AllUsers');
 const AllDevs = () => import('@/components/frontend/admin/AllDevs');
 const AllRecruiter = () => import('@/components/frontend/admin/AllRecruiters');
 const ViewEditProfile = () => import('@/components/frontend/admin/ViewEditProfile');
-
+// demo
+const Demo = () => import('@/components/frontend/developer/DemoPort')
 Vue.use(Router);
 
 let router = new Router({
@@ -511,6 +513,13 @@ let router = new Router({
             meta: {
                 requiresAuth: true
             }
+
+        },
+        {
+            path: '/Demo',
+            name: 'Demo',
+            component: Demo,
+
 
         },
 

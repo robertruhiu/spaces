@@ -32,13 +32,17 @@ export default new Vuex.Store({
         test:[],
         rejected:[],
         job_id:'',
-        registrationstep:0
+        registrationstep:0,
+        skills:[]
 
 
     },
     mutations: {
         setjob_id(state, job_id) {
             state.job_id = job_id
+        },
+        setSkills(state, skills) {
+            state.skills = skills
         },
         setapplicants(state, applicants) {
             state.applicants = applicants
@@ -227,6 +231,9 @@ export default new Vuex.Store({
         },
         setjob_id({commit}, job_id) {
             commit('setjob_id', job_id)
+        },
+        setSkills({commit}, skills) {
+            commit('setSkills', skills)
         },
 
 

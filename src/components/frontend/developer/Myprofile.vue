@@ -74,7 +74,7 @@
                       <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
 
                                 option-filter-prop="children"
-                                v-model="currentcountry" @change="handleChange" :filter-option="filterOption">
+                                v-model="currentcountry" @change="handleChange1" :filter-option="filterOption">
 
                         <a-select-option v-for="country in countrieslist"
                                          v-bind:key="country">
@@ -590,11 +590,6 @@ export default {
                     name: 'developer'
                   })
 
-                } else {
-                  this.$router.push({
-                    name: 'recruiter'
-                  })
-
                 }
                 return resp
 
@@ -653,6 +648,18 @@ export default {
       let self = this;
       self.uploadFile(info.file)
 
+
+    },
+    handleChange1(value){
+      for (const key in this.countrieslist) {
+        if(value === this.countrieslist[key]){
+
+          this.currentcountry = key
+          this.currentUserProfile.country = this.currentcountry
+
+        }
+
+      }
 
     },
     beforeUpload(file) {
