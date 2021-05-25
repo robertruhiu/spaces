@@ -26,14 +26,7 @@
                                v-model="github"
 
                       />
-                      <div v-for="error in step1errors" v-bind:key="error">
-                        <div v-if="error === 'github'" style="color: red">
-                          required
-                        </div>
-                        <div v-else-if="error === 'githubininvalid'" style="color: red">
-                          input a valid url
-                        </div>
-                      </div>
+
 
                     </a-form-item>
 
@@ -555,10 +548,7 @@ export default {
       this.currentUserProfile.user = this.$store.state.user.pk
       if (this.error_watcher.length === 0) {
         this.step1errors = []
-        if (this.github === null || this.github === '') {
-          this.step1errors.push('github')
 
-        }
         if (this.linkedin === null || this.linkedin === '') {
           this.step1errors.push('linkedin')
 
