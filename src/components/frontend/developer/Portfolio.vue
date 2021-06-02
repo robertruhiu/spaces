@@ -5,7 +5,7 @@
 
       <a-layout-content style="background-color: white">
         <PortfolioHeader/>
-        <a-row >
+        <a-row>
           <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }" :md="{span: 16, offset: 0 }"
                  :lg="{span: 16, offset: 0 }" :xl="{span: 16,offset: 0 }"
                  style=" padding-left: 15px;padding-right: 15px;">
@@ -126,43 +126,41 @@
             </div>
 
 
+            <div class="bio">
+              <a-tabs default-active-key="1">
+                <a-tab-pane key="1" tab="Quizzes">
+                  <div v-if="dataload">
+                    <div style="text-align: center">
+                      <div>
+                        <a-skeleton active/>
 
-
-              <div class="bio">
-                <a-tabs default-active-key="1" >
-                  <a-tab-pane key="1" tab="Quizzes">
-                    <div v-if="dataload">
-                      <div style="text-align: center">
-                        <div>
-                          <a-spin/>
-                        </div>
                       </div>
+                    </div>
 
+                  </div>
+                  <div v-else>
+                    <div v-if="takenquizzes.length>0">
+                      <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
+                        {{ takenquiz.quiz.subject.name }}:
+                        <a-progress :percent="takenquiz.score"/>
+                      </div>
                     </div>
                     <div v-else>
-                      <div v-if="takenquizzes.length>0">
-                        <div v-for="takenquiz in takenquizzes" v-bind:key="takenquiz">
-                          {{ takenquiz.quiz.subject.name }}:
-                          <a-progress :percent="takenquiz.score"/>
-                        </div>
-                      </div>
-                      <div v-else>
 
-                        <p>Take a quiz under <a @click="navigateTo({name:'assessment'})">get
-                          verified</a> and it will appear here</p>
-                      </div>
+                      <p>Take a quiz under <a @click="navigateTo({name:'assessment'})">get
+                        verified</a> and it will appear here</p>
                     </div>
-                  </a-tab-pane>
-                  <a-tab-pane key="2" tab="My Projects " force-render>
-                    <Myprojects/>
-                  </a-tab-pane>
-                  <a-tab-pane key="3" tab="Work ">
-                    <Work/>
-                  </a-tab-pane>
-                </a-tabs>
+                  </div>
+                </a-tab-pane>
+                <a-tab-pane key="2" tab="My Projects " force-render>
+                  <Myprojects/>
+                </a-tab-pane>
+                <a-tab-pane key="3" tab="Work ">
+                  <Work/>
+                </a-tab-pane>
+              </a-tabs>
 
-              </div>
-
+            </div>
 
 
           </a-col>
@@ -215,7 +213,7 @@ import CandidateSider from "@/components/frontend/developer/layout/CandidateSide
 import PortfolioHeader from "@/components/frontend/developer/layout/PortfolioHeader";
 
 import QuizService from '@/services/QuizService';
-import Projects from '@/services/Projects'
+
 import Vue from 'vue'
 import VeeValidate from 'vee-validate';
 
@@ -237,7 +235,7 @@ export default {
       experiences: [],
       portoliolist: [],
       portfolio: [],
-      loading:false,
+      loading: false,
       takenquizzes: [],
       codelnprojects: [],
       createproject: false,
@@ -268,7 +266,7 @@ export default {
       cv: '',
       updatexperience: false,
       dataload: false,
-      myprojects:[]
+      myprojects: []
 
 
     }
@@ -277,16 +275,14 @@ export default {
 
     PortfolioHeader,
     CandidateSider,
-    Myprojects,Work
+    Myprojects, Work
   },
   async mounted() {
-    const auth = {
-      headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-    }
     this.dataload = true
     this.currentUser = this.$store.state.user_object.user
     this.currentUserProfile = this.$store.state.user_object
+
     if (this.currentUserProfile.skills) {
       this.skills = this.currentUserProfile.skills.split(',');
     }
@@ -299,21 +295,9 @@ export default {
     }
 
 
-
-    let tempcodelnprojects = (await Projects.myprojects(this.$store.state.user.pk, auth)).data
-
+    this.FetchTakenQuizzes()
 
 
-
-
-
-    tempcodelnprojects.forEach((project) => {
-      if (project.stage === 'analysis_complete' && project.report !== null) {
-        this.codelnprojects.push(project)
-
-      }
-    });
-    this.dataload = false
     if (this.currentUserProfile.file) {
       if (this.currentUserProfile.file.includes("http")) {
         this.cv = this.currentUserProfile.file
@@ -323,50 +307,32 @@ export default {
 
       }
 
-    }else {
+    } else {
       this.cv = null
     }
 
   },
-  computed: {
-
-
-  },
-  watch:{
-
-  },
-
-
   methods: {
 
 
-    FetchTakenQuizzes(){
+    FetchTakenQuizzes() {
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
       QuizService.taken(this.$store.state.user.pk, auth)
-      .then(
-          resp=>{
-            this.takenquizzes = resp.data
+          .then(
+              resp => {
+                this.takenquizzes = resp.data
+                this.dataload = false
 
-          }
-      )
+              }
+          )
     },
 
     navigateTo(route) {
       this.$router.push(route)
     },
-
-    // edit
-
-
-
-
-
-
-
-
 
 
   },
