@@ -19,7 +19,8 @@
                   </a-breadcrumb-item>
                   <a-breadcrumb-item><a @click="$router.push('/managejobs')" style="color: white">Manage Jobs</a>
                   </a-breadcrumb-item>
-                  <a-breadcrumb-item><a @click="$router.push({name:'job',params: { jobId: job.id }})" style="color: white">{{job.title}}</a>
+                  <a-breadcrumb-item><a @click="$router.push({name:'job',params: { jobId: job.id }})"
+                                        style="color: white">{{ job.title }}</a>
                   </a-breadcrumb-item>
                   <a-breadcrumb-item style="color: white">Test assignment</a-breadcrumb-item>
 
@@ -30,7 +31,6 @@
 
 
               </a-col>
-
 
 
             </a-row>
@@ -78,13 +78,15 @@
 
                   </ol>
                   <div style="margin-left: 5%" v-if="application.project === null">
-                    <a-button type="primary" @click="AssignProject(ApplicationId,project.id,job.id)">
+                    <a-spin v-if="loading" />
+                    <a-button type="primary" @click="AssignProject(ApplicationId,project.id,job.id)" v-else>
                       Assign
-                      project to {{ candidate.username }}
+                      project to {{ candidate.user.first_name }}
                     </a-button>
 
 
                   </div>
+
 
                 </div>
 
@@ -92,8 +94,6 @@
               </a-col>
             </a-row>
           </div>
-
-
 
 
         </div>
@@ -127,6 +127,7 @@ export default {
       ApplicationId: null,
       application: {},
       project_id: null,
+      loading:false
 
 
     }
@@ -137,10 +138,8 @@ export default {
   },
   async mounted() {
     this.ApplicationId = this.$store.state.route.params.applicationId
+    this.projectId = this.$store.state.route.params.projectId
     this.currentApplication()
-
-
-
 
 
   },
@@ -160,7 +159,7 @@ export default {
 
           })
     },
-    fetchproject(){
+    fetchproject() {
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
@@ -169,21 +168,13 @@ export default {
         this.project = this.application.project
 
 
-
-
       } else {
-        Projectsservice.projects(this.application.job.id, auth)
+        Projectsservice.projectdetails(this.$store.state.route.params.projectId, auth)
             .then(resp => {
-              this.project = resp.data[0]
-
-
+              this.project = resp.data
 
             })
             .catch(error => {
-              this.$router.push({
-                name: 'projectlist',
-                params: {applicationId: this.ApplicationId}
-              });
               return error
             })
 
@@ -196,16 +187,30 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       };
+      this.loading = true
 
       Marketplace.pickreject(application, {test_stage: 'invite_sent', project: project}, auth)
           .then(resp => {
+                this.$store.state.leads.forEach(application => {
+                  if (application.id === this.ApplicationId) {
+                    application.project = this.project
+                  }
+
+                })
+                this.$store.state.test.forEach(application => {
+                  if (application.id === this.ApplicationId) {
+                    application.project = this.project
+
+                  }
+
+                })
+                this.loading = false
+                this.$router.push({
+                  name: 'job',
+                  params: {jobId: job}
+                })
                 Marketplace.projectemail(resp.data.id, auth)
-                    .then(
-                        this.$router.push({
-                          name: 'job',
-                          params: {jobId: job}
-                        })
-                    )
+
 
               }
           )
@@ -227,6 +232,7 @@ export default {
   color: white;
 
 }
+
 .ant-carousel >>> .slick-slide {
   text-align: center;
   height: 50vh;

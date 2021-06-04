@@ -254,7 +254,7 @@ let router = new Router({
             }
         },
         {
-            path: '/pickedprojectdetails/:applicationId',
+            path: '/pickedprojectdetails/:projectId/:applicationId',
             name: 'pickedprojectdetails',
             component: Projectdetails,
             meta: {

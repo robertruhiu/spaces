@@ -105,7 +105,7 @@
 
                           <router-link v-if="item.project"
                                        style="text-decoration: none"
-                                       :to="{name:'pickedprojectdetails',params:{applicationId: item.id}}"
+                                       :to="{name:'pickedprojectdetails',params:{projectId:item.project.id,applicationId: item.id}}"
                                        target='_blank'>
                             {{ item.project.name }}
                           </router-link>
