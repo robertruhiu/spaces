@@ -8,7 +8,7 @@
                 <div :style="{ padding: '6px 20px', background: '#fff', minHeight: '75vh',
                 marginTop:'0%',marginLeft: '1%',marginRight:'1%' }">
 
-                    <a-row gutter="8">
+                    <a-row gutter="8" v-if="application">
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
                                :lg="{span: 14, offset: 0 }" :xl="{span: 14,offset: 0 }" style="margin-bottom: 1rem">
                             <show-at breakpoint="mediumAndBelow">
@@ -53,6 +53,13 @@
                         <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 24, offset: 0 }"
                                :lg="{span: 10, offset: 0 }" :xl="{span: 10,offset: 0 }" style="padding: 0 1%;">
                             <div style="border:1px solid #e8e8e8;;padding: 2%;">
+                              <div v-if="$store.state.user.email === 'codeln.workspaces@gmail.com'">
+                                <p style="font-family: sofia_probold">View Report sample</p>
+                                <a-button type="primary" size="small" @click="navigateTo({name:'ReportSample',params:{projectId:application.project.id}})">
+                                  sample
+                                </a-button>
+                              </div>
+
 
                                 <div v-if="csa">
 
@@ -247,11 +254,12 @@
 
 <script>
     import Projects from '@/services/Projects'
-    import CandidateSider from "./layout/CandidateSider";
-    import DevHeader from "./layout/DevHeader";
+    import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
+    import DevHeader from "@/components/frontend/developer/layout/DevHeader";
+
     import moment from 'moment';
     import {showAt, hideAt} from 'vue-breakpoints'
-    import VeeValidate from 'vee-validate';
+
     import UsersService from '@/services/UsersService'
 
     export default {
@@ -279,30 +287,35 @@
 
         },
         async mounted() {
+
+            this.getProject()
+
+
+        },
+        methods: {
+          getProject(){
             const auth = {
-                headers: {Authorization: 'JWT ' + this.$store.state.token}
+              headers: {Authorization: 'JWT ' + this.$store.state.token}
 
             };
             Projects.myprojectdetails(this.$store.state.route.params.applicationId, auth)
                 .then(resp => {
-                        this.application = resp.data,
-                            this.videoid = this.application.project.projectimage2
-                        this.csa = this.application.csa
-                        if (this.application.frameworktested === 'html') {
-                            this.basic = true
-                        }
-                        if (this.application.portfolio) {
-                            this.codelink = true
-                            this.sanboxlink = this.application.portfolio.demo_link
-                        }
+                      this.application = resp.data,
+                          this.videoid = this.application.project.projectimage2
+                      this.csa = this.application.csa
+                      if (this.application.frameworktested === 'html') {
+                        this.basic = true
+                      }
+                      if (this.application.portfolio) {
+                        this.codelink = true
+                        this.sanboxlink = this.application.portfolio.demo_link
+                      }
 
                     }
                 )
                 .catch()
 
-
-        },
-        methods: {
+          },
             moment,
             navigateTo(route) {
                 this.$router.push(route)

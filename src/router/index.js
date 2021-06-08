@@ -34,6 +34,7 @@ const TestCenters = () => import('@/components/frontend/developer/TestCenters')
 const DeveloperProfile = () => import('@/components/frontend/developer/Myprofile')
 const ManageApplications = () => import('@/components/frontend/developer/ManageApplications')
 const DeveloperProjects = () => import('@/components/frontend/developer/DeveloperProjects')
+const ReportSample = () => import('@/components/frontend/developer/ReportSample')
 const QuizzesList = () => import('@/components/frontend/developer/quiz/QuizzesList')
 const DeveloperProjectDetails = () => import('@/components/frontend/developer/DeveloperProjectDetails')
 const Report = () => import('@/components/frontend/recruiter/Report');
@@ -519,6 +520,14 @@ let router = new Router({
             path: '/Demo',
             name: 'Demo',
             component: Demo,
+
+
+        },
+        {
+            path: '/ReportSample/:projectId',
+            name: 'ReportSample',
+            component: ReportSample,
+
 
 
         },

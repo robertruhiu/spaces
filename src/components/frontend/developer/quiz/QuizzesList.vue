@@ -16,37 +16,53 @@
           </a-row>
 
           <div style="text-align: center" v-if="waiting">
-            <a-spin/>
+            <div style="padding: 2%">
+              <a-skeleton active />
+              <a-skeleton active />
+              <a-skeleton active />
+            </div>
+
 
           </div>
-          <div v-else>
+          <div v-else  style="height: 90vh;overflow-y: scroll;">
             <div v-if="takenquizzes.length >0">
               <a-row style="padding: 2%" gutter="16">
                 <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }"
                        :md="{span: 12, offset: 0 }"
                        :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in takenquizzes"
                        v-bind:key="quiz">
+                  <a-card class="nine" >
+                    <div style="text-align: center;">
+                      <img
+                          class="card-img-top"
+                          slot="cover"
+                          alt="example"
+                          :src="quiz.quiz.subject.image"
 
 
-                  <a-row class="ant-card actioncards">
-                    <a-col span="24">
-                      <div style="text-align: center">
-                        <img class="poolavatar" :src="quiz.quiz.subject.image">
-                      </div>
-                    </a-col>
-                    <a-col span="24" style="text-align: center">
-                      {{ quiz.quiz.name }}
-                      score:{{ quiz.score }}
-
-                      <a-button style="float: right" size="small" @click="showModal(quiz.quiz.id)" type="danger">
-                        Retake
-                      </a-button>
 
 
-                    </a-col>
+                      />
+                    </div>
 
 
-                  </a-row>
+
+
+
+                    <a-card-meta >
+                      <template slot="description">
+                        <span>{{ quiz.quiz.name }}
+                          score:{{ quiz.score }}</span>
+                        <a-button style="float: right" size="small" @click="showModal(quiz.quiz.id)" type="danger">
+                          Retake
+                        </a-button>
+
+                      </template>
+                    </a-card-meta>
+                  </a-card>
+
+
+
 
 
                 </a-col>
@@ -57,25 +73,39 @@
 
               <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 24, offset: 0 }" :md="{span: 12, offset: 0 }"
                      :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" v-for="quiz in untaken"
-                     v-bind:key="quiz">
+                     v-bind:key="quiz" style="margin-bottom: 1rem">
 
                 <a @click="navigateTo({name:'takequiz',params:{candidateId:currentUserProfile.user.id,quizId: quiz.id,}})">
+                  <a-card class="nine" >
+                    <div style="text-align: center;">
+                      <img
+                          class="card-img-top"
+                          slot="cover"
+                          alt="example"
+                          :src="quiz.subject.image"
 
 
-                  <a-row class="ant-card actioncards">
-                    <a-col span="24">
-                      <div style="text-align: center">
-                        <img class="poolavatar" :src="quiz.subject.image">
-                      </div>
-                    </a-col>
-                    <a-col span="24" style="text-align: center">
-                      {{ quiz.name }}
 
 
-                    </a-col>
+                      />
+                    </div>
 
 
-                  </a-row>
+
+
+
+                    <a-card-meta >
+                      <template slot="description">
+                        <span>{{ quiz.name }}
+                          </span>
+
+
+                      </template>
+                    </a-card-meta>
+                  </a-card>
+
+
+
 
                 </a>
 
@@ -131,7 +161,8 @@ export default {
       sasa: [],
       retakeload: false,
       retakemodal: false,
-      retakequizid: ''
+      retakequizid: '',
+      UniqueUntakenQuizIds:[]
 
 
     }
@@ -142,43 +173,81 @@ export default {
 
   },
   async mounted() {
-    const auth = {
-      headers: {Authorization: 'JWT ' + this.$store.state.token}
 
-    }
-    this.currentUserProfile = (await UsersService.currentuser(this.$store.state.user.pk, auth)).data
-    this.quizzes = (await QuizService.allquizzes(auth)).data;
-    this.takenquizzes = (await QuizService.taken(this.$store.state.user.pk, auth)).data;
+    this.currentUserProfile = this.$store.state.user_object
+    this.fetchQuizzes()
 
-    let ds = []
-    if (this.takenquizzes.length > 0) {
-      for (let i = 0; i < this.quizzes.length; i++) {
-        for (let j = 0; j < this.takenquizzes.length; j++) {
-          if (this.quizzes[i].id === this.takenquizzes[j].quiz.id) {
-            this.taken.push(this.quizzes[i].id)
-          } else {
-            ds.push(this.quizzes[i].id)
-          }
-        }
-      }
-    } else {
-      this.untaken = this.quizzes
-    }
-    this.waiting = false
-    this.sasa = Array.from(new Set(ds))
-    for (let i = 0; i < this.quizzes.length; i++) {
-      for (let j = 0; j < this.sasa.length; j++) {
-        if (this.quizzes[i].id === this.sasa[j]) {
-          this.untaken.push(this.quizzes[i])
 
-        }
 
-      }
-    }
+
 
 
   },
   methods: {
+
+    fetchQuizzes(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      QuizService.allquizzes(auth)
+      .then(resp=>{
+        this.quizzes = resp.data
+
+        this.fetchTaken()
+      })
+
+
+    },
+    fetchTaken(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      QuizService.taken(this.$store.state.user.pk, auth)
+      .then(resp=>{
+        this.takenquizzes = resp.data
+        this.computeQuizzes()
+
+      })
+    },
+    computeQuizzes(){
+      let allquizids = []
+      let takenIds =[]
+      if (this.takenquizzes.length > 0) {
+        this.takenquizzes.forEach(taken=>{
+          takenIds.push(taken.quiz.id)
+
+        })
+
+
+      } else {
+        this.untaken = this.quizzes
+      }
+      this.quizzes.forEach(quiz=>{
+        allquizids.push(quiz.id)
+
+      })
+      takenIds.forEach(id=>{
+        const index = allquizids.indexOf(id);
+        if (index > -1) {
+          allquizids.splice(index, 1);
+        }
+      })
+
+      this.quizzes.forEach(quiz=>{
+        allquizids.forEach(id=>{
+          if(quiz.id === id){
+            this.untaken.push(quiz)
+          }
+        })
+      })
+
+      this.waiting = false
+      // remove duplicate ids in untakenquizIds
+
+
+    },
     navigateTo(route) {
       this.$router.push(route);
     },
@@ -195,11 +264,11 @@ export default {
       }
 
       QuizService.deletequizanswer(this.currentUserProfile.user.id, quiz, auth)
-          .then(resp => {
+          .then(() => {
                 QuizService.deletequiztaken(this.currentUserProfile.user.id, quiz, auth)
-                    .then(resp => {
+                    .then(() => {
                           QuizService.deleterquizrandom(this.currentUserProfile.user.id, quiz, auth)
-                              .then(resp => {
+                              .then(() => {
                                     this.retakequizid = ''
                                     this.retakeload = false
                                     this.$router.push({
@@ -217,7 +286,7 @@ export default {
 
 
     },
-    handleCancel(e) {
+    handleCancel() {
       this.retakemodal = false;
       this.retakeload = false
     },
@@ -238,5 +307,32 @@ export default {
 .poolavatar {
   width: 23%;
 
+}
+.card-img-top{
+
+
+  width: 30%;
+
+
+
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1890ff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #91d5ff;
 }
 </style>

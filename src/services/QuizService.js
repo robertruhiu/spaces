@@ -13,6 +13,9 @@ export default {
     takequiz(candidate, quiz, auth) {
         return Api().get(`takequiz/${candidate}/${quiz}`, auth)
     },
+    questionanswer(question, auth) {
+        return Api().get(`questionanswers/${question}`, auth)
+    },
     postanswer(instance, auth) {
         return Api().post('postanswer', instance, auth)
 
