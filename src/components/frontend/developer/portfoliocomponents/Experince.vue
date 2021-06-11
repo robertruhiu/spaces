@@ -20,8 +20,7 @@
 
         </p>
         <p><span><a-icon type="bank"/>  codeln <a-icon
-            type="environment"/>  Ghana <a-icon
-            type="hourglass"/>  18 months</span>
+            type="environment"/>  Ghana </span>
         </p>
         <p>
           Technologies used:
@@ -36,6 +35,7 @@
 
 
         <p>Designing and implementing use case of UX processes of the user story</p>
+        <p>2013 -2017</p>
 
       </a-timeline-item>
       <a-timeline-item
@@ -49,8 +49,7 @@
 
         </p>
         <p><span><a-icon type="bank"/>  codeln <a-icon
-            type="environment"/>  Ghana <a-icon
-            type="hourglass"/>  18 months</span>
+            type="environment"/>  Ghana</span>
         </p>
         <p>
           Technologies used:
@@ -65,6 +64,7 @@
 
 
         <p>Designing and implementing use case of UX processes of the user story</p>
+        <p>2013 -2017</p>
 
       </a-timeline-item>
 
@@ -114,13 +114,23 @@
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+        <p>
+          <a-checkbox v-model="CurrentJob">
+            Currently working here
+          </a-checkbox>
+          </p>
 
-        <a-input-number :min="1" :max="200"
+        <a-space>
 
-                        name="experience_duration"
+          <a-month-picker placeholder="Start Month " >
 
-        />
-        months
+          </a-month-picker>
+
+          <a-month-picker v-if="CurrentJob === false" placeholder="End Month" >
+
+
+          </a-month-picker>
+        </a-space>
 
       </a-form-item>
       <a-form-item
@@ -207,6 +217,7 @@ export default {
       inputValue: '',
       openExperienceModal: false,
       visible: false,
+      CurrentJob:false
 
 
 

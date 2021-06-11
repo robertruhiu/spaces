@@ -61,6 +61,7 @@ const AllRecruiter = () => import('@/components/frontend/admin/AllRecruiters');
 const ViewEditProfile = () => import('@/components/frontend/admin/ViewEditProfile');
 // demo
 const Demo = () => import('@/components/frontend/developer/DemoPort')
+const Cv = () => import('@/components/frontend/developer/Cv')
 Vue.use(Router);
 
 let router = new Router({
@@ -520,6 +521,13 @@ let router = new Router({
             path: '/Demo',
             name: 'Demo',
             component: Demo,
+
+
+        },
+        {
+            path: '/Cv',
+            name: 'Cv',
+            component: Cv,
 
 
         },

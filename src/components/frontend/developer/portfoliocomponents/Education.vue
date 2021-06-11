@@ -181,10 +181,10 @@
         :wrapper-col="{ span: 24 }"
     >
       <a-space>
-        <a-month-picker placeholder="Select month" >
+        <a-month-picker placeholder="Start month" >
 
         </a-month-picker>
-        <a-month-picker placeholder="Select month" >
+        <a-month-picker placeholder="End month" >
 
         </a-month-picker>
       </a-space>

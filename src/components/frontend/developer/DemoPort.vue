@@ -5,6 +5,8 @@
 
       <a-layout-content style="background-color: #FAFBFF">
         <a-card class="hellocard" :bordered="false">
+          <a-row style="color: white">
+            <a-col span="12">
           <a-breadcrumb>
             <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a></a-breadcrumb-item>
             <a-breadcrumb-item style="color: white">Portfolio</a-breadcrumb-item>
@@ -13,6 +15,15 @@
           <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{ Greeting }}
                 {{ $store.state.user_object.user.first_name | capitalize }}</span>
           <p>Profile completion : 80%</p>
+            </a-col>
+            <a-col span="12">
+              <a-button
+                  type="primary"  @click="navigateTo({name:'Cv'})">
+                <a-icon type="right" />
+                View Public Porftolio
+              </a-button>
+            </a-col>
+          </a-row>
 
 
         </a-card>
@@ -31,7 +42,7 @@
                   <a-tab-pane key="2">
                   <span slot="tab">
                     <a-icon type="code"/>
-                    Skills
+                    Portfolio/Gigs
                   </span>
                     <Skills />
                   </a-tab-pane>
