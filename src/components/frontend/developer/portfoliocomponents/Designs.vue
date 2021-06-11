@@ -182,8 +182,7 @@
         </a-form-item>
 
         <a-form-item>
-          <span >Tools used in project</span>
-          <br>
+
           <span>Which role did you play in the project(you can pick more than one).</span>
           <br>
           <a-checkable-tag v-model="Developer"  @change="handleChange">
@@ -320,7 +319,7 @@
           </div>
         </a-form-item>
         <a-form-item>
-          <p style="font-family: sofia_probold"> Add images of the project</p>
+          <p> Add images of the project</p>
           <a-upload
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               list-type="picture"
