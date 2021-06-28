@@ -4,7 +4,23 @@
     <a-layout>
 
       <a-layout-content style="background-color: white">
-        <DevHeader/>
+        <a-card class="hellocard" :bordered="false">
+
+
+          <a-breadcrumb>
+            <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a>
+            </a-breadcrumb-item>
+            <a-breadcrumb-item style="color: white"><a @click="$router.push('/assessment')" style="color: white">Skill Verification</a></a-breadcrumb-item>
+            <a-breadcrumb-item style="color: white"><a @click="$router.push('/quizlist')" style="color: white">Quiz List</a></a-breadcrumb-item>
+            <a-breadcrumb-item style="color: white">Quiz </a-breadcrumb-item>
+
+          </a-breadcrumb>
+
+          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                A test of your knowledge of programming language</span>
+
+
+        </a-card>
         <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
 
           <div>
@@ -117,11 +133,7 @@
 
 <script>
 import ARow from "ant-design-vue/es/grid/Row";
-
-
-
 import CandidateSider from "../layout/CandidateSider";
-import DevHeader from "../layout/DevHeader";
 import QuizService from '@/services/QuizService';
 
 
@@ -154,7 +166,6 @@ export default {
   components: {
 
     ARow,
-    DevHeader,
     CandidateSider,
 
   },
@@ -335,6 +346,14 @@ export default {
 </script>
 
 <style scoped>
+.hellocard {
+  height: 8rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background: #004EC7;
+  border-radius: 0;
+  color: white;
+
+}
 .steps-content {
   margin-top: 16px;
   border: 1px dashed #e9e9e9;

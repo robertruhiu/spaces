@@ -4,28 +4,33 @@
     <a-layout>
 
       <a-layout-content style="background-color: white">
-        <DevHeader/>
+        <a-card class="hellocard" :bordered="false">
+
+
+              <a-breadcrumb>
+                <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a>
+                </a-breadcrumb-item>
+                <a-breadcrumb-item style="color: white">Manage Applications</a-breadcrumb-item>
+
+              </a-breadcrumb>
+              <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                Track your applications </span>
+
+
+        </a-card>
+
         <div :style="{ padding: '5px', background: '#fff',marginTop:'0rem' }">
-          <a-row style="margin-top: 1%">
-            <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
-                   :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
-              <h3 style="color: #1976D2;font-weight: bold;margin-left: 1rem">
-                Track your applications through the stages
-              </h3>
-            </a-col>
 
-
-          </a-row>
-          <div>
+          <div class="cardScroll1">
             <a-tabs defaultActiveKey="1">
 
               <a-tab-pane key="1">
-                                <span slot="tab">
+                                <span slot="tab" style="font-family: sofia_prolight">
                                     Active applications <a-tag
                                     color="blue">{{ applications.length - withdrawn.length }}</a-tag>
 
                                 </span>
-                <a-row :gutter="16" style="padding: 2%">
+                <a-row :gutter="16" style="padding: 1%">
 
 
                   <a-col class="tracker" :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
@@ -34,7 +39,7 @@
                     <a-row class='managecard'>
                       <a-col span="24">
                         <div style="text-align:center;padding: 5%;">
-                          <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                          <p class="cardTitle">
                             Applications</p>
                         </div>
                         <a-progress :percent="100" strokeColor="#4DB3D3" :showInfo="false"/>
@@ -44,16 +49,19 @@
                         <div style="padding: 5%">
                           <div v-if="waiting">
                             <div style="text-align: center">
-                              <a-spin/>
+                              <a-skeleton active/>
                             </div>
                           </div>
-                          <div v-else>
-                            <a-timeline v-if="active.length>0">
+                          <div v-else class="cardScroll">
+                            <a-timeline v-if="active.length>0" style="padding-top: 1%">
                               <a-timeline-item v-for="application in active"
                                                v-bind:key="application.id">
-                                <a><strong>{{ application.title }}</strong></a>
+                                <span class="jobTitle"
+                                >{{
+                                    application.title
+                                  }}</span>
                                 <br>
-                                <div style="color: black">
+                                <div class="jobContent">
                                   Company : {{ application.company }}
 
                                   <br>
@@ -63,25 +71,26 @@
                                                    style="text-align: center;width: 4rem;">
                                                 {{ application.stage }}
                                             </a-tag>
+                                    </span>
+                                  <p>Application date: {{ application.application_date }}</p>
 
-                                                <p v-if="application.stage === 'pending'">
+
+                                  <p v-if="application.stage === 'pending'">
                                                     <span><a
                                                         @click="acceptapplication(application.key,application.type)">accept</a></span>
-                                                    <a style="color: red;margin-left: 1rem"
-                                                       @click="showModal(application.key,application.type,application.stage)">
-                                                withdraw
-                                            </a>
-                                                </p>
-                                                    <p v-else>
+                                    <a style="color: red;margin-left: 1rem"
+                                       @click="showModal(application.key,application.type,application.stage)">
+                                      withdraw
+                                    </a>
+                                  </p>
+                                  <p v-else>
 
-                                                    <a
-                                                        @click="showModal(application.key,application.type,application.stage)">
-                                                withdraw
-                                            </a>
-                                                </p>
+                                    <a
+                                        @click="showModal(application.key,application.type,application.stage)">
+                                      withdraw
+                                    </a>
+                                  </p>
 
-
-                                            </span>
 
                                 </div>
 
@@ -105,7 +114,7 @@
                     <a-row class='managecard'>
                       <a-col span="24">
                         <div style="text-align:center;padding: 5%;">
-                          <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                          <p class="cardTitle">
                             Testing</p>
                         </div>
                         <a-progress :percent="100" strokeColor="#4DB3D3" :showInfo="false"/>
@@ -115,19 +124,21 @@
                         <div style="padding: 5%">
                           <div v-if="waiting">
                             <div style="text-align: center">
-                              <a-spin/>
+                              <a-skeleton active/>
                             </div>
                           </div>
-                          <div v-else>
-                            <a-timeline v-if="testing.length>0">
+                          <div v-else class="cardScroll">
+
+                            <a-timeline v-if="testing.length>0" style="padding-top: 1%">
                               <a-timeline-item v-for="application in testing"
                                                v-bind:key="application.id">
-                                <a><strong>{{ application.title }}</strong></a>
+                                <span class="jobTitle">{{ application.title }}</span>
                                 <br>
-                                <div style="color: black">
+                                <div class="jobContent">
                                   Company : {{ application.company }}
 
                                   <br>
+                                  <p>Application date: {{ application.application_date }}</p>
                                   <div v-if="application.project">
 
                                     Project assigned: <span></span>
@@ -169,7 +180,7 @@
                     <a-row class='managecard'>
                       <a-col span="24">
                         <div style="text-align:center;padding: 5%;">
-                          <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                          <p class="cardTitle">
                             Interview</p>
                         </div>
                         <a-progress :percent="100" strokeColor="#0868AC" :showInfo="false"/>
@@ -179,19 +190,20 @@
                         <div style="padding: 5%">
                           <div v-if="waiting">
                             <div style="text-align: center">
-                              <a-spin/>
+                              <a-skeleton active/>
                             </div>
                           </div>
-                          <div v-else>
+                          <div v-else class="cardScroll">
                             <a-timeline v-if="interview.length >0">
                               <a-timeline-item v-for="application in interview"
                                                v-bind:key="application.id">
-                                <a><strong>{{ application.title }}</strong></a>
+                                <span class="jobTitle">{{ application.title }}</span>
                                 <br>
-                                <div style="color: black">
+                                <div class="jobContent">
                                   Company : {{ application.company }}
 
                                   <br>
+                                  <p>Application date: {{ application.application_date }}</p>
                                   <div v-if="application.start !=='Invalid date'">
                                     Interview: <span><a style="margin-left: 2%"
                                                         type="primary"
@@ -227,7 +239,7 @@
                     <a-row class='managecard'>
                       <a-col span="24">
                         <div style="text-align:center;padding: 5%;">
-                          <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                          <p class="cardTitle">
                             Offers</p>
                         </div>
                         <a-progress :percent="100" strokeColor="#084081" :showInfo="false"/>
@@ -237,16 +249,16 @@
                         <div style="padding: 5%">
                           <div v-if="waiting">
                             <div style="text-align: center">
-                              <a-spin/>
+                              <a-skeleton active/>
                             </div>
                           </div>
-                          <div v-else>
+                          <div v-else class="cardScroll">
                             <a-timeline v-if="offers.length >0">
                               <a-timeline-item v-for="application in offers"
                                                v-bind:key="application.id">
-                                <a><strong>{{ application.title }}</strong></a>
+                                <span class="jobTitle">{{ application.title }}</span>
                                 <br>
-                                <div style="color: black">
+                                <div class="jobContent">
                                   Company : {{ application.company }}
 
                                   <br>
@@ -255,6 +267,7 @@
                                          style="text-align: center;width: 4rem;">
                                     {{ application.stage }}
                                   </a-tag>
+                                  <p>Application date: {{ application.application_date }}</p>
                                 </div>
                                 <a-button type="primary" size="small"
                                           @click="showModal(application.key,application.type,application.stage)">
@@ -278,18 +291,18 @@
                 </a-row>
               </a-tab-pane>
               <a-tab-pane key="2" forceRender>
-                                <span slot="tab">
+                                <span slot="tab" style="font-family: sofia_prolight">
                                     Withdrawn applications <a-tag color="purple">{{ withdrawn.length }}</a-tag>
                                 </span>
                 <div v-if="withdrawn.length > 0">
-                  <a-row :gutter="16" style="padding: 2%">
+                  <a-row :gutter="16" style="padding: 1%">
                     <a-col :xs="{span: 24, offset: 0  }" :sm="{span: 12, offset: 0 }"
                            :md="{span: 12, offset: 0 }"
                            :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }" class="tracker">
                       <a-row class='managecard'>
                         <a-col span="24">
                           <div style="text-align:center;padding: 5%;">
-                            <p style="color: #1976D2;font-weight: bold;text-align: center;font-size: 1rem">
+                            <p class="cardTitle">
                               Withdrawn</p>
                           </div>
                           <a-progress :percent="100" strokeColor="#084081" :showInfo="false"/>
@@ -299,16 +312,16 @@
                           <div style="padding: 5%">
                             <div v-if="waiting">
                               <div style="text-align: center">
-                                <a-spin/>
+                                <a-skeleton active/>
                               </div>
                             </div>
-                            <div v-else>
+                            <div v-else class="cardScroll">
                               <a-timeline v-if="withdrawn.length >0">
                                 <a-timeline-item v-for="application in withdrawn"
                                                  v-bind:key="application.id">
-                                  <a><strong>{{ application.title }}</strong></a>
+                                  <span class="jobTitle">{{ application.title }}</span>
                                   <br>
-                                  <div style="color: black">
+                                  <div class="jobContent">
                                     Company : {{ application.company }}
 
                                     <br>
@@ -317,6 +330,7 @@
                                            style="text-align: center;width: 4rem;">
                                       {{ application.stage }}
                                     </a-tag>
+                                    <p>Application date: {{ application.application_date }}</p>
                                   </div>
                                   <span style="font-weight: bold">Rejection reasons</span>
                                   <div v-if="application.rejectionreason.length >0">
@@ -411,7 +425,7 @@
 
 <script>
 class Application {
-  constructor(id, title, company, stage, type, start, end, color, project, rejectioncomment, rejectionreason) {
+  constructor(id, title, company, stage, type, start, end, color, project, rejectioncomment, rejectionreason, application_date) {
     this.key = id;
     this.title = title
     this.company = company
@@ -423,13 +437,13 @@ class Application {
     this.project = project
     this.rejectioncomment = rejectioncomment
     this.rejectionreason = rejectionreason
+    this.application_date = application_date
 
 
   }
 }
 
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
-import DevHeader from "@/components/frontend/developer/layout/DevHeader";
 import ARow from "ant-design-vue/es/grid/Row";
 import ACol from "ant-design-vue/es/grid/Col";
 import Marketplace from '@/services/Marketplace'
@@ -460,7 +474,6 @@ export default {
   components: {
     ACol,
     ARow,
-    DevHeader,
     CandidateSider,
 
 
@@ -472,9 +485,10 @@ export default {
 
 
   },
-  watch:{
+
+  watch: {
     applications: function () {
-      this.applications.forEach(application=>{
+      this.applications.forEach(application => {
         if (application.stage === 'active' || application.stage === 'new' || application.stage === 'pending') {
           this.active.push(application)
         } else if (application.stage === 'test') {
@@ -496,7 +510,7 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
-      Marketplace.candidatejobs(this.$store.state.user.pk, auth)
+      Marketplace.manageApplicationBoard(this.$store.state.user.pk, auth)
           .then(resp => {
             this.alldevjobs = resp.data
 
@@ -515,8 +529,9 @@ export default {
             this.PickedCompute()
           })
     },
-    AppliedjobsCompute(){
-      this.alldevjobs.forEach(job=>{
+    AppliedjobsCompute() {
+      this.alldevjobs.forEach(job => {
+
         let id = job.id
         let title = job.job.title
         let company = job.job.company
@@ -536,8 +551,9 @@ export default {
           rejectionreason = job.rejectionreason
 
         }
+        let application_date = moment(job.created).format("YYYY-MM-DD ")
         let one_job_applied = new Application(
-            id, title, company, stage, type, start, end, color, project, rejectioncomment, rejectionreason
+            id, title, company, stage, type, start, end, color, project, rejectioncomment, rejectionreason, application_date
         );
         this.applications.push(one_job_applied)
 
@@ -547,8 +563,8 @@ export default {
 
     },
 
-    PickedCompute(){
-      this.alldevjobpicked.forEach(picked=>{
+    PickedCompute() {
+      this.alldevjobpicked.forEach(picked => {
         let id = picked.id
         let title = 'Talent pool pick'
         let company = picked.owner.company
@@ -569,7 +585,6 @@ export default {
 
 
     },
-
 
 
     navigateTo(route) {
@@ -903,6 +918,45 @@ export default {
 
 }
 
+.hellocard {
+  height: 8rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background: #004EC7;
+  border-radius: 0;
+  color: white;
+
+}
+
+.cardTitle {
+  color: #1976D2;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+  font-family: sofia_probold
+}
+
+.jobTitle {
+  font-family: sofia_probold;
+  text-decoration: underline;
+  text-decoration-color: #1F81CE
+}
+
+.jobContent {
+  color: black;
+  font-family: sofia_prolight
+}
+
+.cardScroll {
+  height: 55vh;
+  overflow: scroll;
+  margin-bottom: 1rem
+}
+.cardScroll1 {
+  height: 80vh;
+  overflow: scroll;
+  margin-bottom: 1rem
+}
+
 .text-muted {
   color: rgba(0, 0, 0, 0.45);
 }
@@ -915,4 +969,23 @@ export default {
   border-bottom: 1px solid #e8e8e8;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1890ff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #91d5ff;
+}
 </style>

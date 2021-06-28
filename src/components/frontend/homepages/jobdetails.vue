@@ -233,14 +233,16 @@ export default {
   async mounted() {
     moment
     if (this.$store.state.user_object) {
+      this.currentUserProfile = this.$store.state.user_object
       if (this.$store.state.user_object.file) {
         this.cv = this.$store.state.user_object.file
       }
+
     }
 
 
     this.dataload = true
-    this.fetchData()
+    this.fetchJob()
 
 
   },
@@ -253,73 +255,52 @@ export default {
 
   methods: {
     moment,
-    fetchData() {
-
-      if (this.$store.state.isUserLoggedIn) {
-        const auth = {
-          headers: {Authorization: 'JWT ' + this.$store.state.token}
-
-        }
-        this.currentUserProfile = this.$store.state.user_object
-
-        MarketPlaceService.jobdetails(this.$route.params.jobId)
-            .then(resp => {
-              this.job = resp.data
-
-              MarketPlaceService.candidatejobs(this.$store.state.user.pk, auth)
-                  .then(resp => {
-                    this.myjobs = resp.data
-                    this.dataload = false
-                    if (this.myjobs && this.job) {
-                      this.myjobs.forEach(job => {
-                        if (job.job.id === this.job.id) {
-                          this.applied = true
-                        }
-
-
-                      })
-
-                    }
-                    if (this.job.tech_stack) {
-                      this.skills = this.job.tech_stack.split(',');
-
-                    }
-
-
-                    this.Applicationvalidators()
-                  })
-            })
-
-
-        this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
-        for (const [key, value] of Object.entries(countries)) {
-          if (key === this.job.location) {
-            this.country = value
-          }
-        }
-
-
-      } else {
-
-        MarketPlaceService.jobdetails(this.$route.params.jobId)
-            .then(resp => {
-              this.job = resp.data
+    fetchJob(){
+      MarketPlaceService.jobdetails(this.$route.params.jobId)
+          .then(resp => {
+            this.job = resp.data
+            if (this.job.tech_stack) {
               this.skills = this.job.tech_stack.split(',');
-              this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
-              this.dataload = false
-            })
 
-
-        for (const [key, value] of Object.entries(countries)) {
-          if (key === this.job.location) {
-            this.country = value
-          }
-        }
-
+            }
+            this.deadline = moment(this.job.deadline).format("YYYY-MM-DD HH:mm:ss")
+            for (const [key, value] of Object.entries(countries)) {
+              if (key === this.job.location) {
+                this.country = value
+              }
+            }
+            if (this.$store.state.isUserLoggedIn) {
+              this.isAppliedLookup()
+            }
+          })
+    },
+    isAppliedLookup(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
+      MarketPlaceService.isappliedlookup(this.$store.state.user.pk, auth)
+          .then((resp) => {
+            this.myjobs = resp.data
+            if (this.myjobs && this.job) {
+              this.myjobs.forEach(job => {
+                if (job.job.id === this.job.id) {
+                  this.applied = true
+                }
+
+
+              })
+
+            }
+            this.dataload = false
+            this.Applicationvalidators()
+
+
+          })
 
     },
+
+
     Applicationvalidators() {
       const auth = {
         headers: {Authorization: 'JWT ' + this.$store.state.token}

@@ -66,6 +66,7 @@
                                   size="large"
                                   :pagination="pagination"
                                   :dataSource="filteredList"
+                                      style="min-height: 70vh;"
 
                               >
 

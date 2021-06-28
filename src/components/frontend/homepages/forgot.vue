@@ -118,15 +118,17 @@
 
 
                         })
-                            .then(resp => {
+                            .then(() => {
                                 this.info = 'Password reset e-mail has been sent.Please check your email'
                                 this.loading = false
 
 
                             })
                             .catch(error => {
+
+
                                 this.loading = false
-                                this.error = 'details incorrect'
+                                this.error = 'A user with that email is not registered on Codeln.'
                                 return error
 
                             });

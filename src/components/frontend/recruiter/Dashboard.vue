@@ -30,7 +30,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/edit-tools.svg">
+                          <img class="poolavatar" src="@/assets/images/register.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
@@ -59,7 +59,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/cv.svg">
+                          <img class="poolavatar" src="@/assets/images/profiles.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
@@ -89,12 +89,42 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/star.svg">
+                          <img class="poolavatar" src="@/assets/images/star.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
                         <p>Browse the Talent Pool</p>
                         <p style="margin: 0;">View more devs from pool</p>
+
+
+                      </a-col>
+
+
+                    </a-row>
+
+                  </div>
+                </router-link>
+
+
+              </a-card>
+
+            </a-col>
+            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                   :md="{span: 12, offset: 0 }"
+                   :lg="{span: 10, offset: 1 }" :xl="{span: 6,offset: 0 }">
+              <a-card hoverable class="cardshadow" style="width: 100%;margin-bottom: 1rem">
+                <router-link to="/Organizations">
+                  <div style="color: black">
+
+                    <a-row>
+                      <a-col span="24">
+                        <div style="text-align: center">
+                          <img class="poolavatar" src="@/assets/images/team.svg">
+                        </div>
+                      </a-col>
+                      <a-col span="24" style="text-align: center">
+                        <p>Manage your Teams</p>
+                        <p style="margin: 0;">Add team members to assist in recruitement</p>
 
 
                       </a-col>
@@ -119,7 +149,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/admin.svg">
+                          <img class="poolavatar" src="@/assets/images/admin.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">

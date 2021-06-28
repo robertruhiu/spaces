@@ -8,12 +8,12 @@
           <a-row style="color: white">
             <a-col span="12">
           <a-breadcrumb>
-            <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a></a-breadcrumb-item>
+            <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a></a-breadcrumb-item>
             <a-breadcrumb-item style="color: white">Portfolio</a-breadcrumb-item>
 
           </a-breadcrumb>
-          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{ Greeting }}
-                {{ $store.state.user_object.user.first_name | capitalize }}</span>
+          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                {{ $store.state.user_object.user.first_name | capitalize }} {{ $store.state.user_object.user.last_name | capitalize }}</span>
           <p>Profile completion : 80%</p>
             </a-col>
             <a-col span="12">
@@ -97,7 +97,6 @@
 
 <script>
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
-import moment from "moment";
 import Basic from "@/components/frontend/developer/portfoliocomponents/basic";
 import intro from "@/components/frontend/developer/portfoliocomponents/intro";
 import skillInfo from "@/components/frontend/developer/portfoliocomponents/skillInfo";
@@ -135,28 +134,7 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1)
     }
   },
-  computed: {
-    Greeting() {
-      moment
-      let today = new Date()
-      let curHr = today.getHours()
-      let greeting = ''
 
-      if (curHr < 12) {
-        greeting = 'Good Morning'
-
-      } else if (curHr < 18) {
-        greeting = 'Good Afternoon'
-
-      } else {
-        greeting = 'Good Evening'
-
-      }
-      return greeting
-    },
-
-
-  },
   watch: {},
 
 

@@ -25,6 +25,9 @@ export default {
     myjobs(user_id, auth) {
         return Api().get(`marketplace/myjobs/${user_id}`, auth)
     },
+    organizationjobs(organization_id, auth) {
+        return Api().get(`marketplace/myorganizationjobs/${organization_id}`, auth)
+    },
     myjobssliced(user_id, auth) {
         return Api().get(`marketplace/myjobssliced/${user_id}`, auth)
     },
@@ -49,6 +52,14 @@ export default {
     },
     candidatejobs(candidate_id,auth){
         return Api().get(`marketplace/candidatejobs/${candidate_id}`, auth)
+
+    },
+    manageApplicationBoard(candidate_id,auth){
+        return Api().get(`marketplace/manageapplicationboard/${candidate_id}`, auth)
+
+    },
+    isappliedlookup(candidate_id,auth){
+        return Api().get(`marketplace/isppliedLookupJobboard/${candidate_id}`, auth)
 
     },
     updatejob(job_id, CurrentJob, auth) {

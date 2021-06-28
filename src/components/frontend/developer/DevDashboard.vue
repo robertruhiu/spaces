@@ -4,32 +4,17 @@
     <a-layout>
 
       <a-layout-content style="background-color: white">
-        <DevHeader/>
+        <a-card class="hellocard" :bordered="false">
+            <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{Greeting}}
+                {{$store.state.user_object.user.first_name | capitalize}}</span>
+          <p style="font-family: sofia_proregular;font-size: 1.2rem;line-height: 1rem;color: white">What would you like to do today?</p>
+
+        </a-card>
+
         <div :style="{ padding: '5px', background: '#fff',marginTop:'0' }">
 
           <div style="min-height: 40vh ;padding: 1%">
-            <a-row style="margin-bottom: 1%">
-              <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                     :lg="{span: 20, offset: 0 }" :xl="{span: 20, offset: 0 }">
 
-                <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
-                  What would you like to do today?
-                </h3>
-
-              </a-col>
-              <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 2 }" :md="{span: 24, offset: 2 }"
-                     :lg="{span: 4, offset: 0 }" :xl="{span:4, offset: 0 }">
-                <a-switch defaultChecked @change='Available' v-model="currentUserProfile.available"/>
-                <a-tooltip>
-                  <template slot='title'>
-                    Your profile will be published on the talent pool
-                  </template>
-                  Make profile public
-                </a-tooltip>
-
-              </a-col>
-
-            </a-row>
             <a-row :gutter="16">
               <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 12, offset: 0 }"
                      :md="{span: 12, offset: 0 }"
@@ -41,7 +26,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="@/assets/images/check1.svg">
+                            <img class="poolavatar" src="@/assets/images/clipboard.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -71,7 +56,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="@/assets/images/resume.svg">
+                            <img class="poolavatar" src="@/assets/images/file.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -101,7 +86,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="../../../assets/images/board.svg">
+                            <img class="poolavatar" src="@/assets/images/offer.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -131,7 +116,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="@/assets/images/curriculum.svg">
+                            <img class="poolavatar" src="@/assets/images/resume1.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -161,7 +146,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="@/assets/images/csa.svg">
+                          <img class="poolavatar" src="@/assets/images/bridge.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
@@ -192,7 +177,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="../../../assets/images/csa.svg">
+                            <img class="poolavatar" src="@/assets/images/bridge.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -218,7 +203,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="@/assets/images/csa.svg">
+                            <img class="poolavatar" src="@/assets/images/bridge.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -249,7 +234,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar" src="@/assets/images/faq.svg">
+                            <img class="poolavatar" src="@/assets/images/faq1.svg">
                           </div>
                         </a-col>
                         <a-col span="24" style="text-align: center">
@@ -279,7 +264,7 @@
                       <a-row>
                         <a-col span="24">
                           <div style="text-align: center">
-                            <img class="poolavatar1" src="@/assets/images/freelancer.svg">
+                            <img class="poolavatar1" src="@/assets/images/freelancer1.svg">
                           </div>
                         </a-col>
                         <a-col span="24" >
@@ -369,8 +354,8 @@
 
 import UsersService from '@/services/UsersService';
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
-import DevHeader from "@/components/frontend/developer/layout/DevHeader";
 import User from "@/services/UsersService";
+import moment from "moment";
 
 
 export default {
@@ -385,8 +370,35 @@ export default {
     }
   },
   components: {
-    DevHeader,
     CandidateSider,
+
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
+  computed: {
+    Greeting(){
+      moment
+      let today = new Date()
+      let curHr = today.getHours()
+      let greeting=''
+
+      if (curHr < 12) {
+        greeting = 'Good Morning'
+
+      } else if (curHr < 18) {
+        greeting = 'Good Afternoon'
+
+      } else {
+        greeting = 'Good Evening'
+
+      }
+      return greeting
+    },
 
   },
   async mounted() {
@@ -554,15 +566,11 @@ export default {
 }
 
 .hellocard {
-
-
+  height: 8rem;
   box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
-
   background: #004EC7;
   border-radius: 0;
-  margin-bottom: 1rem;
   color: white;
-
 
 }
 

@@ -103,7 +103,7 @@
 
                     <a-list item-layout="horizontal" :data-source="DataChoice"
                             :pagination="pagination"
-                            style="margin-bottom: 1rem">
+                             style="overflow-y: scroll;padding: 1%;height: 70vh;margin-bottom: 1rem">
                       <div slot="footer"><b>Your ideal developer is one click away </b></div>
                       <a-list-item slot="renderItem" slot-scope="item">
 
@@ -336,6 +336,25 @@ name: "AllDevs",
 </script>
 
 <style scoped>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1890ff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #91d5ff;
+}
 .hellocard {
 
 

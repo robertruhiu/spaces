@@ -4,16 +4,23 @@
     <a-layout>
 
       <a-layout-content style="background-color: white">
-        <DevHeader/>
+        <a-card class="hellocard" :bordered="false">
+
+
+          <a-breadcrumb>
+            <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a>
+            </a-breadcrumb-item>
+            <a-breadcrumb-item style="color: white"><a @click="$router.push('/assessment')" style="color: white">Skill Verification</a></a-breadcrumb-item>
+            <a-breadcrumb-item style="color: white">Quiz List</a-breadcrumb-item>
+
+          </a-breadcrumb>
+          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                Passed quizzes will reflect on your portfolio</span>
+
+
+        </a-card>
         <div :style="{ padding: '5px', background: '#fff',marginTop:'1rem' }">
-          <a-row style="">
-            <a-col :xs="{span: 24, offset: 1 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
-                   :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
-              <h3 style="margin-left: 1rem;color: #1976D2;font-weight: bold">
-                Passed quizzes will reflect on your portfolio
-              </h3>
-            </a-col>
-          </a-row>
+
 
           <div style="text-align: center" v-if="waiting">
             <div style="padding: 2%">
@@ -143,10 +150,8 @@
 
 
 import CandidateSider from "../layout/CandidateSider";
-import DevHeader from "../layout/DevHeader";
 import QuizService from '@/services/QuizService';
-import UsersService from '@/services/UsersService'
-import User from "@/services/UsersService";
+
 
 export default {
   name: "QuizzesList",
@@ -168,7 +173,6 @@ export default {
     }
   },
   components: {
-    DevHeader,
     CandidateSider,
 
   },
@@ -295,6 +299,15 @@ export default {
 </script>
 
 <style scoped>
+.hellocard {
+  height: 8rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background: #004EC7;
+  border-radius: 0;
+  color: white;
+
+}
+
 .actioncards {
 
   border-radius: 0;

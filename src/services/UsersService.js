@@ -44,6 +44,9 @@ export default {
     portfolio(portfolio_id, auth) {
         return Api().get(`getportofolio/${portfolio_id} `, auth)
     },
+    getportofoliolight(portfolio_id, auth) {
+        return Api().get(`getportofoliolight/${portfolio_id} `, auth)
+    },
     newuser(user_id, auth) {
         return Api().post(`newuser/${user_id} `, auth)
     },

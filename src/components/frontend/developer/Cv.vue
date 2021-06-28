@@ -8,13 +8,13 @@
           <a-row style="color: white">
             <a-col span="12">
           <a-breadcrumb>
-            <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a></a-breadcrumb-item>
+            <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a></a-breadcrumb-item>
             <a-breadcrumb-item style="color: white"><a @click="$router.push('/demo')" style="color: white">Portfolio</a></a-breadcrumb-item>
             <a-breadcrumb-item style="color: white">Cv</a-breadcrumb-item>
 
           </a-breadcrumb>
-          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{ Greeting }}
-                {{ $store.state.user_object.user.first_name | capitalize }}</span>
+          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                {{ $store.state.user_object.user.first_name | capitalize }} {{ $store.state.user_object.user.last_name | capitalize }}</span>
           <p>Email: {{$store.state.user_object.user.email}}</p>
               <p>Linkedin: {{$store.state.user_object.linkedin_url}}</p>
 
@@ -32,7 +32,7 @@
         </a-card>
         <div style=" ;padding: 1%">
           <a-row :gutter="16">
-            <a-col span="16" >
+            <a-col span="16" :offset="4">
               <div style="padding: 1%;min-height: 40vh" class="cardshadow">
                 <div style="overflow-y: scroll;padding: 1%;height: 70vh;">
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">About</p>
@@ -320,28 +320,7 @@ export default {
 
 
   },
-  computed: {
-    Greeting() {
-      moment
-      let today = new Date()
-      let curHr = today.getHours()
-      let greeting = ''
 
-      if (curHr < 12) {
-        greeting = 'Good Morning'
-
-      } else if (curHr < 18) {
-        greeting = 'Good Afternoon'
-
-      } else {
-        greeting = 'Good Evening'
-
-      }
-      return greeting
-    },
-
-
-  },
   filters: {
     capitalize: function (value) {
       if (!value) return ''

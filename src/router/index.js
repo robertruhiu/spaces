@@ -52,7 +52,7 @@ const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
 const Feedback = () => import('@/components/frontend/recruiter/Feedback');
 const CreateJob = () => import('@/components/frontend/recruiter/Create');
-
+const Organizations = () => import('@/components/frontend/recruiter/organizations/Organization');
 // admin resources
 const AdminDashboard = () => import('@/components/frontend/admin/AdminDashboard');
 const AllUsers = () => import('@/components/frontend/admin/AllUsers');
@@ -539,6 +539,18 @@ let router = new Router({
 
 
         },
+        {
+            path: '/Organizations/:name?',
+            name: 'Organizations',
+            component: Organizations,
+            meta: {
+                requiresAuth: true
+            }
+
+
+
+        },
+
 
     ],
     scrollBehavior(to, from, savedPosition) {

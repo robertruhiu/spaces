@@ -59,6 +59,7 @@ import {
     Timeline,
     Skeleton,
     Icon,
+    FormModel,
     Row, Upload, Switch, Tooltip, Affix, notification, Collapse, Empty, message,Pagination,BackTop,Breadcrumb,Popconfirm,Rate,LocaleProvider,Result,Space,Statistic
 
 
@@ -116,6 +117,7 @@ Vue.use(Rate)
 Vue.use(LocaleProvider)
 Vue.use(Space)
 Vue.use(Statistic)
+Vue.use(FormModel)
 Vue.prototype.$message = message;
 import * as Sentry from "@sentry/browser";
 import { Vue as VueIntegration } from "@sentry/integrations";

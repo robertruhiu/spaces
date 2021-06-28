@@ -10,7 +10,8 @@
         <a-row style="color: white">
           <a-col span="12">
             <a-breadcrumb>
-              <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a></a-breadcrumb-item>
+              <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a>
+              </a-breadcrumb-item>
               <a-breadcrumb-item style="color: white">Manage Jobs</a-breadcrumb-item>
 
             </a-breadcrumb>
@@ -18,17 +19,17 @@
                 Jobs</span>
           </a-col>
 
-            <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-                   :md="{span: 12, offset: 0 }"
-                   :lg="{span: 8, offset: 0 }" :xl="{span: 6,offset: 0 }">
-              <a-button
-                        type="primary"  @click="navigateTo({name:'CreateJob'})">
-                <a-icon type="plus" />
-                Create a new Job
-              </a-button>
+          <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+                 :md="{span: 12, offset: 0 }"
+                 :lg="{span: 8, offset: 0 }" :xl="{span: 6,offset: 0 }">
+            <a-button
+                type="primary" @click="navigateTo({name:'CreateJob'})">
+              <a-icon type="plus"/>
+              Create a new Job
+            </a-button>
 
 
-            </a-col>
+          </a-col>
 
         </a-row>
 
@@ -61,7 +62,7 @@
                 <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
                        :lg="{span: 24 }" :xl="{span: 24 }">
 
-                  <a-input-search placeholder="search for a job" style="margin-bottom: 1rem" @search="onSearch" />
+                  <a-input-search placeholder="search for a job" style="margin-bottom: 1rem" @search="onSearch"/>
                   <div style="margin-bottom: 1rem">
                     Search parameters (you can also check only the tags you want your search to cover) :
                     <a-checkable-tag v-model="checked1" @change="onSearch">
@@ -109,9 +110,9 @@
 
                   <a-list item-layout="horizontal" :data-source="DataChoice"
                           :pagination="pagination"
-                          style="margin-bottom: 1rem">
+                          style="overflow-y: scroll;padding: 1%;height: 68vh;margin-bottom: 1rem">
                     <div slot="footer"><b>Your ideal developer is one click away </b></div>
-                    <a-list-item slot="renderItem" slot-scope="item" >
+                    <a-list-item slot="renderItem" slot-scope="item">
 
                       <div class="hero" style="width: 100%">
                         <a-row>
@@ -119,6 +120,12 @@
                             <span style="font-weight: bold">{{ item.title }}</span>
                             <a-tag color="green" v-if="item.published">
                               published
+                            </a-tag>
+                            <a-tag color="orange" v-if="!item.verified">
+                              awaiting verification
+                            </a-tag>
+                            <a-tag color="purple" v-if="item.team">
+                              team
                             </a-tag>
                           </a-col>
 
@@ -136,7 +143,7 @@
 
                           </a-col>
                           <a-col span="4">
-                            {{ item.created | moment}}
+                            {{ item.created | moment }}
 
                           </a-col>
 
@@ -144,13 +151,21 @@
                             <a-button size="small" v-if="item.verified"
                                       @click="navigateTo({name:'job',params:{jobId: item.id}})"
 
-                                      type="primary" >Manage Job
+                                      type="primary">Manage Job
                             </a-button>
-                            <a-button size="small" v-else
-                                      @click="navigateTo({name:'CreateJob',params:{jobId: item.id}})"
+                            <div v-else>
+                              <a-button size="small" v-if="item.posted_by === currentUserProfile.id"
+                                        @click="navigateTo({name:'CreateJob',params:{jobId: item.id}})"
 
-                                      type="primary" >Edit Job
-                            </a-button>
+                                        type="primary">Edit Job
+                              </a-button>
+                              <span v-else>
+
+                              </span>
+
+
+                            </div>
+
 
                           </a-col>
                         </a-row>
@@ -195,6 +210,7 @@ import Marketplace from '@/services/Marketplace'
 import lena from '@/components/frontend/recruiter/lena/lena'
 import RecruiterSider from "../layout/RecruiterSider";
 import moment from 'moment';
+import Organizations from "@/services/Organizations";
 
 export default {
   name: 'Managejob',
@@ -211,14 +227,16 @@ export default {
       checked1: true,
       checked2: true,
       checked4: true,
-      filterdata:[],
-      searchterm:''
+      filterdata: [],
+      searchterm: '',
+      user_organizations: [],
+      organizationjobs: []
 
 
     }
   },
   components: {
-    RecruiterSider,lena
+    RecruiterSider, lena
 
 
   },
@@ -234,12 +252,13 @@ export default {
 
 
   },
-  computed:{
-    DataChoice(){
-      let data =[]
-      if(this.filterdata.length>0){
+  computed: {
+    DataChoice() {
+      let data = []
+      if (this.filterdata.length > 0) {
         data = this.filterdata
-      }else {
+      } else {
+
         data = this.jobs
 
       }
@@ -264,12 +283,71 @@ export default {
       Marketplace.myjobs(this.$store.state.user.pk, auth)
           .then(resp => {
             this.jobs = resp.data
+            this.getOrganization()
             this.loading = false
             this.jobs.forEach(job => {
               this.createjobtag(job)
             })
 
           })
+
+    },
+    getOrganization() {
+      this.loading = true
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      Organizations.myorganizations(this.$store.state.user.pk, auth)
+          .then(resp => {
+            this.user_organizations = resp.data
+            this.getOrganizationJobs()
+
+            this.loading = false
+
+
+          })
+
+
+    },
+    getOrganizationJobs() {
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      this.user_organizations.forEach(team => {
+        Marketplace.organizationjobs(team.organization.id, auth)
+            .then(resp => {
+              resp.data.forEach(job => {
+                this.organizationjobs.push(job)
+              })
+              if(this.jobs.length>0){
+                this.jobs.forEach(job => {
+                  this.organizationjobs.forEach(orgjob => {
+                    if (orgjob.id === job.id) {
+                      const index = this.organizationjobs.indexOf(orgjob);
+                      if (index > -1) {
+                        this.organizationjobs.splice(index, 1);
+                      }
+                    }
+                  })
+
+                })
+              }
+              this.jobs = this.jobs.concat(this.organizationjobs);
+              console.log(this.jobs)
+
+
+              this.loading = false
+
+
+            })
+
+      })
+
+
+
+
 
     },
 
@@ -312,34 +390,34 @@ export default {
     navigateTo(route) {
       this.$router.push(route)
     },
-    onSearch(value){
+    onSearch(value) {
       this.searchterm = value
-      this.filterdata =[]
-      let checkedtags =[]
-      if(this.checked1){
+      this.filterdata = []
+      let checkedtags = []
+      if (this.checked1) {
         checkedtags.push('title')
       }
-      if(this.checked2){
+      if (this.checked2) {
         checkedtags.push('skill')
       }
-      if(this.checked4){
+      if (this.checked4) {
         checkedtags.push('company')
       }
 
 
-      this.jobs.forEach(job=>{
+      this.jobs.forEach(job => {
 
-        let unsetdata =[]
-        if(checkedtags.includes('title')){
+        let unsetdata = []
+        if (checkedtags.includes('title')) {
 
-          if(job.title.toLowerCase().includes(this.searchterm.toLowerCase())){
+          if (job.title.toLowerCase().includes(this.searchterm.toLowerCase())) {
 
             unsetdata.push(job)
           }
         }
-        if(checkedtags.includes('skill')){
-          if(job.tech_stack){
-            if(job.tech_stack.toLowerCase().includes(this.searchterm.toLowerCase())){
+        if (checkedtags.includes('skill')) {
+          if (job.tech_stack) {
+            if (job.tech_stack.toLowerCase().includes(this.searchterm.toLowerCase())) {
 
               unsetdata.push(job)
             }
@@ -349,8 +427,8 @@ export default {
         }
 
 
-        if(checkedtags.includes('company')){
-          if(job.company.toLowerCase().includes(this.searchterm.toLowerCase())){
+        if (checkedtags.includes('company')) {
+          if (job.company.toLowerCase().includes(this.searchterm.toLowerCase())) {
 
             unsetdata.push(job)
           }
@@ -358,16 +436,14 @@ export default {
         }
 
 
-        if(unsetdata.length>0){
+        if (unsetdata.length > 0) {
           let uniq = [...new Set(unsetdata)];
           this.filterdata.push(uniq[0])
         }
 
 
-
-
       })
-      if(this.filterdata.length===0){
+      if (this.filterdata.length === 0) {
         this.$message.error('no result found try another search');
       }
 
@@ -401,7 +477,7 @@ export default {
   background: #004EC7;
   border-radius: 0;
   margin-bottom: 1rem;
-  color:white;
+  color: white;
 
 }
 
@@ -410,6 +486,26 @@ export default {
   padding: 1%;
   box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
   background-color: white;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1890ff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #91d5ff;
 }
 
 </style>

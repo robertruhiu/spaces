@@ -3,17 +3,25 @@
     <CandidateSider/>
 
     <a-layout-content style="background-color: white">
-      <DevHeader/>
-      <div :style="{ padding: '0 2%', background: '#fff',marginTop:'1rem' }">
-        <a-row style="margin-bottom: 2%">
-          <a-col :xs="{span: 18, offset: 2 }" :sm="{span: 24, offset: 1 }" :md="{span: 24, offset: 1 }"
-                 :lg="{span: 24, offset: 0 }" :xl="{span: 24, offset: 0}">
-            <h3 style="color: #1976D2;font-weight: bold;">
-              Start a new project or complete the existing ones.
-            </h3>
-          </a-col>
+      <a-card class="hellocard" :bordered="false">
 
-        </a-row>
+
+        <a-breadcrumb>
+          <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a>
+          </a-breadcrumb-item>
+          <a-breadcrumb-item style="color: white"><a @click="$router.push('/assessment')" style="color: white">Skill Verification</a></a-breadcrumb-item>
+          <a-breadcrumb-item style="color: white"><a @click="$router.push('/selectassesment')" style="color: white">Project based test </a></a-breadcrumb-item>
+          <a-breadcrumb-item style="color: white">My Self test Projects </a-breadcrumb-item>
+
+        </a-breadcrumb>
+
+        <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                Start a new project or complete the existing ones.</span>
+
+
+      </a-card>
+      <div :style="{ padding: '0 2%', background: '#fff',marginTop:'1rem' }">
+
         <a-row gutter="16" style="padding-right: 2rem;padding-bottom: 1.5rem;">
           <a-col class="tracker"
                  :xs="{span: 20, offset: 2  }" :sm="{span: 12, offset: 0 }" :md="{span: 10, offset: 0 }"
@@ -281,7 +289,7 @@
 </template>
 
 <script>
-import DevHeader from "./layout/DevHeader";
+
 import Projects from '@/services/Projects'
 import CandidateSider from "./layout/CandidateSider";
 import ACol from "ant-design-vue/es/grid/Col";
@@ -305,7 +313,6 @@ export default {
   },
   components: {
     ACol,
-    DevHeader,
     CandidateSider,
     showAt, hideAt,
   },
@@ -395,6 +402,14 @@ export default {
 </script>
 
 <style scoped>
+.hellocard {
+  height: 8rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  background: #004EC7;
+  border-radius: 0;
+  color: white;
+
+}
 .card-img-top {
 
 

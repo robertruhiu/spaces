@@ -120,7 +120,7 @@
 
           <a-col :xs="{span: 18, offset: 0 }" :sm="{span: 12, offset: 6 }" :md="{span: 18, offset: 2 }"
                  :lg="{span: 18, offset: 6 }" :xl="{span: 12, offset: 6 }">
-            <h2 style="margin-left: 33%">Choose profile</h2>
+            <h2 style="margin-left: 33%">Choose a profile</h2>
 
 
             <div>
@@ -132,7 +132,7 @@
                     <a-row class="ant-card actioncards">
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/interview.svg">
+                          <img class="poolavatar" src="@/assets/images/recruitment.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
@@ -153,7 +153,7 @@
                     <a-row class="ant-card actioncards">
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/programmer.svg">
+                          <img class="poolavatar" src="@/assets/images/development.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">

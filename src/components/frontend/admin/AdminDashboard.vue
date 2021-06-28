@@ -8,9 +8,20 @@
 
       <a-layout-content>
         <a-card class="hellocard" :bordered="false">
-            <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{Greeting}}
-                {{$store.state.user_object.user.first_name | capitalize}}</span>
-          <p style="font-family: sofia_proregular;font-size: 1.2rem;line-height: 1rem;color: white">Welcome to the admin resources</p>
+          <a-row style="color: white">
+            <a-col span="24">
+              <a-breadcrumb>
+                <a-breadcrumb-item><a @click="$router.push('/recruiter')" style="color: white">Home</a></a-breadcrumb-item>
+                <a-breadcrumb-item style="color: white">Admin resources</a-breadcrumb-item>
+
+              </a-breadcrumb>
+              <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+                Welcome to the admin resources</span>
+            </a-col>
+          </a-row>
+
+
+
 
         </a-card>
 
@@ -30,7 +41,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/connections.svg">
+                          <img class="poolavatar" src="@/assets/images/group.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
@@ -59,7 +70,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/programmer.svg">
+                          <img class="poolavatar" src="@/assets/images/development.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">
@@ -89,7 +100,7 @@
                     <a-row>
                       <a-col span="24">
                         <div style="text-align: center">
-                          <img class="poolavatar" src="../../../assets/images/interview.svg">
+                          <img class="poolavatar" src="@/assets/images/recruitment.svg">
                         </div>
                       </a-col>
                       <a-col span="24" style="text-align: center">

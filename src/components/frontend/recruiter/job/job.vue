@@ -21,6 +21,7 @@
               </a-breadcrumb>
               <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
                 {{ job.title }}</span>
+
               <div v-if="$store.state.user_object.user.is_staff">Email of job owner : {{owner.user.email}}</div>
 
 
@@ -28,7 +29,7 @@
 
             <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
                    :md="{span: 12, offset: 0 }"
-                   :lg="{span: 8, offset: 0 }" :xl="{span: 6,offset: 0 }">
+                   :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
               <a-button-group>
                 <a-button type="primary" icon="share-alt">Share Job</a-button>
 
@@ -56,6 +57,61 @@
 
 
               </a-button-group>
+              <div style="padding-top: 1%">
+                <div v-if="$store.state.user.pk === job.posted_by">
+                  <div v-if="job.team">
+                    <div v-for="team in user_organizations" v-bind:key="team.id">
+                      <div v-if="team.organization.id === job.team">
+                        current team : {{team.organization.name}}
+
+                      </div>
+                    </div>
+                    <router-link
+                        style="text-decoration: none"
+                        :to="{name:'Organizations'}"
+                    >
+                      <a-button type="primary" icon="edit" size="small" >
+                        Edit team
+                      </a-button>
+                    </router-link>
+
+
+
+                  </div>
+                  <div v-else>
+                    <a-select placeholder='available teams' style="width: 180px" @change="pickteam">
+
+                      <a-select-option v-for="team in user_organizations" v-bind:key="team.organization.id" :value="team.organization.id">
+                        {{team.organization.name}}
+
+                      </a-select-option>
+
+
+                    </a-select>
+
+
+                    <a-popconfirm v-if="team"
+                                  title="Are you sure want to add this team?"
+                                  ok-text="Yes"
+                                  cancel-text="No"
+                                  @confirm="confirmTeam"
+
+                    >
+                      <a-button type="primary" icon="save" >
+                        Save Team to job
+                      </a-button>
+                    </a-popconfirm>
+                    <a-button type="primary" icon="usergroup-add" v-else >
+                      Pick Team to job
+                    </a-button>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
 
 
             </a-col>
@@ -67,6 +123,8 @@
         </a-card>
 
         <a-row>
+
+
 
 
           <a-col :xs="{span: 24 }" :sm="{span: 24 }" :md="{span: 24 }"
@@ -116,6 +174,7 @@
                   </span>
                   <EditJob v-bind:job="job"/>
                 </a-tab-pane>
+
                 <a-button slot="tabBarExtraContent" @click="publishUnpublish" v-if="!published && $store.state.user_object.user.is_staff">
                   Publish job
                 </a-button>
@@ -166,6 +225,7 @@ import Rejected from "@/components/frontend/recruiter/job/jobatscomponents/rejec
 import Mobilebase from '@/components/frontend/recruiter/job/jobatscomponents/mobilecomponents/Mobilebase';
 import User from "@/services/UsersService";
 import moment from 'moment';
+import Organizations from "@/services/Organizations";
 export default {
   name: "job",
   components: {
@@ -181,7 +241,9 @@ export default {
       job: {},
       joburl: '',
       published: false,
-      owner:{}
+      owner:{},
+      user_organizations: [],
+      team:null
 
 
     }
@@ -189,6 +251,7 @@ export default {
 
   mounted() {
     this.fetchJob()
+    this.getOrganization()
     this.jobId = this.$store.state.route.params.jobId
 
     if (this.$store.state.job_id !== Number(this.jobId)) {
@@ -221,6 +284,40 @@ export default {
             this.fetchOwner()
           })
 
+    },
+    getOrganization() {
+      this.loading = true
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      Organizations.myorganizations(this.$store.state.user.pk, auth)
+          .then(resp => {
+            this.user_organizations = resp.data
+
+            this.loading =false
+
+
+          })
+
+
+    },
+    pickteam(team){
+
+      this.team =team
+    },
+    confirmTeam(){
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      };
+      const jobId = this.$store.state.route.params.jobId
+      Marketplace.updatejob(jobId, {team: this.team}, auth)
+          .then((resp)=>{
+            this.job = resp.data
+
+
+          })
     },
 
     fetchOwner(){
