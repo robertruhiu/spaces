@@ -271,6 +271,8 @@ export default {
             }
             if (this.$store.state.isUserLoggedIn) {
               this.isAppliedLookup()
+            }else {
+              this.dataload = false
             }
           })
     },
