@@ -392,6 +392,7 @@ export default {
       this.getOrganization()
 
 
+
     }
 
 
@@ -485,7 +486,7 @@ export default {
             this.organizations = resp.data
             this.getInvitees()
 
-            this.loading = false
+
             // resp.data.forEach(team => {
             //   team['active'] =[]
             //   team['members'] = []
@@ -666,6 +667,7 @@ export default {
 
 
       this.organ_list.push(team_obj)
+      this.loading = false
       this.MyInvitations()
 
     },
