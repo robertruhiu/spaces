@@ -16,6 +16,7 @@
 
 
     </div>
+    <a-alert type="error" message="Please update projects.Updated projects appear in your generated portfolio for recruiter review" banner />
 
   </div>
 </template>

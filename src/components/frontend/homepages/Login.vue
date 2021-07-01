@@ -128,7 +128,8 @@ import Footer from '@/components/layout/Footer.vue'
 import AuthService from '@/services/AuthService'
 import User from '@/services/UsersService'
 import ARow from "ant-design-vue/es/grid/Row";
-
+import LogRocket from 'logrocket';
+LogRocket.init('9qgoju/lena');
 
 export default {
   name: 'login',
@@ -171,6 +172,13 @@ export default {
                   headers: {Authorization: 'JWT ' + this.$store.state.token}
 
                 }
+                LogRocket.identify('9qgoju/lena', {
+                  name: resp.data.user.first_name + resp.data.user.last_name,
+                  email: resp.data.user.email,
+
+                  // Add your own custom user variables here, ie:
+                  subscriptionType: 'pro'
+                });
                 User.currentuser(this.$store.state.user.pk, auth)
 
                     .then(response => {

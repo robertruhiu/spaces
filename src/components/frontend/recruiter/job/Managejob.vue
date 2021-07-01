@@ -335,7 +335,7 @@ export default {
                 })
               }
               this.jobs = this.jobs.concat(this.organizationjobs);
-              console.log(this.jobs)
+
 
 
               this.loading = false

@@ -4,6 +4,11 @@ import createPersistedState from 'vuex-persistedstate'
 import sharedMutations from 'vuex-shared-mutations';
 
 Vue.use(Vuex);
+import LogRocket from 'logrocket';
+LogRocket.init('9qgoju/lena');
+import createPlugin from 'logrocket-vuex';
+
+const logrocketPlugin = createPlugin(LogRocket);
 
 export default new Vuex.Store({
     strict: true,
@@ -237,6 +242,7 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState(),
-        sharedMutations({predicate: ['add', 'remove', 'picked', 'manage']})
+        sharedMutations({predicate: ['add', 'remove', 'picked', 'manage']}),
+        logrocketPlugin
     ],
 })

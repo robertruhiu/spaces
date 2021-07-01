@@ -1,10 +1,10 @@
 <template>
   <div style="padding:2%">
-                                        <span style="float: right;color: blue">
-                                            <a @click="CreateExperience">
-                                                <a-icon type="plus-circle" theme="twoTone"/>Add
-                                            </a>
-                                        </span>
+    <span style="float: right;color: blue">
+      <a @click="CreateExperience">
+        <a-icon type="plus-circle" theme="twoTone"/>Add
+      </a>
+    </span>
     <br>
     <div v-if="dataload">
       <div style="text-align: center">
