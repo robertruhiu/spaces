@@ -27,10 +27,13 @@
                :md="{span: 12, offset: 0 }"
                :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
           <a-form-item
-              label="Linkedin Url"
+
               :label-col="{ span: 24 }"
               :wrapper-col="{ span:  24}"
           >
+            <span slot="label">
+              Linkedin Url <span style="color: red">*</span>
+            </span>
             <input v-validate="{required: true,url: {require_protocol: true }}" data-vv-as="linkedin"
                    v-model="$store.state.user_object.linkedin_url" name="linkedin" type="text" placeholder="linkedin profile"
                    class="ant-input">
@@ -67,10 +70,13 @@
                :md="{span: 12, offset: 0 }"
                :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
           <a-form-item
-              label="Country"
+
               :label-col="{ span: 24 }"
               :wrapper-col="{ span:  24}"
           >
+            <span slot="label">
+              Country <span style="color: red">*</span>
+            </span>
 
 
             <a-select name="location"  v-validate="'required'" data-vv-as="location" show-search
@@ -101,10 +107,14 @@
 
         >
           <a-form-item
-              label="Gender"
+
               :label-col="{ span: 24 }"
               :wrapper-col="{ span: 24 }"
           >
+            <span slot="label">
+              Gender <span style="color: red">*</span>
+            </span>
+
             <a-select v-validate="'required'" data-vv-as="gender"
                 name="gender" @change="handleGender"
 
@@ -126,10 +136,13 @@
                :md="{span: 12, offset: 0 }"
                :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
           <a-form-item
-              label="Years of experience"
+
               :label-col="{ span: 24 }"
               :wrapper-col="{ span: 24 }"
           >
+            <span slot="label">
+              Years of experience <span style="color: red">*</span>
+            </span>
             <a-select
                 name="experience"
                 v-validate="'required'" data-vv-as="experience"
@@ -161,10 +174,13 @@
                :md="{span: 12, offset: 0 }"
                :lg="{span: 8, offset: 0 }" :xl="{span: 8, offset: 0 }">
           <a-form-item
-              label="Preffered work type"
+
               :label-col="{ span: 24 }"
               :wrapper-col="{ span: 24 }"
           >
+            <span slot="label">
+              Preffered work type <span style="color: red">*</span>
+            </span>
             <a-select
                 mode="tags"
                 name="work_type"

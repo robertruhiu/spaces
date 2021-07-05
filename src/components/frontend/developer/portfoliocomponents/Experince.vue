@@ -43,7 +43,7 @@
                 <a-card-meta>
                   <template slot="description">
                     <p><span><a-icon type="bank"/>  {{ item.company }} <a-icon
-                        type="environment"/>  {{ item.location }} </span>
+                        type="environment"/>  {{ item.location |countryname}} </span>
                     </p>
                     <p>
                       Technologies used:
@@ -55,14 +55,7 @@
                     </p>
 
 
-                    <p>{{ item.description |truncate }}</p>
-                    <span v-if="item.start">{{ item.start  | moment }}
 
-                  </span>
-                    <span v-if="item.end">
-                    to
-                    {{ item.end  | moment }}
-                  </span>
 
                   </template>
                 </a-card-meta>
@@ -311,6 +304,16 @@ export default {
         return text;
       }
     },
+    countryname:function (abrev){
+      for (const [key, value] of Object.entries(countries)) {
+        if (key === abrev) {
+
+          return  value
+        }
+
+      }
+
+    }
 
   },
   watch: {

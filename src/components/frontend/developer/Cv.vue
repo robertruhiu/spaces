@@ -32,7 +32,7 @@
         </a-card>
         <div style=" ;padding: 1%">
           <a-row :gutter="16">
-            <a-col span="16" :offset="4">
+            <a-col span="18" >
               <div style="padding: 1%;min-height: 40vh" class="cardshadow">
                 <div style="overflow-y: scroll;padding: 1%;height: 70vh;">
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">About</p>
@@ -52,162 +52,11 @@
                     </a-tag>
 
                   </div>
-                  <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Work Experience</p>
-                  <div>
-                    <a-timeline>
-                      <a-timeline-item
-                      >
 
-                        <p style="font-weight: 700">
-                          Kefri conso
-
-
-                        </p>
-                        <p><span><a-icon type="bank"/>  codeln <a-icon
-                            type="environment"/>  Ghana </span>
-                        </p>
-                        <p>
-                          Technologies used:
-                          <a-tag color="#1F81CE">
-                            vue js
-                          </a-tag>
-                          <a-tag color="#1F81CE">
-                            django
-                          </a-tag>
-
-                        </p>
-
-
-                        <p>Designing and implementing use case of UX processes of the user story</p>
-                        <p>2013 -2017</p>
-
-                      </a-timeline-item>
-
-
-                    </a-timeline>
-                    <a-timeline>
-
-                      <a-timeline-item
-                      >
-
-                        <p style="font-weight: 700">
-                          Kefri conso
-
-
-                        </p>
-                        <p><span><a-icon type="bank"/>  codeln <a-icon
-                            type="environment"/>  Ghana</span>
-                        </p>
-                        <p>
-                          Technologies used:
-                          <a-tag color="#1F81CE">
-                            vue js
-                          </a-tag>
-                          <a-tag color="#1F81CE">
-                            django
-                          </a-tag>
-
-                        </p>
-
-
-                        <p>Designing and implementing use case of UX processes of the user story</p>
-                        <p>2013 -2017</p>
-
-                      </a-timeline-item>
-
-                    </a-timeline>
-                  </div>
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">PORTFOLIO / GIGS</p>
-                  <a-row gutter="16">
-
-
-                    <a-col span="12" style="margin-bottom: 1rem">
-                      <a-card class="nine">
-
-                        <img
-                            class="card-img-top"
-                            slot="cover"
-                            alt="example"
-                            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-
-
-
-
-                        />
-
-
-
-                        <a-card-meta >
-                          <template slot="description">
-                            Feb 2018 – Mar 2018
-
-                            <p>Role in Project:</p>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              Developer
-                            </a-tag>
-                            <p>Tools used:</p>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              react
-                            </a-tag>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              django
-                            </a-tag>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              vue
-                            </a-tag>
-                            <p>Description: You can develop,design,product or even devops.</p>
-                          </template>
-                        </a-card-meta>
-                      </a-card>
-                    </a-col>
-                    <a-col span="12" style="margin-bottom: 1rem" >
-                      <a-card class="nine">
-
-                        <img
-                            class="card-img-top"
-                            slot="cover"
-                            alt="example"
-                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-
-
-
-
-                        />
-
-
-
-                        <a-card-meta >
-                          <template slot="description">
-                            Feb 2018 – Mar 2018
-
-                            <p>Role in Project:</p>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              Developer
-                            </a-tag>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              Designer
-                            </a-tag>
-                            <p>Tools used:</p>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              react
-                            </a-tag>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              django
-                            </a-tag>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              vue
-                            </a-tag>
-                            <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                              Adobe Illustrator
-                            </a-tag>
-                            <p>Description: You can develop,design,product or even devops.</p>
-                          </template>
-                        </a-card-meta>
-                      </a-card>
-                    </a-col>
-
-
-                  </a-row>
+                  <Projects/>
+                  <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Work Experience</p>
+                  <Work/>
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Education</p>
                   <a-timeline>
                     <a-timeline-item
@@ -298,7 +147,25 @@
 
 <script>
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
+import Work from "@/components/frontend/developer/CvComponents/experience";
+import Projects from "@/components/frontend/developer/CvComponents/projects";
 import moment from "moment";
+let countries = require("@/store/location.json")
+import UsersService from "@/services/UsersService";
+class Experience {
+  constructor(id, title, description, company, location, duration, tech_used, start, end) {
+    this.key = id;
+    this.title = title;
+    this.description = description;
+    this.company = company;
+    this.duration = duration;
+    this.tags = tech_used;
+    this.location = location;
+    this.start = start;
+    this.end = end;
+
+  }
+}
 
 
 export default {
@@ -307,27 +174,101 @@ export default {
 
     return {
       currentUserProfile: {},
+      experienceslist: [],
+      experiences: [],
+      dataload:false,
+      countrieslist: null,
 
 
     }
   },
   components: {
-    CandidateSider
+    CandidateSider,Work,Projects
 
   },
   async mounted() {
+    this.countrieslist = countries
     this.currentUserProfile = this.$store.state.user_object
+    this.FetchExperience()
 
 
   },
+
 
   filters: {
     capitalize: function (value) {
       if (!value) return ''
       value = value.toString()
       return value.charAt(0).toUpperCase() + value.slice(1)
+    },
+    moment: function (date) {
+      return moment(date).format('MMMM  YYYY');
+    },
+    truncate: function (text) {
+      let length = 45
+      let suffix = '...'
+      if (text.length > length) {
+        return text.substring(0, length) + suffix;
+      } else {
+        return text;
+      }
+    },
+    countryname:function (abrev){
+      for (const [key, value] of Object.entries(countries)) {
+        if (key === abrev) {
+
+          return  value
+        }
+
+      }
+
     }
   },
+  methods:{
+    FetchExperience() {
+      this.experienceslist = []
+      this.experiences = []
+
+
+      const auth = {
+        headers: {Authorization: 'JWT ' + this.$store.state.token}
+
+      }
+      this.dataload = true
+
+      UsersService.experience(this.$store.state.user.pk, auth).then(
+          resp => {
+            this.experienceslist = resp.data
+            this.ComputeExperience()
+          }
+      )
+
+
+    },
+    ComputeExperience() {
+      this.experienceslist.forEach(item => {
+        let id = item.id
+        let title = item.title
+        let description = item.description
+        let company = item.company
+        let location = item.location
+        let duration = item.duration
+        let start = item.work_start_month
+        let end = item.work_end_month
+        let tech_used = []
+        if (item.tech_tags) {
+          tech_used = item.tech_tags.split(',');
+        }
+
+        let one_experience = new Experience(
+            id, title, description, company, location, duration, tech_used, start, end
+        );
+        this.experiences.push(one_experience)
+      })
+      this.dataload = false
+
+    },
+  }
 }
 </script>
 

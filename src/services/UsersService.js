@@ -53,6 +53,18 @@ export default {
     newportfolio(Portfolio, auth) {
         return Api().post('newportfolio ', Portfolio, auth)
     },
+    education(candidate_id, auth) {
+        return Api().get(`geteducation/${candidate_id} `, auth)
+    },
+    neweducation(Education, auth) {
+        return Api().post('neweducation ', Education, auth)
+    },
+    updateeducation(education_id, Experience, auth) {
+        return Api().patch(`updateeducation/${education_id} `, Experience, auth)
+    },
+    deleteeducation(education_id, auth) {
+        return Api().delete(`updateeducation/${education_id} `, auth)
+    },
     newresource(Resource, auth) {
         return Api().post('newresource ', Resource, auth)
     },

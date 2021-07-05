@@ -51,7 +51,7 @@
 
                                 </span>
                                   <span style="float: right"
-                                        v-if="currentUserProfile.user_type ==='developer' && currentUserProfile.stage !== 'complete'  ">
+                                        v-if="currentUserProfile.stage !== 'complete'  ">
                                     <a-button type="primary"
                                               @click="navigateTo({name:'register'})">Registration incomplete click to continue</a-button>
 

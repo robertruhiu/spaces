@@ -3,7 +3,7 @@
     <CandidateSider/>
     <a-layout>
 
-      <a-layout-content style="background-color: white">
+      <a-layout-content style="background-color: #FAFBFF">
         <a-card class="hellocard" :bordered="false">
 
 
@@ -19,7 +19,7 @@
 
         </a-card>
 
-        <div :style="{ padding: '5px', background: '#fff',marginTop:'0rem' }">
+        <div :style="{ padding: '5px', background: '#FAFBFF',marginTop:'0rem' }">
 
           <div class="cardScroll1">
             <a-tabs defaultActiveKey="1">

@@ -19,14 +19,17 @@
       </a-col>
 
       <a-col span="18" style="overflow-y: scroll;padding: 0 1% 0 1% ;height: 70vh;">
+
         <a-skeleton active v-if="dataload" />
 
 
-        <a-row gutter="16" v-else>
+
+        <a-row gutter="16" v-else >
+
 
 
           <a-col span="12" v-for="project in projects" v-bind:key="project" class="equaltable">
-            <a-card class="nine equalcards" v-if="project.role" style="margin-bottom: 1rem">
+            <a-card class="nine equalcards " v-if="project.role" style="margin-bottom: 1rem">
               <img
                   class="card-img-top"
                   slot="cover"
@@ -179,7 +182,7 @@
         </a-form-item>
 
         <a-form-item label="Project Demo Url">
-          <a-input v-model="project_demo" v-validate="{required: true,url: {require_protocol: true }}"
+          <a-input v-model="project_demo" v-validate="{url: {require_protocol: true }}"
                    name="project_demo_url" data-vv-validate-on="change|custom|input"/>
           <span class="errorMessage">{{ errors.first('project_demo_url') }}</span>
           <p>Was the project personal or company</p>
@@ -222,7 +225,7 @@
 
         <a-form-item label="Project repository url">
 
-          <a-input v-model="project_repo" v-validate="{required: true,url: {require_protocol: true }}"
+          <a-input v-model="project_repo" v-validate="{url: {require_protocol: true }}"
                    name="project_repo_url" data-vv-validate-on="change|custom|input"/>
           <span class="errorMessage">{{ errors.first('project_repo_url') }}</span>
 
@@ -234,7 +237,7 @@
 
           <p>
             <a-checkbox v-model="Inprogress">
-              Is the project completed
+              Is the project in progress?
             </a-checkbox>
           </p>
 
@@ -535,7 +538,11 @@ export default {
       imageError: false,
       card_title: '',
       editproject: false,
-      currentproject: null
+      currentproject: null,
+      items: [
+        {title: 'Item 0', content: 'Content'},
+        {title: 'Item 1', content: 'Content'},
+      ]
 
 
     };
@@ -637,6 +644,8 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
+      this.myprojects=[]
+      this.projects=[]
       this.dataload = true
       MyProjectsService.getportofoliolight(this.$store.state.user.pk, auth)
           .then(
@@ -816,19 +825,20 @@ export default {
 
       }
       this.$validator.validate().then(valid => {
-        if (valid && this.toolsErrors.length === 0) {
+        if (valid && this.toolsErrors.length === 0 && this.imageError === false) {
           if (this.editproject) {
             MyProjectsService.updateportfolio(this.currentproject.key, project_obj, auth)
                 .then(resp => {
                   this.visible = false
-                  this.ResetFields(resp.data)
+                  this.FetchPortfolio()
                 })
 
           } else {
             MyProjectsService.newportfolio(project_obj, auth)
-                .then(resp => {
+                .then(() => {
                   this.visible = false
-                  this.ResetFields(resp.data)
+                  this.FetchPortfolio()
+
                 })
           }
 
@@ -1134,9 +1144,30 @@ export default {
 
 
 }
-
+.container{
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
 .equalcards {
 
+}
+.gallery {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
+}
+.wide {
+  grid-column: span 2;
+}
+
+.tall {
+  grid-row: span 2;
 }
 
 /* width */

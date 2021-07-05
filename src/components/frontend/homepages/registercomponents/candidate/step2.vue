@@ -139,7 +139,7 @@
 
           </div>
           <div v-else>
-            Upload cv
+            Upload cv <span style="color: red">*</span>
             <input style="margin-top: 1rem" accept="application/pdf" type="file"
                    @change="handleUpload">
           </div>

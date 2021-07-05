@@ -3,7 +3,7 @@
     <CandidateSider/>
     <a-layout>
 
-      <a-layout-content style="background-color: white">
+      <a-layout-content style="background-color: #FAFBFF">
         <a-card class="hellocard" :bordered="false">
             <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">{{Greeting}}
                 {{$store.state.user_object.user.first_name | capitalize}}</span>
@@ -11,7 +11,7 @@
 
         </a-card>
 
-        <div :style="{ padding: '5px', background: '#fff',marginTop:'0' }">
+        <div :style="{ padding: '5px', background: '#FAFBFF',marginTop:'0' }">
 
           <div style="min-height: 40vh ;padding: 1%">
 
@@ -327,7 +327,7 @@
                 <p>Remote Codeln is feature to enable you to get project contracts and work on them remotely</p>
               </a-collapse-panel>
               <a-collapse-panel key="2" header="Does Codeln charge me upon employment" :disabled="false">
-                <p>No. All payment is done by the employee.We charge them a 12% of your annual salary.Note this should
+                <p>No. All payment is done by the employer.We charge them a 12% of your annual salary.Note this should
                   not affect your salary .
                   Rather it is our service fee model</p>
               </a-collapse-panel>
