@@ -5,37 +5,35 @@
     {{currentUserProfile.about}}
   </p>
   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Skilled in</p>
-  <div>
-    <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-      react
-    </a-tag>
-    <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-      django
-    </a-tag>
-    <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-      vue
-    </a-tag>
+  <div v-if="currentUserProfile.skills.length>0">
+
+                    <span style="" v-for="skill in currentUserProfile.skills.split(',')"
+                          v-bind:key="skill.id">
+                                                <a-tag color="#1F81CE"
+                                                >{{ skill }}</a-tag>
+
+                                            </span>
 
   </div>
   <div>
-    <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Years of experince</p>
-    <p style="font-family: sofia_prolight">3 years</p>
+    <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Years of experience</p>
+    <p style="font-family: sofia_prolight">{{$store.state.user_object.years}} years</p>
     <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Country</p>
-    <p style="font-family: sofia_prolight">Kenya</p>
+    <p style="font-family: sofia_prolight">{{$store.state.user_object.country}}</p>
 
     <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Preffered work type</p>
-    <p style="font-family: sofia_prolight">Contract ,Fulltime</p>
+    <p style="font-family: sofia_prolight">{{$store.state.user_object.availabilty}}</p>
     <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Expected monthly salary</p>
-    <p style="font-family: sofia_prolight">1500$</p>
+    <p style="font-family: sofia_prolight">{{$store.state.user_object.salary}}$</p>
     <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">CV</p>
     <p>
       <a-icon type="file-pdf"/> :
       <a :href="cv" target='_blank'> Cv link</a>
     </p>
     <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Contacts and social</p>
-    <p style="font-family: sofia_prolight"><a-icon type="linkedin" />Linkedin: https://www.linkedin.com/in/dennis-ruhiu-abb1b0ab/ </p>
-    <p style="font-family: sofia_prolight"><a-icon type="phone" />Phone number: 254794993085</p>
-    <p style="font-family: sofia_prolight"><a-icon type="mail" />Email: dennis@codeln.com</p>
+    <p style="font-family: sofia_prolight"><a-icon type="linkedin" />Linkedin: {{$store.state.user_object.linkedin_url}} </p>
+    <p style="font-family: sofia_prolight"><a-icon type="phone" />Phone number: {{$store.state.user_object.phone_number}}</p>
+    <p style="font-family: sofia_prolight"><a-icon type="mail" />Email: {{$store.state.user_object.user.email}}</p>
 
 
 

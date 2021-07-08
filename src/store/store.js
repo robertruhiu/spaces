@@ -38,10 +38,14 @@ export default new Vuex.Store({
         rejected:[],
         job_id:'',
         registrationstep:0,
+        score:0
 
 
     },
     mutations: {
+        setscore(state, score) {
+            state.score = score
+        },
         setjob_id(state, job_id) {
             state.job_id = job_id
         },
@@ -232,6 +236,9 @@ export default new Vuex.Store({
         },
         setjob_id({commit}, job_id) {
             commit('setjob_id', job_id)
+        },
+        setscore({commit}, score) {
+            commit('setscore', score)
         },
 
 

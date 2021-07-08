@@ -4,60 +4,63 @@
 
 
   <a-row :gutter="16" v-else  class="container">
+    <a-col span="24" v-for="project in projects" v-bind:key="project" class="equaltable">
+      <a-card class="card-3 " v-if="project.role" style="margin-bottom: 1rem">
+        <a-row>
+          <a-col :span="16">
+            <span style="font-family: sofia_probold"> {{ project.title |capitalize }}</span>
+            <br>
+            {{ project.start  | moment }}
+            <span v-if="project.end"> to {{ project.end  | moment }}</span>
+            <br>
 
 
 
-    <a-col :span="6" v-for="project in projects" v-bind:key="project" class="equaltable" >
-
-        <a-card class="nine equalcards" v-if="project.role" style="margin-bottom: 1rem">
-          <img
-              class="card-img-top"
-              slot="cover"
-              alt="example"
-              :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
-
-
-          />
-
-
-
-          <a-card-meta>
-            <template slot="description">
-              {{ project.start  | moment }} {{ project.end  | moment }}
-              <br>
-              <span>Project name : {{ project.title }}</span>
-              <br>
-
-
-              <span>Role in Project:<span v-for="role in project.role" v-bind:key="role">
+            <p>Role in Project</p>
+            <span v-for="role in project.role" v-bind:key="role">
                     <a-tag style="margin-bottom: 1rem">
                     {{ role }}
                   </a-tag>
-                  </span></span>
-              <br>
+                  </span>
 
 
-              <span>Tools used:
-                    <span v-for="tool in project.tools" v-bind:key="tool">
+
+            <p>Tools used </p>
+            <span v-for="tool in project.tools" v-bind:key="tool">
                     <a-tag color="#1F81CE" style="margin-bottom: 1rem">
                     {{ tool }}
                   </a-tag>
                   </span>
 
-                  </span>
-              <br>
 
 
-              <p>{{ project.description |truncate }}.</p>
+            <p>{{ project.description |truncate }}.</p>
 
-            </template>
-          </a-card-meta>
-        </a-card>
+          </a-col>
+          <a-col :span="8">
+            <img
+                class="card-img-top"
+                style="border-radius: 2%"
+
+                alt="example"
+                :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
 
 
+            />
+          </a-col>
+        </a-row>
+
+
+
+
+      </a-card>
 
 
     </a-col>
+
+
+
+
 
 
   </a-row>
@@ -116,6 +119,11 @@ export default {
         return text;
       }
     },
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
   },
   async mounted() {
     this.countrieslist = countries
@@ -205,6 +213,9 @@ export default {
 .errorMessage {
   color: #f5222d;
   font-family: sofia_prolight
+}
+.card-3 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .card {

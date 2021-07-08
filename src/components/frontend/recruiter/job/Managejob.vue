@@ -208,7 +208,7 @@
 
 import Marketplace from '@/services/Marketplace'
 import lena from '@/components/frontend/recruiter/lena/lena'
-import RecruiterSider from "../layout/RecruiterSider";
+import RecruiterSider from "@/components/frontend/recruiter/layout/RecruiterSider";
 import moment from 'moment';
 import Organizations from "@/services/Organizations";
 

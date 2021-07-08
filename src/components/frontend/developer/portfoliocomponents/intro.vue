@@ -5,7 +5,7 @@
   </div>
   <p style="font-family: sofia_proregular;text-decoration: underline;text-decoration-color: #1F81CE">Welcome to your profile</p>
   <p style="font-family: sofia_proregular">From here you can edit your profiel to completion</p>
-  <p style="font-family: sofia_probold">Current completion is 80%</p>
+  <p style="font-family: sofia_probold">Current completion is {{ score }}%</p>
 
   <p style="font-family: sofia_proregular">Tabs will have the tick icon for conditions satifiied the ones with the x have something pending.</p>
   <p style="font-family: sofia_proregular">Each tab will guide you on details needed</p>
@@ -15,7 +15,10 @@
 
 <script>
 export default {
-  name: "intro"
+  name: "intro",
+  props: {
+    score: Number,
+  },
 }
 </script>
 

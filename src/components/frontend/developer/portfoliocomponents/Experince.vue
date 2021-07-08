@@ -18,9 +18,67 @@
 
       </div>
       <div v-else>
-        <div v-if="experiences.length>0">
+        <div v-if="experienceslist.length>0">
           <a-row gutter="16">
-            <a-col span="8" v-for="item in experiences"
+            <a-col span="8" v-for="item in complete"
+                   v-bind:key="item.id" class="equaltable">
+              <a-card :title="item.title" style="margin-bottom: 1rem;">
+              <span slot="extra" v-if="item.start === null">
+                <a-alert message="Please update" banner/>
+              </span>
+                <template slot="actions" class="ant-card-actions">
+                  <a-popconfirm
+                      title="Are you sure delete this work experience entry?"
+                      ok-text="Yes"
+                      cancel-text="No"
+                      @confirm="DeleteExperience(item.key)"
+
+                  >
+                    <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
+                  </a-popconfirm>
+
+                  <a-icon key="edit" type="edit" theme="twoTone" @click="EditExperience(item)"/>
+
+                </template>
+                <a-card-meta>
+                  <template slot="description">
+
+                    <p><span> Company name:  {{ item.company }} <a-icon
+                        type="environment"/>  {{ item.location |countryname}} </span>
+                    </p>
+                    <p>
+                      <span v-if="item.start">{{ item.start  | moment }}
+
+                  </span>
+                      <span v-if="item.end">
+                    to
+                    {{ item.end  | moment }}
+                  </span>
+                      <span v-else>
+                    to present
+
+                  </span>
+                    </p>
+                    <p>
+                      Technologies used:
+                      <a-tag v-for="tag in item.tags" color="#1F81CE"
+                             :key="tag">
+                        {{ tag }}
+                      </a-tag>
+
+                    </p>
+
+
+
+
+                  </template>
+                </a-card-meta>
+              </a-card>
+
+            </a-col>
+          </a-row>
+          <a-row gutter="16">
+            <a-col span="8" v-for="item in incomplete"
                    v-bind:key="item.id" class="equaltable">
               <a-card :title="item.title" style="margin-bottom: 1rem;">
               <span slot="extra" v-if="item.start === null">
@@ -85,10 +143,13 @@
       </template>
       <a-form>
         <a-form-item
-            label="Job title"
+
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
+          <span slot="label">
+              Job title <span style="color: red">*</span>
+            </span>
           <a-input name="experience_title"
                    v-model="title" v-validate="'required'"
                    data-vv-validate-on="change|custom|input"
@@ -99,10 +160,13 @@
 
         </a-form-item>
         <a-form-item
-            label="Company"
+
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
+          <span slot="label">
+              Company name <span style="color: red">*</span>
+            </span>
           <a-input name="experience_company" v-model="company" v-validate="'required'"
                    data-vv-validate-on="change|custom|input"
 
@@ -112,7 +176,10 @@
 
 
         </a-form-item>
-        <a-form-item label="Start and End of work stint">
+        <a-form-item >
+          <span slot="label">
+              Start and End of work stint <span style="color: red">*</span>
+            </span>
 
 
           <p>
@@ -149,10 +216,13 @@
         </a-form-item>
 
         <a-form-item
-            label="Location"
+
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
+          <span slot="label">
+              Location <span style="color: red">*</span>
+            </span>
           <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
                     data-vv-validate-on="change|custom|input"
 
@@ -174,10 +244,13 @@
 
 
         <a-form-item
-            label="Technologies used when working"
+
             :label-col="{ span: 24 }"
             :wrapper-col="{ span:  24}"
         >
+          <span slot="label">
+              Technologies used when working <span style="color: red">*</span>
+            </span>
           <div>
             <template v-for="(tag, index) in tags">
               <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
@@ -211,10 +284,12 @@
 
         </a-form-item>
         <a-form-item
-            label="Work description"
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
+          <span slot="label">
+              Work description <span style="color: red">*</span>
+            </span>
           <a-textarea
               v-model="description"
               placeholder="A description of your role and responsibilites(400 char max)"
@@ -258,6 +333,7 @@ class Experience {
     this.start = start;
     this.end = end;
 
+
   }
 }
 
@@ -286,7 +362,9 @@ export default {
       end_month: null,
       toolsErrors: [],
       editexperience: false,
-      currentexperience: null
+      currentexperience: null,
+      incomplete:[],
+      complete:[]
 
 
     }
@@ -349,6 +427,7 @@ export default {
       UsersService.experience(this.$store.state.user.pk, auth).then(
           resp => {
             this.experienceslist = resp.data
+            this.$emit('myexperinecesloaded', this.experienceslist)
             this.ComputeExperience()
           }
       )
@@ -369,12 +448,22 @@ export default {
         if (item.tech_tags) {
           tech_used = item.tech_tags.split(',');
         }
+        if(item.work_start_month){
+          let one_experience = new Experience(
+              id, title, description, company, location, duration, tech_used, start, end
+          );
+          this.complete.push(one_experience)
+        }else {
+          let one_experience = new Experience(
+              id, title, description, company, location, duration, tech_used, start, end
+          );
+          this.incomplete.push(one_experience)
+        }
 
-        let one_experience = new Experience(
-            id, title, description, company, location, duration, tech_used, start, end
-        );
-        this.experiences.push(one_experience)
+
+
       })
+
       this.dataload = false
 
     },
@@ -437,13 +526,15 @@ export default {
     },
     ResetFields() {
       this.$validator.reset();
-      this.toolsErrors = []
+
       this.CurrentJob = false
+      this.editexperience = false
       this.currentexperience = null
       this.start_month = ''
       this.end_month = ''
       this.card_title = ''
       this.tags = []
+      this.toolsErrors = []
       this.title = ''
       this.description = ''
       this.location = ''
@@ -503,6 +594,7 @@ export default {
     },
 
     showModal() {
+      this.ResetFields()
       this.card_title = 'New Work Experience'
       this.visible = true;
     },

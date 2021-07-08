@@ -18,91 +18,59 @@
         </a-card>
       </a-col>
 
-      <a-col span="18" style="overflow-y: scroll;padding: 0 1% 0 1% ;height: 70vh;">
+      <a-col span="20" style="overflow-y: scroll;padding: 0 1% 0 1% ;height: 70vh;">
 
         <a-skeleton active v-if="dataload" />
 
 
 
         <a-row gutter="16" v-else >
-
-
-
-          <a-col span="12" v-for="project in projects" v-bind:key="project" class="equaltable">
-            <a-card class="nine equalcards " v-if="project.role" style="margin-bottom: 1rem">
-              <img
-                  class="card-img-top"
-                  slot="cover"
-                  alt="example"
-                  :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
-
-
-              />
-              <template slot="actions" class="ant-card-actions">
-                <a-popconfirm
-                    title="Are you sure delete this project?"
-                    ok-text="Yes"
-                    cancel-text="No"
-                    @confirm="DeleteProject(project.key)"
-
-                >
-                  <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
-                </a-popconfirm>
-
-                <a-icon key="edit" type="edit" theme="twoTone" @click="EditProject(project)"/>
-
-              </template>
-
-
-              <a-card-meta>
-                <template slot="description">
-                  {{ project.start  | moment }} {{ project.end  | moment }}
+          <a-col span="24" v-for="project in projects" v-bind:key="project" class="equaltable">
+            <a-card class="card-3 " v-if="project.role" style="margin-bottom: 1rem">
+              <a-row>
+                <a-col :span="16">
+                  <span style="font-family: sofia_probold"> {{ project.title |capitalize }}</span>
                   <br>
-                  <span>Project name : {{ project.title }}</span>
+                  {{ project.start  | moment }}
+                  <span v-if="project.end"> to {{ project.end  | moment }}</span>
                   <br>
 
 
-                  <span>Role in Project:<span v-for="role in project.role" v-bind:key="role">
+
+                  <p>Role in Project</p>
+                  <span v-for="role in project.role" v-bind:key="role">
                     <a-tag style="margin-bottom: 1rem">
                     {{ role }}
                   </a-tag>
-                  </span></span>
-                  <br>
+                  </span>
 
 
-                  <span>Tools used:
-                    <span v-for="tool in project.tools" v-bind:key="tool">
+
+                  <p>Tools used </p>
+                  <span v-for="tool in project.tools" v-bind:key="tool">
                     <a-tag color="#1F81CE" style="margin-bottom: 1rem">
                     {{ tool }}
                   </a-tag>
                   </span>
 
-                  </span>
-                  <br>
 
 
                   <p>{{ project.description |truncate }}.</p>
 
-                </template>
-              </a-card-meta>
-            </a-card>
-            <a-card class="nine equalcards" v-else style="margin-bottom: 1rem">
-              <img v-if="project.images.length>0"
-                   class="card-img-top"
-                   slot="cover"
-                   alt="example"
-                   :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
+                </a-col>
+                <a-col :span="8">
+                  <img
+                      class="card-img-top"
+                      style="border-radius: 2%"
+
+                      alt="example"
+                      :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
 
 
-              />
-              <img v-else
-                   class="norole"
-                   slot="cover"
-                   alt="example"
-                   src="@/assets/images/error.svg"
+                  />
+                </a-col>
+              </a-row>
 
-
-              />
               <template slot="actions" class="ant-card-actions">
                 <a-popconfirm
                     title="Are you sure delete this project?"
@@ -118,9 +86,11 @@
 
               </template>
 
-              <a-card-meta>
-                <template slot="description">
 
+            </a-card>
+            <a-card class="card-3" v-else style="margin-bottom: 1rem">
+              <a-row>
+                <a-col :span="16">
                   <div>
                     <span>Project name : {{ project.title }}</span>
                     <br>
@@ -129,12 +99,51 @@
                              show-icon message="Please edit this project to update it." banner/>
 
                   </div>
+                </a-col>
+                <a-col :span="8">
+                  <img v-if="project.images.length>0"
+                       class="card-img-top"
+                       alt="example"
+                       style="border-radius: 2%"
+                       :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
 
 
-                </template>
-              </a-card-meta>
+                  />
+                  <img v-else
+                       class="norole"
+                       style="border-radius: 2%"
+
+                       alt="example"
+                       src="@/assets/images/error.svg"
+
+
+                  />
+                </a-col>
+              </a-row>
+
+              <template slot="actions" class="ant-card-actions">
+                <a-popconfirm
+                    title="Are you sure delete this project?"
+                    ok-text="Yes"
+                    cancel-text="No"
+                    @confirm="DeleteProject(project.key)"
+
+                >
+                  <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
+                </a-popconfirm>
+
+                <a-icon key="edit" type="edit" theme="twoTone" @click="EditProject(project)"/>
+
+              </template>
+
+
             </a-card>
+
           </a-col>
+
+
+
+
 
 
         </a-row>
@@ -158,9 +167,12 @@
 
       >
         <a-form-item
-            label="Project name"
+
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }">
+          <span slot="label">
+              Project name <span style="color: red">*</span>
+            </span>
           <a-input v-model="title" v-validate="'required'" name="project_title"
                    data-vv-validate-on="change|custom|input"
 
@@ -168,10 +180,13 @@
           <span class="errorMessage">{{ errors.first('project_title') }}</span>
         </a-form-item>
         <a-form-item
-            label="Describe what the Project is about"
+
             :label-col="{ span: 24 }"
             :wrapper-col="{ span: 24 }"
         >
+          <span slot="label">
+              Describe what the Project is about <span style="color: red">*</span>
+            </span>
 
           <a-textarea
               placeholder="Autosize height with minimum and maximum number of lines"
@@ -232,10 +247,14 @@
 
         </a-form-item>
 
-        <a-form-item label="Start and End of project">
+        <a-form-item >
+          <span slot="label">
+              Start and End of project <span style="color: red">*</span>
+            </span>
 
 
           <p>
+
             <a-checkbox v-model="Inprogress">
               Is the project in progress?
             </a-checkbox>
@@ -269,7 +288,8 @@
 
         <a-form-item>
 
-          <span>Which role did you play in the project(you can pick more than one).</span>
+          <span>Which role did you play in the project(you can pick more than one).<span style="color: red">*</span></span>
+
           <br>
           <a-checkbox-group
               v-model="rolevalues"
@@ -415,7 +435,8 @@
         </a-form-item>
 
         <a-form-item>
-          <p> Add images of the project</p>
+          <p> Add images of the project <span style="color: red">*</span></p>
+
 
           <div v-if="uploading">
 
@@ -461,7 +482,6 @@ import moment from "moment";
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import UsersService from "@/services/UsersService";
-
 let countries = require("@/store/location.json")
 Vue.use(VeeValidate, {
   events: 'change|input|custom'
@@ -560,6 +580,11 @@ export default {
         return text;
       }
     },
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
   },
   watch: {
     visible:function (){
@@ -651,6 +676,7 @@ export default {
           .then(
               resp => {
                 this.myprojects = resp.data
+                this.$emit('myprojectsloaded', this.myprojects)
                 this.ComputeProjects()
 
 
@@ -695,7 +721,7 @@ export default {
         let company_location = ''
         if (personal_company) {
           company_name = item.company_name
-          company_location = item.company_location
+          company_location = item.location
           company_url = item.company_url
         }
         let start = item.project_start_month
@@ -707,6 +733,7 @@ export default {
         );
         this.projects.push(one_portfolio)
       })
+
       this.dataload = false
 
     },
@@ -793,12 +820,19 @@ export default {
 
       let companyname = ''
       let companyurl = ''
+      let companylocation
 
       let personal = false
       if (this.projectType === 1) {
         personal = true
         companyname = this.company_name
         companyurl = this.company_url
+        companylocation = this.company_location
+
+      }
+      let end = null
+      if(this.Inprogress === false){
+        end = this.end_month
       }
 
       let project_obj = {
@@ -812,8 +846,9 @@ export default {
         'personal_company': personal,
         'company_name': companyname,
         'company_url': companyurl,
+        'location':companylocation,
         'project_start_month': this.start_month,
-        'project_end_month': this.end_month
+        'project_end_month': end
 
 
       }
@@ -828,7 +863,7 @@ export default {
         if (valid && this.toolsErrors.length === 0 && this.imageError === false) {
           if (this.editproject) {
             MyProjectsService.updateportfolio(this.currentproject.key, project_obj, auth)
-                .then(resp => {
+                .then(() => {
                   this.visible = false
                   this.FetchPortfolio()
                 })
@@ -849,19 +884,26 @@ export default {
 
 
     },
-    ResetFields(data) {
-
+    ResetFields() {
+      this.projectType= 2
+      this.rolevalues = []
+      this.tags = []
+      this.tagsDesign = []
+      this.tagsOps = []
+      this.tagsProduct = []
+      this.fileList = []
+      this.start_month = ''
+      this.end_month = ''
+      this.title = ''
+      this.description = ''
+      this.project_demo = ''
+      this.project_repo = ''
+      this.company_name =''
+      this.company_url =''
+      this.company_location =null
       this.currentproject = null
-      this.myprojects.forEach(project => {
-        if (project.id === data.id) {
-          const index = this.myprojects.indexOf(project);
-          if (index > -1) {
-            this.myprojects.splice(index, 1);
-          }
-          this.myprojects.push(data)
-        }
-      })
-      this.ComputeProjects()
+      this.Inprogress = false
+
 
     },
     EditProject(project) {
@@ -881,7 +923,10 @@ export default {
       this.description = project.description
       this.project_demo = project.demo
       this.project_repo = project.repo
-      if (project.end) {
+      if (project.end === null ) {
+        this.Inprogress = true
+
+      }else {
         this.Inprogress = false
         this.end_month = project.end
       }
@@ -943,20 +988,10 @@ export default {
     },
 
     showModal() {
+      this.ResetFields()
       this.visible = true;
       this.editproject = false
-      this.rolevalues = []
-      this.tags = []
-      this.tagsDesign = []
-      this.tagsOps = []
-      this.tagsProduct = []
-      this.fileList = []
-      this.start_month = ''
-      this.end_month = ''
-      this.title = ''
-      this.description = ''
-      this.project_demo = ''
-      this.project_repo = ''
+
       this.card_title = 'New Project'
     },
     handleChange(checked) {
@@ -1093,15 +1128,14 @@ export default {
 </script>
 
 <style scoped>
-.nine {
-
-}
 
 .errorMessage {
   color: #f5222d;
   font-family: sofia_prolight
 }
-
+.card-3 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
 .card {
   position: relative;
   display: -webkit-box;
@@ -1140,10 +1174,6 @@ export default {
   object-fit: cover;
 }
 
-.equaltable {
-
-
-}
 .container{
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1152,9 +1182,7 @@ export default {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-.equalcards {
 
-}
 .gallery {
   display: grid;
   grid-gap: 15px;

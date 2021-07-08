@@ -5,7 +5,7 @@
     <a-row :gutter="16">
       <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
              :md="{span: 12, offset: 0 }"
-             :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+             :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
         <a-form-item label="Title">
           <a-input v-model="job.title">
 
@@ -14,7 +14,7 @@
       </a-col>
       <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
              :md="{span: 12, offset: 0 }"
-             :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+             :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
         <a-form-item label="Job role">
           <a-select
 
@@ -49,7 +49,7 @@
       </a-col>
       <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
              :md="{span: 12, offset: 0 }"
-             :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+             :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
         <a-form-item label="Experience">
           <a-select
               placeholder="Select a option"
@@ -70,39 +70,40 @@
         </a-form-item>
 
       </a-col>
+      <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+             :md="{span: 12, offset: 0 }"
+             :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+        <a-form-item label="Contract type">
+          <a-select
+
+              placeholder="Select a option and change input text above"
+              v-model="job.engagement_type"
+          >
+            <a-select-option value="Full-time">
+              Full-time
+            </a-select-option>
+            <a-select-option value="Part-time">
+              Part-time
+            </a-select-option>
+            <a-select-option value="Contract">
+              Contract
+            </a-select-option>
+            <a-select-option value="Remote">
+              Remote
+            </a-select-option>
+            <a-select-option value="Freelance">
+              Freelance
+            </a-select-option>
+
+          </a-select>
+        </a-form-item>
+
+      </a-col>
     </a-row>
     <!------commission entry added for staff access------>
     <a-row :gutter="16">
       <div v-if="$store.state.user_object.user.is_staff">
-        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-               :md="{span: 12, offset: 0 }"
-               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
-          <a-form-item label="Contract type">
-            <a-select
 
-                placeholder="Select a option and change input text above"
-                v-model="job.engagement_type"
-            >
-              <a-select-option value="Full-time">
-                Full-time
-              </a-select-option>
-              <a-select-option value="Part-time">
-                Part-time
-              </a-select-option>
-              <a-select-option value="Contract">
-                Contract
-              </a-select-option>
-              <a-select-option value="Remote">
-                Remote
-              </a-select-option>
-              <a-select-option value="Freelance">
-                Freelance
-              </a-select-option>
-
-            </a-select>
-          </a-form-item>
-
-        </a-col>
         <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
                :md="{span: 12, offset: 0 }"
                :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
@@ -111,6 +112,16 @@
             <country-select v-model="job.location"
                             class="ant-input"
             />
+          </a-form-item>
+
+        </a-col>
+        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+               :md="{span: 12, offset: 0 }"
+               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+          <a-form-item label="City ">
+            <a-input v-model="job.city">
+
+            </a-input>
           </a-form-item>
 
         </a-col>
@@ -136,38 +147,10 @@
         </a-col>
       </div>
       <div v-else>
+
         <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
                :md="{span: 12, offset: 0 }"
-               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
-          <a-form-item label="Contract type">
-            <a-select
-
-                placeholder="Select a option and change input text above"
-                v-model="job.engagement_type"
-            >
-              <a-select-option value="Full-time">
-                Full-time
-              </a-select-option>
-              <a-select-option value="Part-time">
-                Part-time
-              </a-select-option>
-              <a-select-option value="Contract">
-                Contract
-              </a-select-option>
-              <a-select-option value="Remote">
-                Remote
-              </a-select-option>
-              <a-select-option value="Freelance">
-                Freelance
-              </a-select-option>
-
-            </a-select>
-          </a-form-item>
-
-        </a-col>
-        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
-               :md="{span: 12, offset: 0 }"
-               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
           <a-form-item>
             <span>Location : {{job.location}}</span>
             <country-select v-model="job.location"
@@ -178,7 +161,17 @@
         </a-col>
         <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
                :md="{span: 12, offset: 0 }"
-               :lg="{span: 8, offset: 0 }" :xl="{span: 8,offset: 0 }">
+               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
+          <a-form-item label="City ">
+            <a-input v-model="job.city">
+
+            </a-input>
+          </a-form-item>
+
+        </a-col>
+        <a-col :xs="{span: 12, offset: 0 }" :sm="{span: 12, offset: 0 }"
+               :md="{span: 12, offset: 0 }"
+               :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0 }">
           <a-form-item label="Salary range ">
             <a-input v-model="job.remuneration">
 

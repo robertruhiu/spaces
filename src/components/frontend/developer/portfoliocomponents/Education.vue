@@ -120,10 +120,13 @@
         </a-button>
       </template>
       <a-form-item
-          label="Certificate name"
+
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+        <span slot="label">
+              Certificate name <span style="color: red">*</span>
+            </span>
         <a-input
             name="course_title"
             v-model="course" v-validate="'required'"
@@ -136,10 +139,13 @@
 
       </a-form-item>
       <a-form-item
-          label="Issuing organization"
+
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+        <span slot="label">
+              Issuing organization <span style="color: red">*</span>
+            </span>
         <a-input
             v-model="school" v-validate="'required'"
             data-vv-validate-on="change|custom|input"
@@ -151,10 +157,13 @@
 
       </a-form-item>
       <a-form-item
-          label="Issue month"
+
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+        <span slot="label">
+              Issue month <span style="color: red">*</span>
+            </span>
 
         <a-month-picker placeholder="Select month"
                         v-model="start" v-validate="'required'"
@@ -189,10 +198,13 @@
         </a-button>
       </template>
       <a-form-item
-          label="Institution name"
+
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+        <span slot="label">
+              Institution name <span style="color: red">*</span>
+            </span>
         <a-input
             name="Institution_title"
             v-model="school" v-validate="'required'"
@@ -205,10 +217,13 @@
 
       </a-form-item>
       <a-form-item
-          label="Degree or course title"
+
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+         <span slot="label">
+              Degree or course title <span style="color: red">*</span>
+            </span>
         <a-input
             name="course_title"
             v-model="course" v-validate="'required'"
@@ -221,10 +236,12 @@
 
       </a-form-item>
       <a-form-item
-          label="Start and End of course"
           :label-col="{ span: 24 }"
           :wrapper-col="{ span: 24 }"
       >
+        <span slot="label">
+              Start and End of course <span style="color: red">*</span>
+            </span>
         <a-space>
           <a-month-picker placeholder="Start month"
                           v-model="start" v-validate="'required'"
@@ -302,6 +319,7 @@ export default {
       UsersService.education(this.$store.state.user.pk, auth).then(
           resp => {
             this.education_list = resp.data
+            this.$emit('myeducationloaded', this.education_list)
             this.ComputeEducation()
             this.loading = false
 

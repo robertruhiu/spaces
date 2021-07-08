@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div v-if="dataload">
       <div style="text-align: center">
         <div>
@@ -16,9 +17,7 @@
 
             <p style="font-weight: 700">
               {{ item.title }}
-              <a @click="EditExperience(item)">
-                <a-icon type="edit" theme="twoTone"/>
-              </a>
+
 
             </p>
 
@@ -28,6 +27,10 @@
             <span v-if="item.end">
                     to
                     {{ item.end  | moment }}
+                  </span>
+            <span v-else>
+                    to present
+
                   </span>
             <p><span><a-icon type="bank"/>  {{ item.company }} <a-icon
                 type="environment"/>  {{ item.location |countryname }} </span>
@@ -47,6 +50,7 @@
           </a-timeline-item>
 
         </a-timeline>
+
       </div>
 
     </div>
@@ -162,7 +166,10 @@ export default {
         let one_experience = new Experience(
             id, title, description, company, location, duration, tech_used, start, end
         );
-        this.experiences.push(one_experience)
+        if(item.work_start_month){
+          this.experiences.push(one_experience)
+        }
+
       })
       this.dataload = false
 

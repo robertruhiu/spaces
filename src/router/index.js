@@ -52,6 +52,8 @@ const Resources = () => import('@/components/frontend/bridges/resources');
 const CohortSubmissions = () => import('@/components/frontend/bridges/cohortprojects');
 const Feedback = () => import('@/components/frontend/recruiter/Feedback');
 const CreateJob = () => import('@/components/frontend/recruiter/Create');
+const Pool = () => import('@/components/frontend/recruiter/talentPool');
+const Candidateprofile = () => import('@/components/frontend/recruiter/candidateprofile');
 const Organizations = () => import('@/components/frontend/recruiter/organizations/Organization');
 // admin resources
 const AdminDashboard = () => import('@/components/frontend/admin/AdminDashboard');
@@ -543,6 +545,28 @@ let router = new Router({
             path: '/Organizations/:name?',
             name: 'Organizations',
             component: Organizations,
+            meta: {
+                requiresAuth: true
+            }
+
+
+
+        },
+        {
+            path: '/pool',
+            name: 'Pool',
+            component: Pool,
+            meta: {
+                requiresAuth: true
+            }
+
+
+
+        },
+        {
+            path: '/Candidateprofile/:candidateId',
+            name: 'Candidateprofile',
+            component: Candidateprofile,
             meta: {
                 requiresAuth: true
             }

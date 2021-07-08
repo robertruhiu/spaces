@@ -14,7 +14,11 @@
           </a-breadcrumb>
           <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
                 {{ $store.state.user_object.user.first_name | capitalize }} {{ $store.state.user_object.user.last_name | capitalize }}</span>
-          <p>Profile completion : 80%</p>
+              <p>Profile completion :
+                <span v-if="score>$store.state.score">{{ score }}%</span>
+                <span v-else-if="score === $store.state.score">{{ score }}%</span>
+                <span v-else>{{ $store.state.score }}%</span>
+              </p>
             </a-col>
             <a-col span="12">
               <a-button
@@ -44,21 +48,21 @@
                     <a-icon type="code"/>
                     Portfolio/Gigs
                   </span>
-                    <Skills />
+                    <Skills v-on:myprojectsloaded="onClickChildSkills" />
                   </a-tab-pane>
                   <a-tab-pane key="3">
                   <span slot="tab">
                     <a-icon type="bank"/>
                     Work experience
                   </span>
-                    <Experince/>
+                    <Experince v-on:myexperinecesloaded="onClickChildExperience"/>
                   </a-tab-pane>
                   <a-tab-pane key="4">
                   <span slot="tab">
                     <a-icon type="file-done"/>
                     Education & Certifications
                   </span>
-                    <Education/>
+                    <Education v-on:myeducationloaded="onClickChildEducation"/>
                   </a-tab-pane>
 
                 </a-tabs>
@@ -69,16 +73,16 @@
             <a-col span="6" >
               <div style="padding: 1%;min-height: 40vh" class="cardshadow">
                 <div v-if="currentTabKey === 1">
-                  <intro/>
+                  <intro :score="score"/>
                 </div>
                 <div v-else-if="currentTabKey === 2">
-                  <skillInfo  />
+                  <skillInfo  :projects="projects" v-on:projectscore="onClickChildProjectScore" />
                 </div>
                 <div v-else-if="currentTabKey === 3">
-                  <WorkInfo  />
+                  <WorkInfo :experiences="experiences" v-on:workscore="onClickChildWorkScore"  />
                 </div>
                 <div v-else-if="currentTabKey === 4">
-                  <EducationInfo  />
+                  <EducationInfo :education="education" v-on:educationscore="onClickChildEducationScore"  />
                 </div>
 
 
@@ -112,9 +116,25 @@ export default {
     return {
       currentUserProfile: {},
       currentTabKey:1,
+      projects:[],
+      experiences:[],
+      education:[],
+      work_score:0,
+      projects_score:0,
+      education_score:0
 
 
     }
+  },
+  computed: {
+
+    score: function () {
+      let score =this.work_score+this.projects_score+this.education_score+25
+      this.$store.dispatch('setscore', score)
+      return this.work_score+this.projects_score+this.education_score+25
+
+
+    },
   },
   components: {
     CandidateSider,Basic,intro,skillInfo,Skills,WorkInfo,EducationInfo,
@@ -147,6 +167,32 @@ export default {
     navigateTo(route) {
       this.$router.push(route)
     },
+    onClickChildSkills (value) {
+
+      this.projects =value
+
+    },
+    onClickChildExperience (value) {
+
+
+      this.experiences =value
+
+    },
+    onClickChildEducation (value) {
+      this.education =value
+
+    },
+    onClickChildWorkScore (value) {
+      this.work_score =value
+
+    },
+    onClickChildProjectScore (value) {
+      this.projects_score =value
+
+    },
+    onClickChildEducationScore(value){
+      this.education_score =value
+    }
 
 
   },

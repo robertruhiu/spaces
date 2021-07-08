@@ -3,7 +3,7 @@
     <CandidateSider/>
     <a-layout>
 
-      <a-layout-content style="background-color: #FAFBFF">
+      <a-layout-content style="background-color: #FAFBFF" id="contract">
         <a-card class="hellocard" :bordered="false">
           <a-row style="color: white">
             <a-col span="12">
@@ -23,14 +23,19 @@
               <p>Phone Number: {{$store.state.user_object.phone_number}}</p>
               <p>Location: {{$store.state.user_object.country}}</p>
               <p>Years of Experience: {{$store.state.user_object.years}}</p>
-              <p>Salary Monthly Expectations: $ {{$store.state.user_object.salary}}</p>
+              <p>Monthly Salary Expectations: $ {{$store.state.user_object.salary}}</p>
+              <a-button
+                  type="primary"  @click="printDiv('contract')">
+                <a-icon type="right" />
+                print
+              </a-button>
             </a-col>
           </a-row>
 
 
 
         </a-card>
-        <div style=" ;padding: 1%">
+        <div style=" ;padding: 1%" id="contract">
           <a-row :gutter="16">
             <a-col span="18" >
               <div style="padding: 1%;min-height: 40vh" class="cardshadow">
@@ -40,94 +45,25 @@
                     {{currentUserProfile.about}}
                   </p>
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Skilled in</p>
-                  <div>
-                    <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                      react
-                    </a-tag>
-                    <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                      django
-                    </a-tag>
-                    <a-tag color="#1F81CE" style="margin-bottom: 1rem">
-                      vue
-                    </a-tag>
+                  <div v-if="currentUserProfile.skills.length>0" style="margin-bottom: 1rem">
+
+                    <span style="" v-for="skill in currentUserProfile.skills.split(',')"
+                          v-bind:key="skill.id">
+                                                <a-tag color="#1F81CE"
+                                                       >{{ skill }}</a-tag>
+
+                                            </span>
 
                   </div>
 
-                  <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">PORTFOLIO / GIGS</p>
+
+                  <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Projects Done</p>
                   <Projects/>
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Work Experience</p>
                   <Work/>
-                  <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Education</p>
-                  <a-timeline>
-                    <a-timeline-item
-                    >
-
-                      <p style="font-weight: 700">
-                        Jaramogi Oginga Odinga University
+                  <Education/>
 
 
-                      </p>
-
-                      <p>
-                        Bsc Computer Security forensics
-
-
-                      </p>
-
-
-                      <p>2013 -2017</p>
-
-                    </a-timeline-item>
-
-
-                  </a-timeline>
-                  <a-timeline>
-
-                    <a-timeline-item
-                    >
-
-                      <p style="font-weight: 700">
-                        Jaramogi Oginga Odinga University
-
-
-                      </p>
-
-                      <p>
-                        Bsc Computer Security forensics
-
-
-                      </p>
-
-
-                      <p>2013 -2017</p>
-
-                    </a-timeline-item>
-
-                  </a-timeline>
-                  <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Certifications</p>
-                  <a-timeline>
-                    <a-timeline-item
-                    >
-
-                      <p style="font-weight: 700">
-                        Product Marketing certification
-
-
-                      </p>
-
-                      <p>
-                        Issuing organization: Product school
-
-
-                      </p>
-
-
-                      <p>Issued on : Aug 2020</p>
-
-                    </a-timeline-item>
-
-
-                  </a-timeline>
                 </div>
 
               </div>
@@ -149,6 +85,7 @@
 import CandidateSider from "@/components/frontend/developer/layout/CandidateSider";
 import Work from "@/components/frontend/developer/CvComponents/experience";
 import Projects from "@/components/frontend/developer/CvComponents/projects";
+import Education from "@/components/frontend/developer/CvComponents/education";
 import moment from "moment";
 let countries = require("@/store/location.json")
 import UsersService from "@/services/UsersService";
@@ -183,7 +120,7 @@ export default {
     }
   },
   components: {
-    CandidateSider,Work,Projects
+    CandidateSider,Work,Projects,Education
 
   },
   async mounted() {
@@ -266,6 +203,18 @@ export default {
         this.experiences.push(one_experience)
       })
       this.dataload = false
+
+    },
+    printDiv(divName) {
+      var printContents = document.getElementById(divName).innerHTML;
+      var originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+
+      window.print();
+
+      document.body.innerHTML = originalContents;
+
 
     },
   }
