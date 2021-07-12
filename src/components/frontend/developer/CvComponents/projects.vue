@@ -4,20 +4,21 @@
 
 
   <a-row :gutter="16" v-else  class="container">
-    <a-col span="24" v-for="project in projects" v-bind:key="project" class="equaltable">
-      <a-card class="card-3 " v-if="project.role" style="margin-bottom: 1rem">
-        <a-row>
-          <a-col :span="16">
-            <span style="font-family: sofia_probold"> {{ project.title |capitalize }}</span>
-            <br>
-            {{ project.start  | moment }}
-            <span v-if="project.end"> to {{ project.end  | moment }}</span>
-            <br>
+    <div v-if="projects.length>0">
+      <a-col span="24" v-for="project in projects" v-bind:key="project" class="equaltable">
+        <a-card class="card-3 " v-if="project.role" style="margin-bottom: 1rem">
+          <a-row>
+            <a-col :span="16">
+              <span style="font-family: sofia_probold"> {{ project.title |capitalize }}</span>
+              <br>
+              {{ project.start  | moment }}
+              <span v-if="project.end"> to {{ project.end  | moment }}</span>
+              <br>
 
 
 
-            <p>Role in Project</p>
-            <span v-for="role in project.role" v-bind:key="role">
+              <p>Role in Project</p>
+              <span v-for="role in project.role" v-bind:key="role">
                     <a-tag style="margin-bottom: 1rem">
                     {{ role }}
                   </a-tag>
@@ -25,8 +26,8 @@
 
 
 
-            <p>Tools used </p>
-            <span v-for="tool in project.tools" v-bind:key="tool">
+              <p>Tools used </p>
+              <span v-for="tool in project.tools" v-bind:key="tool">
                     <a-tag color="#1F81CE" style="margin-bottom: 1rem">
                     {{ tool }}
                   </a-tag>
@@ -34,29 +35,36 @@
 
 
 
-            <p>{{ project.description |truncate }}.</p>
+              <p>{{ project.description |truncate }}.</p>
 
-          </a-col>
-          <a-col :span="8">
-            <img
-                class="card-img-top"
-                style="border-radius: 2%"
+            </a-col>
+            <a-col :span="8">
+              <img
+                  class="card-img-top"
+                  style="border-radius: 2%"
 
-                alt="example"
-                :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
-
-
-            />
-          </a-col>
-        </a-row>
+                  alt="example"
+                  :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
 
 
+              />
+            </a-col>
+          </a-row>
 
 
-      </a-card>
 
 
-    </a-col>
+        </a-card>
+
+
+      </a-col>
+    </div>
+
+    <div v-else>
+      <p>Please add projects done or update projects in your portfolio</p>
+
+
+    </div>
 
 
 
@@ -240,7 +248,7 @@ export default {
 
 .card-img-top {
   width: 100%;
-  height: 8vw;
+
   object-fit: cover;
 }
 

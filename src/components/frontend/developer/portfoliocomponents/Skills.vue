@@ -1,477 +1,424 @@
 <template>
   <div>
     <a-row>
-      <a-col span="4">
-        <a-card hoverable @click="showModal">
-          <div style="text-align: center">
-            <img
-                slot="cover"
-                alt="example"
-                src="@/assets/images/plus.svg"
-                style="width: 30%"
+      <a-col :xs="{span: 24, offset: 0, }" :sm="{span: 24, offset: 0, }"
+             :md="{span: 20, offset: 0 }"
+             :lg="{span: 18, offset: 0, }" :xl="{span: 16,offset: 0,push:0 }" >
+        <div style="padding:1%;overflow-y: scroll;height: 70vh;">
+          <div style="color: blue">
+            <a-button type="primary" @click="showModal">
+              <a-icon type="plus-circle" theme="twoTone"/>
+              Add New Project
+            </a-button>
 
-            />
           </div>
-          <a-card-meta title="Add new Project" style="text-align: center">
+          <br>
 
-          </a-card-meta>
-        </a-card>
-      </a-col>
 
-      <a-col span="20" style="overflow-y: scroll;padding: 0 1% 0 1% ;height: 70vh;">
-
-        <a-skeleton active v-if="dataload" />
+          <a-skeleton active v-if="dataload"/>
 
 
 
-        <a-row gutter="16" v-else >
-          <a-col span="24" v-for="project in projects" v-bind:key="project" class="equaltable">
-            <a-card class="card-3 " v-if="project.role" style="margin-bottom: 1rem">
-              <a-row>
-                <a-col :span="16">
-                  <span style="font-family: sofia_probold"> {{ project.title |capitalize }}</span>
-                  <br>
-                  {{ project.start  | moment }}
-                  <span v-if="project.end"> to {{ project.end  | moment }}</span>
-                  <br>
+              <div  v-for="project in projects" v-bind:key="project">
+                <a-card hoverable style="width: 240px" v-if="project.role">
+                  <img
+                      slot="cover"
+                      alt="example"
+                      :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
+                  />
+                  <a-card-meta :title="project.title |capitalize">
+                    <template slot="description">
+                      {{ project.start  | moment }}
+                      <span v-if="project.end"> to {{ project.end  | moment }}</span>
+                      <br>
 
 
-
-                  <p>Role in Project</p>
-                  <span v-for="role in project.role" v-bind:key="role">
+                      <p>Role in Project</p>
+                      <span v-for="role in project.role" v-bind:key="role">
                     <a-tag style="margin-bottom: 1rem">
                     {{ role }}
                   </a-tag>
                   </span>
 
 
-
-                  <p>Tools used </p>
-                  <span v-for="tool in project.tools" v-bind:key="tool">
+                      <p>Tools used </p>
+                      <span v-for="tool in project.tools" v-bind:key="tool">
                     <a-tag color="#1F81CE" style="margin-bottom: 1rem">
                     {{ tool }}
                   </a-tag>
                   </span>
 
 
-
-                  <p>{{ project.description |truncate }}.</p>
-
-                </a-col>
-                <a-col :span="8">
-                  <img
-                      class="card-img-top"
-                      style="border-radius: 2%"
-
-                      alt="example"
-                      :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
+                      <p>{{ project.description |truncate }}.</p>
+                    </template>
+                  </a-card-meta>
+                </a-card>
 
 
-                  />
-                </a-col>
-              </a-row>
-
-              <template slot="actions" class="ant-card-actions">
-                <a-popconfirm
-                    title="Are you sure delete this project?"
-                    ok-text="Yes"
-                    cancel-text="No"
-                    @confirm="DeleteProject(project.key)"
-
-                >
-                  <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
-                </a-popconfirm>
-
-                <a-icon key="edit" type="edit" theme="twoTone" @click="EditProject(project)"/>
-
-              </template>
-
-
-            </a-card>
-            <a-card class="card-3" v-else style="margin-bottom: 1rem">
-              <a-row>
-                <a-col :span="16">
-                  <div>
-                    <span>Project name : {{ project.title }}</span>
-                    <br>
-                    <p>{{ project.description |truncate }}.</p>
-                    <a-alert type="warning"
-                             show-icon message="Please edit this project to update it." banner/>
-
-                  </div>
-                </a-col>
-                <a-col :span="8">
-                  <img v-if="project.images.length>0"
-                       class="card-img-top"
-                       alt="example"
-                       style="border-radius: 2%"
-                       :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${project.images[0]}`"
-
-
-                  />
-                  <img v-else
-                       class="norole"
-                       style="border-radius: 2%"
-
-                       alt="example"
-                       src="@/assets/images/error.svg"
-
-
-                  />
-                </a-col>
-              </a-row>
-
-              <template slot="actions" class="ant-card-actions">
-                <a-popconfirm
-                    title="Are you sure delete this project?"
-                    ok-text="Yes"
-                    cancel-text="No"
-                    @confirm="DeleteProject(project.key)"
-
-                >
-                  <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
-                </a-popconfirm>
-
-                <a-icon key="edit" type="edit" theme="twoTone" @click="EditProject(project)"/>
-
-              </template>
-
-
-            </a-card>
-
-          </a-col>
+              </div>
 
 
 
 
 
+          <a-modal v-model="visible"
+                   :dialog-style="{ top: '20px' }">
+            <span slot="title">{{ card_title }}</span>
+            <template slot="footer">
 
-        </a-row>
-
-
-      </a-col>
-
-    </a-row>
-
-    <a-modal v-model="visible"
-             :dialog-style="{ top: '20px' }">
-      <span slot="title">{{ card_title }}</span>
-      <template slot="footer">
-
-        <a-button key="submit" type="primary" :loading="loading" @click="Save">
-          Save
-        </a-button>
-      </template>
-      <a-form
+              <a-button key="submit" type="primary" :loading="loading" @click="Save">
+                Save
+              </a-button>
+            </template>
+            <a-form
 
 
-      >
-        <a-form-item
+            >
+              <a-form-item
 
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span: 24 }">
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span: 24 }">
           <span slot="label">
               Project name <span style="color: red">*</span>
             </span>
-          <a-input v-model="title" v-validate="'required'" name="project_title"
-                   data-vv-validate-on="change|custom|input"
+                <a-input v-model="title" v-validate="'required'" name="project_title"
+                         data-vv-validate-on="change|custom|input"
 
-          />
-          <span class="errorMessage">{{ errors.first('project_title') }}</span>
-        </a-form-item>
-        <a-form-item
+                />
+                <span class="errorMessage">{{ errors.first('project_title') }}</span>
+              </a-form-item>
+              <a-form-item
 
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span: 24 }"
-        >
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span: 24 }"
+              >
           <span slot="label">
               Describe what the Project is about <span style="color: red">*</span>
             </span>
 
-          <a-textarea
-              placeholder="Autosize height with minimum and maximum number of lines"
-              :auto-size="{ minRows: 2, maxRows: 6 }" v-model="description"
-              v-validate="'required'" name="project_description" data-vv-validate-on="change|custom|input"
-          />
-          <span class="errorMessage">{{ errors.first('project_description') }}</span>
-        </a-form-item>
+                <a-textarea
+                    placeholder="Autosize height with minimum and maximum number of lines"
+                    :auto-size="{ minRows: 2, maxRows: 6 }" v-model="description"
+                    v-validate="'required'" name="project_description" data-vv-validate-on="change|custom|input"
+                />
+                <span class="errorMessage">{{ errors.first('project_description') }}</span>
+              </a-form-item>
 
-        <a-form-item label="Project Demo Url">
-          <a-input v-model="project_demo" v-validate="{url: {require_protocol: true }}"
-                   name="project_demo_url" data-vv-validate-on="change|custom|input"/>
-          <span class="errorMessage">{{ errors.first('project_demo_url') }}</span>
-          <p>Was the project personal or company</p>
-          <a-radio-group name="radioGroup" :default-value="1" v-model="projectType">
-            <a-radio :value="1">
-              Company
-            </a-radio>
-            <a-radio :value="2">
-              Personal
-            </a-radio>
+              <a-form-item label="Project Demo Url">
+                <a-input v-model="project_demo" v-validate="{url: {require_protocol: true }}"
+                         name="project_demo_url" data-vv-validate-on="change|custom|input"/>
+                <span class="errorMessage">{{ errors.first('project_demo_url') }}</span>
+                <p>Was the project personal or company</p>
+                <a-radio-group name="radioGroup" :default-value="1" v-model="projectType">
+                  <a-radio :value="1">
+                    Company
+                  </a-radio>
+                  <a-radio :value="2">
+                    Personal
+                  </a-radio>
 
-          </a-radio-group>
-          <div v-if="projectType === 1">
-            <a-input placeholder="Company name" v-model="company_name" v-validate="'required'" name="companyName"
-                     data-vv-validate-on="change|custom|input"/>
-            <span class="errorMessage">{{ errors.first('companyName') }}</span>
-            <a-input placeholder="Company url" v-model="company_url"
-                     v-validate="{required: true,url: {require_protocol: true }}" name="companyUrl"
-                     data-vv-validate-on="change|custom|input"/>
-            <span class="errorMessage">{{ errors.first('companyUrl') }}</span>
-            <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
-                      data-vv-validate-on="change|custom|input"
+                </a-radio-group>
+                <div v-if="projectType === 1">
+                  <a-input placeholder="Company name" v-model="company_name" v-validate="'required'" name="companyName"
+                           data-vv-validate-on="change|custom|input"/>
+                  <span class="errorMessage">{{ errors.first('companyName') }}</span>
+                  <a-input placeholder="Company url" v-model="company_url"
+                           v-validate="{required: true,url: {require_protocol: true }}" name="companyUrl"
+                           data-vv-validate-on="change|custom|input"/>
+                  <span class="errorMessage">{{ errors.first('companyUrl') }}</span>
+                  <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
+                            data-vv-validate-on="change|custom|input"
 
-                      option-filter-prop="children"
-                      v-model="company_location" @change="handleChangeCompanyLocation" :filter-option="filterOption">
+                            option-filter-prop="children"
+                            v-model="company_location" @change="handleChangeCompanyLocation" :filter-option="filterOption">
 
-              <a-select-option v-for="country in countrieslist"
-                               v-bind:key="country">
+                    <a-select-option v-for="country in countrieslist"
+                                     v-bind:key="country">
 
-                {{ country }}
-              </a-select-option>
-
-
-            </a-select>
-            <span class="errorMessage">{{ errors.first('location') }}</span>
-
-          </div>
-
-        </a-form-item>
-
-        <a-form-item label="Project repository url">
-
-          <a-input v-model="project_repo" v-validate="{url: {require_protocol: true }}"
-                   name="project_repo_url" data-vv-validate-on="change|custom|input"/>
-          <span class="errorMessage">{{ errors.first('project_repo_url') }}</span>
+                      {{ country }}
+                    </a-select-option>
 
 
-        </a-form-item>
+                  </a-select>
+                  <span class="errorMessage">{{ errors.first('location') }}</span>
 
-        <a-form-item >
+                </div>
+
+              </a-form-item>
+
+              <a-form-item label="Project repository url">
+
+                <a-input v-model="project_repo" v-validate="{url: {require_protocol: true }}"
+                         name="project_repo_url" data-vv-validate-on="change|custom|input"/>
+                <span class="errorMessage">{{ errors.first('project_repo_url') }}</span>
+
+
+              </a-form-item>
+
+              <a-form-item>
           <span slot="label">
               Start and End of project <span style="color: red">*</span>
             </span>
 
 
-          <p>
+                <p>
 
-            <a-checkbox v-model="Inprogress">
-              Is the project in progress?
-            </a-checkbox>
-          </p>
+                  <a-checkbox v-model="Inprogress">
+                    Is the project in progress?
+                  </a-checkbox>
+                </p>
 
-          <div>
-            <a-row gutter="16">
-              <a-col span="12">
-                <a-month-picker placeholder="Start Month" v-model="start_month" v-validate="'required'"
-                                name="starting_month" data-vv-validate-on="change|custom|input">
+                <div>
+                  <a-row gutter="16">
+                    <a-col span="12">
+                      <a-month-picker placeholder="Start Month" v-model="start_month" v-validate="'required'"
+                                      name="starting_month" data-vv-validate-on="change|custom|input">
 
-                </a-month-picker>
+                      </a-month-picker>
+                      <br>
+                      <span class="errorMessage">{{ errors.first('starting_month') }}</span>
+                    </a-col>
+                    <a-col span="12">
+                      <a-month-picker v-if="Inprogress === false" placeholder="End Month" v-model="end_month"
+                                      v-validate="'required'" name="ending_month" data-vv-validate-on="change|custom|input">
+
+                      </a-month-picker>
+                      <br>
+                      <span class="errorMessage">{{ errors.first('ending_month') }}</span>
+
+                    </a-col>
+                  </a-row>
+
+
+                </div>
+
+              </a-form-item>
+
+              <a-form-item>
+
+          <span>Which role did you play in the project(you can pick more than one).<span
+              style="color: red">*</span></span>
+
                 <br>
-                <span class="errorMessage">{{ errors.first('starting_month') }}</span>
-              </a-col>
-              <a-col span="12">
-                <a-month-picker v-if="Inprogress === false" placeholder="End Month" v-model="end_month"
-                                v-validate="'required'" name="ending_month" data-vv-validate-on="change|custom|input">
+                <a-checkbox-group
+                    v-model="rolevalues"
+                    name="checkboxgroup"
+                    :options="role_options"
 
-                </a-month-picker>
-                <br>
-                <span class="errorMessage">{{ errors.first('ending_month') }}</span>
-
-              </a-col>
-            </a-row>
-
-
-          </div>
-
-        </a-form-item>
-
-        <a-form-item>
-
-          <span>Which role did you play in the project(you can pick more than one).<span style="color: red">*</span></span>
-
-          <br>
-          <a-checkbox-group
-              v-model="rolevalues"
-              name="checkboxgroup"
-              :options="role_options"
-
-          />
-          <br>
-          <span class="errorMessage" v-if="roleerror">please pick a role</span>
-
-
-          <div v-if="rolevalues.includes('Developer')">
-            Developer tools:
-            <template v-for="(tag, index) in tags">
-              <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                <a-tag :key="tag"
-                       :afterClose="() => handleClose(tag)" color="#2db7f5">
-                  {{ `${tag.slice(0, 20)}...` }}
-                </a-tag>
-              </a-tooltip>
-              <a-tag v-else :key="tag" :closable="index >= 0"
-                     :afterClose="() => handleClose(tag)" color="#2db7f5">
-                {{ tag }}
-              </a-tag>
-            </template>
-            <a-input
-                v-if="inputVisible"
-                ref="input"
-                type="text"
-                size="small"
-                :style="{ width: '78px' }"
-                :value="inputValue"
-                @change="handleInputChange"
-                @blur="handleInputConfirm"
-                @keyup.enter="handleInputConfirm"
-            />
-            <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInput">
-              <a-icon type="plus"/>
-              New Tag
-            </a-tag>
-            <br>
-            <span class="errorMessage" v-if="toolsErrors.includes('Developer')">add a tool used</span>
-          </div>
-
-          <div v-if="rolevalues.includes('Designer')">
-            Design tools:
-            <template v-for="(tag, index) in tagsDesign">
-              <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                <a-tag :key="tag"
-                       :afterClose="() => handleCloseDesign(tag)" color="#2db7f5">
-                  {{ `${tag.slice(0, 20)}...` }}
-                </a-tag>
-              </a-tooltip>
-              <a-tag v-else :key="tag" :closable="index >= 0"
-                     :afterClose="() => handleCloseDesign(tag)" color="#2db7f5">
-                {{ tag }}
-              </a-tag>
-            </template>
-            <a-input
-                v-if="inputVisibleDesign"
-                ref="input"
-                type="text"
-                size="small"
-                :style="{ width: '78px' }"
-                :value="inputValueDesign"
-                @change="handleInputChangeDesign"
-                @blur="handleInputConfirmDesign"
-                @keyup.enter="handleInputConfirmDesign"
-            />
-            <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInputDesign">
-              <a-icon type="plus"/>
-              New Tag
-            </a-tag>
-            <br>
-            <span class="errorMessage" v-if="toolsErrors.includes('Designer')">add a tool used</span>
-          </div>
-
-          <div v-if="rolevalues.includes('Product_Manager')">
-            Product Management tools:
-            <template v-for="(tag, index) in tagsProduct">
-              <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                <a-tag :key="tag"
-                       :afterClose="() => handleCloseProduct(tag)" color="#2db7f5">
-                  {{ `${tag.slice(0, 20)}...` }}
-                </a-tag>
-              </a-tooltip>
-              <a-tag v-else :key="tag" :closable="index >= 0"
-                     :afterClose="() => handleCloseProduct(tag)" color="#2db7f5">
-                {{ tag }}
-              </a-tag>
-            </template>
-            <a-input
-                v-if="inputVisibleProduct"
-                ref="input"
-                type="text"
-                size="small"
-                :style="{ width: '78px' }"
-                :value="inputValueProduct"
-                @change="handleInputChangeProduct"
-                @blur="handleInputConfirmProduct"
-                @keyup.enter="handleInputConfirmProduct"
-            />
-            <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInputProduct">
-              <a-icon type="plus"/>
-              New Tag
-            </a-tag>
-            <br>
-            <span class="errorMessage" v-if="toolsErrors.includes('Product_Manager')">add a tool used</span>
-          </div>
-
-          <div v-if="rolevalues.includes('Devops')">
-            Devops tools:
-            <template v-for="(tag, index) in tagsOps">
-              <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                <a-tag :key="tag"
-                       :afterClose="() => handleCloseOps(tag)" color="#2db7f5">
-                  {{ `${tag.slice(0, 20)}...` }}
-                </a-tag>
-              </a-tooltip>
-              <a-tag v-else :key="tag" :closable="index >= 0"
-                     :afterClose="() => handleCloseOps(tag)" color="#2db7f5">
-                {{ tag }}
-              </a-tag>
-            </template>
-            <a-input
-                v-if="inputVisiblesOps"
-                ref="input"
-                type="text"
-                size="small"
-                :style="{ width: '78px' }"
-                :value="inputValueOps"
-                @change="handleInputChangeOps"
-                @blur="handleInputConfirmOps"
-                @keyup.enter="handleInputConfirmOps"
-            />
-            <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInputOps">
-              <a-icon type="plus"/>
-              New Tag
-            </a-tag>
-            <br>
-            <span class="errorMessage" v-if="toolsErrors.includes('Devops')">add a tool used</span>
-          </div>
-        </a-form-item>
-
-        <a-form-item>
-          <p> Add images of the project <span style="color: red">*</span></p>
-
-
-          <div v-if="uploading">
-
-            <span>Uploading file <a-spin/></span>
-
-          </div>
-          <div v-else>
-
-            <input type="file" @change="ChangehandleUpload" accept=".png, .jpg, .jpeg">
-          </div>
-          <span class="errorMessage" v-if="imageError">please add an image or images</span>
-          <a-row :gutter="16" v-if="fileList.length>0">
-            <a-col :span="8" v-for="image in fileList" v-bind:key="image">
-              <a-card hoverable>
-                <img
-                    class="card-img-topsmall"
-                    slot="cover"
-                    alt="example"
-                    :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${image}`"
                 />
-                <template slot="actions" class="ant-card-actions">
-                  <a-icon @click="deleteImage(image)" key="delete" type="delete"/>
-
-                </template>
-
-              </a-card>
-            </a-col>
-
-          </a-row>
+                <br>
+                <span class="errorMessage" v-if="roleerror">please pick a role</span>
 
 
-        </a-form-item>
-      </a-form>
-    </a-modal>
+                <div v-if="rolevalues.includes('Developer')">
+                  Developer tools:
+                  <template v-for="(tag, index) in tags">
+                    <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                      <a-tag :key="tag"
+                             :afterClose="() => handleClose(tag)" color="#2db7f5">
+                        {{ `${tag.slice(0, 20)}...` }}
+                      </a-tag>
+                    </a-tooltip>
+                    <a-tag v-else :key="tag" :closable="index >= 0"
+                           :afterClose="() => handleClose(tag)" color="#2db7f5">
+                      {{ tag }}
+                    </a-tag>
+                  </template>
+                  <a-input
+                      v-if="inputVisible"
+                      ref="input"
+                      type="text"
+                      size="small"
+                      :style="{ width: '78px' }"
+                      :value="inputValue"
+                      @change="handleInputChange"
+                      @blur="handleInputConfirm"
+                      @keyup.enter="handleInputConfirm"
+                  />
+                  <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInput">
+                    <a-icon type="plus"/>
+                    New Tag
+                  </a-tag>
+                  <br>
+                  <span class="errorMessage" v-if="toolsErrors.includes('Developer')">add a tool used</span>
+                </div>
+
+                <div v-if="rolevalues.includes('Designer')">
+                  Design tools:
+                  <template v-for="(tag, index) in tagsDesign">
+                    <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                      <a-tag :key="tag"
+                             :afterClose="() => handleCloseDesign(tag)" color="#2db7f5">
+                        {{ `${tag.slice(0, 20)}...` }}
+                      </a-tag>
+                    </a-tooltip>
+                    <a-tag v-else :key="tag" :closable="index >= 0"
+                           :afterClose="() => handleCloseDesign(tag)" color="#2db7f5">
+                      {{ tag }}
+                    </a-tag>
+                  </template>
+                  <a-input
+                      v-if="inputVisibleDesign"
+                      ref="input"
+                      type="text"
+                      size="small"
+                      :style="{ width: '78px' }"
+                      :value="inputValueDesign"
+                      @change="handleInputChangeDesign"
+                      @blur="handleInputConfirmDesign"
+                      @keyup.enter="handleInputConfirmDesign"
+                  />
+                  <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInputDesign">
+                    <a-icon type="plus"/>
+                    New Tag
+                  </a-tag>
+                  <br>
+                  <span class="errorMessage" v-if="toolsErrors.includes('Designer')">add a tool used</span>
+                </div>
+
+                <div v-if="rolevalues.includes('Product_Manager')">
+                  Product Management tools:
+                  <template v-for="(tag, index) in tagsProduct">
+                    <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                      <a-tag :key="tag"
+                             :afterClose="() => handleCloseProduct(tag)" color="#2db7f5">
+                        {{ `${tag.slice(0, 20)}...` }}
+                      </a-tag>
+                    </a-tooltip>
+                    <a-tag v-else :key="tag" :closable="index >= 0"
+                           :afterClose="() => handleCloseProduct(tag)" color="#2db7f5">
+                      {{ tag }}
+                    </a-tag>
+                  </template>
+                  <a-input
+                      v-if="inputVisibleProduct"
+                      ref="input"
+                      type="text"
+                      size="small"
+                      :style="{ width: '78px' }"
+                      :value="inputValueProduct"
+                      @change="handleInputChangeProduct"
+                      @blur="handleInputConfirmProduct"
+                      @keyup.enter="handleInputConfirmProduct"
+                  />
+                  <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInputProduct">
+                    <a-icon type="plus"/>
+                    New Tag
+                  </a-tag>
+                  <br>
+                  <span class="errorMessage" v-if="toolsErrors.includes('Product_Manager')">add a tool used</span>
+                </div>
+
+                <div v-if="rolevalues.includes('Devops')">
+                  Devops tools:
+                  <template v-for="(tag, index) in tagsOps">
+                    <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                      <a-tag :key="tag"
+                             :afterClose="() => handleCloseOps(tag)" color="#2db7f5">
+                        {{ `${tag.slice(0, 20)}...` }}
+                      </a-tag>
+                    </a-tooltip>
+                    <a-tag v-else :key="tag" :closable="index >= 0"
+                           :afterClose="() => handleCloseOps(tag)" color="#2db7f5">
+                      {{ tag }}
+                    </a-tag>
+                  </template>
+                  <a-input
+                      v-if="inputVisiblesOps"
+                      ref="input"
+                      type="text"
+                      size="small"
+                      :style="{ width: '78px' }"
+                      :value="inputValueOps"
+                      @change="handleInputChangeOps"
+                      @blur="handleInputConfirmOps"
+                      @keyup.enter="handleInputConfirmOps"
+                  />
+                  <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInputOps">
+                    <a-icon type="plus"/>
+                    New Tag
+                  </a-tag>
+                  <br>
+                  <span class="errorMessage" v-if="toolsErrors.includes('Devops')">add a tool used</span>
+                </div>
+              </a-form-item>
+
+              <a-form-item>
+                <p> Add images of the project <span style="color: red">*</span></p>
+
+
+                <div v-if="uploading">
+
+                  <span>Uploading file <a-spin/></span>
+
+                </div>
+                <div v-else>
+
+                  <input type="file" @change="ChangehandleUpload" accept=".png, .jpg, .jpeg">
+                </div>
+                <span class="errorMessage" v-if="imageError">please add an image or images</span>
+                <a-row :gutter="16" v-if="fileList.length>0">
+                  <a-col :span="8" v-for="image in fileList" v-bind:key="image">
+                    <a-card hoverable>
+                      <img
+                          class="card-img-topsmall"
+                          slot="cover"
+                          alt="example"
+                          :src="`https://res.cloudinary.com/dwtvwjhn3/raw/upload/${image}`"
+                      />
+                      <template slot="actions" class="ant-card-actions">
+                        <a-icon @click="deleteImage(image)" key="delete" type="delete"/>
+
+                      </template>
+
+                    </a-card>
+                  </a-col>
+
+                </a-row>
+
+
+              </a-form-item>
+            </a-form>
+          </a-modal>
+        </div>
+      </a-col>
+      <a-col :xs="{span: 14, offset: 0 }" :sm="{span: 14, offset: 0 }"
+             :md="{span: 6, offset: 0 ,pull:0}"
+             :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0,pull:0 }" >
+        <div style="padding: 2%;">
+          <div style="text-align: center">
+            <img src="@/assets/images/competence.svg" style="width: 30%"/>
+          </div>
+          <p style="font-family: sofia_proregular;text-decoration: underline;text-decoration-color: #1F81CE">You skills may traverse many specialities.({{Finished/25*100}}% complete)
+
+          </p>
+          <p style="font-family: sofia_proregular">You can develop,design,product or even devops.</p>
+          <p style="font-family: sofia_proregular">Ensure the recruiter is able to see how diverse you are </p>
+
+
+          <div style="margin-top: 1rem" >
+            <p>Requirements needed</p>
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </a-col>
+    </a-row>
   </div>
+
 
 </template>
 
@@ -482,6 +429,7 @@ import moment from "moment";
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import UsersService from "@/services/UsersService";
+
 let countries = require("@/store/location.json")
 Vue.use(VeeValidate, {
   events: 'change|input|custom'
@@ -515,7 +463,7 @@ export default {
 
   data() {
     return {
-      dataload:false,
+      dataload: false,
       role_options: ['Developer', 'Designer', 'Product_Manager', 'Devops'],
       Developer: false,
       Design: false,
@@ -587,7 +535,7 @@ export default {
     }
   },
   watch: {
-    visible:function (){
+    visible: function () {
       this.$validator.reset();
     },
     rolevalues: function () {
@@ -669,8 +617,8 @@ export default {
         headers: {Authorization: 'JWT ' + this.$store.state.token}
 
       }
-      this.myprojects=[]
-      this.projects=[]
+      this.myprojects = []
+      this.projects = []
       this.dataload = true
       MyProjectsService.getportofoliolight(this.$store.state.user.pk, auth)
           .then(
@@ -831,7 +779,7 @@ export default {
 
       }
       let end = null
-      if(this.Inprogress === false){
+      if (this.Inprogress === false) {
         end = this.end_month
       }
 
@@ -846,7 +794,7 @@ export default {
         'personal_company': personal,
         'company_name': companyname,
         'company_url': companyurl,
-        'location':companylocation,
+        'location': companylocation,
         'project_start_month': this.start_month,
         'project_end_month': end
 
@@ -885,7 +833,7 @@ export default {
 
     },
     ResetFields() {
-      this.projectType= 2
+      this.projectType = 2
       this.rolevalues = []
       this.tags = []
       this.tagsDesign = []
@@ -898,9 +846,9 @@ export default {
       this.description = ''
       this.project_demo = ''
       this.project_repo = ''
-      this.company_name =''
-      this.company_url =''
-      this.company_location =null
+      this.company_name = ''
+      this.company_url = ''
+      this.company_location = null
       this.currentproject = null
       this.Inprogress = false
 
@@ -923,10 +871,10 @@ export default {
       this.description = project.description
       this.project_demo = project.demo
       this.project_repo = project.repo
-      if (project.end === null ) {
+      if (project.end === null) {
         this.Inprogress = true
 
-      }else {
+      } else {
         this.Inprogress = false
         this.end_month = project.end
       }
@@ -1133,9 +1081,11 @@ export default {
   color: #f5222d;
   font-family: sofia_prolight
 }
+
 .card-3 {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
 .card {
   position: relative;
   display: -webkit-box;
@@ -1158,7 +1108,7 @@ export default {
 
 .card-img-top {
   width: 100%;
-  height: 8vw;
+
   object-fit: cover;
 }
 
@@ -1174,7 +1124,7 @@ export default {
   object-fit: cover;
 }
 
-.container{
+.container {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1190,6 +1140,7 @@ export default {
   grid-auto-rows: 200px;
   grid-auto-flow: dense;
 }
+
 .wide {
   grid-column: span 2;
 }

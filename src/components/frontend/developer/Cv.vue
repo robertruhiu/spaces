@@ -6,7 +6,7 @@
       <a-layout-content style="background-color: #FAFBFF" id="contract">
         <a-card class="hellocard" :bordered="false">
           <a-row style="color: white">
-            <a-col span="12">
+            <a-col span="24">
           <a-breadcrumb>
             <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a></a-breadcrumb-item>
             <a-breadcrumb-item style="color: white"><a @click="$router.push('/demo')" style="color: white">Portfolio</a></a-breadcrumb-item>
@@ -15,21 +15,10 @@
           </a-breadcrumb>
           <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
                 {{ $store.state.user_object.user.first_name | capitalize }} {{ $store.state.user_object.user.last_name | capitalize }}</span>
-          <p>Email: {{$store.state.user_object.user.email}}</p>
-              <p>Linkedin: {{$store.state.user_object.linkedin_url}}</p>
+
 
             </a-col>
-            <a-col span="12">
-              <p>Phone Number: {{$store.state.user_object.phone_number}}</p>
-              <p>Location: {{$store.state.user_object.country}}</p>
-              <p>Years of Experience: {{$store.state.user_object.years}}</p>
-              <p>Monthly Salary Expectations: $ {{$store.state.user_object.salary}}</p>
-              <a-button
-                  type="primary"  @click="printDiv('contract')">
-                <a-icon type="right" />
-                print
-              </a-button>
-            </a-col>
+
           </a-row>
 
 
@@ -37,13 +26,21 @@
         </a-card>
         <div style=" ;padding: 1%" id="contract">
           <a-row :gutter="16">
-            <a-col span="18" >
+            <a-col :xs="{span: 24, offset: 0, }" :sm="{span: 24, offset: 0, }"
+                   :md="{span: 24, offset: 0 ,push:0}"
+                   :lg="{span: 20, offset: 0,push:0 }" :xl="{span: 18,offset: 0,push:0 }" >
               <div style="padding: 1%;min-height: 40vh" class="cardshadow">
-                <div style="overflow-y: scroll;padding: 1%;height: 70vh;">
+                <div style="overflow-y: scroll;padding: 1%;height: 80vh;">
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">About</p>
                   <p style="font-family: sofia_prolight">
                     {{currentUserProfile.about}}
                   </p>
+                  <p>Email: {{$store.state.user_object.user.email}}</p>
+                  <p>Linkedin: {{$store.state.user_object.linkedin_url}}</p>
+                  <p>Phone Number: {{$store.state.user_object.phone_number}}</p>
+                  <p>Location: {{$store.state.user_object.country}}</p>
+                  <p>Years of Experience: {{$store.state.user_object.years}}</p>
+                  <p>Monthly Salary Expectations: $ {{$store.state.user_object.salary}}</p>
                   <p style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Skilled in</p>
                   <div v-if="currentUserProfile.skills.length>0" style="margin-bottom: 1rem">
 

@@ -1,313 +1,346 @@
 <template>
-  <div style="padding:2%;overflow-y: scroll;padding: 1%;height: 70vh;">
-    <div style="color: blue">
-      <a-button type="primary" @click="showModal">
-        <a-icon type="plus-circle" theme="twoTone"/>
-        Add work experience
-      </a-button>
+  <div>
+    <a-row>
+      <a-col :xs="{span: 24, offset: 0, }" :sm="{span: 24, offset: 0, }"
+             :md="{span: 20, offset: 0 }"
+             :lg="{span: 18, offset: 0, }" :xl="{span: 16,offset: 0,push:0 }" >
+        <div style="padding:2%;overflow-y: scroll;padding: 1%;height: 70vh;">
+          <div style="color: blue">
+            <a-button type="primary" @click="showModal">
+              <a-icon type="plus-circle" theme="twoTone"/>
+              Add work experience
+            </a-button>
 
-    </div>
-    <br>
-    <div>
-      <div v-if="dataload">
-        <div style="text-align: center">
-          <div>
-            <a-skeleton active/>
           </div>
-        </div>
+          <br>
+          <div>
+            <div v-if="dataload">
+              <div style="text-align: center">
+                <div>
+                  <a-skeleton active/>
+                </div>
+              </div>
 
-      </div>
-      <div v-else>
-        <div v-if="experienceslist.length>0">
-          <a-row gutter="16">
-            <a-col span="8" v-for="item in complete"
-                   v-bind:key="item.id" class="equaltable">
-              <a-card :title="item.title" style="margin-bottom: 1rem;">
+            </div>
+            <div v-else>
+              <div v-if="experienceslist.length>0">
+                <a-row gutter="16">
+                  <a-col :xs="{span: 24, offset: 0, }" :sm="{span: 24, offset: 0, }"
+                         :md="{span: 12, offset: 0 }"
+                         :lg="{span: 8, offset: 0, }" :xl="{span: 8,offset: 0,push:0 }" v-for="item in complete"
+                         v-bind:key="item.id" class="equaltable">
+                    <a-card :title="item.title" style="margin-bottom: 1rem;">
               <span slot="extra" v-if="item.start === null">
                 <a-alert message="Please update" banner/>
               </span>
-                <template slot="actions" class="ant-card-actions">
-                  <a-popconfirm
-                      title="Are you sure delete this work experience entry?"
-                      ok-text="Yes"
-                      cancel-text="No"
-                      @confirm="DeleteExperience(item.key)"
+                      <template slot="actions" class="ant-card-actions">
+                        <a-popconfirm
+                            title="Are you sure delete this work experience entry?"
+                            ok-text="Yes"
+                            cancel-text="No"
+                            @confirm="DeleteExperience(item.key)"
 
-                  >
-                    <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
-                  </a-popconfirm>
+                        >
+                          <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
+                        </a-popconfirm>
 
-                  <a-icon key="edit" type="edit" theme="twoTone" @click="EditExperience(item)"/>
+                        <a-icon key="edit" type="edit" theme="twoTone" @click="EditExperience(item)"/>
 
-                </template>
-                <a-card-meta>
-                  <template slot="description">
+                      </template>
+                      <a-card-meta>
+                        <template slot="description">
 
-                    <p><span> Company name:  {{ item.company }} <a-icon
-                        type="environment"/>  {{ item.location |countryname}} </span>
-                    </p>
-                    <p>
+                          <p><span> Company name:  {{ item.company }} <a-icon
+                              type="environment"/>  {{ item.location |countryname}} </span>
+                          </p>
+                          <p>
                       <span v-if="item.start">{{ item.start  | moment }}
 
                   </span>
-                      <span v-if="item.end">
+                            <span v-if="item.end">
                     to
                     {{ item.end  | moment }}
                   </span>
-                      <span v-else>
+                            <span v-else>
                     to present
 
                   </span>
-                    </p>
-                    <p>
-                      Technologies used:
-                      <a-tag v-for="tag in item.tags" color="#1F81CE"
-                             :key="tag">
-                        {{ tag }}
-                      </a-tag>
+                          </p>
+                          <p>
+                            Technologies used:
+                            <a-tag v-for="tag in item.tags" color="#1F81CE"
+                                   :key="tag">
+                              {{ tag }}
+                            </a-tag>
 
-                    </p>
-
-
+                          </p>
 
 
-                  </template>
-                </a-card-meta>
-              </a-card>
 
-            </a-col>
-          </a-row>
-          <a-row gutter="16">
-            <a-col span="8" v-for="item in incomplete"
-                   v-bind:key="item.id" class="equaltable">
-              <a-card :title="item.title" style="margin-bottom: 1rem;">
+
+                        </template>
+                      </a-card-meta>
+                    </a-card>
+
+                  </a-col>
+                </a-row>
+                <a-row gutter="16">
+                  <a-col span="8" v-for="item in incomplete"
+                         v-bind:key="item.id" class="equaltable">
+                    <a-card :title="item.title" style="margin-bottom: 1rem;">
               <span slot="extra" v-if="item.start === null">
                 <a-alert message="Please update" banner/>
               </span>
-                <template slot="actions" class="ant-card-actions">
-                  <a-popconfirm
-                      title="Are you sure delete this work experience entry?"
-                      ok-text="Yes"
-                      cancel-text="No"
-                      @confirm="DeleteExperience(item.key)"
+                      <template slot="actions" class="ant-card-actions">
+                        <a-popconfirm
+                            title="Are you sure delete this work experience entry?"
+                            ok-text="Yes"
+                            cancel-text="No"
+                            @confirm="DeleteExperience(item.key)"
 
-                  >
-                    <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
-                  </a-popconfirm>
+                        >
+                          <a-icon key="delete" type="delete" theme="twoTone" two-tone-color="#eb2f96"/>
+                        </a-popconfirm>
 
-                  <a-icon key="edit" type="edit" theme="twoTone" @click="EditExperience(item)"/>
+                        <a-icon key="edit" type="edit" theme="twoTone" @click="EditExperience(item)"/>
 
-                </template>
-                <a-card-meta>
-                  <template slot="description">
-                    <p><span><a-icon type="bank"/>  {{ item.company }} <a-icon
-                        type="environment"/>  {{ item.location |countryname}} </span>
-                    </p>
-                    <p>
-                      Technologies used:
-                      <a-tag v-for="tag in item.tags" color="#1F81CE"
-                             :key="tag">
-                        {{ tag }}
-                      </a-tag>
+                      </template>
+                      <a-card-meta>
+                        <template slot="description">
+                          <p><span><a-icon type="bank"/>  {{ item.company }} <a-icon
+                              type="environment"/>  {{ item.location |countryname}} </span>
+                          </p>
+                          <p>
+                            Technologies used:
+                            <a-tag v-for="tag in item.tags" color="#1F81CE"
+                                   :key="tag">
+                              {{ tag }}
+                            </a-tag>
 
-                    </p>
-
-
+                          </p>
 
 
-                  </template>
-                </a-card-meta>
-              </a-card>
-
-            </a-col>
-          </a-row>
-
-        </div>
-        <div v-else>
-          <p>Add your recent work stints.Experience builds trust</p>
 
 
-        </div>
-      </div>
+                        </template>
+                      </a-card-meta>
+                    </a-card>
 
-    </div>
+                  </a-col>
+                </a-row>
+
+              </div>
+              <div v-else>
+                <p>Add your recent work stints.Experience builds trust</p>
 
 
-    <a-modal v-model="visible" :dialog-style="{ top: '20px' }">
-      <span slot="title">{{ card_title }}</span>
-      <template slot="footer">
+              </div>
+            </div>
 
-        <a-button key="submit" type="primary" @click="Save">
-          Save
-        </a-button>
-      </template>
-      <a-form>
-        <a-form-item
+          </div>
 
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span: 24 }"
-        >
+
+          <a-modal v-model="visible" :dialog-style="{ top: '20px' }">
+            <span slot="title">{{ card_title }}</span>
+            <template slot="footer">
+
+              <a-button key="submit" type="primary" @click="Save">
+                Save
+              </a-button>
+            </template>
+            <a-form>
+              <a-form-item
+
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span: 24 }"
+              >
           <span slot="label">
               Job title <span style="color: red">*</span>
             </span>
-          <a-input name="experience_title"
-                   v-model="title" v-validate="'required'"
-                   data-vv-validate-on="change|custom|input"
+                <a-input name="experience_title"
+                         v-model="title" v-validate="'required'"
+                         data-vv-validate-on="change|custom|input"
 
-          />
-          <span class="errorMessage">{{ errors.first('experience_title') }}</span>
+                />
+                <span class="errorMessage">{{ errors.first('experience_title') }}</span>
 
 
-        </a-form-item>
-        <a-form-item
+              </a-form-item>
+              <a-form-item
 
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span: 24 }"
-        >
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span: 24 }"
+              >
           <span slot="label">
               Company name <span style="color: red">*</span>
             </span>
-          <a-input name="experience_company" v-model="company" v-validate="'required'"
-                   data-vv-validate-on="change|custom|input"
+                <a-input name="experience_company" v-model="company" v-validate="'required'"
+                         data-vv-validate-on="change|custom|input"
 
 
-          />
-          <span class="errorMessage">{{ errors.first('experience_company') }}</span>
+                />
+                <span class="errorMessage">{{ errors.first('experience_company') }}</span>
 
 
-        </a-form-item>
-        <a-form-item >
+              </a-form-item>
+              <a-form-item >
           <span slot="label">
               Start and End of work stint <span style="color: red">*</span>
             </span>
 
 
-          <p>
-            <a-checkbox v-model="CurrentJob">
-              Currently working here?
-            </a-checkbox>
+                <p>
+                  <a-checkbox v-model="CurrentJob">
+                    Currently working here?
+                  </a-checkbox>
 
-          </p>
+                </p>
 
-          <div>
-            <a-row gutter="16">
-              <a-col span="12">
-                <a-month-picker placeholder="Start Month" v-model="start_month" v-validate="'required'"
-                                name="starting_month" data-vv-validate-on="change|custom|input">
+                <div>
+                  <a-row gutter="16">
+                    <a-col span="12">
+                      <a-month-picker placeholder="Start Month" v-model="start_month" v-validate="'required'"
+                                      name="starting_month" data-vv-validate-on="change|custom|input">
 
-                </a-month-picker>
-                <br>
-                <span class="errorMessage">{{ errors.first('starting_month') }}</span>
-              </a-col>
-              <a-col span="12">
-                <a-month-picker v-if="CurrentJob === false" placeholder="End Month" v-model="end_month"
-                                v-validate="'required'" name="ending_month" data-vv-validate-on="change|custom|input">
+                      </a-month-picker>
+                      <br>
+                      <span class="errorMessage">{{ errors.first('starting_month') }}</span>
+                    </a-col>
+                    <a-col span="12">
+                      <a-month-picker v-if="CurrentJob === false" placeholder="End Month" v-model="end_month"
+                                      v-validate="'required'" name="ending_month" data-vv-validate-on="change|custom|input">
 
-                </a-month-picker>
-                <br>
-                <span class="errorMessage">{{ errors.first('ending_month') }}</span>
+                      </a-month-picker>
+                      <br>
+                      <span class="errorMessage">{{ errors.first('ending_month') }}</span>
 
-              </a-col>
-            </a-row>
+                    </a-col>
+                  </a-row>
 
 
-          </div>
+                </div>
 
-        </a-form-item>
+              </a-form-item>
 
-        <a-form-item
+              <a-form-item
 
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span: 24 }"
-        >
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span: 24 }"
+              >
           <span slot="label">
               Location <span style="color: red">*</span>
             </span>
-          <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
-                    data-vv-validate-on="change|custom|input"
+                <a-select name="location" v-validate="'required'" data-vv-as="location" show-search
+                          data-vv-validate-on="change|custom|input"
 
-                    option-filter-prop="children"
-                    v-model="location" @change="handleChange" :filter-option="filterOption">
+                          option-filter-prop="children"
+                          v-model="location" @change="handleChange" :filter-option="filterOption">
 
-            <a-select-option v-for="country in countrieslist"
-                             v-bind:key="country">
+                  <a-select-option v-for="country in countrieslist"
+                                   v-bind:key="country">
 
-              {{ country }}
-            </a-select-option>
-
-
-          </a-select>
-          <span class="errorMessage">{{ errors.first('location') }}</span>
+                    {{ country }}
+                  </a-select-option>
 
 
-        </a-form-item>
+                </a-select>
+                <span class="errorMessage">{{ errors.first('location') }}</span>
 
 
-        <a-form-item
+              </a-form-item>
 
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span:  24}"
-        >
+
+              <a-form-item
+
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span:  24}"
+              >
           <span slot="label">
               Technologies used when working <span style="color: red">*</span>
             </span>
-          <div>
-            <template v-for="(tag, index) in tags">
-              <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                <a-tag :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">
-                  {{ `${tag.slice(0, 20)}...` }}
-                </a-tag>
-              </a-tooltip>
-              <a-tag v-else :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">
-                {{ tag }}
-              </a-tag>
-            </template>
-            <a-input
-                v-if="inputVisible"
-                ref="input"
-                type="text"
-                size="small"
-                :style="{ width: '78px' }"
-                :value="inputValue"
-                @change="handleInputChange"
-                @blur="handleInputConfirm"
-                @keyup.enter="handleInputConfirm"
-            />
-            <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInput">
-              <a-icon type="plus"/>
-              New Tag
-            </a-tag>
-            <br>
-            <span class="errorMessage" v-if="toolsErrors.includes('tech_used')">add a tool used</span>
-          </div>
+                <div>
+                  <template v-for="(tag, index) in tags">
+                    <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                      <a-tag :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">
+                        {{ `${tag.slice(0, 20)}...` }}
+                      </a-tag>
+                    </a-tooltip>
+                    <a-tag v-else :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">
+                      {{ tag }}
+                    </a-tag>
+                  </template>
+                  <a-input
+                      v-if="inputVisible"
+                      ref="input"
+                      type="text"
+                      size="small"
+                      :style="{ width: '78px' }"
+                      :value="inputValue"
+                      @change="handleInputChange"
+                      @blur="handleInputConfirm"
+                      @keyup.enter="handleInputConfirm"
+                  />
+                  <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInput">
+                    <a-icon type="plus"/>
+                    New Tag
+                  </a-tag>
+                  <br>
+                  <span class="errorMessage" v-if="toolsErrors.includes('tech_used')">add a tool used</span>
+                </div>
 
 
-        </a-form-item>
-        <a-form-item
-            :label-col="{ span: 24 }"
-            :wrapper-col="{ span: 24 }"
-        >
+              </a-form-item>
+              <a-form-item
+                  :label-col="{ span: 24 }"
+                  :wrapper-col="{ span: 24 }"
+              >
           <span slot="label">
               Work description <span style="color: red">*</span>
             </span>
-          <a-textarea
-              v-model="description"
-              placeholder="A description of your role and responsibilites(400 char max)"
-              rows="4" maxLength=400
+                <a-textarea
+                    v-model="description"
+                    placeholder="A description of your role and responsibilites(400 char max)"
+                    rows="4" maxLength=400
 
-              name="experience_description"
-              v-validate="'required'" data-vv-validate-on="change|custom|input"
+                    name="experience_description"
+                    v-validate="'required'" data-vv-validate-on="change|custom|input"
 
-          />
-          <span class="errorMessage">{{ errors.first('experience_description') }}</span>
-
-
-        </a-form-item>
+                />
+                <span class="errorMessage">{{ errors.first('experience_description') }}</span>
 
 
-      </a-form>
-    </a-modal>
+              </a-form-item>
+
+
+            </a-form>
+          </a-modal>
+        </div>
+      </a-col>
+      <a-col :xs="{span: 14, offset: 0 }" :sm="{span: 14, offset: 0 }"
+             :md="{span: 6, offset: 0 ,pull:0}"
+             :lg="{span: 6, offset: 0 }" :xl="{span: 6,offset: 0,pull:0 }" >
+        <div style="padding: 2%;">
+          <div style="text-align: center">
+            <img src="@/assets/images/briefcase.svg" style="width: 30%"/>
+          </div>
+          <p style="font-family: sofia_proregular;text-decoration: underline;text-decoration-color: #1F81CE">Work experience({{Finished/25*100}}% complete)</p>
+          <p style="font-family: sofia_proregular">Years of experience is a commonly requested by recruiter showcase your timeline of work</p>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </a-col>
+    </a-row>
   </div>
+
 </template>
 
 <script>

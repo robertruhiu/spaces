@@ -124,8 +124,9 @@
                           <span v-if="item.test_stage">
                             <span v-if="item.report">
                               <div v-if="item.report.report_ready">
-                                <a @click="navigateTo({name:'report',params:{candidateId: item.profile,projectId:item.project,reportId:item.report.id}})">
-                                  report
+                                <a @click="navigateTo({name:'report',
+                                params:{candidateId: item.candidate.id, projectId: item.project.id,reportId:item.report.id}})">
+                                  Report
                                 </a>
                               </div>
                               <span v-else>
@@ -277,7 +278,6 @@ export default {
   mounted() {
     this.jobId = this.$store.state.route.params.jobId
     this.testapplicants = this.$store.state.test
-
   },
   filters: {
     moment: function (date) {
@@ -286,10 +286,8 @@ export default {
   },
   methods: {
     navigateTo(route) {
-      this.$router.push(route)
+      this.$router.push(route);
     },
-
-
     showModal(candidate, application_id) {
       this.visible = true
       this.candidate = candidate

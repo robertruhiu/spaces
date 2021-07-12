@@ -9,6 +9,17 @@
 
   <p style="font-family: sofia_proregular">Tabs will have the tick icon for conditions satifiied the ones with the x have something pending.</p>
   <p style="font-family: sofia_proregular">Each tab will guide you on details needed</p>
+  <p>Want to edit basic info?</p>
+
+  <router-link
+      style="text-decoration: none"
+      :to="{name:'developerprofile'}"
+      target='_blank'>
+    <a-button type="primary"
+        >
+      Edit basic info
+    </a-button>
+  </router-link>
 
 </div>
 </template>

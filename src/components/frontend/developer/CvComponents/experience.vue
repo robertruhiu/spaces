@@ -52,6 +52,11 @@
         </a-timeline>
 
       </div>
+      <div v-else>
+        <p>Add your recent work stints.Experience builds trust</p>
+
+
+      </div>
 
     </div>
   </div>

@@ -1,18 +1,20 @@
 <template>
-  <a-layout id="components-layout-demo-side" style="min-height: 100vh;">
+  <a-layout id="components-layout-demo-side" style="height: 100vh;">
     <CandidateSider/>
     <a-layout>
 
       <a-layout-content style="background-color: #FAFBFF">
         <a-card class="hellocard" :bordered="false">
           <a-row style="color: white">
-            <a-col span="12">
-          <a-breadcrumb>
-            <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a></a-breadcrumb-item>
-            <a-breadcrumb-item style="color: white">Portfolio</a-breadcrumb-item>
+            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                   :md="{span: 12, offset: 0 }"
+                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
+              <a-breadcrumb>
+                <a-breadcrumb-item><a @click="$router.push('/developer')" style="color: white">Dashboard</a></a-breadcrumb-item>
+                <a-breadcrumb-item style="color: white">Portfolio</a-breadcrumb-item>
 
-          </a-breadcrumb>
-          <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
+              </a-breadcrumb>
+              <span style="font-size: 1.7rem;font-family: sofia_prosemibold;margin-bottom: 0;color: white">
                 {{ $store.state.user_object.user.first_name | capitalize }} {{ $store.state.user_object.user.last_name | capitalize }}</span>
               <p>Profile completion :
                 <span v-if="score>$store.state.score">{{ score }}%</span>
@@ -20,7 +22,9 @@
                 <span v-else>{{ $store.state.score }}%</span>
               </p>
             </a-col>
-            <a-col span="12">
+            <a-col :xs="{span: 24, offset: 0 }" :sm="{span: 24, offset: 0 }"
+                   :md="{span: 12, offset: 0 }"
+                   :lg="{span: 12, offset: 0 }" :xl="{span: 12,offset: 0 }">
               <a-button
                   type="primary"  @click="navigateTo({name:'Cv'})">
                 <a-icon type="right" />
@@ -31,67 +35,50 @@
 
 
         </a-card>
-        <div style=" ;padding: 1%">
-          <a-row :gutter="16">
-            <a-col span="16" >
-              <div style="padding: 1%;min-height: 40vh" class="cardshadow">
-                <a-tabs default-active-key="1" @change="callback" >
-                  <a-tab-pane key="1">
+        <a-tabs default-active-key="1" @change="callback" >
+          <a-tab-pane key="1">
                   <span slot="tab">
-                    <a-icon type="solution"/>
-                    Basic information
+
+                    Basic_info
                   </span>
-                    <Basic/>
-                  </a-tab-pane>
-                  <a-tab-pane key="2">
+            <Basic/>
+
+
+
+          </a-tab-pane>
+          <a-tab-pane key="2">
                   <span slot="tab">
-                    <a-icon type="code"/>
-                    Portfolio/Gigs
+
+                    Projects
                   </span>
-                    <Skills v-on:myprojectsloaded="onClickChildSkills" />
-                  </a-tab-pane>
-                  <a-tab-pane key="3">
+            <Skills v-on:myprojectsloaded="onClickChildSkills" />
+
+
+
+          </a-tab-pane>
+          <a-tab-pane key="3">
                   <span slot="tab">
-                    <a-icon type="bank"/>
-                    Work experience
+
+                    Work
                   </span>
-                    <Experince v-on:myexperinecesloaded="onClickChildExperience"/>
-                  </a-tab-pane>
-                  <a-tab-pane key="4">
+<!--            <Experince v-on:myexperinecesloaded="onClickChildExperience"/>-->
+
+
+
+          </a-tab-pane>
+          <a-tab-pane key="4">
                   <span slot="tab">
-                    <a-icon type="file-done"/>
-                    Education & Certifications
+
+                    Education
                   </span>
-                    <Education v-on:myeducationloaded="onClickChildEducation"/>
-                  </a-tab-pane>
-
-                </a-tabs>
-
-              </div>
-
-            </a-col>
-            <a-col span="6" >
-              <div style="padding: 1%;min-height: 40vh" class="cardshadow">
-                <div v-if="currentTabKey === 1">
-                  <intro :score="score"/>
-                </div>
-                <div v-else-if="currentTabKey === 2">
-                  <skillInfo  :projects="projects" v-on:projectscore="onClickChildProjectScore" />
-                </div>
-                <div v-else-if="currentTabKey === 3">
-                  <WorkInfo :experiences="experiences" v-on:workscore="onClickChildWorkScore"  />
-                </div>
-                <div v-else-if="currentTabKey === 4">
-                  <EducationInfo :education="education" v-on:educationscore="onClickChildEducationScore"  />
-                </div>
+            <Education v-on:myeducationloaded="onClickChildEducation"/>
 
 
-              </div>
 
-            </a-col>
-          </a-row>
+          </a-tab-pane>
 
-        </div>
+        </a-tabs>
+
 
 
       </a-layout-content>
@@ -109,6 +96,7 @@ import WorkInfo from "@/components/frontend/developer/portfoliocomponents/WorkIn
 import EducationInfo from "@/components/frontend/developer/portfoliocomponents/EducationInfo";
 import Experince from "@/components/frontend/developer/portfoliocomponents/Experince";
 import Education from "@/components/frontend/developer/portfoliocomponents/Education";
+import { showAt} from 'vue-breakpoints'
 export default {
   name: "DemoPort",
   data() {
@@ -138,7 +126,7 @@ export default {
   },
   components: {
     CandidateSider,Basic,intro,skillInfo,Skills,WorkInfo,EducationInfo,
-    Experince,Education
+    Experince,Education,showAt
 
 
   },

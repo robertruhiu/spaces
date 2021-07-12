@@ -8,7 +8,7 @@
                 <a-col :span="16">
                             <span>
                                 <span style="color: white;line-height: 13px;font-size: 17px;font-weight:bold;margin-top: 15%">
-                                {{currentUser.first_name |capitalize}} {{currentUser.last_name |capitalize}}</span>
+                                Candidate Name: {{currentUser.first_name |capitalize}} {{currentUser.last_name |capitalize}}</span>
 
                             </span>
 
@@ -18,7 +18,7 @@
                 </a-col>
                 <a-col :span="4" style="color: white">
                 <p style="color: white;font-size: 15px;font-weight: bold;">
-                    Project Score : {{report.score}}%
+                    Overall Project Mean Score : {{report.score}}%
 
                 </p>
             </a-col>
@@ -26,7 +26,7 @@
                     <p style="color: white;font-size: 15px;font-weight: bold">
                          <span>
                               <a-button type="primary">
-                                  <a style="text-decoration: none" :href="report.code_base" target="_blank">Demo</a>
+                                  <a style="text-decoration: none" :href="report.code_base" target="_blank">Code Base</a>
                               </a-button>
 
                          </span>

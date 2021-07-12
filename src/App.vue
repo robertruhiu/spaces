@@ -149,6 +149,4 @@
       src: local("sofia_proultralightitalic"),
       url(./assets/fonts/sofiapro-ultralightitalic.otf) format("opentype");
     }
-
-
 </style>
