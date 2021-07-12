@@ -97,7 +97,6 @@ export default {
   components: {
     ACol,
     ARow,
-
     RecruiterSider,
   },
   async mounted() {
@@ -108,14 +107,14 @@ export default {
     this.loading = true
     this.ApplicationId = this.$store.state.route.params.applicationId
 
-
-
-
     Projectsservice.allprojects(auth)
         .then(resp => {
           this.projects = resp.data
           for (let i = 0; i < this.projects.length; i++) {
-            let skill_list = this.projects[i].tags.split(',');
+            let skill_list = []
+            if(this.projects[i].tags){
+              skill_list=this.projects[i].tags.split(',');
+            }
 
             let id = this.projects[i].id
             let name = this.projects[i].name
