@@ -52,7 +52,7 @@
             <div style="height: 70vh;overflow: scroll;margin-bottom: 1rem">
               <div>
                 <h3 style="font-family: sofia_probold;text-decoration: underline;text-decoration-color: #1F81CE">Project
-                  Name : {{ project.name }}es</h3>
+                  Name : {{ project.name }}</h3>
                 <p>{{ project.description }}</p>
                 <h3 style="font-family: sofia_promedium;text-decoration: underline;text-decoration-color: #1F81CE">Tech
                   Stack Used</h3>
