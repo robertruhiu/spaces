@@ -78,7 +78,7 @@
                         </a-list-item-meta>
                         <div>
                           <a-tag color="#87d068" v-if="value === 'success'">complete</a-tag>
-                          <a-tag color="#f50" v-else>{{ value }}</a-tag>
+                          <a-tag color="#E21900" v-else>{{ value }}</a-tag>
                         </div>
 
                       </a-list-item>
